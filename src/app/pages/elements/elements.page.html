@@ -1,0 +1,198 @@
+<ion-content fullscreen="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <p>Body default text</p>
+        <hr>
+        <hr>
+        <h1 class="h1">h1</h1>
+        <hr>
+        <h2 class="h2">h2</h2>
+        <hr>
+        <div class="block-title">Block Title</div>
+        <hr>
+        <div class="text-s">text-s</div>
+        <hr>
+        <div class="text-m">text-m</div>
+        <hr>
+        <div class="text-l">text-l</div>
+        <hr>
+        <article class="article text">
+          <p>Article text <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, tempora.</p>
+          <ul>
+            <li>ul li item</li>
+            <li>ul li item</li>
+            <li>ul li item</li>
+          </ul>
+          <ol>
+            <li>ol li item</li>
+            <li>ol li item</li>
+            <li>ol li item</li>
+          </ol>
+          <img src="assets/img/icon/favicon.png" alt="">
+          <blockquote>blockquote blockquote blockquote</blockquote>
+          <p><strong>Strong tag</strong> <i> Italic tag</i></p>
+          <table>
+            <thead>
+            <tr>
+              <th>Th 1</th>
+              <th>Th 2</th>
+              <th>Th 3</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Td</td>
+              <td>Td</td>
+              <td>Td</td>
+            </tr>
+            <tr>
+              <td>Td</td>
+              <td>Td</td>
+              <td>Td</td>
+            </tr>
+            <tr>
+              <td>Td</td>
+              <td>Td</td>
+              <td>Td</td>
+            </tr>
+            <tr>
+              <td>Td</td>
+              <td>Td</td>
+              <td>Td</td>
+            </tr>
+            </tbody>
+          </table>
+          <address>Address Tag<br>
+            Cupertino, CA 95014<br>
+            United States</address>
+          <p><b>Code tag.</b> You will learn later on in these tests that <code>word-wrap: break-word;</code> will be your best friend.</p>
+          <p>This tag should denote <ins>inserted</ins> text.</p>
+          <p>
+            <strong>Preformatted Tag</strong><br>
+            This tag styles large blocks of code.
+          </p>
+          <pre>.post-title [
+            margin: 0 0 5px;
+            font-weight: bold;
+            font-size: 38px;
+            line-height: 1.2;
+          ]</pre>
+        </article>
+        <hr>
+        <div class="simple-link">Simple Link</div>
+        <hr>
+        <ion-button class="btn btn-sm" color="primary" mode="md">
+          Ion button btn-sm
+        </ion-button>
+        <hr>
+        <ion-button class="btn btn-md" color="primary" mode="md">
+          Ion button btn-md
+        </ion-button>
+        <hr>
+        <ion-button class="btn" color="primary" mode="md">
+          Ion button
+        </ion-button>
+        <hr>
+        <ion-button class="btn" color="primary" mode="md" expand="block">
+          Ion button block
+        </ion-button>
+        <hr>
+        <ion-button class="btn btn-transparent" mode="md" expand="block">
+          Ion btn transparent
+        </ion-button>
+        <hr>
+        <ion-button class="btn btn-close" fill="clear" mode="md">
+          <ion-icon slot="icon-only" src="./assets/img/icon/icon-close.svg"></ion-icon>
+        </ion-button>
+        <hr>
+        <form class="form" [formGroup]="form">
+          <ion-item class="form-item" mode="ios">
+            <ion-label position="fixed">Ваше Ім’я*</ion-label>
+            <ion-input type="text" inputmode="text" required></ion-input>
+          </ion-item>
+
+          <ion-item class="form-item" mode="ios">
+            <ion-label position="fixed">Ваш email*</ion-label>
+            <ion-input formControlName="email" type="email" inputmode="email" required></ion-input>
+          </ion-item>
+
+          <ion-item class="form-item mask" mode="ios" lines="none">
+            <ion-label position="fixed">Телефон</ion-label>
+            <ion-input class="form-item-hidden" formControlName="phone" inputmode="tel" autocomplete="'off'"></ion-input>
+            <input class="native-input" formControlName="phone" type="text" inputmode="tel"
+              placeholder="+380 ( __ ) __ - __ - ___" autocomplete="'off'" prefix="+38 " mask="( 000 ) 00 - 00 - 000"
+              [showMaskTyped]="true" appPhoneInput />
+          </ion-item>
+          <!-- <ion-item class="form-item form-item-mask" mode="ios">
+            <ion-label position="fixed">Телефон</ion-label>
+            <input class="native-input" formControlName="phone" type="text" inputmode="tel"
+              placeholder="+380 ( __ ) __ - __ - ___" autocomplete="'off'" prefix="+38 " mask="( 000 ) 00 - 00 - 000"
+              [showMaskTyped]="true" appPhoneInput>
+            <ion-input class="form-item-hidden" type="text" inputmode="text" [value]="form.value.phone"></ion-input>
+          </ion-item> -->
+
+          <ion-item class="form-item" mode="ios">
+            <ion-textarea type="text" placeholder="Ваше повідомлення"></ion-textarea>
+          </ion-item>
+
+          <ion-item class="form-item" mode="ios">
+            <ion-select value="" interface="popover" mode="ios" placeholder="Селект" [interfaceOptions]="selectInterfaceOptions">
+              <ion-select-option value="Львів">Львів</ion-select-option>
+              <ion-select-option value="Винники">Винники</ion-select-option>
+              <ion-select-option value="Пасіки-Зубрицькі">Пасіки-Зубрицькі</ion-select-option>
+              <ion-select-option value="Сокільники">Сокільники</ion-select-option>
+              <ion-select-option value="Скнилів">Скнилів</ion-select-option>
+              <ion-select-option value="Лапаївка">Лапаївка</ion-select-option>
+              <ion-select-option value="Зимна вода">Зимна вода</ion-select-option>
+              <ion-select-option value="Брюховичі">Брюховичі</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="form-item" mode="ios">
+            <ion-select value="" interface="popover" mode="ios" placeholder="Селект в попапі із додатковим класом in-popover" [interfaceOptions]="popoverOptions">
+              <ion-select-option value="Львів">Львів</ion-select-option>
+              <ion-select-option value="Винники">Винники</ion-select-option>
+              <ion-select-option value="Пасіки-Зубрицькі">Пасіки-Зубрицькі</ion-select-option>
+              <ion-select-option value="Сокільники">Сокільники</ion-select-option>
+              <ion-select-option value="Скнилів">Скнилів</ion-select-option>
+              <ion-select-option value="Лапаївка">Лапаївка</ion-select-option>
+              <ion-select-option value="Зимна вода">Зимна вода</ion-select-option>
+              <ion-select-option value="Брюховичі">Брюховичі</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-datetime displayFormat="MM.DD.YYYY" placeholder="Дата: від" doneText="Обрати"
+                          cancelText="Відміна"></ion-datetime>
+            <ion-icon slot="end" src="./assets/img/icon/calendar.svg"></ion-icon>
+          </ion-item>
+
+          <div class="form-error">Form Error</div>
+
+          <ion-item class="simple-checkbox" lines="none" mode="md">
+            <ion-checkbox
+              slot="start"
+              value="1">
+            </ion-checkbox>
+            <ion-label>simple-checkbox</ion-label>
+          </ion-item>
+
+
+          <ion-radio-group>
+
+            <ion-item class="simple-radio" lines="none" mode="md">
+              <ion-radio value="radio-1" mode="md"></ion-radio>
+              <ion-label>radio - 1</ion-label>
+            </ion-item>
+
+            <ion-item class="simple-radio" lines="none" mode="md">
+              <ion-radio value="radio-2" mode="md"></ion-radio>
+              <ion-label>radio - 2</ion-label>
+            </ion-item>
+          </ion-radio-group>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

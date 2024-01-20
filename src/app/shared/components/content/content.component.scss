@@ -1,0 +1,39 @@
+:host {
+  background: transparent;
+  display: block;
+}
+.header {
+  margin: -3px 0 3px;
+  &:empty {
+    display: none!important;
+  }
+  &.d-flex {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &.toggle {
+    ion-icon {
+      color: var(--ion-color-danger);
+      transition: .3s;
+    }
+    &.active {
+      ion-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+.content {
+  position: relative;
+  overflow: hidden;
+  transition: .3s;
+}
+.footer {
+  padding: 25px;
+  border-top: 1px blue solid;
+  margin-top: -1px;
+  &:empty {
+    display: none!important;
+  }
+}

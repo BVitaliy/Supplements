@@ -1,0 +1,12 @@
+<div class="header d-flex align-items-center" [ngClass]="{'active': opened, 'toggle': toggle}" (click)="onToggle()">
+  <ng-content select="[header]"></ng-content>
+  <ion-icon src="./assets/img/icon/select-icon.svg" slot="end" size="large"></ion-icon>
+</div>
+<div class="content" [ngStyle]="{'height': opened ? currentHeight : 0}">
+  <div class="align" #more>
+    <ng-content></ng-content>
+  </div>
+</div>
+<div class="footer d-flex align-items-center justify-content-end">
+  <ng-content select="[footer]"></ng-content>
+</div>

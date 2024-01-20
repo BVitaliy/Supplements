@@ -1,0 +1,32 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom" *ngIf="hideHeaderTabsService.isShowTabs">
+    <ion-tab-button tab="tab/main" [ngClass]="{'tab-selected': router.url.includes('main')}">
+      <ion-icon src="./assets/img/icons/icon-home-tab.svg"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab/chat" [ngClass]="{'tab-selected': router.url.includes('catalog')}">
+      <ion-icon src="./assets/img/icons/icon-catalog-tab.svg"></ion-icon>
+      <ion-label>Catalog</ion-label>
+    </ion-tab-button>
+    <ion-tab-button></ion-tab-button>
+    <ion-button>
+      <div class="icon">
+        <ion-icon src="./assets/img/icons/icon-scanner.svg"></ion-icon>
+      </div>
+    </ion-button>
+    <ion-tab-button tab="tab/favorites" [ngClass]="{'tab-selected': router.url.includes('favorites')}">
+      <ion-icon src="./assets/img/icons/icon-favorite-tab.svg"></ion-icon>
+      <ion-label>Favorites</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab/more" [ngClass]="{'tab-selected': router.url.includes('more')}">
+      <ion-icon src="./assets/img/icons/icon-more-tab.svg"></ion-icon>
+      <ion-label>More</ion-label>
+    </ion-tab-button>
+
+
+  </ion-tab-bar>
+
+</ion-tabs>

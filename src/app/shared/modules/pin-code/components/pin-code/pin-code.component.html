@@ -1,0 +1,6 @@
+<div class="wrapper" id="c_{{componentKey}}" *ngIf="otpForm?.controls" [formGroup]="otpForm">
+  <input pattern="\d*" numberOnly [attr.inputmode]="'numeric'" [disabledNumberOnly]="!config.allowNumbersOnly"
+    [placeholder]="config.placeholder" maxlength="1" class="otp-input" [ngStyle]="config.inputStyles" autocomplete="'off'"
+    [type]="config.isPasswordInput ? 'password' : 'tel'" *ngFor="let item of otpForm?.controls | keys;let i=index" [formControlName]="item"
+    id="otp_{{i}}_{{componentKey}}" (keydown)="onKeyDown($event)" (keyup)="onKeyUp($event,i)" (click)="defaultFocus()">
+</div>

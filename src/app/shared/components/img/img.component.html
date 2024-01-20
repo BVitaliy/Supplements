@@ -1,0 +1,10 @@
+<div class="img-wrap" [ngClass]="cssClasses">
+  <ion-img
+    [src]="src"
+    [alt]="alt"
+    (ionImgDidLoad)="imgDidLoad()"
+    [class.loaded]="imgLoaded"
+    tappable (click)="openPreview(src)">
+  </ion-img>
+  <ion-spinner name="lines-small" *ngIf="!imgLoaded"></ion-spinner>
+</div>

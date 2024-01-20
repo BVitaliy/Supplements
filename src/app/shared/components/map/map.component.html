@@ -1,0 +1,6 @@
+<google-map #maps *ngIf="mapLoaded && mapOptions" [height]="height" width="100%" [center]="center"
+  [zoom]="zoom" [options]="mapOptions" (mapClick)="foo(maps)">
+  <map-marker #marker="mapMarker" *ngFor="let markers of markerArray; let i=index" [options]="markers" (mapClick)="openInfoWindow(marker)"></map-marker>
+  <map-polygon *ngFor="let polygonOption of polygonOptions" [options]="polygonOption"></map-polygon>
+  <!-- <map-polyline *ngFor="let vertices of directionRes" [path]="vertices.path" (mapClick)="foo(polyline)"></map-polyline> -->
+</google-map>

@@ -1,0 +1,32 @@
+.otp-input {
+  width: 56px;
+  height: 56px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--ion-color-secondary);
+  border-radius: 55px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 56px;
+  outline: none;
+  color: var(--ion-color-dark);
+  // caret-color: transparent;
+  &::selection {
+    border-color: var(--ion-color-primary);
+  }
+  &:focus {
+    border-color: var(--ion-color-primary) !important;
+  }
+  &.ng-invalid {
+    border-color: var(--ion-color-danger);
+  }
+}
+
+.wrapper {
+  .otp-input:not(:last-child) {
+    margin-right: 10px;
+  }
+  display: flex;
+  justify-content: center;
+}

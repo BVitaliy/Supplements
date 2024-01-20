@@ -1,0 +1,37 @@
+<ion-header mode="ios" *ngIf="closeEnable">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button slot="start" class="close-popover" fill="clear" mode="md" *ngIf="closeEnable" (click)="closePopover()">
+        <ion-icon src="./assets/img/icon/close-icon.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-grid class="ion-text-center">
+  <div class="icon" *ngIf="icon">
+    <img [src]="icon">
+  </div>
+  <div class="text-lx dark" [innerHTML]="title | safeHtml"></div>
+  <div class="image" *ngIf="imgSrc">
+    <img [src]="imgSrc">
+  </div>
+  <div class="text medium" *ngIf="text">
+    <ion-text [innerHTML]="text | safeHtml"></ion-text>
+  </div>
+
+  <ion-button class="btn" expand="block" fill="solid" mode="md" *ngIf="buttons?.length === 1"
+    (click)="redirectTo(buttons[0])">
+    <ion-icon [src]="buttons[0]?.icon" class="mr-10" *ngIf="buttons[0]?.icon"></ion-icon>
+    {{ buttons[0]?.name }}
+  </ion-button>
+
+  <ion-row *ngIf="buttons!.length > 1">
+    <ion-col class="ion-no-padding" size="12" *ngFor="let button of buttons; let i=index">
+      <ion-button class="btn" expand="block" [fill]="i === 0 ? 'solid' : 'clear'" mode="md" (click)="redirectTo(button)">
+        <ion-icon [src]="button?.icon" class="mr-10" *ngIf="button?.icon"></ion-icon>
+        {{ button?.name }}
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,0 +1,98 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Create account</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <div class="content">
+      <form class="form" [formGroup]="form">
+        <div class="form-control">
+          <ion-item class="form-item" mode="ios" lines="none">
+            <ion-label position="stacked">Full name</ion-label>
+            <ion-input formControlName="name" type="text" inputmode="text" placeholder="Enter your full name"
+              autocomplete="off"></ion-input>
+          </ion-item>
+
+        </div>
+        <div class="form-control">
+          <ion-item class="form-item" mode="ios" lines="none">
+            <ion-label position="stacked">Email address</ion-label>
+            <ion-input formControlName="email" type="email" inputmode="email" placeholder="Enter your email address"
+              autocomplete="off"></ion-input>
+          </ion-item>
+        </div>
+        <div class="form-control">
+          <ion-item class="form-item" mode="ios" lines="none">
+            <ion-label position="stacked">Password</ion-label>
+            <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
+              placeholder="Enter your password" autocomplete="off"></ion-input>
+            <ion-icon
+              [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+              [color]="showPassword ? 'primary' : 'medium'" slot="end"
+              (click)="toggleShowPassword('password')"></ion-icon>
+          </ion-item>
+        </div>
+        <div class="form-control">
+          <ion-item class="form-item" mode="ios" lines="none">
+            <ion-label position="stacked">Repeat password</ion-label>
+            <ion-input formControlName="confirm_password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
+              placeholder="Enter your password again" autocomplete="off"></ion-input>
+            <ion-icon
+              [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+              [color]="showPassword ? 'primary' : 'medium'" slot="end"
+              (click)="toggleShowPassword('confirm_password')"></ion-icon>
+          </ion-item>
+        </div>
+
+        <div class="form-control">
+          <ion-item class="form-item" mode="ios" lines="none">
+            <ion-label position="stacked">Sex</ion-label>
+            <ion-select value="" interface="popover" mode="ios" placeholder="Select" formControlName="sex"
+              [interfaceOptions]="{alignment: 'center', arrow: true, side: 'bottom', size: 'cover'}">
+              <ion-select-option value="male">Male</ion-select-option>
+              <ion-select-option value="female">Female</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="form-control">
+          <ion-item mode="ios" lines="none" id="open-modal" class="form-item"
+            [disabled]="form.get('birth_date')?.value">
+            <ion-label position="floating">Birthday</ion-label>
+            <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="Birthday"
+              autocomplete="off"></ion-input>
+          </ion-item>
+        </div>
+
+        <ion-modal #modal trigger="open-modal" handle="true">
+          <ng-template>
+            <ion-content>
+              <ion-grid>
+                <ion-datetime mode="ios" presentation="date" [preferWheel]="true" [showDefaultButtons]="true"
+                  placeholder="Birthday" formControlName="birth_date" (ionChange)="setFormattedBirth($event)">
+                </ion-datetime><!-- locale="en-US-u-hc-h12" -->
+              </ion-grid>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
+        <div class="form-error" *ngIf="form?.invalid && form?.hasError(' wrongLogin')">
+          {{ form!.errors?.['wrongLogin'] }}
+        </div>
+
+        <ion-button class="btn btn-primary mb-16" expand="block" fill="solid" mode="md" [disabled]="form.invalid">
+          Create account
+        </ion-button>
+
+      </form>
+    </div>
+  </ion-grid>
+</ion-content>

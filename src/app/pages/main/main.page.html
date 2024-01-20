@@ -1,0 +1,34 @@
+<ion-header mode="ios">
+
+  <ion-toolbar [formGroup]="filterForm">
+    <ion-searchbar #searchbar mode="ios" placeholder="Search for a product or ingredient..." show-clear-button="never"
+      [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
+      formControlName="search" (ionChange)="search($event)">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid *ngIf="!loading">
+
+    <!-- <ng-container *ngIf="!orders?.data?.length">
+      <div class="data-placeholder type-2">
+        <img src="./assets/img/placeholder.svg" alt="">
+      </div>
+    </ng-container> -->
+
+
+  </ion-grid>
+
+  <!-- <ng-container *ngIf="!loading && orders?.data?.length">
+    <ion-infinite-scroll threshold="0" (ionInfinite)="loadData()" position="bottom" [disabled]="disableInfinity">
+      <ion-infinite-scroll-content loadingSpinner="bubbles">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container> -->
+</ion-content>

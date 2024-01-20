@@ -1,0 +1,18 @@
+{
+  "appId": "com.Supplement.app",
+  "appName": "Supplement",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1000,
+      "launchAutoHide": true,
+      "backgroundColor": "#ffffffff",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "splashFullScreen": false,
+      "splashImmersive": false,
+      "showSpinner": false
+    }
+  }
+}

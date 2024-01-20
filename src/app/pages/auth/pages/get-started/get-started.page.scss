@@ -1,0 +1,34 @@
+ion-grid {
+  padding: 70px 15px 30px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .content {
+    width: 100%;
+  }
+}
+
+ion-header {
+  text-align: center;
+  ion-toolbar {
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+  }
+  .logo {
+    max-width: 140px;
+    margin: auto;
+  }
+
+  ion-button {
+    --color: #ffcca7;
+  }
+}
+
+.bottom-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}

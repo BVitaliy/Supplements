@@ -1,0 +1,33 @@
+<ion-grid class="ion-text-center">
+  <ion-button class="close-popover" fill="clear" mode="md" (click)="closePopover()">
+    <ion-icon src="./assets/img/icon/close-icon.svg" color="medium"></ion-icon>
+  </ion-button>
+
+  <div class="round primary-bg light" *ngIf="title">
+    <ng-container *ngFor="let word of title?.split(' ')">
+      {{ word?.charAt(0)?.toUpperCase() }}
+    </ng-container>
+  </div>
+  <div class="h1 dark mb-5" [innerHTML]="('Call from ' + title) | safeHtml"></div>
+  <div class="text-l medium" *ngIf="message">
+    <ion-text [innerHTML]="message | safeHtml"></ion-text>
+  </div>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="4">
+      <ion-button class="btn" shape="round" [fill]="'solid'" mode="md" (click)="closePopover({accept: true, type: 0})">
+        <ion-icon name="call-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button class="btn" shape="round" [fill]="'clear'" mode="md" (click)="closePopover()">
+        <ion-icon src="./assets/img/icon/close-icon.svg" slot="icon-only" color="medium"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button class="btn" shape="round" [fill]="'solid'" mode="md" (click)="closePopover({accept: true, type: 1})">
+        <ion-icon name="videocam-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

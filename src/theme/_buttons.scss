@@ -1,0 +1,151 @@
+.btn {
+  box-sizing: border-box;
+  --border-width: 0px;
+  --border-style: solid;
+  --border-color: var(--ion-color-primary);
+  border-radius: 74px;
+  --border-radius: 74px;
+  --box-shadow: none;
+  margin-right: unset;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  margin: 0;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  text-transform: none;
+  height: 48px;
+  --min-height: 48px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: center;
+
+  &.btn-primary {
+    --color: #fff;
+
+    &::part(native) {
+      color: #fff;
+      --color: #fff;
+    }
+  }
+
+  &.btn-sign {
+    --border-width: 1px;
+    --border-color: var(--ion-color-medium-tint);
+    font-weight: 700;
+    border-radius: 30px;
+    height: 50px;
+    &::part(native) {
+      --color: var(--ion-color-dark);
+    }
+  }
+
+  // &.button-disabled {
+  //  --ion-color-base: var(--ion-color-grey)!important;
+  //  --ion-color-contrast: var(--ion-color-medium) !important;
+  //  --box-shadow: none;
+  //   opacity: 1;
+  // }
+
+  // &.button-solid {
+  //   &.button-disabled {
+  //     opacity: 1;
+  //   }
+  // }
+
+  &.button-clear {
+    span {
+      color: var(--ion-color-dark);
+    }
+  }
+
+  &.button-outline {
+    --border-width: 1px;
+    --border-color: var(--ion-color-tertiary);
+  }
+
+  &-sm {
+    --padding-start: 11px;
+    --padding-end: 11px;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    line-height: 18px !important;
+    // line-height: 18px !important;
+    // text-transform: uppercase;
+    height: 38px !important;
+  }
+
+  &-md {
+    --padding-start: 11px;
+    --padding-end: 11px;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    line-height: 18px !important;
+    text-transform: inherit !important;
+    height: 46px !important;
+  }
+
+  &-link {
+    height: auto;
+    --padding-start: 0;
+    --padding-end: 0px;
+    text-transform: none !important;
+    --overflow: visible;
+  }
+}
+
+/***********************************************************
+                          Back Button
+************************************************************/
+.back-btn {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px;
+  min-height: 40px !important;
+  margin: 0 !important;
+  padding: 0;
+  background: var(--ion-color-primary-shade);
+  border-radius: 50%;
+  // &[slot*="start"] {
+  //   margin-left: 4px !important;
+  // }
+  // &[slot*="end"] {
+  //   margin: 0 6px !important;
+  // }
+}
+
+ion-buttons[slot*="end"] .back-btn[slot*="end"] {
+  margin-left: 5px !important;
+}
+
+// Щоб на ios працював disabled для кнопок!
+.button-disabled::part(native) {
+  pointer-events: none;
+}
+
+.swipable-container {
+  display: flex;
+  width: 100%;
+  ion-button {
+    width: 100%;
+    height: 52px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    border-radius: 6px;
+    --background: var(--ion-color-light-next);
+    color: var(--ion-color-dark);
+    text-transform: uppercase;
+    margin: 0 5px 0 0;
+    ion-icon {
+      margin-right: 5px;
+    }
+    &.active {
+      --background: var(--ion-color-quaternary);
+      color: var(--ion-color-primary);
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

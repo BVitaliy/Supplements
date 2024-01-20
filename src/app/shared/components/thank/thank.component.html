@@ -1,0 +1,17 @@
+<ion-content fullscreen="true" color="light">
+  <ion-grid>
+    <ion-button class="btn btn-close" fill="clear" mode="md" *ngIf="hasCloseBtn && buttonRouterUrl" (click)="redirect()">
+      <ion-icon slot="icon-only" src="./assets/img/icon/close-icon.svg"></ion-icon>
+    </ion-button>
+
+    <div class="content">
+      <app-img [src]="imgSrc" cssClasses="img-fit-contain" *ngIf="imgSrc"></app-img>
+
+      <h1 class="h1 pt-10 mt-20 mb-20 ion-text-center" *ngIf="title">{{ title }}</h1>
+
+      <ion-button class="btn" expand="block" fill="solid" mode="md" type="submit" *ngIf="buttonRouterUrl && buttonText" (click)="redirect()">
+        {{ buttonText }}
+      </ion-button>
+    </div>
+  </ion-grid>
+</ion-content>

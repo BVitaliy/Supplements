@@ -1,0 +1,30 @@
+ion-grid {
+  min-height: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .content {
+    width: 100%;
+  }
+  // background-image: url(/assets/img/auth-bottom-decor.svg), url(/assets/img/auth-top-decor.svg);
+  // background-position: 0% 100%, 100% 0%;
+  // background-repeat: no-repeat, no-repeat;
+}
+
+app-img {
+  display: block;
+  margin: 0 auto 10px;
+  width: 60%;
+}
+
+.btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.btn:not(.btn-close) {
+  width: 100%;
+}
