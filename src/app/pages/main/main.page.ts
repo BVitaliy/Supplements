@@ -11,6 +11,12 @@ import { Storage } from '@ionic/storage';
 import { finalize } from 'rxjs';
 import { OrderService } from './main.service';
 
+import SwiperCore, { Scrollbar, SwiperOptions } from 'swiper';
+import { SwiperComponent } from 'swiper/angular';
+import { Products } from 'src/mock/products';
+
+SwiperCore.use([Scrollbar]);
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
@@ -24,10 +30,19 @@ export class MainPage implements OnInit {
   };
   loading: boolean = false;
   filterForm!: FormGroup;
-
   statuses!: any;
   selectedStatus: any;
   disableInfinity = false;
+  products: Array<any> = [];
+
+  @ViewChild('swiper') swiper!: SwiperComponent;
+  slideOpts: SwiperOptions = {
+    initialSlide: 0,
+    slidesPerView: 2,
+    spaceBetween: 12,
+    speed: 400,
+    freeMode: true,
+  };
 
   constructor(
     private storage: Storage,
@@ -35,7 +50,9 @@ export class MainPage implements OnInit {
     private platform: Platform,
     private modalController: ModalController,
     private orderService: OrderService
-  ) {}
+  ) {
+    this.products = Products;
+  }
 
   ngOnInit() {
     this.filterForm = new FormGroup({

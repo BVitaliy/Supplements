@@ -1,0 +1,12 @@
+<div class="rating-count" [ngClass]="type">
+  <!-- <div class="icon"> -->
+
+  <ion-icon *ngIf="rating < 4" [src]="'./assets/img/icons/state-bad.svg'"></ion-icon>
+  <ion-icon *ngIf="rating >= 4 && rating < 7" [src]="'./assets/img/icons/state-normal.svg'"></ion-icon>
+  <ion-icon *ngIf="rating >= 7" [src]="'./assets/img/icons/state-good.svg'"></ion-icon>
+  <!-- </div> -->
+
+  <span *ngIf="rating" class="text-s fw-600 dark">{{rating}}</span>
+  <span *ngIf="text">{{text}}</span>
+  <span *ngIf="count">({{count}})</span>
+</div>

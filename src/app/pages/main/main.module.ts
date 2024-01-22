@@ -9,6 +9,7 @@ import { MainPageRoutingModule } from './main-routing.module';
 import { MainPage } from './main.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { MaterialModule } from 'src/app/shared/modules/material.module';
     SharedModule,
     ReactiveFormsModule,
     MaterialModule,
+    SwiperModule,
   ],
   declarations: [MainPage],
 })

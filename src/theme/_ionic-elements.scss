@@ -183,11 +183,19 @@ ion-badge {
 ************************************************************/
 .swiper {
   display: flex;
-  flex-direction: column-reverse;
+  // flex-direction: column-reverse;
   // padding: 0 15px !important;
   // margin-left: -15px !important;
   // margin-right: -15px !important;
 
+  &.main-swiper {
+    padding: 0 35px 0 16px !important;
+    margin-left: -16px !important;
+    margin-right: -16px !important;
+    // .swiper-slide {
+    //   width: 156px;
+    // }
+  }
   &.attachment-box {
     .swiper-slide {
       position: relative;

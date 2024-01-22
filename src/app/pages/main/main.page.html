@@ -1,6 +1,7 @@
 <ion-header mode="ios">
 
   <ion-toolbar [formGroup]="filterForm">
+    <ion-icon slot="start" [src]="'./assets/img/logo.svg'"></ion-icon>
     <ion-searchbar #searchbar mode="ios" placeholder="Search for a product or ingredient..." show-clear-button="never"
       [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
       formControlName="search" (ionChange)="search($event)">
@@ -16,16 +17,109 @@
 
   <ion-grid *ngIf="!loading">
 
-    <!-- <ng-container *ngIf="!orders?.data?.length">
+    <ng-container *ngIf="!products?.length">
       <div class="data-placeholder type-2">
         <img src="./assets/img/placeholder.svg" alt="">
       </div>
-    </ng-container> -->
+    </ng-container>
+
+
+    <div class="section">
+      <div class="section-header">
+        <h3 class="h3">Recent products</h3>
+      </div>
+
+      <div class="swiper-body" *ngIf="products?.length">
+        <swiper #swiper [config]="slideOpts" class="main-swiper">
+          <ng-template swiperSlide *ngFor="let product of products; let i=index">
+            <app-product-card [product]="product"></app-product-card>
+          </ng-template>
+        </swiper>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h3 class="h3">Trending now</h3>
+
+        <ion-button class="btn btn-link ml-10" fill="clear" mode="md">
+          <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="swiper-body" *ngIf="products?.length">
+        <swiper #swiper [config]="slideOpts" class="main-swiper">
+          <ng-template swiperSlide *ngFor="let product of products; let i=index">
+            <app-product-card [product]="product"></app-product-card>
+          </ng-template>
+        </swiper>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h3 class="h3">For you</h3>
+      </div>
+
+      <div class="shop-links">
+        <ion-item button detail="false" lines="none">
+          <div class="item">
+            <app-img [src]="'./assets/img/icons/main-all-brands.svg'" cssClasses="img-fit-contain"></app-img>
+            <ion-label>
+              All Brands
+            </ion-label>
+          </div>
+        </ion-item>
+        <ion-item button detail="false" lines="none">
+          <div class="item">
+            <app-img [src]="'./assets/img/icons/icon-main-ingredients.svg'" cssClasses="img-fit-contain"></app-img>
+            <ion-label>
+              Ingredients
+            </ion-label>
+          </div>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h3 class="h3">For you</h3>
+
+        <ion-button class="btn btn-link ml-10" fill="clear" mode="md">
+          <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="swiper-body" *ngIf="products?.length">
+        <swiper #swiper [config]="slideOpts" class="main-swiper">
+          <ng-template swiperSlide *ngFor="let product of products; let i=index">
+            <app-product-card [product]="product"></app-product-card>
+          </ng-template>
+        </swiper>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h3 class="h3">Sales and offers</h3>
+
+        <ion-button class="btn btn-link ml-10" fill="clear" mode="md">
+          <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="swiper-body" *ngIf="products?.length">
+        <swiper #swiper [config]="slideOpts" class="main-swiper">
+          <ng-template swiperSlide *ngFor="let product of products; let i=index">
+            <app-product-card [product]="product"></app-product-card>
+          </ng-template>
+        </swiper>
+      </div>
+    </div>
 
 
   </ion-grid>
-
-  <!-- <ng-container *ngIf="!loading && orders?.data?.length">
+  <!-- <ng-container *ngIf="!loading">
     <ion-infinite-scroll threshold="0" (ionInfinite)="loadData()" position="bottom" [disabled]="disableInfinity">
       <ion-infinite-scroll-content loadingSpinner="bubbles">
       </ion-infinite-scroll-content>

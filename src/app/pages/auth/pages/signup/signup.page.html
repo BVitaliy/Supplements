@@ -55,19 +55,20 @@
         <div class="form-control">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Sex</ion-label>
-            <ion-select value="" interface="popover" mode="ios" placeholder="Select" formControlName="sex"
-              [interfaceOptions]="{alignment: 'center', arrow: true, side: 'bottom', size: 'cover'}">
+            <ion-select interface="popover" mode="ios" placeholder="Select" formControlName="sex"
+              [interfaceOptions]="{alignment: 'center', arrow: false, side: 'bottom', size: 'cover'}">
               <ion-select-option value="male">Male</ion-select-option>
               <ion-select-option value="female">Female</ion-select-option>
             </ion-select>
+            <ion-icon slot="end" color="medium" src="./assets/img/icons/select-arrow.svg"></ion-icon>
           </ion-item>
         </div>
 
         <div class="form-control">
           <ion-item mode="ios" lines="none" id="open-modal" class="form-item"
             [disabled]="form.get('birth_date')?.value">
-            <ion-label position="floating">Birthday</ion-label>
-            <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="Birthday"
+            <ion-label position="stacked">Birthday</ion-label>
+            <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="DD/MM/YYYY"
               autocomplete="off"></ion-input>
           </ion-item>
         </div>
@@ -77,7 +78,7 @@
             <ion-content>
               <ion-grid>
                 <ion-datetime mode="ios" presentation="date" [preferWheel]="true" [showDefaultButtons]="true"
-                  placeholder="Birthday" formControlName="birth_date" (ionChange)="setFormattedBirth($event)">
+                  placeholder="DD/MM/YYYY" formControlName="birth_date" (ionChange)="setFormattedBirth($event)">
                 </ion-datetime><!-- locale="en-US-u-hc-h12" -->
               </ion-grid>
             </ion-content>
@@ -88,7 +89,8 @@
           {{ form!.errors?.['wrongLogin'] }}
         </div>
 
-        <ion-button class="btn btn-primary mb-16" expand="block" fill="solid" mode="md" [disabled]="form.invalid">
+        <ion-button class="btn btn-primary mb-16" expand="block" fill="solid" mode="md" [disabled]="form.invalid"
+          (click)="createAccount()">
           Create account
         </ion-button>
 

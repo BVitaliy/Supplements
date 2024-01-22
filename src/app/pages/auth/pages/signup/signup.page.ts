@@ -1,12 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
+import { APP_HOME_REDIRECT_URL } from 'src/app/app.config';
 import {
   emailPattern,
   onlyLetters,
 } from 'src/app/core/validators/email.validator';
 import { matchFieldsValidator } from 'src/app/core/validators/password.validator';
+import { DoneComponent } from 'src/app/shared/components/done/done.component';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +21,11 @@ export class SignupPage implements OnInit {
   formattedDate!: string | null;
   modalHeight!: number;
 
-  constructor(public navCtrl: NavController, private datePipe: DatePipe) {}
+  constructor(
+    public navCtrl: NavController,
+    private datePipe: DatePipe,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup(
@@ -64,8 +70,25 @@ export class SignupPage implements OnInit {
       .setValue(new Date(event?.detail?.value).toISOString());
     this.formattedDate = this.datePipe.transform(
       new Date(event?.detail?.value),
-      'MM/dd/yyyy'
+      'dd/MM/yyyy'
     );
+  }
+
+  createAccount() {
+    this.presentModal();
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: DoneComponent,
+      cssClass: 'ios-modal-safe-top-offset thank-modal full-screen-modal',
+      mode: 'ios',
+      componentProps: {
+        buttonRouterUrl: APP_HOME_REDIRECT_URL,
+        imgSrc: './assets/img/icons/icon-done-signup.svg',
+      },
+    });
+    return await modal.present();
   }
 
   ionViewDidLeave() {

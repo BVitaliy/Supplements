@@ -17,6 +17,11 @@ import { MaterialModule } from './modules/material.module';
 import { ImageZoomingComponent } from './components/image-zooming/image-zooming.component';
 
 import { CallPopoverComponent } from './components/call-popover/call-popover.component';
+import { DoneComponent } from './components/done/done.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
+import { RatingComponent } from './components/rating/rating.component';
+import { RatingCountComponent } from './components/rating-count/rating-count.component';
+import { FavoriteBtnComponent } from './components/favorite-btn/favorite-btn.component';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -29,6 +34,11 @@ const exportedDeclarations = [
   SafeHtmlPipe,
   FocusPhoneInputDirective,
   MapComponent,
+  DoneComponent,
+  ProductCardComponent,
+  RatingComponent,
+  RatingCountComponent,
+  FavoriteBtnComponent,
 
   CallPopoverComponent,
 ];
