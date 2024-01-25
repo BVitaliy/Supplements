@@ -1,0 +1,50 @@
+<ion-content>
+  <form direction="column" class="form p-around--medium" [formGroup]="formGroup">
+    <!-- Title -->
+    <div class="manage-favorite-list__title m-bottom--medium">
+      {{ titleText }}
+    </div>
+    <!-- / Title -->
+
+    <!-- List name -->
+      <div class="form-control m-top--xx-small">
+        <ion-item class="form-item" mode="ios" lines="none">
+          <ion-label position="stacked">List name</ion-label>
+          <ion-input
+            formControlName="listName"
+            type="text"
+            inputmode="text"
+            placeholder="Enter list name"
+          ></ion-input>
+        </ion-item>
+      </div>
+    <!-- / List name -->
+
+    <!-- Description -->
+    <div class="form-control">
+      <ion-item class="form-item" mode="ios" lines="none">
+        <ion-label position="stacked">Description</ion-label>
+        <ion-input
+          formControlName="listDescription"
+          type="text"
+          inputmode="text"
+          placeholder="Enter list description"
+        ></ion-input>
+      </ion-item>
+    </div>
+    <!-- / Description -->
+
+    <!-- Action -->
+    <ion-button
+      class="btn btn-sm btn-primary"
+      expand="block"
+      fill="solid"
+      mode="md"
+      [disabled]="!formGroup.valid"
+      (click)="handleAction()"
+    >
+      <b>{{ buttonText }}</b>
+    </ion-button>
+    <!-- / Action -->
+  </form>
+</ion-content>

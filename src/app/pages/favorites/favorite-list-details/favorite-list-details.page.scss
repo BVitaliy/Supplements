@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.favorite-list-details__header-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: left;
+  color: #ffffff;
+}
+
+.favorite-list-details__empty-list {
+  height: 100%;
+}
+
+.favorite-list-details__empty-list-icon {
+  height: 222px;
+  width: 222px;
+}
+
+.favorite-list-details__empty-list-title {
+  font-family: 'Inter';
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0;
+  text-align: center;
+  color: #04002C;
+}
+
+.favorite-list-details__empty-list-description {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0;
+  text-align: center;
+  color: #9E9D9D;
+}
+
+.favorite-list-details__empty-list-action {
+  width: 200px;
+}
+

@@ -1,0 +1,31 @@
+<ion-content>
+  <div direction="column" class="p-around--medium">
+    <!-- Title -->
+    <div class="favorite-list-actions__title m-bottom--medium">
+      Edit list
+    </div>
+    <!-- / Title -->
+
+    <!-- Rename -->
+    <div
+      vertical="center"
+      class="m-bottom--small favorite-list-actions__item"
+      (click)="handleAction(listActions.update)"
+    >
+      <ion-icon [src]="'./assets/img/icons/edit-icon.svg'" class="m-right--x-small"></ion-icon>
+      <div class="favorite-list-actions__item-text">Rename</div>
+    </div>
+    <!-- / Rename -->
+
+    <!-- Delete -->
+    <div
+      vertical="center"
+      class="m-bottom--small favorite-list-actions__item"
+      (click)="handleAction(listActions.delete)"
+    >
+      <ion-icon [src]="'./assets/img/icons/delete-icon.svg'" class="m-right--x-small"></ion-icon>
+      <div class="favorite-list-actions__item-text">Delete</div>
+    </div>
+    <!-- / Delete -->
+  </div>
+</ion-content>

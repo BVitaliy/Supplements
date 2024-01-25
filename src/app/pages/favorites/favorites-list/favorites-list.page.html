@@ -1,0 +1,55 @@
+<ion-content>
+  <ion-list lines="full">
+    <ion-item *ngFor="let favorite of favoritesList" (click)="onOpenDetails.emit(favorite.id)">
+      <div class="favorites-list__list p-vertical--medium">
+        <div vertical="center" horizontal="between">
+          <div direction="column" class="p-right--medium">
+            <!-- List name -->
+            <div class="favorites-list__list-name m-bottom--xx-small">
+              {{ favorite.listName }}
+            </div>
+            <!-- / List name -->
+
+            <!-- List description -->
+            <div class="favorites-list__list-description">
+              {{ favorite.listDescription }}
+            </div>
+            <!-- / List description -->
+          </div>
+
+          <!-- List actions -->
+          <ion-button class="btn btn-link m-right--x-small" fill="clear" mode="md">
+            <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
+          </ion-button>
+          <!-- / List actions -->
+        </div>
+
+        <!-- Products -->
+        <div *ngIf="!!favorite?.products?.length" class="m-top--medium" vertical="center">
+          <ng-container *ngFor="let product of favorite.products; let index = index">
+            <div
+              *ngIf="index < productsToShow"
+              vertical="center"
+              horizontal="center"
+              class="favorites-list__list-product p-around--x-small"
+            >
+              <app-img [src]="product?.image" cssClasses="img-fit-contain" class="favorites-list__list-product-img"></app-img>
+            </div>
+          </ng-container>
+
+          <div
+            *ngIf="handleProductsCount(favorite.products) > productsToShow"
+            vertical="center"
+            horizontal="center"
+            class="favorites-list__list-product"
+          >
+            <span class="favorites-list__count-number">
+              + {{ handleProductsCount(favorite.products) - productsToShow }}
+            </span>
+          </div>
+        </div>
+        <!-- / Products -->
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
