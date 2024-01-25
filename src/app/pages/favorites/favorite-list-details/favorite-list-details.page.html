@@ -28,7 +28,7 @@
   <ng-container [ngSwitch]="!!listProducts.length">
     <!-- No products -->
     <ng-container *ngSwitchCase="false">
-      <div direction="column" vertical="center" horizontal="center" class="favorite-list-details__empty-list">
+      <div direction="column" vertical="center" horizontal="center" class="favorite-list-details__empty-list favorite-list-details__tabs-gap">
         <!-- Icon -->
         <ion-icon
           class="favorite-list-details__empty-list-icon m-bottom--large"
@@ -76,7 +76,7 @@
 
     <!-- Products -->
     <ng-container *ngSwitchCase="true">
-      <ion-list lines="full">
+      <ion-list lines="full" class="favorite-list-details__tabs-gap">
         <ion-item *ngFor="let product of listProducts">
           <div class="p-vertical--medium">
             <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>

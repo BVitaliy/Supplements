@@ -28,7 +28,7 @@
   <ng-container [ngSwitch]="!!favoritesList.length">
     <!-- Empty list -->
     <ng-container *ngSwitchCase="false">
-      <div direction="column" vertical="center" horizontal="center" class="favorites__empty-list">
+      <div direction="column" vertical="center" horizontal="center" class="favorites__empty-list favorites__tabs-gap">
         <!-- Icon -->
         <ion-icon
           class="favorites__empty-list-icon m-bottom--large"
@@ -69,6 +69,7 @@
       <app-favorites-list
         [favoritesList]="favoritesList"
         (onOpenDetails)="handleOpenListDetails($event)"
+        class="favorites__tabs-gap"
       ></app-favorites-list>
     </ng-container>
     <!-- / Favorites list -->
