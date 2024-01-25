@@ -3,11 +3,26 @@
     <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
   </div>
   <div class="content">
-    <div class="category medium">{{product?.category}}</div>
-    <div class="title text-s line-clamp-3 fw-600 dark">{{product?.title}}</div>
-    <div class="product-bottom">
-      <app-rating-count [rating]="product?.score" [type]="'badge'"></app-rating-count>
-      <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"></app-favorite-btn>
+    <div>
+      <div class="category medium">{{product?.category}}</div>
+      <div class="title text-s line-clamp-3 fw-600 dark">{{product?.title}}</div>
+    </div>
+    <div>
+      <div vertical="center" class="m-bottom--x-small">
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <div class="review-count m-left--xx-small">
+          32
+        </div>
+      </div>
+
+      <div class="product-bottom">
+        <app-rating-count [rating]="product?.score" [type]="'badge'"></app-rating-count>
+        <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"></app-favorite-btn>
+      </div>
     </div>
   </div>
 </div>

@@ -13,6 +13,26 @@
     }
   }
 
+  &.horizontal {
+    display: flex;
+    .image {
+      padding: 14px 10px;
+      height: 132px;
+      width: 110px;
+      min-width: 110px;
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      border: 1px solid #e9e9e9;
+      margin-right: 12px;
+    }
+    .content {
+      padding-right: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+
   .title {
     min-height: 48px;
     margin-bottom: 8px;
@@ -29,5 +49,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .star {
+    width: 12px;
+    min-width: 12px;
+    height: 12px;
+  }
+
+  .review-count {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0;
+    color: #A3A3A3;
   }
 }

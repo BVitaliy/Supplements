@@ -75,6 +75,15 @@
     height: 38px !important;
   }
 
+  &-sm-x {
+    display: flex;
+    justify-content: center;
+    min-width: 24px;
+    width: 24px;
+    min-height: 24px;
+    height: 24px !important;
+  }
+
   &-md {
     --padding-start: 11px;
     --padding-end: 11px;
@@ -87,6 +96,7 @@
 
   &-link {
     height: auto;
+    min-height: auto;
     --padding-start: 0;
     --padding-end: 0px;
     text-transform: none !important;
