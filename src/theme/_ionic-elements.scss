@@ -66,8 +66,8 @@ ion-toolbar {
 
   ion-searchbar {
     padding: 0 !important;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 16px;
+    margin-bottom: 16px;
     --background: var(--ion-color-light-tint-next) !important;
     --color: var(--ion-color-dark-tint) !important;
     --placeholder-color: var(--ion-color-dark-tint) !important;
@@ -76,7 +76,7 @@ ion-toolbar {
     --border-radius: 55px !important;
     --color: var(--ion-color-light);
     border-radius: 55px !important;
-    height: 40px;
+    height: 40px !important;
     input {
       padding-inline-start: 44px !important;
       padding-inline-end: 15px !important;
@@ -97,6 +97,13 @@ ion-toolbar {
     }
     button {
       right: 10px !important;
+    }
+  }
+
+  &.sm {
+    ion-searchbar {
+      margin-top: 12px;
+      margin-bottom: 12px;
     }
   }
 }
@@ -448,6 +455,11 @@ ion-modal {
     ion-title {
       color: var(--ion-color-dark);
     }
+  }
+
+  ion-datetime {
+    width: 100%;
+    max-width: 100%;
   }
 }
 

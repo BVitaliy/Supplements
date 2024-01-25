@@ -1,0 +1,56 @@
+<ion-header mode="ios">
+  <ion-toolbar [formGroup]="filterForm" class="sm">
+    <ion-title class="sm mb-10 pt-10">Catalog</ion-title>
+    <ion-searchbar #searchbar mode="ios" placeholder="Search" show-clear-button="never"
+      [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
+      formControlName="search" (ionChange)="search($event)">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <div class="content">
+      <h3 class="h3 mb-16 fw-700 dark">Supplements</h3>
+
+      <div class="list">
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/vitamines.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Vitamins</ion-label>
+        </ion-item>
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/minerales.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Minerals</ion-label>
+        </ion-item>
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/sleep.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Sleep</ion-label>
+        </ion-item>
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/vitamines.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Bone, Joint & Cartilage</ion-label>
+        </ion-item>
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/minerales.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Antioxidants</ion-label>
+        </ion-item>
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/sleep.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Children’s Health</ion-label>
+        </ion-item>
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/vitamines.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Fish Oil & Omegas</ion-label>
+        </ion-item>
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/minerales.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Protein</ion-label>
+        </ion-item>
+        <ion-item button lines="none" mode="ios">
+          <ion-icon slot="start" [src]="'./assets/img/catalog/sleep.svg'"></ion-icon>
+          <ion-label class="fw-600 dark">Hair, Skin & Nails</ion-label>
+        </ion-item>
+      </div>
+    </div>
+  </ion-grid>
+</ion-content>

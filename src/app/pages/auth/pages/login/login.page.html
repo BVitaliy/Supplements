@@ -16,7 +16,7 @@
               autocomplete="off"></ion-input>
           </ion-item>
         </div>
-        <div class="form-control">
+        <div class="form-control pb-10">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Password</ion-label>
             <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
@@ -26,6 +26,13 @@
               [color]="showPassword ? 'primary' : 'medium'" slot="end" (click)="toggleShowPassword()"></ion-icon>
           </ion-item>
         </div>
+        <p class="mb-20">
+          <ion-button class="btn btn-link ml-10" fill="clear" mode="md" color="primary"
+            (click)="navCtrl.navigateRoot('auth/recover-password')">
+            Forgot password?
+          </ion-button>
+        </p>
+
 
         <div class="form-error" *ngIf="loginForm?.invalid && loginForm?.hasError(' wrongLogin')">
           {{ loginForm!.errors?.['wrongLogin'] }}
