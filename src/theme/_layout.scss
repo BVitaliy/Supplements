@@ -1,0 +1,70 @@
+@mixin flex() {
+  display: flex;
+  min-width: 0;
+}
+
+[horizontal='evenly'] {
+  @include flex();
+  justify-content: space-evenly;
+}
+
+[horizontal='around'] {
+  @include flex();
+  justify-content: space-evenly;
+}
+
+[horizontal='between'] {
+  @include flex();
+  justify-content: space-between;
+}
+
+[horizontal='center'] {
+  @include flex();
+  justify-content: center;
+}
+
+[horizontal='end'] {
+  @include flex();
+  justify-content: flex-end;
+}
+
+[horizontal='start'] {
+  @include flex();
+  justify-content: flex-start;
+}
+
+[vertical='center'] {
+  @include flex();
+  align-items: center;
+}
+
+[vertical='start'] {
+  @include flex();
+  align-items: flex-start;
+}
+
+[vertical='end'] {
+  @include flex();
+  align-items: flex-end;
+}
+
+[direction='column'] {
+  @include flex();
+  flex-direction: column;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-grow--none {
+  flex-grow: 0;
+}
+
+.flex-shrink {
+  flex-shrink: 1;
+}
+
+.flex-shrink--none {
+  flex-shrink: 0;
+}
