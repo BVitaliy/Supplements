@@ -34,22 +34,22 @@
             <ion-label position="stacked">Password</ion-label>
             <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
               placeholder="Enter your password" autocomplete="off"></ion-input>
-            <ion-icon
-              [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
-              [color]="showPassword ? 'primary' : 'medium'" slot="end"
-              (click)="toggleShowPassword('password')"></ion-icon>
           </ion-item>
+          <ion-icon
+            [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+            [color]="showPassword ? 'primary' : 'medium'" slot="end"
+            (click)="toggleShowPassword('password')"></ion-icon>
         </div>
         <div class="form-control">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Repeat password</ion-label>
             <ion-input formControlName="confirm_password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
               placeholder="Enter your password again" autocomplete="off"></ion-input>
-            <ion-icon
-              [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
-              [color]="showPassword ? 'primary' : 'medium'" slot="end"
-              (click)="toggleShowPassword('confirm_password')"></ion-icon>
           </ion-item>
+          <ion-icon
+            [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+            [color]="showPassword ? 'primary' : 'medium'" slot="end"
+            (click)="toggleShowPassword('confirm_password')"></ion-icon>
         </div>
 
         <div class="form-control">
@@ -65,8 +65,7 @@
         </div>
 
         <div class="form-control">
-          <ion-item mode="ios" lines="none" id="open-modal" class="form-item"
-            [disabled]="form.get('birth_date')?.value">
+          <ion-item mode="ios" lines="none" id="open-modal" class="form-item">
             <ion-label position="stacked">Birthday</ion-label>
             <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="DD/MM/YYYY"
               autocomplete="off"></ion-input>

@@ -1,0 +1,39 @@
+ion-grid {
+  padding: 24px 15px;
+  .content {
+    width: 100%;
+  }
+}
+
+ion-toolbar {
+  ion-title {
+    position: relative;
+  }
+}
+
+.list {
+  ion-item {
+    margin-bottom: 8px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --min-height: 24px;
+    --background: #f8f8f8;
+    border-radius: 10px;
+    --border-radius: 10px;
+  }
+
+  ion-label {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    padding-left: 12px;
+  }
+  ion-icon {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    margin: 0;
+  }
+}

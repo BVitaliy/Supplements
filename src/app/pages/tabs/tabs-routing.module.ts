@@ -21,6 +21,11 @@ const routes: Routes = [
           import('../main/main.module').then((m) => m.MainPageModule),
       },
       {
+        path: 'tab/catalog',
+        loadChildren: () =>
+          import('../catalog/catalog.module').then((m) => m.CatalogPageModule),
+      },
+      {
         path: 'tab/favorites',
         loadChildren: () =>
           import('../favorites/favorites.module').then((m) => m.FavoritesPageModule),
