@@ -1,0 +1,101 @@
+<ion-content>
+  <div direction="column" class="p-around--medium">
+    <!-- Title -->
+    <div class="add-favorite-list-product__title p-bottom--xx-small">
+      Add to the list
+    </div>
+    <!-- / Title -->
+
+    <!-- Selected product -->
+    <div class="add-favorite-list-product__product-wrapper m-vertical--medium" vertical="center">
+      <!-- Image -->
+      <div
+        class="add-favorite-list-product__product-img-wrapper m-right--small p-around--x-small"
+        vertical="center"
+        horizontal="center"
+      >
+        <app-img
+          [src]="'./assets/img/temp/product-1.png'"
+          cssClasses="img-fit-contain"
+          class="add-favorite-list-product__product-img"
+        ></app-img>
+      </div>
+      <!-- / Image -->
+
+      <div direction="column">
+        <!-- Title -->
+        <div class="add-favorite-list-product__product-title m-bottom--xxx-small">
+          Athletic Greens
+        </div>
+        <!-- / Title -->
+
+        <!-- Description -->
+        <div class="add-favorite-list-product__product-description">
+          Ultimate Daily, Whole Food Sourced  All in One Greens Supplement Powder
+        </div>
+        <!-- / Description -->
+      </div>
+    </div>
+    <!-- / Selected product -->
+
+    <!-- Create list -->
+    <div class="p-vertical--xx-small">
+      <ion-button
+        class="btn btn-sm"
+        expand="block"
+        fill="outline"
+        mode="md"
+        color="primary"
+        (click)="showCreateListModal()"
+      >
+        <ion-icon [src]="'./assets/img/icons/add-icon-orange.svg'" class="m-right--x-small"></ion-icon>
+        <b>Create list</b>
+      </ion-button>
+    </div>
+    <!-- / Create list -->
+
+    <!-- Favorite lists -->
+    <ion-list lines="full" class="m-bottom--medium m-top--small">
+      <ion-item *ngFor="let favorite of favoritesList">
+        <div class="add-favorite-list-product__list p-vertical--medium" vertical="center" horizontal="between">
+          <div direction="column" class="p-right--medium">
+            <!-- List name -->
+            <div class="add-favorite-list-product__list-name m-bottom--xx-small">
+              {{ favorite.listName }}
+            </div>
+            <!-- / List name -->
+
+            <!-- List description -->
+            <div class="add-favorite-list-product__list-description">
+              {{ favorite.listDescription }}
+            </div>
+            <!-- / List description -->
+          </div>
+
+          <!-- List checkbox -->
+          <ion-checkbox
+            (ionChange)="checkboxChangeState($event, favorite.id)"
+            class="add-favorite-list-product__list-checkbox"
+          ></ion-checkbox>
+          <!-- / List checkbox -->
+        </div>
+      </ion-item>
+    </ion-list>
+    <!-- / Favorite lists -->
+
+    <!-- Apply -->
+    <div class="p-top--xx-small">
+      <ion-button
+        class="btn btn-sm btn-primary"
+        expand="block"
+        fill="solid"
+        mode="md"
+        [disabled]="!selectedListsIds.length"
+        (click)="handleApply()"
+      >
+        <b>Apply</b>
+      </ion-button>
+    </div>
+    <!-- / Apply -->
+  </div>
+</ion-content>
