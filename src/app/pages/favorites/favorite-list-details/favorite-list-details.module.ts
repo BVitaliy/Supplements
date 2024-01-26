@@ -7,7 +7,7 @@ import { FavoriteListDetailsPage } from './favorite-list-details.page';
 import { FavoritesListPageModule } from '../favorites-list/favorites-list.module';
 import { FavoriteListActionsPageModule } from '../favorite-list-actions/favorite-list-actions.module';
 import { SharedModule } from '../../../shared/shared.module';
-import { SwiperModule } from 'swiper/angular';
+import { AddFavoriteListProductPageModule } from '../add-favorite-list-product/add-favorite-list-product.module';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { SwiperModule } from 'swiper/angular';
     FavoritesListPageModule,
     FavoriteListActionsPageModule,
     SharedModule,
-    SwiperModule,
+    AddFavoriteListProductPageModule,
   ],
   declarations: [FavoriteListDetailsPage]
 })
