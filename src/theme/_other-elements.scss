@@ -282,3 +282,23 @@ ion-popover::part(arrow):after {
     }
   }
 }
+
+//PAGE HEADER
+.page-header {
+  position: relative;
+  > ion-button {
+    &:first-child {
+      position: absolute;
+      left: -7px;
+      top: 2px;
+      width: 34px;
+      height: 34px;
+      padding: 5px;
+    }
+    ion-icon {
+      width: 24px;
+      min-width: 24px;
+      height: 24px;
+    }
+  }
+}

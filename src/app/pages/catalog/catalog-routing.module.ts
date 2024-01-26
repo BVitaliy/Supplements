@@ -9,6 +9,13 @@ const routes: Routes = [
         (m) => m.CatalogListPageModule
       ),
   },
+  {
+    path: ':id',
+    loadChildren: () =>
+      import('./pages/catalog-detail/catalog-detail.module').then(
+        (m) => m.CatalogDetailPageModule
+      ),
+  },
 ];
 
 @NgModule({

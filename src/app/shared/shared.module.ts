@@ -22,6 +22,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { RatingComponent } from './components/rating/rating.component';
 import { RatingCountComponent } from './components/rating-count/rating-count.component';
 import { FavoriteBtnComponent } from './components/favorite-btn/favorite-btn.component';
+import { FilterRowComponent } from './components/filter-row/filter-row.component';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -39,7 +40,7 @@ const exportedDeclarations = [
   RatingComponent,
   RatingCountComponent,
   FavoriteBtnComponent,
-
+  FilterRowComponent,
   CallPopoverComponent,
 ];
 

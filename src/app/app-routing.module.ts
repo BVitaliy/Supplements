@@ -30,6 +30,10 @@ const routes: Routes = [
     redirectTo: 'info-steps',
     pathMatch: 'full',
   },
+  {
+    path: 'more',
+    loadChildren: () => import('./pages/more/more.module').then( m => m.MorePageModule)
+  },
 ];
 
 @NgModule({

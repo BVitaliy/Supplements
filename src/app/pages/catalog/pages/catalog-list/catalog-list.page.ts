@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-catalog-list',
@@ -9,7 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class CatalogListPage implements OnInit {
   loading: boolean = false;
   filterForm!: FormGroup;
-  constructor() {}
+  constructor(public navCtrl: NavController) {}
 
   ngOnInit() {
     this.filterForm = new FormGroup({

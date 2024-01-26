@@ -28,7 +28,14 @@ const routes: Routes = [
       {
         path: 'tab/favorites',
         loadChildren: () =>
-          import('../favorites/favorites.module').then((m) => m.FavoritesPageModule),
+          import('../favorites/favorites.module').then(
+            (m) => m.FavoritesPageModule
+          ),
+      },
+      {
+        path: 'tab/more',
+        loadChildren: () =>
+          import('../more/more.module').then((m) => m.MorePageModule),
       },
       {
         path: '',

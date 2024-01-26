@@ -1,9 +1,32 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>catalog-detail</ion-title>
+<ion-header mode="ios">
+  <ion-toolbar [formGroup]="filterForm" class="sm">
+    <div class="page-header">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+      <ion-title class="sm mb-10 pt-10">Vitamins</ion-title>
+    </div>
+    <ion-searchbar #searchbar mode="ios" placeholder="Search" show-clear-button="never"
+      [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
+      formControlName="search" (ionChange)="search($event)">
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <app-filter-row (onOpenSort)="openSortPopover()" (onOpenFilter)="openFilter()" [resultCount]="123"></app-filter-row>
 
+  <div class="content" [ngSwitch]="!!listProducts.length">
+    <!-- Products -->
+    <ng-container *ngSwitchCase="true">
+      <ion-list lines="full" class="favorite-list-details__tabs-gap">
+        <ion-item *ngFor="let product of listProducts">
+          <div class="p-vertical--medium">
+            <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <!-- / Products -->
+  </div>
 </ion-content>

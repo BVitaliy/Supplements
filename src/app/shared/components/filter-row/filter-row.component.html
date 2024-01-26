@@ -1,0 +1,14 @@
+<div class="filter-btns">
+  <ion-button mode="ios" color="light" (click)="onOpenSort.emit(true)">
+    <ion-icon src="./assets/img/icons/icon-sort.svg"></ion-icon>
+    <span>Sort</span>
+  </ion-button>
+  <ion-button mode="ios" color="light" (click)="onOpenFilter.emit(true)">
+    <ion-icon src="./assets/img/icons/icon-filter.svg"></ion-icon>
+    <span>Filter</span>
+  </ion-button>
+</div>
+
+<span class="fw-500 text-s medium">
+  {{resultCount}} results
+</span>
