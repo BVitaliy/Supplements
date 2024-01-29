@@ -1,58 +1,139 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>More</ion-title>
+    <!-- Header title -->
+    <div class="more-main__header">
+      More
+    </div>
+    <!-- / Header title -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="content-profile">
-    <ion-item class="fw-600 text-m dark profile-item" button detail="false" lines="none" *ngIf="profile">
+    <!-- Profile details -->
+    <ion-item
+      class="fw-600 text-m dark profile-item"
+      button
+      detail="false"
+      lines="none"
+      *ngIf="profile"
+      (click)="navCtrl.navigateRoot('home/tabs/tab/more/profile-details')"
+    >
       <app-img [src]="profile?.photo" cssClasses="img-fit-cover" *ngIf="profile?.photo"></app-img>
       <ion-label>
         <p class="text-m dark fw-700">{{profile?.name}}</p>
         <p class="text-m medium fw-500">{{profile?.email}}</p>
       </ion-label>
     </ion-item>
+    <!-- / Profile details -->
 
-    <ion-item class="fw-600 text-m dark" button detail="false" lines="none">
+    <!-- History -->
+    <ion-item
+      class="fw-600 text-m dark"
+      button
+      detail="false"
+      lines="none"
+      (click)="navCtrl.navigateRoot('home/tabs/tab/more/history')"
+    >
       <ion-icon size="large" [src]="'./assets/img/icons/icon-history.svg'" slot="start"></ion-icon>
       History
     </ion-item>
+    <!-- / History -->
+
+    <!-- Highlighted ingredients -->
     <ion-item class="fw-600 text-m dark" button detail="false" lines="none">
       <ion-icon size="large" [src]="'./assets/img/icons/icon-check-list.svg'" slot="start"></ion-icon>
       Highlighted ingredients
     </ion-item>
-    <ion-item class="fw-600 text-m dark" button detail="false" lines="none">
+    <!-- / Highlighted ingredients -->
+
+    <!-- Submitted products -->
+    <ion-item
+      class="fw-600 text-m dark"
+      button
+      detail="false"
+      lines="none"
+      (click)="navCtrl.navigateRoot('home/tabs/tab/more/submitted-products')"
+    >
       <ion-icon size="large" [src]="'./assets/img/icons/icon-box.svg'" slot="start"></ion-icon>
       Submitted products
     </ion-item>
-    <ion-item class="fw-600 text-m dark" button detail="false" lines="none">
+    <!-- / Submitted products -->
+
+    <!-- Password -->
+    <ion-item
+      class="fw-600 text-m dark"
+      button
+      detail="false"
+      lines="none"
+      (click)="navCtrl.navigateRoot('home/tabs/tab/more/change-password')"
+    >
       <ion-icon size="large" [src]="'./assets/img/icons/icon-lock.svg'" slot="start"></ion-icon>
       Password
     </ion-item>
-    <ion-item class="fw-600 text-m dark" button detail="false" lines="none">
+    <!-- / Password -->
+
+    <!-- Notifications -->
+    <ion-item
+      class="fw-600 text-m dark"
+      button
+      detail="false"
+      lines="none"
+      (click)="navCtrl.navigateRoot('home/tabs/tab/more/notifications')"
+    >
       <ion-icon size="large" [src]="'./assets/img/icons/icon-notifications.svg'" slot="start"></ion-icon>
       Notifications
     </ion-item>
+    <!-- / Notifications -->
   </div>
+
   <ion-list class="content-list">
+    <!-- Rate our app -->
     <ion-item class="fw-500 text-m dark" button detail="false" lines="none">
       Rate our app
     </ion-item>
-    <ion-item class="fw-500 text-m dark" button detail="false" lines="none">
+    <!-- / Rate our app -->
+
+    <!-- Report problem -->
+    <ion-item
+      class="fw-500 text-m dark"
+      button
+      detail="false"
+      lines="none"
+      (click)="navCtrl.navigateRoot('home/tabs/tab/more/report-problem')"
+    >
       Report problem
     </ion-item>
+    <!-- / Report problem -->
+
+    <!-- Privacy Policy -->
     <ion-item class="fw-500 text-m dark" button detail="false" lines="none">
       Privacy Policy
     </ion-item>
+    <!-- / Privacy Policy -->
+
+    <!-- Terms of Service -->
     <ion-item class="fw-500 text-m dark" button detail="false" lines="none">
       Terms of Service
     </ion-item>
+    <!-- / Terms of Service -->
+
+    <!-- Log out -->
     <ion-item class="fw-500 text-m dark" button detail="false" lines="none">
       Log out
     </ion-item>
-    <ion-item class="fw-500 text-m danger" button detail="false" lines="none">
+    <!-- / Log out -->
+
+    <!-- Delete account -->
+    <ion-item
+      class="fw-500 text-m danger"
+      button
+      detail="false"
+      lines="none"
+      (click)="handleDeleteAccount()"
+    >
       Delete account
     </ion-item>
+    <!-- / Delete account -->
   </ion-list>
 </ion-content>

@@ -29,6 +29,15 @@
     }
   }
 
+  &.btn-orange {
+    --color: var(--ion-color-primary-shade);
+
+    &::part(native) {
+      color: var(--ion-color-primary-shade);
+      --color: var(--ion-color-primary-shade);
+    }
+  }
+
   &.btn-sign {
     --border-width: 1px;
     --border-color: var(--ion-color-medium-tint);

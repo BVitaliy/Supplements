@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Header actions -->
+    <div vertical="center" horizontal="between" class="m-top--x-small">
+      <!-- Back action -->
+      <ion-button class="btn btn-sm-x" fill="clear" mode="md" (click)="navCtrl.navigateRoot('home/tabs/tab/more')">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+      <!-- / Back action -->
+    </div>
+    <!-- / Header actions -->
+
+    <!-- Header title -->
+    <div class="history__header-title m-bottom--small m-top--x-small">
+      History
+    </div>
+    <!-- / Header title -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="history__content-gap">
+  <!-- Tabs -->
+  <div class="history__tabs-wrapper">
+    <div class="history__tabs">
+      <!-- Viewed -->
+      <div
+        class="history__tabs-item"
+        vertical="center"
+        horizontal="center"
+        [ngClass]="{ 'history__tabs-item--active': activeTab === historyTabs.viewed }"
+        (click)="handleChangeTab(historyTabs.viewed)"
+      >
+        Viewed
+      </div>
+      <!-- / Viewed -->
+
+      <!-- Scanned -->
+      <div
+        class="history__tabs-item"
+        vertical="center"
+        horizontal="center"
+        [ngClass]="{ 'history__tabs-item--active': activeTab === historyTabs.scanned }"
+        (click)="handleChangeTab(historyTabs.scanned)"
+      >
+        Scanned
+      </div>
+      <!-- / Scanned -->
+
+      <!-- Reviewed -->
+      <div
+        class="history__tabs-item"
+        vertical="center"
+        horizontal="center"
+        [ngClass]="{ 'history__tabs-item--active': activeTab === historyTabs.reviewed }"
+        (click)="handleChangeTab(historyTabs.reviewed)"
+      >
+        Reviewed
+      </div>
+      <!-- / Reviewed -->
+    </div>
+  </div>
+  <!-- / Tabs -->
+
+  <ng-container [ngSwitch]="activeTab">
+    <!-- Viewed -->
+    <ng-container *ngSwitchCase="historyTabs.viewed">
+      <ion-list lines="full" class="history__tabs-gap">
+        <ion-item *ngFor="let product of viewedProducts">
+          <div class="p-vertical--medium">
+            <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <!-- / Viewed -->
+
+    <!-- Scanned -->
+    <ng-container *ngSwitchCase="historyTabs.scanned">
+      <ion-list lines="full" class="history__tabs-gap">
+        <ion-item *ngFor="let product of scannedProducts">
+          <div class="p-vertical--medium">
+            <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <!-- / Scanned -->
+
+    <!-- Reviewed -->
+    <ng-container *ngSwitchCase="historyTabs.reviewed">
+      <app-reviewed-list
+        [reviewedProducts]="reviewedProducts"
+      ></app-reviewed-list>
+    </ng-container>
+    <!-- / Reviewed -->
+  </ng-container>
+</ion-content>
