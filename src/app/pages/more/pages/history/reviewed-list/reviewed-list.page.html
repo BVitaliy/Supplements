@@ -1,0 +1,123 @@
+<ion-content>
+  <ion-list lines="full" class="reviewed-list__tabs-gap">
+    <ion-item *ngFor="let product of reviewedProducts">
+      <div class="reviewed-list__wrapper p-vertical--medium">
+        <!-- Product -->
+        <div class="reviewed-list__product-wrapper m-bottom--medium" vertical="center">
+          <!-- Image -->
+          <div
+            vertical="center"
+            horizontal="center"
+            class="reviewed-list__product-img-wrapper p-around--x-small m-right--small"
+          >
+            <app-img
+              [src]="'./assets/img/temp/product-1.png'"
+              cssClasses="img-fit-contain"
+              class="reviewed-list__product-img"
+            ></app-img>
+          </div>
+          <!-- / Image -->
+
+          <div>
+            <!-- Title -->
+            <div class="reviewed-list__product-title m-bottom--xxx-small">
+              Athletic Greens
+            </div>
+            <!-- / Title -->
+
+            <!-- Description -->
+            <div class="reviewed-list__product-description">
+              Ultimate Daily, Whole Food Sourced  All in One Greens Supplement Powder
+            </div>
+            <!-- / Description -->
+          </div>
+        </div>
+        <!-- / Product -->
+
+        <!-- Comments -->
+        <div>
+          <div horizontal="between" class="m-bottom--medium">
+            <!-- Author -->
+            <div vertical="center">
+              <!-- Avatar -->
+              <app-img
+                [src]="'./assets/img/temp/photo.png'"
+                cssClasses="img-fit-cover"
+                class="m-right--x-small reviewed-list__avatar"
+              ></app-img>
+              <!-- / Avatar -->
+
+              <div>
+                <!-- Author name -->
+                <div class="m-bottom--xx-small reviewed-list__author-name">
+                  Anna Armas
+                </div>
+                <!-- / Author name -->
+
+                <!-- Stars -->
+                <div vertical="center">
+                  <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="reviewed-list__star"></ion-icon>
+                  <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="reviewed-list__star m-left--xx-small"></ion-icon>
+                  <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="reviewed-list__star m-left--xx-small"></ion-icon>
+                  <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="reviewed-list__star m-left--xx-small"></ion-icon>
+                  <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="reviewed-list__star m-left--xx-small"></ion-icon>
+                </div>
+                <!-- / Stars -->
+              </div>
+            </div>
+            <!-- / Author -->
+
+            <!-- Date -->
+            <div class="reviewed-list__date">
+              12 April 2023
+            </div>
+            <!-- / Date -->
+          </div>
+
+          <div>
+            <!-- Title -->
+            <div class="reviewed-list__comment-title m-bottom--xx-small">
+              Title
+            </div>
+            <!-- / Title -->
+
+            <!-- Message -->
+            <div class="reviewed-list__comment-message m-bottom--small">
+              Lorem ipsum dolor sit amet consectetur. Suspendisse vitae quisque risus pulvinar. Tristique ornare integer magna et semper.
+            </div>
+            <!-- / Message -->
+
+            <!-- Likes / dislikes -->
+            <div horizontal="between" vertical="center">
+              <div class="reviewed-list__likes-text">
+                Do you find this review useful?
+              </div>
+
+              <div vertical="center">
+                <!-- Likes -->
+                <div vertical="center" class="m-right--small">
+                  <ion-icon src="./assets/img/icons/like-icon-colored.svg" class="m-right--xx-small"></ion-icon>
+                  <div class="reviewed-list__likes-count">
+                    1
+                  </div>
+                </div>
+                <!-- / Likes -->
+
+                <!-- Dislikes -->
+                <div vertical="center">
+                  <ion-icon src="./assets/img/icons/dislike-icon.svg" class="m-right--xx-small"></ion-icon>
+                  <div class="reviewed-list__likes-count">
+                    0
+                  </div>
+                </div>
+                <!-- / Dislikes -->
+              </div>
+            </div>
+            <!-- / Likes / dislikes -->
+          </div>
+        </div>
+        <!-- / Comments -->
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -8,7 +8,7 @@
       <div class="title text-s line-clamp-3 fw-600 dark">{{product?.title}}</div>
     </div>
     <div>
-      <div vertical="center" class="m-bottom--x-small">
+      <div *ngIf="showStars" vertical="center" class="m-bottom--x-small">
         <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star"></ion-icon>
         <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
         <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
@@ -20,8 +20,8 @@
       </div>
 
       <div class="product-bottom">
-        <app-rating-count [rating]="product?.score" [type]="'badge'"></app-rating-count>
-        <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"></app-favorite-btn>
+        <app-rating-count *ngIf="showRatingCount" [rating]="product?.score" [type]="'badge'"></app-rating-count>
+        <app-favorite-btn *ngIf="showFavoriteBtn" (favorited)="favoriteHandle($event)" [product]="product"></app-favorite-btn>
       </div>
     </div>
   </div>

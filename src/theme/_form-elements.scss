@@ -49,6 +49,9 @@
     //   line-height: 10px;
     // }
   }
+  &--no-label {
+    margin: 0;
+  }
   &.mask {
     .native-input {
       transition: all 300ms ease-in-out 0s !important;

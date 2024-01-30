@@ -23,7 +23,7 @@ export class MainPage implements OnInit {
     private alertController: AlertController
   ) {}
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.profile = {
       photo: './assets/img/temp/photo.png' || '',
       name: 'Anna Armas' || '',
@@ -81,6 +81,32 @@ export class MainPage implements OnInit {
       this.backBtnSubscription.unsubscribe();
     }
     await this.alertController?.dismiss();
+  }
+
+  public async handleDeleteAccount(): Promise<void> {
+    const alert: HTMLIonAlertElement = await this.alertController.create({
+      header: 'Delete Account?',
+      message: 'Are you sure you would like to delete your account?',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'confirm',
+          cssClass: 'alert-button-delete',
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'alert-button-cancel',
+        },
+      ],
+    });
+    alert.onDidDismiss().then((data) => {
+      if (data?.role === 'confirm') {
+        // delete account
+      }
+    });
+
+    return await alert.present();
   }
 
   ionViewDidLeave() {
