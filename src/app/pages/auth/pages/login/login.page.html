@@ -16,15 +16,15 @@
               autocomplete="off"></ion-input>
           </ion-item>
         </div>
-        <div class="form-control pb-10">
+        <div class="form-control pb-10 relative-block">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Password</ion-label>
             <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
               placeholder="Enter your password" autocomplete="off"></ion-input>
-            <ion-icon
-              [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
-              [color]="showPassword ? 'primary' : 'medium'" slot="end" (click)="toggleShowPassword()"></ion-icon>
           </ion-item>
+          <ion-icon
+            [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+            [color]="showPassword ? 'primary' : 'medium'" slot="end" (click)="toggleShowPassword()"></ion-icon>
         </div>
         <p class="mb-20">
           <ion-button class="btn btn-link ml-10" fill="clear" mode="md" color="primary"
@@ -39,7 +39,7 @@
         </div>
 
         <ion-button class="btn btn-primary mb-16" expand="block" fill="solid" mode="md" [disabled]="loginForm.invalid"
-          (click)="getDeviceId()">
+          (click)="logIn()">
           Log in
         </ion-button>
 

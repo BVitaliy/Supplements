@@ -8,7 +8,7 @@ const FIRST_OPEN_APP = 'first_open_app';
 const MODE_STORAGE_NAME = 'mode';
 
 // app redirects
-const APP_AUTH_REDIRECT_URL = '/home';
+const APP_AUTH_REDIRECT_URL = '/auth';
 const APP_HOME_REDIRECT_URL = '/home';
 
 export {

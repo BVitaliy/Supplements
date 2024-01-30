@@ -1,0 +1,120 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="sm">Description</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+
+
+  <ng-container *ngIf="!loading">
+    <div class="product-image">
+      <app-rating-count [rating]="9.1" [type]="'badge'"></app-rating-count>
+      <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
+    </div>
+
+
+    <div class="product-main_info">
+
+      <div class="medium fw-500 pb-5">{{product?.category}}</div>
+      <div class="text-l fw-700 dark m-bottom--small">{{product?.title}}</div>
+
+      <div vertical="center" class="m-bottom--medium">
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <div class="review-count m-left--x-small text-s">
+          32
+        </div>
+      </div>
+
+      <div class="product-controls">
+        <ion-button class="btn btn-primary" expand="block" fill="solid" mode="md" (click)="shopNowProduct()">
+          Shop now
+        </ion-button>
+        <div class="options">
+          <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product" [size]="'md'"></app-favorite-btn>
+          <ion-button shape="round" fill="outline">
+            <ion-icon slot="icon-only" [src]="'./assets/img/icons/add-feedback.svg'"></ion-icon>
+          </ion-button>
+          <ion-button shape="round" fill="outline">
+            <ion-icon slot="icon-only" [src]="'./assets/img/icons/icon-share.svg'"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="content">
+      <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
+        <div class="title text-l fw-600 dark m-bottom--x-large">Ingredients summery</div>
+
+        <div class="chart m-bottom--x-large">
+          <div class="chart-text">
+            <p class="h2 dark">52</p>
+            <p class="medium text-s">Ingredients</p>
+          </div>
+        </div>
+
+        <ion-segment (ionChange)="setType($event)" [value]="type" mode="ios" class="m-bottom--medium">
+          <ion-segment-button value="ingredient">
+            Ingredient Analysis
+          </ion-segment-button>
+          <ion-segment-button value="efects">
+            Body Positive Efects
+
+          </ion-segment-button>
+        </ion-segment>
+
+        <ng-container *ngIf="type === 'ingredient'">
+          <ion-list class="list list-ingredients">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+              <span class="indicator green"></span>
+              <div class="dark ">Benefits</div>
+              <div class="count medium m-left--x-small">
+                32
+              </div>
+            </ion-item>
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+              <span class="indicator danger-bg"></span>
+              <div class="dark ">Weaknesses</div>
+              <div class="count medium m-left--x-small">
+                7
+              </div>
+            </ion-item>
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+              <span class="indicator primary-bg"></span>
+              <div class="dark">Contaminants</div>
+              <div class="count medium m-left--x-small">
+                3
+              </div>
+            </ion-item>
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+              <span class="indicator warning-bg"></span>
+              <div class="dark">Allergens</div>
+              <div class="count medium m-left--x-small">
+                5
+              </div>
+            </ion-item>
+          </ion-list>
+        </ng-container>
+
+      </div>
+
+    </div>
+  </ng-container>
+
+
+</ion-content>

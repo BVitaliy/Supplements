@@ -17,6 +17,7 @@ import { ThankComponent } from '../../../../shared/components/thank/thank.compon
 import { APP_AUTH_REDIRECT_URL } from 'src/app/app.config';
 // import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { finalize } from 'rxjs/operators';
+import { DoneComponent } from 'src/app/shared/components/done/done.component';
 
 @Component({
   selector: 'app-recover-password',
@@ -28,7 +29,7 @@ export class RecoverPasswordPage
 {
   // @ViewChild('countdown', { static: false })
   // private countdown: CountdownComponent;
-  step = 3;
+  step = 1;
   recoverForm: FormGroup;
   inputFocusClass = false;
   submitTouched = false;
@@ -139,6 +140,8 @@ export class RecoverPasswordPage
   }
 
   async sendEmail() {
+    this.step = 2;
+    console.log(this.step);
     // this.recoverForm.get('code').reset();
     // const loading = await this.loadingController.create({
     // message: this.translate.instant('RECOVER.wait'),
@@ -152,7 +155,6 @@ export class RecoverPasswordPage
     //     }))
     //     .subscribe(
     //       (data: any) => {
-    this.step = 2;
     //         this.countDone = false;
     //         setTimeout(() => {
     //           this.countdown.restart();
@@ -176,6 +178,7 @@ export class RecoverPasswordPage
 
   async saveNewPassword() {
     this.step = 4;
+    // this.presentModal();
     // const loading = await this.loadingController.create({
     //   message: this.translate.instant('RECOVER.wait'),
     //   // duration: 2000,
@@ -204,20 +207,33 @@ export class RecoverPasswordPage
     }
   }
 
+  // async presentModal() {
+  //   const modal = await this.modalController.create({
+  //     component: ThankComponent,
+  //     cssClass: 'full-screen-modal',
+  //     mode: 'ios',
+  //     componentProps: {
+  //       header: 'Вітаємо',
+  //       title: 'Ваш пароль успішно змінено',
+  //       description:
+  //         'Тепер ви можете увійти у свій профіль за допомогою нового паролю',
+  //       buttonRouterUrl: APP_AUTH_REDIRECT_URL,
+  //       icon: './assets/img/icon/password-recover.svg',
+  //       hasCloseBtn: false,
+  //       buttonText: 'увійти',
+  //     },
+  //   });
+  //   return await modal.present();
+  // }
+
   async presentModal() {
     const modal = await this.modalController.create({
-      component: ThankComponent,
-      cssClass: 'full-screen-modal',
+      component: DoneComponent,
+      cssClass: 'ios-modal-safe-top-offset thank-modal full-screen-modal',
       mode: 'ios',
       componentProps: {
-        header: 'Вітаємо',
-        title: 'Ваш пароль успішно змінено',
-        description:
-          'Тепер ви можете увійти у свій профіль за допомогою нового паролю',
-        buttonRouterUrl: APP_AUTH_REDIRECT_URL,
-        icon: './assets/img/icon/password-recover.svg',
-        hasCloseBtn: false,
-        buttonText: 'увійти',
+        buttonRouterUrl: 'auth/login',
+        imgSrc: './assets/img/icons/icon-done-signup.svg',
       },
     });
     return await modal.present();

@@ -29,7 +29,7 @@
               autocomplete="off"></ion-input>
           </ion-item>
         </div>
-        <div class="form-control">
+        <div class="form-control relative-block">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Password</ion-label>
             <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
@@ -40,7 +40,7 @@
             [color]="showPassword ? 'primary' : 'medium'" slot="end"
             (click)="toggleShowPassword('password')"></ion-icon>
         </div>
-        <div class="form-control">
+        <div class="form-control relative-block">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Repeat password</ion-label>
             <ion-input formControlName="confirm_password" [type]="showPassword ? 'text' : 'password'" inputmode="text"

@@ -53,6 +53,7 @@
     "apexcharts": "^3.41.1",
     "capacitor-call-keep": "^0.0.2",
     "capacitor-voice-recorder": "^4.0.2",
+    "chart.js": "^4.4.1",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-app-version": "^0.1.14",
     "cordova-plugin-file": "^7.0.0",

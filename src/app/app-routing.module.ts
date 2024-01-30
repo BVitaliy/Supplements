@@ -9,6 +9,7 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomePageModule),
+    canActivate: [CabinetGuard],
   },
   {
     path: 'auth',
@@ -16,7 +17,6 @@ const routes: Routes = [
       import('./pages/auth/auth.module').then((m) => m.AuthPageModule),
     canActivate: [AuthGuard],
   },
-
   {
     path: 'info-steps',
     loadChildren: () =>
@@ -26,13 +26,21 @@ const routes: Routes = [
     canActivate: [FirstOpenGuard],
   },
   {
-    path: '',
-    redirectTo: 'info-steps',
-    pathMatch: 'full',
+    path: 'product-detail',
+    loadChildren: () =>
+      import('./pages/product-detail/product-detail.module').then(
+        (m) => m.ProductDetailPageModule
+      ),
   },
   {
     path: 'more',
-    loadChildren: () => import('./pages/more/more.module').then( m => m.MorePageModule)
+    loadChildren: () =>
+      import('./pages/more/more.module').then((m) => m.MorePageModule),
+  },
+  {
+    path: '',
+    redirectTo: 'info-steps',
+    pathMatch: 'full',
   },
 ];
 

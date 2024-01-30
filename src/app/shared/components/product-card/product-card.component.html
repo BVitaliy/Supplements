@@ -1,9 +1,9 @@
 <div class="product" [ngClass]="type">
-  <div class="image">
+  <div class="image" (click)="navCtrl.navigateRoot(['/product-detail', 1])">
     <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
   </div>
   <div class="content">
-    <div>
+    <div (click)="navCtrl.navigateRoot(['/product-detail', 1])">
       <div class="category medium">{{product?.category}}</div>
       <div class="title text-s line-clamp-3 fw-600 dark">{{product?.title}}</div>
     </div>
