@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Header actions -->
+    <div vertical="center" horizontal="between" class="m-top--x-small">
+      <!-- Back action -->
+      <ion-button class="btn btn-sm-x" fill="clear" mode="md" (click)="navCtrl.navigateRoot('home/tabs/tab/more')">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+      <!-- / Back action -->
+
+      <!-- Edit action -->
+      <ion-button
+        class="btn btn-link btn-primary"
+        mode="md"
+        (click)="handleSaveChanges()"
+      >
+        Save changes
+      </ion-button>
+      <!-- / Edit action -->
+    </div>
+    <!-- / Header actions -->
+
+    <!-- Header title -->
+    <div class="notifications__header-title m-bottom--small m-top--x-small">
+      Notifications
+    </div>
+    <!-- / Header title -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full" class="notifications__tabs-gap">
+    <!-- Updates -->
+    <div class="notifications__label">
+      Updates
+    </div>
+    <ion-item lines="none">
+      <div vertical="center">
+        <ion-checkbox
+          slot="start"
+          class="checkbox"
+        ></ion-checkbox>
+        <ion-label>
+            <span class="checkbox-label">
+              When a favorite product  rating change
+            </span>
+        </ion-label>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <div vertical="center" class="p-bottom--small">
+        <ion-checkbox
+          slot="start"
+          class="checkbox"
+        ></ion-checkbox>
+        <ion-label>
+            <span class="checkbox-label">
+              When your submissions are in database
+            </span>
+        </ion-label>
+      </div>
+    </ion-item>
+    <!-- / Updates -->
+
+    <!-- Reviews -->
+    <div class="notifications__label">
+      Reviews
+    </div>
+
+    <ion-item>
+      <div vertical="center" class="p-bottom--small">
+        <ion-checkbox
+          slot="start"
+          class="checkbox"
+        ></ion-checkbox>
+        <ion-label>
+            <span class="checkbox-label">
+              When your review is submitted and added
+            </span>
+        </ion-label>
+      </div>
+    </ion-item>
+    <!-- / Reviews -->
+
+    <!-- Promotions -->
+    <div class="notifications__label">
+      Promotions
+    </div>
+
+    <ion-item>
+      <div vertical="center" class="p-bottom--small">
+        <ion-checkbox
+          slot="start"
+          class="checkbox"
+        ></ion-checkbox>
+        <ion-label>
+            <span class="checkbox-label">
+              Receiving promotional push notifications
+            </span>
+        </ion-label>
+      </div>
+    </ion-item>
+    <!-- / Promotions -->
+  </ion-list>
+</ion-content>

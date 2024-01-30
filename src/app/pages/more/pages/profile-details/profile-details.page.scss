@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.profile-details__header-title {
+  font-family: 'Inter';
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: left;
+  color: #ffffff;
+}
+
+.profile-details__list {
+  width: 100%;
+}
+
+.profile-details__title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0;
+  color: #9E9D9D;
+}
+
+.profile-details__value {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0;
+  color: #04002C;
+}
+
+.profile-details__photo {
+  min-width: 100px;
+  width: 100px;
+  height: 100px;
+}
+
+.profile-details__tabs-gap {
+  padding-bottom: 66px;
+}

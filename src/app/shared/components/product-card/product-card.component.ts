@@ -12,6 +12,9 @@ import {
 export class ProductCardComponent implements OnInit {
   @Input() type = 'vertical'; //horizontal
   @Input() product: any;
+  @Input() showStars: boolean = true;
+  @Input() showRatingCount: boolean = true;
+  @Input() showFavoriteBtn: boolean = true;
 
   constructor(private modalCtrl: ModalController) {}
 

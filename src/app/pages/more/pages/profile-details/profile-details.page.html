@@ -1,0 +1,210 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Header actions -->
+    <div vertical="center" horizontal="between" class="m-top--x-small">
+      <!-- Back action -->
+      <ion-button class="btn btn-sm-x" fill="clear" mode="md" (click)="navCtrl.navigateRoot('home/tabs/tab/more')">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+      <!-- / Back action -->
+    </div>
+    <!-- / Header actions -->
+
+    <!-- Header title -->
+    <div class="profile-details__header-title m-bottom--small m-top--x-small">
+      Profile details
+    </div>
+    <!-- / Header title -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full" class="profile-details__tabs-gap">
+    <!-- Photo -->
+    <ion-item>
+      <div class="profile-details__list p-vertical--large">
+        <div vertical="center" horizontal="center" direction="column">
+          <!-- Img -->
+          <app-img
+            [src]="profileDetails?.photo"
+            cssClasses="img-fit-cover"
+            class="m-bottom--medium profile-details__photo"
+          ></app-img>
+          <!-- / Img -->
+
+          <!-- Edit action -->
+          <ion-button fill="clear" class="btn btn-link btn-orange" mode="md">
+            Change image
+          </ion-button>
+          <!-- / Edit action -->
+        </div>
+      </div>
+    </ion-item>
+    <!-- / Photo -->
+
+    <!-- First name -->
+    <ion-item>
+      <div class="profile-details__list p-vertical--medium">
+        <div vertical="center" horizontal="between">
+          <div direction="column" class="p-right--medium">
+            <!-- Title -->
+            <div class="profile-details__title m-bottom--xx-small">
+              {{ profileDetailsFields.firstName }}
+            </div>
+            <!-- / Title -->
+
+            <!-- Value -->
+            <div class="profile-details__value">
+              {{ profileDetails.firstName }}
+            </div>
+            <!-- / Value -->
+          </div>
+
+          <!-- Edit action -->
+          <ion-button
+            fill="clear"
+            class="btn btn-link btn-orange m-right--xx-small"
+            mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.firstName, profileDetails.firstName)"
+          >
+            Edit
+          </ion-button>
+          <!-- / Edit action -->
+        </div>
+      </div>
+    </ion-item>
+    <!-- / First name -->
+
+    <!-- Last name -->
+    <ion-item>
+      <div class="profile-details__list p-vertical--medium">
+        <div vertical="center" horizontal="between">
+          <div direction="column" class="p-right--medium">
+            <!-- Title -->
+            <div class="profile-details__title m-bottom--xx-small">
+              {{ profileDetailsFields.lastName }}
+            </div>
+            <!-- / Title -->
+
+            <!-- Value -->
+            <div class="profile-details__value">
+              {{ profileDetails.lastName }}
+            </div>
+            <!-- / Value -->
+          </div>
+
+          <!-- Edit action -->
+          <ion-button
+            fill="clear"
+            class="btn btn-link btn-orange m-right--xx-small"
+            mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.lastName, profileDetails.lastName)"
+          >
+            Edit
+          </ion-button>
+          <!-- / Edit action -->
+        </div>
+      </div>
+    </ion-item>
+    <!-- / Last name -->
+
+    <!-- Email address -->
+    <ion-item>
+      <div class="profile-details__list p-vertical--medium">
+        <div vertical="center" horizontal="between">
+          <div direction="column" class="p-right--medium">
+            <!-- Title -->
+            <div class="profile-details__title m-bottom--xx-small">
+              {{ profileDetailsFields.emailAddress }}
+            </div>
+            <!-- / Title -->
+
+            <!-- Value -->
+            <div class="profile-details__value">
+              {{ profileDetails.email }}
+            </div>
+            <!-- / Value -->
+          </div>
+
+          <!-- Edit action -->
+          <ion-button
+            fill="clear"
+            class="btn btn-link btn-orange m-right--xx-small"
+            mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.emailAddress, profileDetails.email)"
+          >
+            Edit
+          </ion-button>
+          <!-- / Edit action -->
+        </div>
+      </div>
+    </ion-item>
+    <!-- / Email address -->
+
+    <!-- Sex -->
+    <ion-item>
+      <div class="profile-details__list p-vertical--medium">
+        <div vertical="center" horizontal="between">
+          <div direction="column" class="p-right--medium">
+            <!-- Title -->
+            <div class="profile-details__title m-bottom--xx-small">
+              {{ profileDetailsFields.sex }}
+            </div>
+            <!-- / Title -->
+
+            <!-- Value -->
+            <div class="profile-details__value">
+              {{ profileDetails.sex }}
+            </div>
+            <!-- / Value -->
+          </div>
+
+          <!-- Edit action -->
+          <ion-button
+            fill="clear"
+            class="btn btn-link btn-orange m-right--xx-small"
+            mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.sex, profileDetails.sex)"
+          >
+            Edit
+          </ion-button>
+          <!-- / Edit action -->
+        </div>
+      </div>
+    </ion-item>
+    <!-- / Sex -->
+
+    <!-- Birthday -->
+    <ion-item lines="none">
+      <div class="profile-details__list p-vertical--medium">
+        <div vertical="center" horizontal="between">
+          <div direction="column" class="p-right--medium">
+            <!-- Title -->
+            <div class="profile-details__title m-bottom--xx-small">
+              {{ profileDetailsFields.birthday }}
+            </div>
+            <!-- / Title -->
+
+            <!-- Value -->
+            <div class="profile-details__value">
+              {{ profileDetails.birthday }}
+            </div>
+            <!-- / Value -->
+          </div>
+
+          <!-- Edit action -->
+          <ion-button
+            fill="clear"
+            class="btn btn-link btn-orange m-right--xx-small"
+            mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.birthday, profileDetails.birthday)"
+          >
+            Edit
+          </ion-button>
+          <!-- / Edit action -->
+        </div>
+      </div>
+    </ion-item>
+    <!-- / Birthday -->
+  </ion-list>
+</ion-content>
