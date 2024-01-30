@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/history/history.module').then( m => m.HistoryPageModule),
   },
   {
+    path: 'highlighted-ingredients',
+    loadChildren: () => import('./pages/highlighted-ingredients/highlighted-ingredients.module').then( m => m.HighlightedIngredientsPageModule),
+  },
+  {
     path: 'submitted-products',
     loadChildren: () => import('./pages/submitted-products/submitted-products.module').then( m => m.SubmittedProductsPageModule),
   },

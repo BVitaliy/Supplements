@@ -41,7 +41,13 @@
     <!-- / History -->
 
     <!-- Highlighted ingredients -->
-    <ion-item class="fw-600 text-m dark" button detail="false" lines="none">
+    <ion-item
+      class="fw-600 text-m dark"
+      button
+      detail="false"
+      lines="none"
+      (click)="navCtrl.navigateRoot('home/tabs/tab/more/highlighted-ingredients')"
+    >
       <ion-icon size="large" [src]="'./assets/img/icons/icon-check-list.svg'" slot="start"></ion-icon>
       Highlighted ingredients
     </ion-item>
