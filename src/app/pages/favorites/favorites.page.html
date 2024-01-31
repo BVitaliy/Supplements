@@ -1,26 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <!-- Header actions -->
-    <div vertical="center" horizontal="between" class="m-top--x-small">
-      <!-- Back action -->
-      <ion-button class="btn btn-sm-x" fill="clear" mode="md" (click)="navCtrl.navigateRoot('home/tabs/tab/main')">
+    <!-- Back action -->
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
         <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
       </ion-button>
-      <!-- / Back action -->
-
-      <!-- Add action -->
-      <ion-button class="btn btn-sm-x" fill="clear" mode="md" (click)="showCreateListModal()">
-        <ion-icon [src]="'./assets/img/icons/add-icon.svg'"></ion-icon>
-      </ion-button>
-      <!-- / Add action -->
-    </div>
-    <!-- / Header actions -->
+    </ion-buttons>
+    <!-- / Back action -->
 
     <!-- Header title -->
-    <div class="favorites__header-title m-bottom--small m-top--x-small">
-      Favorites list
-    </div>
+    <ion-title class="sm">Favorites list</ion-title>
     <!-- / Header title -->
+
+    <!-- Add action -->
+    <ion-buttons slot="end">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="showCreateListModal()">
+        <ion-icon [src]="'./assets/img/icons/add-icon.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- / Add action -->
   </ion-toolbar>
 </ion-header>
 
@@ -28,7 +26,7 @@
   <ng-container [ngSwitch]="!!favoritesList.length">
     <!-- Empty list -->
     <ng-container *ngSwitchCase="false">
-      <div direction="column" vertical="center" horizontal="center" class="favorites__empty-list favorites__tabs-gap">
+      <div direction="column" vertical="center" horizontal="center" class="favorites__empty-list">
         <!-- Icon -->
         <ion-icon
           class="favorites__empty-list-icon m-bottom--large"
@@ -69,7 +67,6 @@
       <app-favorites-list
         [favoritesList]="favoritesList"
         (onOpenDetails)="handleOpenListDetails($event)"
-        class="favorites__tabs-gap"
       ></app-favorites-list>
     </ng-container>
     <!-- / Favorites list -->

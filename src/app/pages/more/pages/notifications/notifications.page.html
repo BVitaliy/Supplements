@@ -1,35 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <!-- Header actions -->
-    <div vertical="center" horizontal="between" class="m-top--x-small">
-      <!-- Back action -->
-      <ion-button class="btn btn-sm-x" fill="clear" mode="md" (click)="navCtrl.navigateRoot('home/tabs/tab/more')">
+    <!-- Back action -->
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
         <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
       </ion-button>
-      <!-- / Back action -->
-
-      <!-- Edit action -->
-      <ion-button
-        class="btn btn-link btn-primary"
-        mode="md"
-        (click)="handleSaveChanges()"
-      >
-        Save changes
-      </ion-button>
-      <!-- / Edit action -->
-    </div>
-    <!-- / Header actions -->
+    </ion-buttons>
+    <!-- / Back action -->
 
     <!-- Header title -->
-    <div class="notifications__header-title m-bottom--small m-top--x-small">
-      Notifications
-    </div>
+    <ion-title class="sm">Notifications</ion-title>
     <!-- / Header title -->
+
+    <!-- Save action -->
+    <ion-buttons slot="end">
+      <ion-button class="btn btn-link btn-primary ml-10" fill="clear" mode="md" (click)="handleSaveChanges()">
+        Save
+      </ion-button>
+    </ion-buttons>
+    <!-- / Save action -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list lines="full" class="notifications__tabs-gap">
+  <ion-list lines="full">
     <!-- Updates -->
     <div class="notifications__label">
       Updates
