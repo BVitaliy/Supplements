@@ -84,27 +84,35 @@ export class MainPage implements OnInit {
   }
 
   public async handleDeleteAccount(): Promise<void> {
+    this.backBtnSubscription = this.platform.backButton.subscribeWithPriority(
+      9998,
+      (): void => {
+        this.closeAlert();
+      }
+    );
+
     const alert: HTMLIonAlertElement = await this.alertController.create({
       header: 'Delete Account?',
       message: 'Are you sure you would like to delete your account?',
       mode: 'ios',
       buttons: [
         {
-          text: 'Delete',
-          role: 'confirm',
-          cssClass: 'alert-button-delete',
-        },
-        {
           text: 'Cancel',
           role: 'cancel',
-          cssClass: 'alert-button-cancel',
+          cssClass: ['danger'],
+        },
+        {
+          text: 'Delete',
+          role: 'confirm',
+          cssClass: ['secondary'],
+          handler: (): void => {
+            // delete account
+          },
         },
       ],
     });
-    alert.onDidDismiss().then((data) => {
-      if (data?.role === 'confirm') {
-        // delete account
-      }
+    alert.onDidDismiss().then((data): void => {
+      this.backBtnSubscription.unsubscribe();
     });
 
     return await alert.present();

@@ -19,7 +19,7 @@
   <div class="content" [ngSwitch]="!!listProducts.length">
     <!-- Products -->
     <ng-container *ngSwitchCase="true">
-      <ion-list lines="full" class="favorite-list-details__tabs-gap">
+      <ion-list lines="full">
         <ion-item *ngFor="let product of listProducts">
           <div class="p-vertical--medium">
             <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>

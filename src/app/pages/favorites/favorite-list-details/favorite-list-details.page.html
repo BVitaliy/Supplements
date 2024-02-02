@@ -1,26 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <!-- Header actions -->
-    <div vertical="center" horizontal="between" class="m-top--x-small">
-      <!-- Back action -->
-      <ion-button class="btn btn-sm-x" fill="clear" mode="md" (click)="navCtrl.navigateRoot('home/tabs/tab/favorites')">
+    <!-- Back action -->
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
         <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
       </ion-button>
-      <!-- / Back action -->
-
-      <!-- Edit action -->
-      <ion-button class="btn btn-link btn-primary" mode="md" (click)="showListActionsModal()">
-        Edit list
-      </ion-button>
-      <!-- / Edit action -->
-    </div>
-    <!-- / Header actions -->
+    </ion-buttons>
+    <!-- / Back action -->
 
     <!-- Header title -->
-    <div class="favorite-list-details__header-title m-bottom--small m-top--x-small">
-      My favorite supplements
-    </div>
+    <ion-title class="sm">My favorite supplements</ion-title>
     <!-- / Header title -->
+
+    <!-- Edit action -->
+    <ion-buttons slot="end">
+      <ion-button class="btn btn-link btn-primary" fill="clear" mode="md" (click)="showListActionsModal()">
+        Edit
+      </ion-button>
+    </ion-buttons>
+    <!-- / Edit action -->
   </ion-toolbar>
 </ion-header>
 
@@ -28,7 +26,7 @@
   <ng-container [ngSwitch]="!!listProducts.length">
     <!-- No products -->
     <ng-container *ngSwitchCase="false">
-      <div direction="column" vertical="center" horizontal="center" class="favorite-list-details__empty-list favorite-list-details__tabs-gap">
+      <div direction="column" vertical="center" horizontal="center" class="favorite-list-details__empty-list">
         <!-- Icon -->
         <ion-icon
           class="favorite-list-details__empty-list-icon m-bottom--large"
@@ -77,7 +75,7 @@
 
     <!-- Products -->
     <ng-container *ngSwitchCase="true">
-      <ion-list lines="full" class="favorite-list-details__tabs-gap">
+      <ion-list lines="full">
         <ion-item *ngFor="let product of listProducts">
           <div class="p-vertical--medium">
             <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>

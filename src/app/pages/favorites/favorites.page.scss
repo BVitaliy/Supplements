@@ -1,16 +1,3 @@
-:host {
-  display: block;
-}
-
-.favorites__header-title {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24px;
-  letter-spacing: 0;
-  text-align: left;
-  color: #ffffff;
-}
-
 .favorites__empty-list {
   height: 100%;
 }
@@ -41,8 +28,4 @@
 
 .favorites__empty-list-action {
   width: 200px;
-}
-
-.favorites__tabs-gap {
-  padding-bottom: 66px;
 }
