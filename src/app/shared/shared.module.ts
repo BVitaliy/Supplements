@@ -23,6 +23,8 @@ import { RatingComponent } from './components/rating/rating.component';
 import { RatingCountComponent } from './components/rating-count/rating-count.component';
 import { FavoriteBtnComponent } from './components/favorite-btn/favorite-btn.component';
 import { FilterRowComponent } from './components/filter-row/filter-row.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { NgChartsModule } from 'ng2-charts';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -42,6 +44,7 @@ const exportedDeclarations = [
   FavoriteBtnComponent,
   FilterRowComponent,
   CallPopoverComponent,
+  ChartComponent,
 ];
 
 @NgModule({
@@ -53,7 +56,8 @@ const exportedDeclarations = [
     ReactiveFormsModule,
     GoogleMapsModule,
     MaterialModule,
+    NgChartsModule,
   ],
-  exports: [MaterialModule, ...exportedDeclarations],
+  exports: [MaterialModule, NgChartsModule, ...exportedDeclarations],
 })
 export class SharedModule {}

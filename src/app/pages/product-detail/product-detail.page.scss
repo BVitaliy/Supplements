@@ -68,7 +68,20 @@
 .chart {
   max-width: 252px;
   height: 252px;
-  margin: 0 auto;
+  margin: -5px auto 36px;
+  position: relative;
+  &-text {
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    height: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 }
 
 .list {
@@ -103,7 +116,19 @@
       margin-bottom: 8px;
     }
   }
+}
 
-  &- {
-  }
+.item-detail {
+  --min-height: 32px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --inner-padding-end: 12px;
+  --background: #f8f8f8;
+  --border-width: 1px;
+  --border-color: #f2f2f2;
+  border-radius: 10px;
+  --border-radius: 10px;
+  margin-top: 12px;
 }

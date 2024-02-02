@@ -61,10 +61,12 @@
       <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
         <div class="title text-l fw-600 dark m-bottom--x-large">Ingredients summery</div>
 
-        <div class="chart m-bottom--x-large">
+        <div class="chart">
+          <app-chart [data]="dataChart" [backgroundColor]="backgroundColors"></app-chart>
+
           <div class="chart-text">
             <p class="h2 dark">52</p>
-            <p class="medium text-s">Ingredients</p>
+            <p class="medium text-m">Ingredients</p>
           </div>
         </div>
 
@@ -112,6 +114,35 @@
         </ng-container>
 
       </div>
+
+      <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
+        <div class="title text-l fw-600 dark pb-5">Highlighted ingredients</div>
+        <p class="medium fw-500">Add ingredients that you would like to highlight based on your diet, allergies, or
+          other reasons that you have, if this
+          ingredient is present in the product, it will appear in this list</p>
+      </div>
+
+      <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
+        <div class="title text-l fw-600 dark pb-5">Product description</div>
+        <p class="medium fw-500 mb-5">Athletic Greens is the delicious daily habit that sets you up for a healthy
+          future. No
+          other drink or supplement does as
+          much for your body as Athletic Greens: - The antioxidant equivalent of 12 servings of vegetables and fruits in
+          a single
+          serving - 10 years of research and ongoing development - Formulated by nutritionists and doctors - Made in
+          100% Pure New
+          Zealand - Gluten and dairy free - Paleo,</p>
+
+        <ion-button class="btn btn-link" fill="clear" mode="md" color="primary">
+          Read All
+        </ion-button>
+      </div>
+
+      <ion-item class="fw-600 text-l dark item-detail m-bottom--large" button lines="none"
+        (click)="navCtrl.navigateRoot('home/tabs/tab/more/change-password')">
+        Reviews
+        <span class="medium m-left--x-small">32</span>
+      </ion-item>
 
     </div>
   </ng-container>

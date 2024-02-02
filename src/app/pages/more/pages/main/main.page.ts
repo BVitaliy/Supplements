@@ -54,16 +54,16 @@ export class MainPage implements OnInit {
       mode: 'ios',
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: ['danger'],
-        },
-        {
           text: 'Log out',
-          cssClass: ['secondary'],
+          cssClass: ['alert-button-delete'],
           handler: () => {
             this.logOut();
           },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: ['alert-button-cancel'],
         },
       ],
     });
@@ -87,6 +87,7 @@ export class MainPage implements OnInit {
     const alert: HTMLIonAlertElement = await this.alertController.create({
       header: 'Delete Account?',
       message: 'Are you sure you would like to delete your account?',
+      mode: 'ios',
       buttons: [
         {
           text: 'Delete',

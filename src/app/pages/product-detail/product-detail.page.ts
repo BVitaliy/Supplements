@@ -10,6 +10,8 @@ export class ProductDetailPage implements OnInit {
   loading: boolean = true;
   product: any;
   type = 'ingredient';
+  backgroundColors = ['#22b51f', '#FF001C', '#FF9635', '#FDE334'];
+  dataChart = [39, 5, 4, 5];
 
   constructor(public navCtrl: NavController) {}
 
