@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.search-system__wrapper {
+  height: 100%;
+}
+
+.search-system__tabs-wrapper {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: #fff;
+}
+
+.search-system__content-wrapper {
+  padding-top: 72px;
+}

@@ -8,18 +8,28 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./catalog-list.page.scss'],
 })
 export class CatalogListPage implements OnInit {
-  loading: boolean = false;
-  filterForm!: FormGroup;
+  public loading: boolean = false;
+  public filterForm!: FormGroup;
+  public isSearchActive: boolean = false;
+
   constructor(public navCtrl: NavController) {}
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.filterForm = new FormGroup({
-      search: new FormControl(null),
+      search: new FormControl(''),
     });
   }
 
-  search(event: any) {
+  public search(event: any): void {
     console.log(event?.detail?.value);
     this.filterForm.get('search')?.setValue(event?.detail?.value);
+  }
+
+  public onSearchFocus(_event: any): void {
+    this.isSearchActive = true;
+  }
+
+  public handleCancelSearch(): void {
+    this.isSearchActive = false;
   }
 }

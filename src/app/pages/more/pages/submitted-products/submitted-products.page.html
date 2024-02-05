@@ -16,44 +16,26 @@
 
 <ion-content class="submitted-products__content-gap">
   <!-- Tabs -->
-  <div class="submitted-products__tabs-wrapper">
-    <div class="submitted-products__tabs">
-      <!-- On review -->
-      <div
-        class="submitted-products__tabs-item"
-        vertical="center"
-        horizontal="center"
-        [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === submittedProductsTabs.onReview }"
-        (click)="handleChangeTab(submittedProductsTabs.onReview)"
-      >
+  <div class="p-bottom--x-small p-horizontal--medium p-top--large submitted-products__tabs-wrapper">
+    <ion-segment (ionChange)="handleChangeTab($event)" [value]="activeTab" mode="ios">
+      <!-- On review tab -->
+      <ion-segment-button [value]="submittedProductsTabs.onReview">
         {{ submittedProductsTabs.onReview }}
-      </div>
-      <!-- / On review -->
+      </ion-segment-button>
+      <!-- / On review tab -->
 
-      <!-- Approved -->
-      <div
-        class="submitted-products__tabs-item"
-        vertical="center"
-        horizontal="center"
-        [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === submittedProductsTabs.approved }"
-        (click)="handleChangeTab(submittedProductsTabs.approved)"
-      >
+      <!-- Approved tab -->
+      <ion-segment-button [value]="submittedProductsTabs.approved">
         {{ submittedProductsTabs.approved }}
-      </div>
-      <!-- / Approved -->
+      </ion-segment-button>
+      <!-- / Approved tab -->
 
-      <!-- Declined -->
-      <div
-        class="submitted-products__tabs-item"
-        vertical="center"
-        horizontal="center"
-        [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === submittedProductsTabs.declined }"
-        (click)="handleChangeTab(submittedProductsTabs.declined)"
-      >
+      <!-- Declined tab -->
+      <ion-segment-button [value]="submittedProductsTabs.declined">
         {{ submittedProductsTabs.declined }}
-      </div>
-      <!-- / Declined -->
-    </div>
+      </ion-segment-button>
+      <!-- / Declined tab -->
+    </ion-segment>
   </div>
   <!-- / Tabs -->
 

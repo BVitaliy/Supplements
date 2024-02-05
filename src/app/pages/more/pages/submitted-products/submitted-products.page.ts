@@ -17,7 +17,7 @@ export class SubmittedProductsPage {
 
   constructor(public navCtrl: NavController) {}
 
-  public handleChangeTab(tab: SubmittedProductsTabs): void {
-    this.activeTab = tab;
+  public handleChangeTab(event: any): void {
+    this.activeTab = event?.detail?.value;
   }
 }
