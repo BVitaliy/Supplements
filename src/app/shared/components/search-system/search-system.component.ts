@@ -16,7 +16,22 @@ export class SearchSystemComponent {
 
   public searchActiveTab: SearchSystemTabs = SearchSystemTabs.products;
   public searchTabs: typeof SearchSystemTabs = SearchSystemTabs;
+  public categories: any[] = [
+    {
+      image: './assets/img/catalog/vitamines.svg',
+      label: 'Vitamins',
+    },
+    {
+      image: './assets/img/catalog/minerales.svg',
+      label: 'Minerals',
+    },
+    {
+      image: './assets/img/catalog/sleep.svg',
+      label: 'Sleep',
+    },
+  ];
   public productsHistoryItems: any[] = [ ...Products ];
+  public productsItems: any[] = [ ...Products, ...Products ];
   public ingredientsHistoryItems: IngredientOption[] = [
     {
       color: '#22B51F',
@@ -51,6 +66,22 @@ export class SearchSystemComponent {
       label: 'Blackberry Extract',
       id: 5,
       status: ReasonLabels.contaminant,
+      checked: false,
+    },
+  ];
+  public ingredientsItems: IngredientOption[] = [
+    {
+      color: '#22B51F',
+      label: 'Aloe Vera',
+      id: 6,
+      status: ReasonLabels.benefit,
+      checked: false,
+    },
+    {
+      color: '#22B51F',
+      label: 'Alpha-Ketoglutaric Acid',
+      id: 7,
+      status: ReasonLabels.benefit,
       checked: false,
     },
   ];

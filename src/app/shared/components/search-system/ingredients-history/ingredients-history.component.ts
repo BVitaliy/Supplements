@@ -8,6 +8,7 @@ import { IngredientOption } from '../../../../pages/more/pages/highlighted-ingre
 })
 export class IngredientsHistoryComponent {
   @Input() ingredientsHistory: IngredientOption[] = [];
+  @Input() isHistory: boolean = true;
 
   @Output() onCleanHistory: EventEmitter<void> = new EventEmitter<void>();
 }

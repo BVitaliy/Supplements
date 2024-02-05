@@ -1,5 +1,10 @@
 <ion-list lines="full">
-  <ion-item *ngFor="let ingredient of ingredientsHistory">
+  <ion-item
+    *ngFor="let ingredient of ingredientsHistory"
+    [routerLink]="['/home/tabs/tab/catalog/1']"
+    mode="ios"
+    button
+  >
     <div class="ingredients-history__wrapper p-vertical--medium" vertical="center" horizontal="between">
       <div vertical="center" class="p-right--medium">
         <div
@@ -10,17 +15,11 @@
           {{ ingredient.label }}
         </div>
       </div>
-
-      <!-- List actions -->
-      <ion-button class="btn btn-link m-right--x-small" fill="clear" mode="md">
-        <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
-      </ion-button>
-      <!-- / List actions -->
     </div>
   </ion-item>
 </ion-list>
 
-<div class="p-horizontal--medium p-top--medium p-bottom--xx-large">
+<div *ngIf="isHistory" class="p-horizontal--medium p-top--medium p-bottom--xx-large">
   <ion-button
     class="btn btn-sm"
     expand="block"

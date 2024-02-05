@@ -6,13 +6,15 @@ import { SearchEmptyStateComponent } from './search-empty-state/search-empty-sta
 import { ProductsHistoryComponent } from './products-history/products-history.component';
 import { SharedModule } from '../../shared.module';
 import { IngredientsHistoryComponent } from './ingredients-history/ingredients-history.component';
+import { RouterLink } from '@angular/router';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    SharedModule,
-  ],
+    imports: [
+        CommonModule,
+        IonicModule,
+        SharedModule,
+        RouterLink,
+    ],
   declarations: [
     SearchSystemComponent,
     SearchEmptyStateComponent,
