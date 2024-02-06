@@ -28,7 +28,23 @@
     </div>
 
     <div class="content">
+      <form class="form" [formGroup]="form">
+        <div class="form-control">
+          <ion-item class="form-item" mode="ios" lines="none">
+            <ion-label position="stacked">Review title</ion-label>
+            <ion-input formControlName="title" type="text" inputmode="text"
+              placeholder="Shortly describe experience with the product" autocomplete="off"></ion-input>
+          </ion-item>
 
+        </div>
+        <div class="form-control">
+          <ion-item class="form-item" mode="ios" lines="none">
+            <ion-label position="stacked">Your comment</ion-label>
+            <ion-textarea formControlName="comment" type="text" inputmode="text"
+              placeholder="Tell us what do you think about this product" autocomplete="off"></ion-textarea>
+          </ion-item>
+        </div>
+      </form>
     </div>
 
   </ion-grid>

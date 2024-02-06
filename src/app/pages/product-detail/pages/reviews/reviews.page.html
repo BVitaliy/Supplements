@@ -7,7 +7,8 @@
     </ion-buttons>
     <ion-title class="sm">Reviews</ion-title>
     <ion-buttons slot="end">
-      <ion-button class="btn btn-link btn-primary ml-10 fw-500" fill="clear" mode="md">
+      <ion-button class="btn btn-link btn-primary ml-10 fw-500" fill="clear" mode="md"
+        (click)="navCtrl.navigateForward('/product/add-review')">
         <!-- (click)="navCtrl.navigateForward('/product//add-review')" -->
         Add review
       </ion-button>
