@@ -17,7 +17,7 @@ export class HistoryPage {
 
   constructor(public navCtrl: NavController) {}
 
-  public handleChangeTab(tab: HistoryTabs): void {
-    this.activeTab = tab;
+  public handleChangeTab(event: any): void {
+    this.activeTab = event?.detail?.value;
   }
 }
