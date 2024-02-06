@@ -302,6 +302,10 @@ ion-badge {
       color: var(--ion-color-danger);
     }
 
+    &.cancel {
+      color: #007aff;
+    }
+
     span {
       font-weight: bold;
       justify-content: center;
@@ -309,6 +313,23 @@ ion-badge {
 
     &:first-child {
       border-right: 1px solid var(--ion-color-light);
+    }
+  }
+}
+
+.alert-button-group {
+  .alert-button {
+    text-transform: none;
+    font-size: 17px;
+    span {
+      font-weight: 400;
+    }
+    &-delete {
+      color: #ff001c;
+      border-right: 1px solid #3c3c435c !important;
+    }
+    &-cancel {
+      color: #007aff;
     }
   }
 }
@@ -418,13 +439,21 @@ ion-badge {
                   Ion-Modal
 ***********************************************/
 ion-modal {
-  --border-radius: 6px;
+  --border-radius: 0;
   --background: var(--ion-color-quaternary) !important;
 
   &:not(.transparent-modal) {
-    --backdrop-opacity: 1.25;
+    --backdrop-opacity: 1;
     &::part(backdrop) {
-      background: #000000 !important;
+      background: rgba(0, 0, 0, 0.6) !important;
+    }
+  }
+
+  &.modal-sheet {
+    --border-radius: 20px;
+    .ion-page {
+      --border-radius: 20px;
+      border-radius: 20px 20px 0px 0px;
     }
   }
 
@@ -451,10 +480,6 @@ ion-modal {
         height: 18px;
         margin-right: 5px;
       }
-    }
-
-    ion-title {
-      color: var(--ion-color-dark);
     }
   }
 
@@ -556,4 +581,11 @@ ion-modal {
   // width: 100%;
   background: var(--ion-color-light);
   border: none !important;
+}
+
+ion-accordion {
+  ion-icon {
+    margin: 0;
+    color: #a3a3a3;
+  }
 }

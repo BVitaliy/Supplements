@@ -82,28 +82,32 @@
 
         <ng-container *ngIf="type === 'ingredient'">
           <ion-list class="list list-ingredients">
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              (click)="openIngredientsModal(product?.benefits)">
               <span class="indicator green"></span>
               <div class="dark ">Benefits</div>
               <div class="count medium m-left--x-small">
                 32
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              (click)="openIngredientsModal(product?.weaknesses)">
               <span class="indicator danger-bg"></span>
               <div class="dark ">Weaknesses</div>
               <div class="count medium m-left--x-small">
                 7
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              (click)="openIngredientsModal(product?.contaminants)">
               <span class="indicator primary-bg"></span>
               <div class="dark">Contaminants</div>
               <div class="count medium m-left--x-small">
                 3
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              (click)="openIngredientsModal(product?.allergens)">
               <span class="indicator warning-bg"></span>
               <div class="dark">Allergens</div>
               <div class="count medium m-left--x-small">
@@ -113,13 +117,84 @@
           </ion-list>
         </ng-container>
 
+        <ng-container *ngIf="type === 'efects'">
+          <ion-accordion-group [multiple]="true" class="list">
+            <ion-accordion>
+              <ion-item slot="header" class="text-m dark">
+                <div class="dark fw-600">Blood sugar levels</div>
+                <div class="count medium m-left--x-small">2</div>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                <ion-item class="text-m primary fw-500" button detail="false" lines="none"
+                  (click)="openIngredientModal('Green Tea Extract')">
+                  Green Tea Extract
+                </ion-item>
+                <ion-item class="text-m primary fw-500" button detail="false" lines="none"
+                  (click)="openIngredientModal('Rhodiola Root Extract')">
+                  Rhodiola Root Extract
+                </ion-item>
+              </div>
+            </ion-accordion>
+            <ion-accordion>
+              <ion-item slot="header" class="text-m dark">
+                <div class="dark fw-600">Liver function</div>
+                <div class="count medium m-left--x-small">4</div>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                <ion-item class="text-m primary fw-500" button detail="false" lines="none"
+                  (click)="openIngredientModal('Green Tea Extract')">
+                  Green Tea Extract
+                </ion-item>
+                <ion-item class="text-m primary fw-500" button detail="false" lines="none"
+                  (click)="openIngredientModal('Rhodiola Root Extract')">
+                  Rhodiola Root Extract
+                </ion-item>
+              </div>
+            </ion-accordion>
+            <ion-accordion>
+              <ion-item slot="header" class="text-m dark">
+                <div class="dark fw-600">Hormone function</div>
+                <div class="count medium m-left--x-small">2</div>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                <ion-item class="text-m primary fw-500" button detail="false" lines="none"
+                  (click)="openIngredientModal('Green Tea Extract')">
+                  Green Tea Extract
+                </ion-item>
+                <ion-item class="text-m primary fw-500" button detail="false" lines="none"
+                  (click)="openIngredientModal('Rhodiola Root Extract')">
+                  Rhodiola Root Extract
+                </ion-item>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </ng-container>
       </div>
 
       <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
         <div class="title text-l fw-600 dark pb-5">Highlighted ingredients</div>
-        <p class="medium fw-500">Add ingredients that you would like to highlight based on your diet, allergies, or
+        <p class="medium fw-500 p-bottom--x-large" *ngIf="!addedHIngredientsOptions?.length">Add ingredients that you
+          would like to highlight based on your diet,
+          allergies, or
           other reasons that you have, if this
           ingredient is present in the product, it will appear in this list</p>
+
+        <ng-container *ngIf="addedHIngredientsOptions?.length">
+          <ion-list class="list list-ingredients m-bottom--x-small m-top--xx-small">
+            <ion-item class="text-m dark" button detail="false" lines="none"
+              *ngFor="let option of addedHIngredientsOptions"
+              (click)="openIngredientModal(option?.label, option?.color)">
+              <span class="indicator" [ngStyle]="{ 'background': option?.color}"></span>
+              <div class="primary fw-500">{{option?.label}}</div>
+            </ion-item>
+          </ion-list>
+        </ng-container>
+
+
+        <ion-button class="btn btn-primary btn-sm" expand="block" fill="outline" mode="md"
+          (click)="openHighlightedModal()">
+          {{addedHIngredientsOptions && addedHIngredientsOptions?.length ? 'Edit' : 'Add Ingredients'}}
+        </ion-button>
       </div>
 
       <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
@@ -138,12 +213,11 @@
         </ion-button>
       </div>
 
-      <ion-item class="fw-600 text-l dark item-detail m-bottom--large" button lines="none"
-        (click)="navCtrl.navigateRoot('home/tabs/tab/more/change-password')">
+      <ion-item class="fw-600 text-l dark item-detail m-bottom--large" button detail="true" lines="none"
+        (click)="navCtrl.navigateForward('/product/reviews')">
         Reviews
         <span class="medium m-left--x-small">32</span>
       </ion-item>
-
     </div>
   </ng-container>
 

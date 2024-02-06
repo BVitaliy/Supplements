@@ -1,0 +1,41 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="cancelModal()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="sm">{{indregientsDetail?.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <div class="product-detail">
+      <div class="image">
+        <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
+      </div>
+      <ion-text>
+        <p class="text-xs medium fw-400 ion-text-uppercase m-bottom--xxx-small">{{product?.category}}</p>
+        <p class="text-s dark fw-600">{{product?.title}}</p>
+      </ion-text>
+    </div>
+
+    <div class="content">
+      <div class="ingredient-header m-bottom--medium">
+        <div class="badge" [ngStyle]="{ 'background': indregientsDetail?.color}"></div>
+        <span class="h4 dark fw-600">{{indregientsDetail?.title}}</span>
+        <span class="h4 medium fw-600">{{indregientsDetail?.count}}</span>
+      </div>
+
+      <ion-list class="ingerdients">
+        <ng-container *ngFor="let item of indregientsDetail?.ingredients">
+          <ion-item class="text-m primary" button detail="false" lines="none" (click)="openIngredientModal(item)">
+            {{item}}
+          </ion-item>
+        </ng-container>
+      </ion-list>
+    </div>
+
+  </ion-grid>
+</ion-content>

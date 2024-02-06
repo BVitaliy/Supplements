@@ -5,8 +5,17 @@ import { ProductDetailPage } from './product-detail.page';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: 'detail/:id',
     component: ProductDetailPage,
+  },
+  {
+    path: 'reviews',
+    loadChildren: () =>
+      import('./pages/reviews/reviews.module').then((m) => m.ReviewsPageModule),
+  },
+  {
+    path: 'add-review',
+    loadChildren: () => import('./pages/add-review/add-review.module').then( m => m.AddReviewPageModule)
   },
 ];
 

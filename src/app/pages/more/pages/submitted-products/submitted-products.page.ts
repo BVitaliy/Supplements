@@ -9,15 +9,16 @@ import { Products } from '../../../../../mock/products';
   styleUrls: ['./submitted-products.page.scss'],
 })
 export class SubmittedProductsPage {
-  public activeTab: SubmittedProductsTabs = SubmittedProductsTabs.onReview;
-  public submittedProductsTabs: typeof SubmittedProductsTabs = SubmittedProductsTabs;
-  public onReviewProducts: any[] = [ ...Products ];
-  public approvedProducts: any[] = [ ...Products ];
-  public declinedProducts: any[] = [ ...Products ];
+  public activeTab = 'onReview';
+  public submittedProductsTabs: typeof SubmittedProductsTabs =
+    SubmittedProductsTabs;
+  public onReviewProducts: any[] = [...Products];
+  public approvedProducts: any[] = [...Products];
+  public declinedProducts: any[] = [...Products];
 
   constructor(public navCtrl: NavController) {}
 
-  public handleChangeTab(tab: SubmittedProductsTabs): void {
-    this.activeTab = tab;
+  public handleChangeTab(event: any): void {
+    this.activeTab = event?.detail?.value;
   }
 }

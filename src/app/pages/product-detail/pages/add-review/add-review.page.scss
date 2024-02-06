@@ -1,0 +1,32 @@
+ion-grid {
+  padding: 0;
+}
+
+ion-buttons {
+  ion-button {
+    --padding-start: 0;
+    --padding-end: 0;
+    font-size: 13px;
+  }
+}
+.product-detail {
+  padding: 16px;
+  border-bottom: 1px solid #e9e9e9;
+  background: #fff;
+  display: flex;
+  .image {
+    background: #f8f8f8;
+    min-width: 48px;
+    padding: 5px;
+    width: 48px;
+    height: 58px;
+    border-radius: 10px;
+    border: 1px solid #f2f2f2;
+    margin-right: 12px;
+  }
+
+  ion-text {
+    align-self: center;
+    --padding-end: 20px;
+  }
+}

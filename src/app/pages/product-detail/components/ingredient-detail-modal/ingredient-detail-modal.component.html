@@ -1,0 +1,68 @@
+<ion-content>
+  <ion-grid>
+
+    <div class="content">
+      <div class="ingredient-header m-bottom--medium">
+        <div class="badge" [ngStyle]="{ 'background': indregientDetail?.color || color}"></div>
+        <span class="h4 dark fw-600">{{title}}</span>
+      </div>
+
+      <!-- <ion-list class="ingerdients">
+        <ng-container *ngFor="let item of indregientDetail?.ingredients">
+          <ion-item class="text-m primary" button detail="false" lines="none"
+            (click)="navCtrl.navigateRoot('home/tabs/tab/more/history')">
+            {{item}}
+          </ion-item>
+        </ng-container>
+      </ion-list> -->
+      <div class="description">
+        <div class="text-m m-bottom--xx-small dark fw-700">Usage</div>
+        <p>Lorem ipsum dolor sit amet consectetur. Venenatis cursus rhoncus et nulla at adipiscing nascetur mi. Egestas
+          vel integer
+          sem pharetra. Sagittis cras lectus posuere netus dictumst sapien. Blandit auctor sapien dictum at pellentesque
+          lectus.
+          Ultricies vitae facilisi aenean lobortis duis. In velit vulputate maecenas massa sit scelerisque enim aliquet
+          nisi.
+          Maecenas aenean gravida porttitor tempus tincidunt potenti nisi dolor viverra.</p>
+
+        <div class="text-m m-bottom--xx-small dark fw-700">Health impact</div>
+        <p>Lorem ipsum dolor sit amet consectetur. Venenatis cursus rhoncus et nulla at adipiscing nascetur mi. Egestas
+          vel integer
+          sem pharetra. Sagittis cras lectus posuere netus dictumst sapien. Blandit auctor sapien dictum at pellentesque
+          lectus.
+          Ultricies vitae facilisi aenean lobortis duis. In velit vulputate maecenas massa sit scelerisque enim aliquet
+          nisi.
+          Maecenas aenean gravida porttitor tempus tincidunt potenti nisi dolor viverra.</p>
+
+        <div class="text-m m-bottom--xx-small dark fw-700">Sources</div>
+        <ion-list class="external-links">
+          <!-- <ng-container *ngFor="let item of indregientsDetail?.ingredients">
+          <ion-item class="text-m primary" button detail="false" lines="none" (click)="openIngredientModal(item)">
+            {{item}}
+          </ion-item>
+        </ng-container> -->
+          <ion-item class="text-m primary" button detail="false" lines="none">
+            <p>
+              A toxicological review of the propylene glycol
+            </p>
+            <ion-icon slot="end" [src]="'./assets/img/icons/icon-extrnal-link.svg'"></ion-icon>
+          </ion-item>
+          <ion-item class="text-m primary" button detail="false" lines="none">
+            <p>
+              A toxicological review of the propylene glycol
+            </p>
+            <ion-icon slot="end" [src]="'./assets/img/icons/icon-extrnal-link.svg'"></ion-icon>
+          </ion-item>
+          <ion-item class="text-m primary" button detail="false" lines="none">
+            <p>
+              A toxicological review of the propylene glycol
+            </p>
+            <ion-icon slot="end" [src]="'./assets/img/icons/icon-extrnal-link.svg'"></ion-icon>
+          </ion-item>
+        </ion-list>
+      </div>
+
+    </div>
+
+  </ion-grid>
+</ion-content>

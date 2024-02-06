@@ -48,7 +48,7 @@ export class MainPage implements OnInit {
     );
 
     const alert = await this.alertController.create({
-      // cssClass: 'delete-alert',
+      cssClass: 'delete-alert',
       header: 'Log out profile?',
       message: 'Do you really want to log out?',
       mode: 'ios',
@@ -99,12 +99,12 @@ export class MainPage implements OnInit {
         {
           text: 'Cancel',
           role: 'cancel',
-          cssClass: ['danger'],
+          cssClass: ['alert-button-delete'],
         },
         {
           text: 'Delete',
           role: 'confirm',
-          cssClass: ['secondary'],
+          cssClass: ['alert-button-cancel'],
           handler: (): void => {
             // delete account
           },

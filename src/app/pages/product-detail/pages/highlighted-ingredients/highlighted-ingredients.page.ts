@@ -1,14 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { SwiperComponent } from 'swiper/angular';
-import { SwiperOptions } from 'swiper';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ModalController, NavController } from '@ionic/angular';
+
+import { FormControl, FormGroup } from '@angular/forms';
 import {
   IngredientOption,
   IngredientsSection,
   ReasonLabels,
   ReasonOption,
-} from '../../../../core/models/highlighted-ingredients.models';
-import { FormControl, FormGroup } from '@angular/forms';
+} from 'src/app/core/models/highlighted-ingredients.models';
+import { SwiperComponent } from 'swiper/angular';
+import { SwiperOptions } from 'swiper';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-highlighted-ingredients',
@@ -18,7 +20,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class HighlightedIngredientsPage implements OnInit {
   @ViewChild('reasonsSwiper') reasonsSwiper!: SwiperComponent;
   @ViewChild('ingredientsSwiper') ingredientsSwiper!: SwiperComponent;
-
+  @Input() addedIngredientsOptions: Array<IngredientOption> = [];
+  // backBtnSubscription!: Subscription;
   public searchForm!: FormGroup;
   public activeReasonFilter: string = '';
   public reasonsSlideOpts: SwiperOptions = {
@@ -57,7 +60,7 @@ export class HighlightedIngredientsPage implements OnInit {
       isActive: false,
     },
   ];
-  public addedIngredientsOptions: IngredientOption[] = [];
+
   public optionsToShow: IngredientsSection[] = [];
   public options: IngredientsSection[] = [
     {
@@ -142,17 +145,33 @@ export class HighlightedIngredientsPage implements OnInit {
     },
   ];
 
-  constructor(public navCtrl: NavController) {}
+  constructor(
+    public navCtrl: NavController,
+    private modalController: ModalController
+  ) {
+    console.log(this.addedIngredientsOptions);
+  }
 
-  public ngOnInit(): void {
+  ngOnInit() {
     this.searchForm = new FormGroup({
       search: new FormControl(null),
     });
     this.optionsToShow = this.options;
+    console.log(this.addedIngredientsOptions);
+    setTimeout(() => {
+      if (this.optionsToShow && this.addedIngredientsOptions?.length) {
+        this.addedIngredientsOptions?.map((item: any) => {
+          this.handleChangeCheckboxState(true, item?.id);
+        });
+      }
+      console.log(this.optionsToShow);
+    }, 500);
   }
 
-  public handleApplyChanges(): void {
+  public async handleApplyChanges() {
     // apply changes
+    console.log(this.addedIngredientsOptions);
+    await this.modalController.dismiss(this.addedIngredientsOptions);
   }
 
   public handleSelectReasonFilter(label?: ReasonLabels | string): void {
@@ -173,6 +192,12 @@ export class HighlightedIngredientsPage implements OnInit {
   }
 
   public handleClearAllAddedIngredients(): void {
+    console.log(this.addedIngredientsOptions);
+
+    this.addedIngredientsOptions?.map((item: any) => {
+      console.log(item);
+      this.handleChangeCheckboxState(false, item?.id);
+    });
     this.addedIngredientsOptions = [];
   }
 
@@ -231,5 +256,9 @@ export class HighlightedIngredientsPage implements OnInit {
         ),
       } as IngredientsSection;
     });
+  }
+
+  cancelModal() {
+    this.modalController.dismiss();
   }
 }

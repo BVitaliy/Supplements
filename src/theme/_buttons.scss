@@ -69,8 +69,16 @@
   }
 
   &.button-outline {
-    --border-width: 1px;
-    --border-color: var(--ion-color-tertiary);
+    --border-width: 2px;
+    --border-color: var(--ion-color-primary);
+
+    &.btn-primary {
+      --color: var(--ion-color-primary);
+      &::part(native) {
+        --color: var(--ion-color-primary);
+        color: var(--ion-color-primary);
+      }
+    }
   }
 
   &-sm {

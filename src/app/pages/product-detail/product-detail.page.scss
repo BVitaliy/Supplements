@@ -82,6 +82,10 @@
     justify-content: center;
     flex-direction: column;
   }
+  app-chart {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .list {
@@ -108,12 +112,46 @@
     border-radius: 10px;
     --min-height: 24px;
     --padding-start: 14px;
-    --inner-padding-end: 14px;
+    --inner-padding-end: 0;
     --padding-top: 14px;
     --padding-bottom: 14px;
     --padding-end: 14px;
     &:not(:last-child) {
       margin-bottom: 8px;
+    }
+  }
+
+  ion-accordion {
+    background-color: #fff;
+    border: 1px solid #f2f2f2;
+    border-radius: 10px;
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+
+    ion-item {
+      --inner-padding-end: 0;
+      --border-width: 0;
+      &:not(:last-child) {
+        margin-bottom: 0;
+      }
+      ion-icon {
+        margin: 0;
+      }
+    }
+
+    .ion-padding {
+      padding: 0 12px 12px;
+      ion-item {
+        --border-color: #f2f2f2;
+        --border-width: 1px;
+        --min-height: 18px;
+        background-color: #f2f2f2;
+        --background: #f2f2f2;
+        &:not(:last-child) {
+          margin-bottom: 12px;
+        }
+      }
     }
   }
 }

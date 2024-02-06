@@ -10,14 +10,18 @@ import { Products } from '../../../../../mock/products';
 })
 export class HistoryPage {
   public historyTabs: typeof HistoryTabs = HistoryTabs;
-  public activeTab: HistoryTabs = HistoryTabs.viewed;
-  public viewedProducts: any[] = [ ...Products ];
-  public scannedProducts: any[] = [ ...Products ];
-  public reviewedProducts: any[] = [ ...Products ];
+  public activeTab = 'viewed';
+  public viewedProducts: any[] = [...Products];
+  public scannedProducts: any[] = [...Products];
+  public reviewedProducts: any[] = [...Products];
 
   constructor(public navCtrl: NavController) {}
 
-  public handleChangeTab(tab: HistoryTabs): void {
-    this.activeTab = tab;
+  // public handleChangeTab(tab: HistoryTabs): void {
+  //   this.activeTab = tab;
+  // }
+
+  handleChangeTab(event: any) {
+    this.activeTab = event?.detail?.value;
   }
 }

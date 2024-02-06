@@ -1,0 +1,35 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="sm">New review</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="btn btn-link btn-primary ml-10 fw-500" fill="clear" mode="md">
+        Send
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+
+    <div class="product-detail">
+      <div class="image">
+        <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
+      </div>
+      <ion-text>
+        <p class="text-xs medium fw-400 ion-text-uppercase m-bottom--xxx-small">{{product?.category}}</p>
+        <p class="text-s dark fw-600">{{product?.title}}</p>
+      </ion-text>
+    </div>
+
+    <div class="content">
+
+    </div>
+
+  </ion-grid>
+</ion-content>
