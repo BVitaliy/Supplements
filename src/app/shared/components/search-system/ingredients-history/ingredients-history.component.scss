@@ -1,0 +1,21 @@
+.ingredients-history__wrapper {
+  width: 100%;
+}
+
+.ingredients-history__badge {
+  width: 10px;
+  min-width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.ingredients-history__item-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0;
+  color: #04002C;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

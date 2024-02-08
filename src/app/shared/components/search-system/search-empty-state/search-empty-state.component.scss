@@ -1,0 +1,27 @@
+.search-empty-state__empty-list {
+  height: 100%;
+}
+
+.search-empty-state__empty-list-icon {
+  height: 180px;
+  width: 188px;
+}
+
+.search-empty-state__empty-list-title {
+  font-family: 'Inter';
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0;
+  text-align: center;
+  color: #04002C;
+}
+
+.search-empty-state__empty-list-description {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0;
+  text-align: center;
+  color: #9E9D9D;
+}

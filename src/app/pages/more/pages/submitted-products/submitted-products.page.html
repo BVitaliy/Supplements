@@ -17,36 +17,6 @@
 <ion-content class="submitted-products__content-gap">
   <!-- Tabs -->
   <div class="submitted-products__tabs-wrapper">
-    <!-- <div class="submitted-products__tabs">
-      
-      <div
-        class="submitted-products__tabs-item"
-        vertical="center"
-        horizontal="center"
-        [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === submittedProductsTabs.onReview }"
-        (click)="handleChangeTab(submittedProductsTabs.onReview)"
-      >
-        {{ submittedProductsTabs.onReview }}
-      </div> 
-      <div
-        class="submitted-products__tabs-item"
-        vertical="center"
-        horizontal="center"
-        [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === submittedProductsTabs.approved }"
-        (click)="handleChangeTab(submittedProductsTabs.approved)"
-      >
-        {{ submittedProductsTabs.approved }}
-      </div> 
-      <div
-        class="submitted-products__tabs-item"
-        vertical="center"
-        horizontal="center"
-        [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === submittedProductsTabs.declined }"
-        (click)="handleChangeTab(submittedProductsTabs.declined)"
-      >
-        {{ submittedProductsTabs.declined }}
-      </div> 
-    </div> -->
 
     <ion-segment (ionChange)="handleChangeTab($event)" [value]="activeTab" mode="ios" class="m-bottom--medium">
       <ion-segment-button value="onReview">
@@ -59,6 +29,7 @@
         {{ submittedProductsTabs.declined }}
       </ion-segment-button>
     </ion-segment>
+
   </div>
   <!-- / Tabs -->
 

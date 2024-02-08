@@ -17,40 +17,7 @@
 <ion-content class="history__content-gap">
   <!-- Tabs -->
   <div class="history__tabs-wrapper">
-    <!-- 
-      <div class="history__tabs">
-    
-        <div
-          class="history__tabs-item"
-          vertical="center"
-          horizontal="center"
-          [ngClass]="{ 'history__tabs-item--active': activeTab === historyTabs.viewed }"
-          (click)="handleChangeTab(historyTabs.viewed)"
-        >
-          Viewed
-        </div>
-  
-        <div
-          class="history__tabs-item"
-          vertical="center"
-          horizontal="center"
-          [ngClass]="{ 'history__tabs-item--active': activeTab === historyTabs.scanned }"
-          (click)="handleChangeTab(historyTabs.scanned)"
-        >
-          Scanned
-        </div>
-  
-        <div
-          class="history__tabs-item"
-          vertical="center"
-          horizontal="center"
-          [ngClass]="{ 'history__tabs-item--active': activeTab === historyTabs.reviewed }"
-          (click)="handleChangeTab(historyTabs.reviewed)"
-        >
-          Reviewed
-        </div> 
-      </div>
-    -->
+
     <ion-segment (ionChange)="handleChangeTab($event)" [value]="activeTab" mode="ios" class="m-bottom--medium">
       <ion-segment-button value="viewed">
         Viewed

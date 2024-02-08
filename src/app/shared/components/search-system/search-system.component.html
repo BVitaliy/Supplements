@@ -1,0 +1,89 @@
+<div direction="column" class="search-system__wrapper">
+  <!-- Tabs -->
+  <div class="p-bottom--x-small p-horizontal--medium p-top--large search-system__tabs-wrapper">
+    <ion-segment (ionChange)="changeSearchTab($event)" [value]="searchActiveTab" mode="ios">
+      <!-- Products tab -->
+      <ion-segment-button [value]="searchTabs.products">
+        {{ searchTabs.products }}
+      </ion-segment-button>
+      <!-- / Products tab -->
+
+      <!-- Ingredients tab -->
+      <ion-segment-button [value]="searchTabs.ingredients">
+        {{ searchTabs.ingredients }}
+      </ion-segment-button>
+      <!-- / Ingredients tab -->
+    </ion-segment>
+  </div>
+  <!-- / Tabs -->
+
+  <!-- Content -->
+  <div [ngSwitch]="searchActiveTab" class="flex-grow search-system__content-wrapper">
+    <!-- Products tab content -->
+    <ng-container *ngSwitchCase="searchTabs.products" [ngSwitch]="!!searchValue.length">
+      <!-- Search value -->
+      <ng-container *ngSwitchCase="true">
+        <app-products-history
+          [productsHistory]="productsItems"
+          [searchValue]="searchValue"
+          [categories]="categories"
+          [isHistory]="false"
+        ></app-products-history>
+      </ng-container>
+      <!-- / Search value -->
+
+      <!-- Empty search value -->
+      <ng-container *ngSwitchCase="false" [ngSwitch]="!!productsHistoryItems.length">
+        <!-- Products history -->
+        <ng-container *ngSwitchCase="true">
+          <app-products-history
+            [productsHistory]="productsHistoryItems"
+            (onCleanHistory)="handleCleanProductsHistory()"
+          ></app-products-history>
+        </ng-container>
+        <!-- / Products history -->
+
+        <!-- Empty state -->
+        <ng-container *ngSwitchCase="false">
+          <app-search-empty-state class="flex-grow"></app-search-empty-state>
+        </ng-container>
+        <!-- / Empty state -->
+      </ng-container>
+      <!-- / Empty search value -->
+    </ng-container>
+    <!-- / Products tab content -->
+
+    <!-- Ingredients tab content -->
+    <ng-container *ngSwitchCase="searchTabs.ingredients" [ngSwitch]="!!searchValue.length">
+      <!-- Search value -->
+      <ng-container *ngSwitchCase="true">
+        <app-ingredients-history
+          [ingredientsHistory]="ingredientsItems"
+          [isHistory]="false"
+        ></app-ingredients-history>
+      </ng-container>
+      <!-- / Search value -->
+
+      <!-- Empty search value -->
+      <ng-container *ngSwitchCase="false" [ngSwitch]="!!ingredientsHistoryItems.length">
+        <!-- Ingredients history -->
+        <ng-container *ngSwitchCase="true">
+          <app-ingredients-history
+            [ingredientsHistory]="ingredientsHistoryItems"
+            (onCleanHistory)="handleCleanIngredientsHistory()"
+          ></app-ingredients-history>
+        </ng-container>
+        <!-- / Ingredients history -->
+
+        <!-- Empty state -->
+        <ng-container *ngSwitchCase="false">
+          <app-search-empty-state class="flex-grow"></app-search-empty-state>
+        </ng-container>
+        <!-- / Empty state -->
+      </ng-container>
+      <!-- / Empty search value -->
+    </ng-container>
+    <!-- / Ingredients tab content -->
+  </div>
+  <!-- / Content -->
+</div>
