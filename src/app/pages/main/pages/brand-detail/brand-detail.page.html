@@ -1,21 +1,15 @@
 <ion-header mode="ios">
-  <ion-toolbar [formGroup]="filterForm" class="sm">
-    <div class="page-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
       <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
         <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
       </ion-button>
-      <ion-title class="sm mb-10 pt-10">Vitamins</ion-title>
-    </div>
-    <ion-searchbar #searchbar mode="ios" placeholder="Search" show-clear-button="never"
-      [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
-      formControlName="search" (ionChange)="search($event)">
-    </ion-searchbar>
+    </ion-buttons>
+    <ion-title class="md">Now Supplements</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <app-filter-row (onOpenSort)="openSortPopover()" (onOpenFilter)="openFiltersModal()"
-    [resultCount]="123"></app-filter-row>
+  <app-filter-row (onOpenSort)="openSortPopover()" (onOpenFilter)="openFilter()" [resultCount]="123"></app-filter-row>
 
   <div class="content" [ngSwitch]="!!listProducts.length">
     <!-- Products -->

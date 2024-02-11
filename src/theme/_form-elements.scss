@@ -59,14 +59,22 @@
     }
   }
 
+  &.sm {
+    --min-height: 40px;
+    font-size: 14px;
+    input {
+      padding: 10px 14px !important;
+    }
+  }
+
   // Внутрішні відступи для філдів
   ion-input,
   ion-textarea,
   ion-datetime,
   ion-select {
-    --padding-start: 13px !important;
-    --padding-end: 13px !important;
-    --padding-top: 14px !important;
+    --padding-start: 12px !important;
+    --padding-end: 12px !important;
+    --padding-top: 13px !important;
     --padding-bottom: 13px !important;
     --background: transparent;
     --placeholder-color: var(--ion-color-light-next);
@@ -84,11 +92,20 @@
   ion-textarea {
     margin: 0;
     height: 109px;
-    --padding-top: 8px;
-    --padding-bottom: 8px;
+    --padding-top: 8px !important;
+    --padding-bottom: 8px !important;
     // margin: 10px 0 12px;
     textarea {
       height: 109px;
+    }
+  }
+
+  &.sm {
+    ion-textarea {
+      height: 98px;
+      textarea {
+        height: 98px;
+      }
     }
   }
 
@@ -411,61 +428,19 @@ ion-checkbox {
 /***********************************************************
                         Radio button
 ************************************************************/
-.line-radio-group {
-  display: flex;
-  // justify-content: flex-end;
-  // margin-bottom: 15px;
-}
+ion-radio {
+  --border-width: 1px;
+  --border-color: #d8d8d8;
 
-ion-list .item-radio-checked ion-label {
-  color: var(--ion-color-primary) !important;
-}
-
-.item-radio {
-  --min-height: 0;
-  font-size: 14px;
-  line-height: 20px;
-
-  ion-label {
-    margin: 0;
-  }
-
-  ion-radio {
-    margin: 0;
-  }
-
-  &-md {
-    --min-height: none;
-    --inner-padding-end: 0;
-    ion-radio {
-      width: 17px;
-      height: 17px;
-      --border-radius: 50%;
-      --inner-border-radius: 50%;
-      --color: var(--ion-color-tertiary);
-      --color-checked: var(--ion-color-danger);
-      --border-width: 1px;
-      margin: 5px 10px;
+  &.radio-checked {
+    &::part(container) {
+      background: var(--ion-color-primary);
     }
-    ion-label {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      margin: 0 0 0 9px;
-      color: var(--ion-color-dark);
+    &::part(mark) {
+      width: 8px;
+      height: 8px;
+      background: #fff;
     }
-    &.item-radio-checked {
-      ion-radio::part(container) {
-        padding: 2px;
-      }
-
-      ion-radio::part(mark) {
-        transform: scale3d(1, 1, 1);
-      }
-    }
-    // &:not(:last-of-type) {
-    //   margin-bottom: 5px;
-    // }
   }
 }
 
@@ -666,6 +641,51 @@ ion-list .item-radio-checked ion-label {
       min-width: 24px;
       margin: 0;
       z-index: 20;
+    }
+
+    .btn {
+      height: 32px;
+      width: 32px;
+      --min-height: 32px;
+      z-index: 10;
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      --padding-start: 0;
+      --padding-end: 0;
+      ion-icon {
+        position: relative;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+}
+
+.highlighted-ingredients__search {
+  .searchbar-input {
+    font-size: 14px;
+  }
+}
+
+.file-control {
+  padding-bottom: 20px;
+  ion-label {
+    color: var(--ion-color-dark);
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+  }
+  .btn {
+    --border-width: 1px;
+    --border-color: var(--ion-color-light-shade);
+    height: 40px;
+    --min-height: 40px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    ion-icon {
+      margin-right: 8px;
     }
   }
 }

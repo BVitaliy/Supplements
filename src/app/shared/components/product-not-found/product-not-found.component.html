@@ -1,0 +1,16 @@
+<ion-content>
+
+  <div class="content ion-text-center" [ngStyle]="{'height': modalHeight + 'px'}">
+    <app-img [src]="'./assets/img/product/product-not-found.svg'" cssClasses="img-fit-contain"></app-img>
+
+    <h2 class="h2 fw-700 dark m-bottom--x-small ">Product not found</h2>
+    <p class="medium text-m m-bottom--medium">Unfortunately, the product you scanned is not in our database, but you can
+      add it yourself
+      and share your
+      experience</p>
+    <ion-button class="btn btn-primary" expand="block" fill="solid" mode="md" (click)="openPage()">
+      <ion-icon [src]="'./assets/img/product/plus.svg'" slot="start"></ion-icon>
+      Add product
+    </ion-button>
+  </div>
+</ion-content>

@@ -42,7 +42,7 @@
       <div class="section-header">
         <h3 class="h3">Trending now</h3>
 
-        <ion-button class="btn btn-link ml-10" fill="clear" mode="md">
+        <ion-button class="btn btn-link ml-10" fill="clear" mode="md" [routerLink]="['/home/tabs/tab/main/trending']">
           <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
         </ion-button>
       </div>
@@ -58,19 +58,19 @@
 
     <div class="section">
       <div class="section-header">
-        <h3 class="h3">For you</h3>
+        <h3 class="h3">Shop by</h3>
       </div>
 
       <div class="shop-links">
         <ion-item button detail="false" lines="none">
-          <div class="item">
+          <div class="item" [routerLink]="['/home/tabs/tab/main/all-brands']">
             <app-img [src]="'./assets/img/icons/main-all-brands.svg'" cssClasses="img-fit-contain"></app-img>
             <ion-label>
               All Brands
             </ion-label>
           </div>
         </ion-item>
-        <ion-item button detail="false" lines="none">
+        <ion-item button detail="false" lines="none" [routerLink]="['/home/tabs/tab/main/ingredients']">
           <div class="item">
             <app-img [src]="'./assets/img/icons/icon-main-ingredients.svg'" cssClasses="img-fit-contain"></app-img>
 
@@ -86,7 +86,7 @@
       <div class="section-header">
         <h3 class="h3">For you</h3>
 
-        <ion-button class="btn btn-link ml-10" fill="clear" mode="md">
+        <ion-button class="btn btn-link ml-10" fill="clear" mode="md" [routerLink]="['/home/tabs/tab/main/trending']">
           <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
         </ion-button>
       </div>
@@ -104,7 +104,7 @@
       <div class="section-header">
         <h3 class="h3">Sales and offers</h3>
 
-        <ion-button class="btn btn-link ml-10" fill="clear" mode="md">
+        <ion-button class="btn btn-link ml-10" fill="clear" mode="md" [routerLink]="['/home/tabs/tab/main/trending']">
           <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
         </ion-button>
       </div>

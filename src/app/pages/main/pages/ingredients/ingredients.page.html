@@ -1,0 +1,44 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="md">Ingredients</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+    <!-- Search -->
+    <div class="p-bottom--large" [formGroup]="searchForm">
+      <ion-searchbar mode="ios" placeholder="Search..." show-clear-button="never"
+        [searchIcon]="'./assets/img/icons/search-icon-grey.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
+        formControlName="search" class="highlighted-ingredients__search" (ionChange)="search($event)"></ion-searchbar>
+    </div>
+    <!-- / Search -->
+
+    <ng-container *ngFor="let brandSection of brandList">
+      <div *ngIf="brandSection.brands?.length" class="section">
+        <!-- Section label -->
+        <div class="section-label m-bottom--x-small">
+          {{ brandSection.label }}
+        </div>
+        <!-- / Section label -->
+        <ion-list class="list">
+          <ng-container *ngFor="let brand of brandSection.brands; let last = last">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              [routerLink]="['/home/tabs/tab/main/all-brands/', brand?.id]">
+              <span class="indicator" [ngStyle]="{ 'background': brand?.color}"></span>
+              <div class="dark ">{{brand?.label}}</div>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+
+
+      </div>
+    </ng-container>
+
+  </div>
+</ion-content>

@@ -1,28 +1,29 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController, NavController, Platform } from '@ionic/angular';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ModalController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-thank',
-  templateUrl: './thank.component.html',
-  styleUrls: ['./thank.component.scss'],
+  selector: 'app-sort-modal',
+  templateUrl: './sort-modal.component.html',
+  styleUrls: ['./sort-modal.component.scss'],
 })
-export class ThankComponent implements OnInit {
-  @Input() imgSrc!: string;
-  @Input() title!: string;
-  @Input() description!: string;
-  @Input() buttonRouterUrl!: string;
-  @Input() buttonText!: string;
-  @Input() hasCloseBtn!: boolean;
+export class SortModalComponent implements OnInit {
+  @Input() sort!: string;
+  public sortForm!: FormGroup;
   backBtnSubscription!: Subscription;
 
   constructor(
-    private navCtrl: NavController,
     private modalController: ModalController,
     private platform: Platform
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.sort);
+    this.sortForm = new FormGroup({
+      sort: new FormControl(this.sort || 'featured'),
+    });
+  }
 
   ionViewWillEnter() {
     this.backBtnSubscription = this.platform.backButton.subscribeWithPriority(
@@ -37,13 +38,8 @@ export class ThankComponent implements OnInit {
     if (this.backBtnSubscription) {
       this.backBtnSubscription.unsubscribe();
     }
-    const onClosedData = null;
+    const onClosedData = this.sortForm.value?.sort || null;
     await this.modalController.dismiss(onClosedData);
-  }
-
-  redirect(): void {
-    this.navCtrl.navigateForward([this.buttonRouterUrl]);
-    this.cancelModal();
   }
 
   ionViewDidLeave() {

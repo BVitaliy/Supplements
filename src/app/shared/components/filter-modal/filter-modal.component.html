@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Back action -->
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link btn-primary ml-10" fill="clear" mode="md" (click)="handleApplyChanges()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <!-- / Back action -->
+
+    <!-- Header title -->
+    <ion-title class="sm">Filter (257)</ion-title>
+    <!-- / Header title -->
+
+    <!-- Apply action -->
+    <ion-buttons slot="end">
+      <ion-button class="btn btn-link btn-primary ml-10" fill="clear" mode="md" (click)="handleApplyChanges()">
+        Apply
+      </ion-button>
+    </ion-buttons>
+    <!-- / Apply action -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-accordion-group [multiple]="true">
+    <ion-accordion value="categories">
+      <ion-item slot="header" class="item-header" color="light">
+        <ion-label>Categories</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <app-filter-group [options]="categories" [type]="'category'"
+          (filteredOptions)="filtered($event)"></app-filter-group>
+
+      </div>
+    </ion-accordion>
+    <ion-accordion value="rating">
+      <ion-item slot="header" class="item-header" color="light">
+        <ion-label>Ingredients Rating</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+      </div>
+    </ion-accordion>
+    <ion-accordion value="brands">
+      <ion-item slot="header" class="item-header" color="light">
+        <ion-label>Brands</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-filter-group [options]="brands" [type]="'brand'" (filteredOptions)="filtered($event)"></app-filter-group>
+      </div>
+    </ion-accordion>
+
+    <ion-accordion value="ingredients">
+      <ion-item slot="header" class="item-header" color="light">
+        <ion-label>Ingredients</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">Third Content</div>
+    </ion-accordion>
+
+    <ion-accordion value="user-ratings">
+      <ion-item slot="header" class="item-header" color="light">
+        <ion-label>User Ratings</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">Third Content</div>
+    </ion-accordion>
+
+    <ion-accordion value="offers">
+      <ion-item slot="header" class="item-header" color="light">
+        <ion-label>Special Offers</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">Third Content</div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>

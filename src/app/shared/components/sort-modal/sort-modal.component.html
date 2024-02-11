@@ -1,0 +1,32 @@
+<ion-content>
+  <div class="content">
+
+    <div class="sort-header">
+      <ion-button class="btn btn-close" fill="clear" mode="md" (click)="cancelModal()">
+        <ion-icon slot="icon-only" src="./assets/img/icon/close-icon.svg"></ion-icon>
+      </ion-button>
+      <div class="title dark h2 fw-700">Sort by</div>
+    </div>
+    <ng-container [formGroup]="sortForm">
+
+      <ion-radio-group mode="md" formControlName="sort">
+        <ion-item lines="none">
+          <ion-label>Featured</ion-label>
+          <ion-radio value="featured" slot="end"></ion-radio>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Product rating: Bad to Good</ion-label>
+          <ion-radio value="bad" slot="end">Product rating: Bad to Good</ion-radio>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Product rating: Good to Bad</ion-label>
+          <ion-radio value="good" slot="end">Product rating: Good to Bad</ion-radio>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Most Rated</ion-label>
+          <ion-radio value="rated" slot="end">Most Rated</ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ng-container>
+  </div>
+</ion-content>

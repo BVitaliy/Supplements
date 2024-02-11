@@ -214,6 +214,7 @@ export class HighlightedIngredientsPage implements OnInit {
         this.handleChangeCheckboxState(false, ingredient.id);
       }
     }
+    console.log(this.addedIngredientsOptions);
   }
 
   private handleChangeCheckboxState(value: boolean, id: number): void {

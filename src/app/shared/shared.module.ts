@@ -25,6 +25,11 @@ import { FavoriteBtnComponent } from './components/favorite-btn/favorite-btn.com
 import { FilterRowComponent } from './components/filter-row/filter-row.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { NgChartsModule } from 'ng2-charts';
+import { SortModalComponent } from './components/sort-modal/sort-modal.component';
+import { ProductNotFoundComponent } from './components/product-not-found/product-not-found.component';
+import { SourcePopoverComponent } from './components/source-popover/source-popover.component';
+import { FilterModalComponent } from './components/filter-modal/filter-modal.component';
+import { FilterGroupComponent } from './components/filter-group/filter-group.component';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -45,6 +50,11 @@ const exportedDeclarations = [
   FilterRowComponent,
   CallPopoverComponent,
   ChartComponent,
+  SortModalComponent,
+  ProductNotFoundComponent,
+  SourcePopoverComponent,
+  FilterModalComponent,
+  FilterGroupComponent,
 ];
 
 @NgModule({

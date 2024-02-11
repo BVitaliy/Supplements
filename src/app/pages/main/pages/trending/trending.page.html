@@ -1,0 +1,26 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="md">Tranding now</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+    <!-- Products -->
+    <ng-container>
+      <ion-list lines="full">
+        <ion-item *ngFor="let product of listProducts">
+          <div class="p-vertical--medium">
+            <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  </div>
+</ion-content>

@@ -1,0 +1,11 @@
+.content {
+  padding-bottom: 25px;
+}
+ion-list {
+  ion-item {
+    --border-color: #e9e9e9;
+    &:last-child {
+      --border-width: 0px;
+    }
+  }
+}

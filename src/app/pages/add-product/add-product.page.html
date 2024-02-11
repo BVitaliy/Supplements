@@ -1,0 +1,86 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="md">Add product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+    <form class="form" [formGroup]="form">
+      <div class="file-control">
+        <ion-label>Product front packing image*</ion-label>
+        <ion-button class="btn btn-outline" expand="block" fill="outline" mode="md" (click)="openSourcePopover()"
+          *ngIf="!form.value?.photo">
+          <ion-icon src="./assets/img/product/upload.svg"></ion-icon>
+          Upload image
+        </ion-button>
+
+        <div class="product-image" (click)="openSourcePopover()" *ngIf="form.value?.photo">
+          <app-img [src]="form.value?.photo" cssClasses="img-fit-contain"></app-img>
+        </div>
+      </div>
+      <div class="form-control relative-block">
+        <ion-item class="form-item sm" mode="ios" lines="none">
+          <ion-label position="stacked">Barcode*</ion-label>
+          <ion-input formControlName="barcode" type="text" inputmode="text" placeholder="Enter barcode or scan"
+            autocomplete="off"></ion-input>
+        </ion-item>
+        <ion-button class="btn" fill="clear" mode="md">
+          <ion-icon slot="icon-only" src="./assets/img/product/scan.svg"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="form-control">
+        <ion-item class="form-item sm" mode="ios" lines="none">
+          <ion-label position="stacked">Brand*</ion-label>
+          <ion-input formControlName="brand" type="text" inputmode="text" placeholder="Enter brand name"
+            autocomplete="off"></ion-input>
+        </ion-item>
+      </div>
+      <div class="form-control">
+        <ion-item class="form-item sm" mode="ios" lines="none">
+          <ion-label position="stacked">Product*</ion-label>
+          <ion-input formControlName="product" type="text" inputmode="text" placeholder="Enter product name"
+            autocomplete="off"></ion-input>
+        </ion-item>
+      </div>
+      <div class="form-control relative-block">
+        <ion-item class="form-item sm" mode="ios" lines="none">
+          <ion-label position="stacked">Ingredients*</ion-label>
+          <ion-textarea formControlName="ingredients" type="text" inputmode="text"
+            placeholder="Enter product ingredients or  scan" autocomplete="off"></ion-textarea>
+        </ion-item>
+        <ion-button class="btn" fill="clear" mode="md">
+          <ion-icon slot="icon-only" src="./assets/img/product/scan.svg"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="form-control relative-block">
+        <ion-item class="form-item sm" mode="ios" lines="none">
+          <ion-label position="stacked">Description</ion-label>
+          <ion-textarea formControlName="description" type="text" inputmode="text"
+            placeholder="Enter product description or scan" autocomplete="off"></ion-textarea>
+        </ion-item>
+        <ion-button class="btn" fill="clear" mode="md">
+          <ion-icon slot="icon-only" src="./assets/img/product/scan.svg"></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- <div class="form-error" *ngIf="form?.invalid && form?.hasError(' wrongLogin')">
+          {{ form!.errors?.['wrongLogin'] }}
+        </div> -->
+
+    </form>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button class="btn btn-primary mb-5" expand="block" fill="solid" mode="md" [disabled]="form.invalid"
+    (click)="createProduct()">
+    Submit
+  </ion-button>
+</ion-footer>

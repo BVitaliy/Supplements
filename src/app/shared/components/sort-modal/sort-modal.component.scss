@@ -1,0 +1,34 @@
+.content {
+  padding: 24px 16px;
+
+  ion-item {
+    --min-height: 28px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+  }
+  ion-radio,
+  ion-label {
+    margin: 0;
+    color: var(--ion-color-dark);
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+.sort-header {
+  position: relative;
+  text-align: center;
+  padding: 0 40px;
+  margin-bottom: 16px;
+
+  ion-button {
+    color: #92929d;
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translateY(-50%);
+  }
+}

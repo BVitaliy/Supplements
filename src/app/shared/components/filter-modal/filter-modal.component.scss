@@ -1,0 +1,20 @@
+.item-header {
+  --padding-start: 15px;
+  --padding-top: 15px;
+  --padding-bottom: 15px;
+  --inner-padding-end: 15px;
+  --min-height: 24px;
+  font-size: 14px;
+  font-weight: 700;
+
+  ion-label {
+    margin: 0;
+  }
+}
+
+ion-accordion {
+  .ion-padding {
+    --ion-padding: 0;
+    padding: 0 16px 10px;
+  }
+}
