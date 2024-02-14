@@ -1,0 +1,23 @@
+<ion-content>
+
+  <div class="content" [ngStyle]="{'height': modalHeight + 'px'}">
+
+    <!-- Search -->
+    <div class="p-top--xx-large p-bottom--medium p-horizontal--medium">
+      <ion-searchbar mode="ios" placeholder="Search product by name" show-clear-button="never"
+        [searchIcon]="'./assets/img/icons/search-icon-grey.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
+        class="search" (ionChange)="search($event)"></ion-searchbar>
+    </div>
+    <!-- / Search -->
+
+    <ion-list lines="full" *ngIf="searchText.length">
+      <ion-item *ngFor="let product of products">
+        <div class="p-vertical--medium">
+          <app-product-card [product]="product" [type]="'horizontal'" [openInModal]="openInModal"></app-product-card>
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+</ion-content>

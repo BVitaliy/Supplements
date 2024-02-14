@@ -10,8 +10,12 @@
 <ion-list *ngIf="optionsToShow?.length">
   <ng-container *ngFor="let option of optionsToShow;let i = index">
     <!-- <ion-item lines="none" *ngIf="open">-->
-    <ion-item lines="none">
-      <ion-label class="dark fw-500">{{option?.label}}
+    <ion-item lines="none" *ngIf="i <= 9 || open && i >= 10">
+      <ion-label class="dark fw-500">
+        <ion-icon slot="start" class="m-right--x-small"
+          [ngStyle]="{'width': option?.type === 'user_rating' ? '116px' : '20px'}" [src]="option?.icon"
+          *ngIf="option?.icon"></ion-icon>
+        {{ option?.type !== 'user_rating' ? option?.label : ''}}
         <span class="medium">({{option?.count || 0}})</span>
       </ion-label>
 
@@ -21,9 +25,12 @@
   </ng-container>
 </ion-list>
 
-<ion-button class="btn btn-link" fill="clear" mode="md" color="primary" (click)="toggleAllOptions()">
+
+<ion-button class="btn btn-link" fill="clear" mode="md" color="primary" (click)="toggleAllOptions()"
+  *ngIf="countHide !== 0">
   {{open ? 'Roll up' : 'Show all ('+countHide+')'}}
 </ion-button>
+
 
 <ng-container *ngIf="!optionsToShow?.length">
   <p class="ion-text-center dark fw-600 text-lg">Nothing was found</p>

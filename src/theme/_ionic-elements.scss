@@ -112,6 +112,16 @@ ion-toolbar {
   }
 }
 
+ion-searchbar {
+  .searchbar-input {
+    font-size: 14px !important;
+  }
+
+  &.searchbar-has-focus {
+    border-color: #ff4c00 !important;
+  }
+}
+
 /***********************************************************
                         Footer
 ************************************************************/

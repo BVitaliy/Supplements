@@ -8,9 +8,22 @@
       add it yourself
       and share your
       experience</p>
-    <ion-button class="btn btn-primary" expand="block" fill="solid" mode="md" (click)="openPage()">
+    <ion-button class="btn btn-primary" expand="block" fill="solid" mode="md" (click)="openPage('/add-product')"
+      *ngIf="logged">
       <ion-icon [src]="'./assets/img/product/plus.svg'" slot="start"></ion-icon>
       Add product
     </ion-button>
+
+    <ng-container *ngIf="!logged">
+
+      <ion-button class="btn btn-primary" expand="block" fill="solid" mode="md" (click)="openSearchProductModal()">
+        Search for another product
+      </ion-button>
+      <ion-button class="btn btn-link m-top--medium" fill="clear" mode="md" color="primary"
+        (click)="openPage('info-steps')">
+        Back to onboarding
+      </ion-button>
+    </ng-container>
+
   </div>
 </ion-content>

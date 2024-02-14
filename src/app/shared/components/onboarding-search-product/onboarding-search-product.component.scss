@@ -1,0 +1,26 @@
+ion-content {
+  --overflow: hidden;
+}
+
+.search {
+  height: 40px;
+  padding: 0;
+  background: var(--ion-color-light-tint-next);
+  --background: var(--ion-color-light-tint-next);
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+}
+
+ion-list {
+  ion-item {
+    --border-color: #e9e9e9;
+    &:last-child {
+      --border-width: 0px;
+    }
+  }
+}
+
+.content {
+  overflow: auto;
+  padding-bottom: 10px;
+}

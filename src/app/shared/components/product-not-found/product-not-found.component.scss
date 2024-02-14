@@ -19,6 +19,12 @@ app-img {
 ion-button {
   height: 36px;
   --min-height: 36px;
-  max-width: 195px;
+  max-width: 228px;
   width: 100%;
+  font-size: 14px;
+
+  &.btn-link {
+    height: auto;
+    min-height: auto;
+  }
 }

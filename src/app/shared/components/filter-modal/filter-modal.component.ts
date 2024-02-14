@@ -2,7 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ModalController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Brands, Categories } from 'src/mock/filters';
+import {
+  Brands,
+  Categories,
+  ProductRating,
+  Special,
+  UserRating,
+} from 'src/mock/filters';
 
 @Component({
   selector: 'app-filter-modal',
@@ -14,6 +20,9 @@ export class FilterModalComponent implements OnInit {
   public form!: FormGroup;
   public categories: any[] = [...Categories];
   public brands: any[] = [...Brands];
+  public productRating: any[] = [...ProductRating];
+  public userRating: any[] = [...UserRating];
+  public special: any[] = [...Special];
 
   selectedOptions: any[] = [];
   backBtnSubscription!: Subscription;

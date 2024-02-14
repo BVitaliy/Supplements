@@ -53,6 +53,10 @@
     <ng-container *ngIf="currentStep === 3">
       <h2>Find out how ingredients affect your body</h2>
       <p class="text-s">Find out not only whether the ingredient is useful, but also what effect it has on your body</p>
+      <ion-button class="btn btn-link m-top--x-small" fill="clear" mode="md" color="primary"
+        (click)="goToScanner('scanner')">
+        Try scanning
+      </ion-button>
     </ng-container>
     <ng-container *ngIf="currentStep === 4">
       <h2 class="pl-20 pr-20">Create and manage personalized lists of your favorite supplements</h2>

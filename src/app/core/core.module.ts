@@ -2,10 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { httpInterceptorProviders } from './interceptors';
-import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientJsonpModule,
+  HttpClientModule,
+} from '@angular/common/http';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { Drivers } from '@ionic/storage';
-import { IonicStorageModule } from '@ionic/storage-angular'; 
+import { IonicStorageModule } from '@ionic/storage-angular';
 // import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 // import { Network } from '@ionic-native/network/ngx';
@@ -18,8 +22,9 @@ import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 // import { MultipleDocumentsPicker } from '@ionic-native/multiple-document-picker/ngx';
 import { MultipleDocumentsPicker } from '@awesome-cordova-plugins/multiple-document-picker/ngx';
-import { File } from '@awesome-cordova-plugins/file/ngx'; 
-
+import { File } from '@awesome-cordova-plugins/file/ngx';
+import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
+import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -34,9 +39,12 @@ const maskConfig: Partial<IConfig> = {
     NgxMaskModule.forRoot(maskConfig),
     IonicStorageModule.forRoot({
       name: '__Supplement',
-      driverOrder: [Drivers.SecureStorage, Drivers.IndexedDB, Drivers.LocalStorage]
+      driverOrder: [
+        Drivers.SecureStorage,
+        Drivers.IndexedDB,
+        Drivers.LocalStorage,
+      ],
     }),
- 
   ],
   exports: [],
   providers: [
@@ -52,7 +60,9 @@ const maskConfig: Partial<IConfig> = {
     MultipleDocumentsPicker,
     AndroidPermissions,
     AndroidPermissions,
-    File, 
+    File,
+    Camera,
+    BarcodeScanner,
   ],
 })
 export class CoreModule {}

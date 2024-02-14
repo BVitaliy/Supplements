@@ -1,0 +1,113 @@
+.highlighted-ingredients__tips-text {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0;
+  color: #9e9d9d;
+}
+
+.highlighted-ingredients__border-bottom {
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.highlighted-ingredients__border-vertical {
+  border-bottom: 1px solid #e9e9e9;
+  border-top: 1px solid #e9e9e9;
+}
+
+.highlighted-ingredients__badge {
+  width: 10px;
+  min-width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.highlighted-ingredients__item-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0;
+  color: #04002c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.highlighted-ingredients__ingredient-label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: #04002c;
+}
+
+.highlighted-ingredients__clear-all-added-ingredients-text {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: #ff001c !important;
+}
+
+.highlighted-ingredients__close-icon {
+  min-width: 12px;
+  width: 12px;
+  height: 12px;
+}
+
+.highlighted-ingredients__search {
+  height: 40px;
+  padding: 0;
+  background: var(--ion-color-light-tint-next);
+  --background: var(--ion-color-light-tint-next);
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+}
+
+.highlighted-ingredients__section-label {
+  font-family: "Inter";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0;
+  color: #04002c;
+}
+
+::ng-deep {
+  .highlighted-ingredients__reason-swiper-wrapper {
+    .swiper-slide {
+      width: auto !important;
+    }
+
+    .chip-outline {
+      margin: 0;
+      border-color: #e9e9e9;
+      height: 36px;
+    }
+
+    .highlighted-ingredients__reason-swiper-chip--active {
+      border-color: #ff4c00;
+
+      .highlighted-ingredients__reason-filter-label {
+        color: #ff4c00;
+      }
+    }
+  }
+
+  .highlighted-ingredients__ingredients-added-wrapper {
+    .swiper {
+      margin: 0;
+    }
+
+    .swiper-slide {
+      width: auto !important;
+    }
+
+    .chip-outline {
+      margin: 0;
+      border-color: #e9e9e9;
+      background: #f8f8f8;
+      height: 28px;
+    }
+  }
+}

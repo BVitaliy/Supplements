@@ -30,6 +30,8 @@ import { ProductNotFoundComponent } from './components/product-not-found/product
 import { SourcePopoverComponent } from './components/source-popover/source-popover.component';
 import { FilterModalComponent } from './components/filter-modal/filter-modal.component';
 import { FilterGroupComponent } from './components/filter-group/filter-group.component';
+import { IngredientFilterGroupComponent } from './components/ingredient-filter-group/ingredient-filter-group.component';
+import { OnboardingSearchProductComponent } from './components/onboarding-search-product/onboarding-search-product.component';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -55,6 +57,8 @@ const exportedDeclarations = [
   SourcePopoverComponent,
   FilterModalComponent,
   FilterGroupComponent,
+  IngredientFilterGroupComponent,
+  OnboardingSearchProductComponent,
 ];
 
 @NgModule({

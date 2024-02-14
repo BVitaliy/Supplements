@@ -157,3 +157,83 @@ export const Brands = [
     checked: false,
   },
 ];
+
+export const ProductRating = [
+  {
+    id: 1,
+    type: 'product_rating',
+    label: 'God: 8-10',
+    count: 34,
+    checked: false,
+    icon: './assets/img/icons/state-bad.svg',
+  },
+  {
+    id: 2,
+    type: 'product_rating',
+    label: 'Not bad: 4-7',
+    count: 32,
+    checked: false,
+    icon: './assets/img/icons/state-normal.svg',
+  },
+  {
+    id: 3,
+    type: 'product_rating',
+    label: 'Bad: 0-3',
+    count: 24,
+    checked: false,
+    icon: './assets/img/icons/state-good.svg',
+  },
+];
+
+export const UserRating = [
+  {
+    id: 1,
+    type: 'user_rating',
+    label: '5 star',
+    count: 34,
+    checked: false,
+    icon: './assets/img/icons/star-5.svg',
+  },
+  {
+    id: 2,
+    type: 'user_rating',
+    label: '4 star',
+    count: 32,
+    checked: false,
+    icon: './assets/img/icons/star-4.svg',
+  },
+  {
+    id: 3,
+    type: 'user_rating',
+    label: '3 star',
+    count: 24,
+    checked: false,
+    icon: './assets/img/icons/star-3.svg',
+  },
+  {
+    id: 4,
+    type: 'user_rating',
+    label: '2 star',
+    count: 32,
+    checked: false,
+    icon: './assets/img/icons/star-2.svg',
+  },
+  {
+    id: 5,
+    type: 'user_rating',
+    label: '1 star',
+    count: 24,
+    checked: false,
+    icon: './assets/img/icons/star-1.svg',
+  },
+];
+
+export const Special = [
+  {
+    id: 1,
+    type: 'special',
+    label: 'Sales & Offers',
+    count: 1,
+    checked: false,
+  },
+];

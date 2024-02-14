@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
+import { ProductDetailPage } from 'src/app/pages/product-detail/product-detail.page';
 import { AddFavoriteListProductPage } from '../../../pages/favorites/add-favorite-list-product/add-favorite-list-product.page';
 
 @Component({
@@ -13,10 +14,11 @@ export class ProductCardComponent implements OnInit {
   @Input() showStars: boolean = true;
   @Input() showRatingCount: boolean = true;
   @Input() showFavoriteBtn: boolean = true;
+  @Input() openInModal: boolean = false;
 
   constructor(
     public navCtrl: NavController,
-    private modalCtrl: ModalController
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {}
@@ -27,7 +29,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   public async showListActionsModal(): Promise<void> {
-    const modal: HTMLIonModalElement = await this.modalCtrl.create({
+    const modal: HTMLIonModalElement = await this.modalController.create({
       component: AddFavoriteListProductPage,
       breakpoints: [0, 0.3, 0.5, 0.8],
       initialBreakpoint: 0.8,
@@ -38,6 +40,29 @@ export class ProductCardComponent implements OnInit {
         // add product to favorite list
       }
     });
+    return await modal.present();
+  }
+
+  openDetail() {
+    if (this.openInModal) {
+      this.openProductInModal();
+    } else {
+      this.navCtrl.navigateRoot(['/product/detail', 1]);
+    }
+  }
+
+  async openProductInModal() {
+    const modal = await this.modalController.create({
+      component: ProductDetailPage,
+      cssClass: '',
+      mode: 'ios',
+      handle: true,
+      componentProps: {
+        openedInModal: true,
+        id: 1,
+      },
+    });
+
     return await modal.present();
   }
 }

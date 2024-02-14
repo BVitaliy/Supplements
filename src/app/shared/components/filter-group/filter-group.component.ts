@@ -25,6 +25,7 @@ export class FilterGroupComponent implements OnInit {
     });
     this.optionsToShow = this.options;
     console.log(this.optionsToShow);
+    this.checkCount();
 
     this.searchForm.get('search')?.valueChanges.subscribe((el) => {
       this.optionsToShow =
@@ -33,10 +34,15 @@ export class FilterGroupComponent implements OnInit {
               option.label.toLowerCase().includes(el.toLowerCase())
             )
           : this.options;
+      this.checkCount();
     });
+  }
 
-    if (this.options && this.options?.length > 10) {
-      this.countHide = this.options?.length - 10;
+  checkCount() {
+    if (this.optionsToShow && this.optionsToShow?.length > 10) {
+      this.countHide = this.optionsToShow?.length - 10;
+    } else {
+      this.countHide = 0;
     }
   }
 

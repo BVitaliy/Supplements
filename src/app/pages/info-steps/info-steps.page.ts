@@ -13,14 +13,28 @@ export class InfoStepsPage implements OnInit {
 
   constructor(public navCtrl: NavController, private storage: Storage) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const openStep3 = Boolean(this.storage.get('onbording_not_finished'));
+    console.log(openStep3);
+    if (openStep3) {
+      this.currentStep = 3;
+    }
+  }
 
   next() {
     this.currentStep >= 5 ? (this.currentStep = 5) : this.currentStep++;
+    if (this.currentStep >= 4) {
+      this.storage.set('onbording_not_finished', false);
+    }
   }
 
   nextPage(url: string) {
     this.storage.set(FIRST_OPEN_APP, true);
     this.navCtrl.navigateRoot(url);
+  }
+
+  goToScanner(url: string) {
+    this.storage.set('onbording_not_finished', true);
+    this.navCtrl.navigateForward(url);
   }
 }

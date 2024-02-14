@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { IngredientOption } from 'src/app/core/models/highlighted-ingredients.models';
 import { IngredientDetailModalComponent } from './components/ingredient-detail-modal/ingredient-detail-modal.component';
@@ -11,6 +11,8 @@ import { HighlightedIngredientsPage } from './pages/highlighted-ingredients/high
   styleUrls: ['./product-detail.page.scss'],
 })
 export class ProductDetailPage implements OnInit {
+  @Input() openedInModal = false;
+  @Input() id: any;
   loading: boolean = true;
   product: any;
   type = 'ingredient';

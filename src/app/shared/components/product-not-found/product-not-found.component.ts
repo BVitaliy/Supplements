@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController, Platform } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { OnboardingSearchProductComponent } from '../onboarding-search-product/onboarding-search-product.component';
 
 @Component({
   selector: 'app-product-not-found',
@@ -8,23 +10,42 @@ import { ModalController, NavController, Platform } from '@ionic/angular';
 })
 export class ProductNotFoundComponent implements OnInit {
   modalHeight = 0;
-
+  logged = false;
   constructor(
     public navCtrl: NavController,
     private platform: Platform,
+    private storage: Storage,
     private modalController: ModalController
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.modalHeight = Math.floor(0.75 * window.innerHeight);
+    const token = await this.storage.get('access_token');
+
+    this.logged = token ? true : false;
   }
 
-  openPage() {
+  openPage(link: string) {
     this.cancelModal();
-    this.navCtrl.navigateForward(['/add-product']);
+    this.navCtrl.navigateForward([link]);
   }
 
   async cancelModal() {
     await this.modalController.dismiss();
+  }
+
+  // Відкривання модалки
+  async openSearchProductModal() {
+    const modal = await this.modalController.create({
+      component: OnboardingSearchProductComponent,
+      cssClass: '',
+      mode: 'ios',
+      breakpoints: [0, 0.9],
+      initialBreakpoint: 0.9,
+      handle: true,
+      componentProps: {},
+    });
+
+    return await modal.present();
   }
 }
