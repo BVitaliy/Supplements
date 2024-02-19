@@ -13,7 +13,8 @@
     <ion-list lines="full" *ngIf="searchText.length">
       <ion-item *ngFor="let product of products">
         <div class="p-vertical--medium">
-          <app-product-card [product]="product" [type]="'horizontal'" [openInModal]="openInModal"></app-product-card>
+          <app-product-card [product]="product" [type]="'horizontal'" [openInModal]="openInModal"
+            (closeModal)="cancelModal(true)"></app-product-card>
         </div>
       </ion-item>
     </ion-list>

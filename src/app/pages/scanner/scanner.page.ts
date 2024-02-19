@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Storage } from '@ionic/storage';
 import {
   BarcodeScanner,
   BarcodeScannerOptions,
 } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { ProductNotFoundComponent } from 'src/app/shared/components/product-not-found/product-not-found.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scanner',
@@ -14,15 +15,25 @@ import { ProductNotFoundComponent } from 'src/app/shared/components/product-not-
 })
 export class ScannerPage implements OnInit {
   loading = true;
+  logged = false;
 
   constructor(
     public navCtrl: NavController,
     private platform: Platform,
+    private storage: Storage,
+    public router: Router,
     private modalController: ModalController,
     private barcodeScanner: BarcodeScanner
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.storage.get('access_token').then((event: string) => {
+      console.log(event);
+      if (event) {
+        this.logged = true;
+      }
+    });
+  }
 
   ionViewWillEnter() {
     this.openCameraToScanning();
@@ -42,6 +53,7 @@ export class ScannerPage implements OnInit {
       this.barcodeScanner
         .scan(options)
         .then((barcodeData) => {
+          console.log(barcodeData);
           if (barcodeData?.format === 'CODE_128') {
             // this.openDelivery(barcodeData?.text, 1);
           } else if (barcodeData?.format === 'QR_CODE') {
@@ -49,8 +61,10 @@ export class ScannerPage implements OnInit {
           } else if (barcodeData?.format === 'CODE_39') {
             // this.openDelivery(barcodeData?.text, 2);
           }
+          this.openProductNotFound();
         })
         .catch((error) => {
+          this.openProductNotFound();
           // this.scanningInfo = null;
           this.loading = false;
         });
@@ -74,10 +88,14 @@ export class ScannerPage implements OnInit {
       handle: true,
       componentProps: {},
     });
-
     modal.onDidDismiss().then(() => {
-      console.log('close');
-      this.navCtrl.navigateForward(['info-steps']);
+      console.log(this.router.url);
+      if (this.logged && !this.router.url.includes('add-product')) {
+        this.navCtrl.navigateForward(['/home/tabs/tab/main']);
+      }
+      if (!this.logged) {
+        this.navCtrl.navigateForward(['info-steps']);
+      }
     });
 
     return await modal.present();

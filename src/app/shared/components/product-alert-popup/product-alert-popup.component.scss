@@ -1,0 +1,24 @@
+// :host {
+//   --height: auto;
+//   height: auto;
+//   max-width: calc(100% - 30px);
+// }
+
+.content {
+  position: relative;
+  padding: 44px 16px 24px;
+}
+ion-button.btn-primary {
+  height: 36px;
+  --min-height: 36px;
+  max-width: 210px;
+  width: 100%;
+  font-size: 14px;
+  margin: 20px auto 0;
+}
+.btn-close {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  color: #9e9d9d;
+}

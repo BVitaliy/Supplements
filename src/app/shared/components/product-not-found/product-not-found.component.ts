@@ -30,8 +30,8 @@ export class ProductNotFoundComponent implements OnInit {
     this.navCtrl.navigateForward([link]);
   }
 
-  async cancelModal() {
-    await this.modalController.dismiss();
+  async cancelModal(closeModal = false) {
+    await this.modalController.dismiss(closeModal);
   }
 
   // Відкривання модалки
@@ -44,6 +44,13 @@ export class ProductNotFoundComponent implements OnInit {
       initialBreakpoint: 0.9,
       handle: true,
       componentProps: {},
+    });
+
+    modal.onDidDismiss().then((returnedData: any) => {
+      if (returnedData && returnedData?.data) {
+        console.log(returnedData);
+        this.cancelModal(true);
+      }
     });
 
     return await modal.present();

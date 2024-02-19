@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { IngredientOption } from 'src/app/core/models/highlighted-ingredients.models';
+import { ProductAlertPopupComponent } from 'src/app/shared/components/product-alert-popup/product-alert-popup.component';
 import { IngredientDetailModalComponent } from './components/ingredient-detail-modal/ingredient-detail-modal.component';
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
 import { HighlightedIngredientsPage } from './pages/highlighted-ingredients/highlighted-ingredients.page';
@@ -101,8 +102,22 @@ export class ProductDetailPage implements OnInit {
     }, 1000);
   }
 
-  shopNowProduct() {}
-  favoriteHandle($event: any) {}
+  shopNowProduct() {
+    if (this.openedInModal) {
+      this.openAlertModal();
+    }
+  }
+
+  actionAlert() {
+    if (this.openedInModal) {
+      this.openAlertModal();
+    }
+  }
+  favoriteHandle($event: any) {
+    if (this.openedInModal) {
+      this.openAlertModal();
+    }
+  }
 
   // Зміна типу сторінки
   setType(event: any) {
@@ -145,20 +160,63 @@ export class ProductDetailPage implements OnInit {
 
   // Відкривання модалки Highlighted ingredients
   async openHighlightedModal() {
+    if (this.openedInModal) {
+      this.openAlertModal();
+    } else {
+      const modal = await this.modalController.create({
+        component: HighlightedIngredientsPage,
+        cssClass: '',
+        mode: 'ios',
+        handle: true,
+        componentProps: {
+          addedHIngredientsOptions: this.addedHIngredientsOptions,
+        },
+      });
+
+      modal.onDidDismiss().then((returnedData: any) => {
+        if (returnedData && returnedData?.data) {
+          this.addedHIngredientsOptions = returnedData?.data;
+          console.log(returnedData);
+        }
+      });
+
+      return await modal.present();
+    }
+  }
+
+  async cancelModal(closeAll = false) {
+    await this.modalController.dismiss(closeAll);
+  }
+
+  closePage() {
+    if (this.openedInModal) {
+      this.cancelModal();
+    } else {
+      this.navCtrl.back();
+    }
+  }
+
+  goToReview() {
+    if (this.openedInModal) {
+      this.openAlertModal();
+    } else {
+      this.navCtrl.navigateForward('/product/reviews');
+    }
+  }
+
+  async openAlertModal() {
     const modal = await this.modalController.create({
-      component: HighlightedIngredientsPage,
-      cssClass: '',
+      component: ProductAlertPopupComponent,
+      cssClass: 'alert-modal',
       mode: 'ios',
-      handle: true,
-      componentProps: {
-        addedHIngredientsOptions: this.addedHIngredientsOptions,
-      },
+      handle: false,
+      componentProps: {},
     });
 
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
-        this.addedHIngredientsOptions = returnedData?.data;
         console.log(returnedData);
+        this.cancelModal(true);
       }
     });
 

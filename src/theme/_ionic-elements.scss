@@ -603,3 +603,21 @@ ion-accordion {
     color: #a3a3a3;
   }
 }
+
+ion-modal {
+  &.alert-modal {
+    --backdrop-opacity: 1 !important;
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+
+    &::part(content) {
+      width: calc(100% - 50px);
+      box-sizing: border-box;
+      background: #fff;
+      border-radius: 10px;
+    }
+  }
+}

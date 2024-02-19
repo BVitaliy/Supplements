@@ -14,11 +14,12 @@ export class InfoStepsPage implements OnInit {
   constructor(public navCtrl: NavController, private storage: Storage) {}
 
   ngOnInit() {
-    const openStep3 = Boolean(this.storage.get('onbording_not_finished'));
-    console.log(openStep3);
-    if (openStep3) {
-      this.currentStep = 3;
-    }
+    this.storage.get('onbording_not_finished').then((event: string) => {
+      console.log(event);
+      if (event) {
+        this.currentStep = 3;
+      }
+    });
   }
 
   next() {

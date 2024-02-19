@@ -15,6 +15,7 @@ export class ProductCardComponent implements OnInit {
   @Input() showRatingCount: boolean = true;
   @Input() showFavoriteBtn: boolean = true;
   @Input() openInModal: boolean = false;
+  @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public navCtrl: NavController,
@@ -61,6 +62,13 @@ export class ProductCardComponent implements OnInit {
         openedInModal: true,
         id: 1,
       },
+    });
+
+    modal.onDidDismiss().then((returnedData: any) => {
+      if (returnedData && returnedData?.data) {
+        console.log(returnedData);
+        this.closeModal.emit(true);
+      }
     });
 
     return await modal.present();

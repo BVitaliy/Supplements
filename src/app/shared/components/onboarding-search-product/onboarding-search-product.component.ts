@@ -25,7 +25,7 @@ export class OnboardingSearchProductComponent implements OnInit {
     this.searchText = event?.detail?.value;
   }
 
-  async cancelModal() {
-    await this.modalController.dismiss();
+  async cancelModal(closeModal = false) {
+    await this.modalController.dismiss(closeModal);
   }
 }

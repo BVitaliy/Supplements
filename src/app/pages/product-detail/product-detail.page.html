@@ -1,8 +1,9 @@
 <ion-header mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
-        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="closePage()">
+        <ion-icon
+          [src]="openedInModal ? './assets/img/icon/close-icon.svg' : './assets/img/icons/icon-back.svg'"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title class="sm">Description</ion-title>
@@ -45,10 +46,10 @@
         </ion-button>
         <div class="options">
           <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product" [size]="'md'"></app-favorite-btn>
-          <ion-button shape="round" fill="outline">
+          <ion-button shape="round" fill="outline" (click)="actionAlert()">
             <ion-icon slot="icon-only" [src]="'./assets/img/icons/add-feedback.svg'"></ion-icon>
           </ion-button>
-          <ion-button shape="round" fill="outline">
+          <ion-button shape="round" fill="outline" (click)="actionAlert()">
             <ion-icon slot="icon-only" [src]="'./assets/img/icons/icon-share.svg'"></ion-icon>
           </ion-button>
         </div>
@@ -214,7 +215,7 @@
       </div>
 
       <ion-item class="fw-600 text-l dark item-detail m-bottom--large" button detail="true" lines="none"
-        (click)="navCtrl.navigateForward('/product/reviews')">
+        (click)="goToReview()">
         Reviews
         <span class="medium m-left--x-small">32</span>
       </ion-item>

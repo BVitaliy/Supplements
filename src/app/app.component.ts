@@ -44,7 +44,7 @@ export class AppComponent {
           // });
         });
       }
-      this.themeOptionsService.loadOptions();
+      // this.themeOptionsService.loadOptions();
     });
   }
 }

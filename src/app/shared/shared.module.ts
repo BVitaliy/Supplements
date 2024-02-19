@@ -32,6 +32,7 @@ import { FilterModalComponent } from './components/filter-modal/filter-modal.com
 import { FilterGroupComponent } from './components/filter-group/filter-group.component';
 import { IngredientFilterGroupComponent } from './components/ingredient-filter-group/ingredient-filter-group.component';
 import { OnboardingSearchProductComponent } from './components/onboarding-search-product/onboarding-search-product.component';
+import { ProductAlertPopupComponent } from './components/product-alert-popup/product-alert-popup.component';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -59,6 +60,7 @@ const exportedDeclarations = [
   FilterGroupComponent,
   IngredientFilterGroupComponent,
   OnboardingSearchProductComponent,
+  ProductAlertPopupComponent,
 ];
 
 @NgModule({
