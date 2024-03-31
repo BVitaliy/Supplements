@@ -16,11 +16,11 @@ import { MatInputModule } from '@angular/material/input';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @Injectable()
-class MyDateAdapter extends NativeDateAdapter {
-  override getFirstDayOfWeek(): number {
-    return 1;
-  }
-}
+// class MyDateAdapter extends NativeDateAdapter {
+//   override getFirstDayOfWeek(): number {
+//     return 1;
+//   }
+// }
 
 @NgModule({
   declarations: [],
@@ -38,7 +38,7 @@ class MyDateAdapter extends NativeDateAdapter {
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-    { provide: DateAdapter, useClass: MyDateAdapter },
+    { provide: DateAdapter, useClass: NativeDateAdapter },
   ],
 })
 export class MaterialModule {}
