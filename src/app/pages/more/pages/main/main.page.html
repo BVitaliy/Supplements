@@ -11,12 +11,15 @@
     <!-- Profile details -->
     <ion-item class="fw-600 text-m dark profile-item" button detail="false" lines="none" *ngIf="profile"
       (click)="navCtrl.navigateRoot('home/tabs/tab/more/profile-details')">
-      <app-img [src]="profile?.photo" cssClasses="img-fit-cover" *ngIf="profile?.photo"></app-img>
+      <app-img [src]="profile?.image" cssClasses="img-fit-cover rounded" *ngIf="profile?.image"></app-img>
+      <div class="avatar" *ngIf="!profile?.image" [innerHTML]="profile | setAvatarName"></div>
       <ion-label>
-        <p class="text-m dark fw-700">{{profile?.name}}</p>
+        <p class="text-m dark fw-700">{{profile?.first_name}} {{profile?.last_name}}</p>
         <p class="text-m medium fw-500">{{profile?.email}}</p>
       </ion-label>
     </ion-item>
+
+    <ion-skeleton-text *ngIf="!profile" [animated]="true" style="height: 48px; border-radius:10px;"></ion-skeleton-text>
     <!-- / Profile details -->
 
     <!-- History -->

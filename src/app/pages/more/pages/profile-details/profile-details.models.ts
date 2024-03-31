@@ -1,10 +1,10 @@
 export enum ProfileDetailsFields {
   image = 'Image',
-  firstName = 'First name',
-  lastName = 'Last name',
-  emailAddress = 'Email address',
-  sex = 'Sex',
-  birthday = 'Birthday',
+  first_name = 'First name',
+  last_name = 'Last name',
+  email = 'Email address',
+  gender = 'Sex',
+  date_of_birth = 'Birthday',
 }
 
 export enum ProfileGenders {

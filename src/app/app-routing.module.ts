@@ -44,11 +44,15 @@ const routes: Routes = [
   },
   {
     path: 'add-product',
-    loadChildren: () => import('./pages/add-product/add-product.module').then( m => m.AddProductPageModule)
+    loadChildren: () =>
+      import('./pages/add-product/add-product.module').then(
+        (m) => m.AddProductPageModule
+      ),
   },
   {
     path: 'scanner',
-    loadChildren: () => import('./pages/scanner/scanner.module').then( m => m.ScannerPageModule)
+    loadChildren: () =>
+      import('./pages/scanner/scanner.module').then((m) => m.ScannerPageModule),
   },
 ];
 

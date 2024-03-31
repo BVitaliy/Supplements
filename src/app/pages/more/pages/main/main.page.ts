@@ -1,11 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { AlertController, NavController, Platform } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import {
+  AlertController,
+  LoadingController,
+  NavController,
+  Platform,
+} from '@ionic/angular';
+import { finalize, Subscription } from 'rxjs';
 import {
   ACCESS_TOKEN_STORAGE_NAME,
   APP_AUTH_REDIRECT_URL,
+  REFRESH_TOKEN_STORAGE_NAME,
 } from 'src/app/app.config';
+import { ProfileService } from '../../profile.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-main',
@@ -20,24 +30,70 @@ export class MainPage implements OnInit {
     public navCtrl: NavController,
     private platform: Platform,
     private storage: Storage,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private profileService: ProfileService,
+    private loadingController: LoadingController,
+    private alertService: AlertService
   ) {}
 
   public ngOnInit(): void {
-    this.profile = {
-      photo: './assets/img/temp/photo.png' || '',
-      name: 'Anna Armas' || '',
-      email: 'annaarmas@email.com' || '',
-    };
+    this.getUser();
   }
 
-  // Вихід
   async logOut() {
-    this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
-    this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+    // this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+    // this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+    const loading = await this.loadingController.create({
+      message: 'Wait...',
+      mode: 'ios',
+    });
+
+    this.profileService
+      .logout({})
+      .pipe(
+        finalize(() => {
+          loading?.dismiss();
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+          this.storage.remove(REFRESH_TOKEN_STORAGE_NAME);
+          this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
   }
 
-  // Алерт із підвердженням виходу
+  getUser() {
+    this.storage.get(ACCESS_TOKEN_STORAGE_NAME).then((token) => {
+      if (token) {
+        const decoded: any = jwtDecode(token);
+
+        this.profileService.getProfile(decoded?.user_id).subscribe(
+          (data: any) => {
+            console.log(data);
+            this.profile = data;
+          },
+          (error: any) => {
+            // this.alertService.presentErrorAlert(error?.email?.error);
+
+            if (error.status === 401) {
+              this.alertService.presentErrorAlert('Something went wrong');
+            }
+          }
+        );
+      }
+    });
+  }
+
   async logoutAlert() {
     // subscribe to HardwereBackBatton
     this.backBtnSubscription = this.platform.backButton.subscribeWithPriority(
@@ -83,6 +139,38 @@ export class MainPage implements OnInit {
     await this.alertController?.dismiss();
   }
 
+  // Вихід
+  async delete() {
+    // this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+    // this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+    const loading = await this.loadingController.create({
+      message: 'Wait...',
+      mode: 'ios',
+    });
+
+    this.profileService
+      .delete()
+      .pipe(
+        finalize(() => {
+          loading?.dismiss();
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+          this.storage.remove(REFRESH_TOKEN_STORAGE_NAME);
+          this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
+  }
+
   public async handleDeleteAccount(): Promise<void> {
     this.backBtnSubscription = this.platform.backButton.subscribeWithPriority(
       9998,
@@ -106,7 +194,7 @@ export class MainPage implements OnInit {
           role: 'confirm',
           cssClass: ['alert-button-cancel'],
           handler: (): void => {
-            // delete account
+            this.delete();
           },
         },
       ],

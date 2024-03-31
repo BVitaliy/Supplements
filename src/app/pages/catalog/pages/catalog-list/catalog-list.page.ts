@@ -23,9 +23,9 @@ export class CatalogListPage implements OnInit {
     this.filterForm = new FormGroup({
       search: new FormControl(''),
     });
-    setTimeout(() => {
-      this.openProductNotFound();
-    }, 3000);
+    // setTimeout(() => {
+    //   this.openProductNotFound();
+    // }, 3000);
   }
 
   public search(event: any): void {

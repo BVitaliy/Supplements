@@ -14,9 +14,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 // import { Network } from '@ionic-native/network/ngx';
 import { Network } from '@awesome-cordova-plugins/network/ngx';
-// import { OneSignal } from '@ionic-native/onesignal/ngx';
-import { OneSignal } from '@awesome-cordova-plugins/onesignal/ngx';
-// import { AppVersion } from '@ionic-native/app-version/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 // import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
@@ -55,7 +52,6 @@ const maskConfig: Partial<IConfig> = {
     DatePipe,
     ScreenOrientation,
     Network,
-    OneSignal,
     AppVersion,
     MultipleDocumentsPicker,
     AndroidPermissions,

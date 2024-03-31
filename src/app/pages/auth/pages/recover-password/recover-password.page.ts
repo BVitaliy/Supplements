@@ -18,6 +18,7 @@ import { APP_AUTH_REDIRECT_URL } from 'src/app/app.config';
 // import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { DoneComponent } from 'src/app/shared/components/done/done.component';
+import { AuthenticationService } from '../../authentication.service';
 
 @Component({
   selector: 'app-recover-password',
@@ -57,7 +58,8 @@ export class RecoverPasswordPage
     public navCtrl: NavController,
     private loadingController: LoadingController,
     private modalController: ModalController,
-    private platform: Platform // private translate: TranslateService, // private authService: AuthenticationService
+    private platform: Platform,
+    private authService: AuthenticationService
   ) {
     this.recoverForm = new FormGroup(
       {
@@ -77,6 +79,7 @@ export class RecoverPasswordPage
           Validators.required,
           Validators.minLength(6),
         ]),
+        token: new FormControl(null),
       },
       { validators: matchFieldsValidator('password', 'confirm_password') }
     );
@@ -140,63 +143,91 @@ export class RecoverPasswordPage
   }
 
   async sendEmail() {
-    this.step = 2;
-    console.log(this.step);
-    // this.recoverForm.get('code').reset();
-    // const loading = await this.loadingController.create({
-    // message: this.translate.instant('RECOVER.wait'),
-    // duration: 2000,
-    // });
-    // await loading.present().then(() => {
-    //   if (this.recoverForm.get('email').valid) {
-    //     this.authService.forgotPassword(this.recoverForm.value)
-    //     .pipe(finalize(() => {
-    //       loading.dismiss();
-    //     }))
-    //     .subscribe(
-    //       (data: any) => {
-    //         this.countDone = false;
-    //         setTimeout(() => {
-    //           this.countdown.restart();
-    //         }, 100);
-    //       },
-    //       (error: any) => {}
-    //     );
-    //   }
-    // });
+    this.recoverForm.get('code')!.reset();
+    const loading = await this.loadingController.create({
+      message: 'Waiting...',
+      // duration: 2000,
+    });
+    await loading.present().then(() => {
+      if (this.recoverForm.get('email')!.valid) {
+        this.authService
+          .forgotPassword({ email: this.recoverForm.value.email })
+          .pipe(
+            finalize(() => {
+              loading.dismiss();
+            })
+          )
+          .subscribe(
+            (data: any) => {
+              this.step = 2;
+              this.recoverForm.setErrors(null);
+            },
+            (error: any) => {
+              this.recoverForm?.setErrors(error?.error);
+            }
+          );
+      }
+    });
   }
 
   async checkCode() {
-    // if (this.recoverForm.get('code').valid) {
-    this.step = 3;
-    // } else {
-    //   this.recoverForm
-    //     .get('code')
-    //     .setErrors({ incorrect: this.translate.instant('RECOVER.incorrect') });
-    // }
+    if (this.recoverForm.get('code')?.valid) {
+      const loading = await this.loadingController.create({
+        message: 'Waiting...',
+        // duration: 2000,
+      });
+      await loading.present().then(() => {
+        this.authService
+          .recoveryCode({
+            email: this.recoverForm.value.email,
+            recovery_code: this.recoverForm.value.code,
+          })
+          .pipe(
+            finalize(() => {
+              loading.dismiss();
+            })
+          )
+          .subscribe(
+            (data: any) => {
+              // this.countDone = false;
+              this.recoverForm.setErrors(null);
+              this.recoverForm.get('token')?.setValue(data?.token);
+              this.step = 3;
+            },
+            (error: any) => {}
+          );
+      });
+    }
   }
 
   async saveNewPassword() {
-    this.step = 4;
+    // this.step = 4;
     // this.presentModal();
-    // const loading = await this.loadingController.create({
-    //   message: this.translate.instant('RECOVER.wait'),
-    //   // duration: 2000,
-    // });
-    // await loading.present().then(() => {
-    //   if (this.recoverForm.valid) {
-    //     this.authService.restorePassword(this.recoverForm.value)
-    //     .pipe(finalize(() => {
-    //       loading.dismiss();
-    //     }))
-    //     .subscribe(
-    //       (data: any) => {
-    // this.presentModal();
-    //       },
-    //       (error: any) => { }
-    //     );
-    //   }
-    // });
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+      // duration: 2000,
+    });
+    await loading.present().then(() => {
+      if (this.recoverForm.valid) {
+        this.authService
+          .createNewPassword({
+            token: this.recoverForm.value.token,
+            password: this.recoverForm.value.password,
+            confirm_password: this.recoverForm.value.confirm_password,
+          })
+          .pipe(
+            finalize(() => {
+              loading.dismiss();
+            })
+          )
+          .subscribe(
+            (data: any) => {
+              // this.presentModal();
+            },
+            (error: any) => {}
+          );
+      }
+    });
   }
 
   toggleShowPassword(field: string) {

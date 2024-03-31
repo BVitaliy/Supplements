@@ -29,7 +29,7 @@ export class DoneComponent implements OnInit {
     );
     setTimeout(() => {
       this.redirect();
-    }, 3000);
+    }, 6000);
   }
 
   async cancelModal() {

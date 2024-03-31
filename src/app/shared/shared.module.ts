@@ -10,8 +10,7 @@ import { InformationPopoverComponent } from './components/information-popover/in
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ContentComponent } from './components/content/content.component';
-import { GoogleMapsModule } from '@angular/google-maps';
-import { MapComponent } from './components/map/map.component';
+
 import { PatchImagePipe } from './pipes/patch-image.pipe';
 import { MaterialModule } from './modules/material.module';
 import { ImageZoomingComponent } from './components/image-zooming/image-zooming.component';
@@ -33,6 +32,7 @@ import { FilterGroupComponent } from './components/filter-group/filter-group.com
 import { IngredientFilterGroupComponent } from './components/ingredient-filter-group/ingredient-filter-group.component';
 import { OnboardingSearchProductComponent } from './components/onboarding-search-product/onboarding-search-product.component';
 import { ProductAlertPopupComponent } from './components/product-alert-popup/product-alert-popup.component';
+import { SetAvatarNamePipe } from './pipes/setAvatarName.pipe';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -43,8 +43,9 @@ const exportedDeclarations = [
   PatchImagePipe,
   PhonePipe,
   SafeHtmlPipe,
+  SetAvatarNamePipe,
   FocusPhoneInputDirective,
-  MapComponent,
+
   DoneComponent,
   ProductCardComponent,
   RatingComponent,
@@ -70,7 +71,6 @@ const exportedDeclarations = [
     IonicModule,
     SwiperModule,
     ReactiveFormsModule,
-    GoogleMapsModule,
     MaterialModule,
     NgChartsModule,
   ],

@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { ProfileService } from '../../profile.service';
+import { matchFieldsValidator } from 'src/app/core/validators/password.validator';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-change-password',
@@ -12,30 +16,76 @@ export class ChangePasswordPage {
   public showCurrentPassword: boolean = false;
   public showNewPassword: boolean = false;
   public showRepeatNewPassword: boolean = false;
+  loading = false;
+  modalHeight: number = 0;
+  showPassword: string = '';
 
-  constructor(public navCtrl: NavController) {}
+  constructor(
+    public navCtrl: NavController,
+    private profileService: ProfileService,
+    private alertService: AlertService
+  ) {}
 
   public ngOnInit(): void {
     this.form = new FormGroup(
       {
-        currentPassword: new FormControl(null, [
+        old_password: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
+          Validators.pattern(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
+          ),
         ]),
-        newPassword: new FormControl(null, [
+        password: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
+          Validators.pattern(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
+          ),
         ]),
-        repeatNewPassword: new FormControl(null, [
+        confirm_password: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
+          Validators.minLength(8),
         ]),
       },
+      {
+        validators: matchFieldsValidator('password', 'confirm_password'),
+      }
     );
+  }
+
+  toggleShowPassword(field: string) {
+    if (this.showPassword === field) {
+      this.showPassword = '';
+    } else {
+      this.showPassword = field;
+    }
   }
 
   public handleSaveChanges(): void {
     // save changes
-    console.log('form', this.form);
+    this.loading = true;
+    console.log('form', this.form.value);
+    this.profileService
+      .updatePassword(this.form.value)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.form.reset();
+          this.alertService.createToast({
+            header: 'Password was successfully updated!',
+            mode: 'ios',
+            position: 'bottom',
+          });
+        },
+        (error: any) => {
+          if (error.status === 401) {
+            this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
   }
 }

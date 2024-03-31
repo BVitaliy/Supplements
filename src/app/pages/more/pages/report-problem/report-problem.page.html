@@ -14,13 +14,8 @@
 
     <!-- Save action -->
     <ion-buttons slot="end">
-      <ion-button
-        class="btn btn-link btn-primary ml-10"
-        fill="clear"
-        mode="md"
-        [disabled]="!form.valid"
-        (click)="handleSaveChanges()"
-      >
+      <ion-button class="btn btn-link btn-primary ml-10" fill="clear" mode="md" [disabled]="!form.valid"
+        *ngIf="!loading" (click)="handleSaveChanges()">
         Save
       </ion-button>
     </ion-buttons>
@@ -34,13 +29,8 @@
     <div class="form-control">
       <ion-item class="form-item" mode="ios" lines="none">
         <ion-label position="stacked">Problem theme</ion-label>
-        <ion-input
-          formControlName="problemTheme"
-          type="text"
-          inputmode="text"
-          placeholder="Enter problem theme"
-          autocomplete="off"
-        ></ion-input>
+        <ion-input formControlName="theme" type="text" inputmode="text" placeholder="Enter problem theme"
+          autocomplete="off"></ion-input>
       </ion-item>
     </div>
     <!-- / Problem theme -->
@@ -49,11 +39,7 @@
     <div class="form-control">
       <ion-item class="form-item" mode="ios" lines="none">
         <ion-label position="stacked">Problem description</ion-label>
-        <ion-textarea
-          formControlName="problemDescription"
-          placeholder="Please describe the problem"
-          [autoGrow]="true"
-        ></ion-textarea>
+        <ion-textarea formControlName="message" placeholder="Please describe the problem" [rows]="4"></ion-textarea>
       </ion-item>
     </div>
     <!-- / Problem description -->

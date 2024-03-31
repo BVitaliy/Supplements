@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { ProfileDetailsFields, ProfileGenders } from '../profile-details.models';
+import {
+  ProfileDetailsFields,
+  ProfileGenders,
+} from '../profile-details.models';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -11,32 +14,29 @@ import { DatePipe } from '@angular/common';
 })
 export class EditProfileDetailPage implements OnInit {
   public formGroup!: FormGroup;
-  public profileDetailsFields: typeof ProfileDetailsFields = ProfileDetailsFields;
+  public profileDetailsFields: typeof ProfileDetailsFields =
+    ProfileDetailsFields;
   public profileGenders: typeof ProfileGenders = ProfileGenders;
   public fieldTitle?: ProfileDetailsFields;
   public fieldValue?: string;
   public formattedDate!: string | undefined;
-  constructor(public modalCtrl: ModalController, private datePipe: DatePipe) { }
+  constructor(public modalCtrl: ModalController, private datePipe: DatePipe) {}
 
   public ngOnInit(): void {
     switch (this.fieldTitle) {
-      case ProfileDetailsFields.firstName: {
+      case ProfileDetailsFields.first_name: {
         this.formGroup = new FormGroup({
-          firstName: new FormControl(this.fieldValue, [
-            Validators.required,
-          ]),
+          first_name: new FormControl(this.fieldValue, [Validators.required]),
         });
         break;
       }
-      case ProfileDetailsFields.lastName: {
+      case ProfileDetailsFields.last_name: {
         this.formGroup = new FormGroup({
-          lastName: new FormControl(this.fieldValue, [
-            Validators.required,
-          ]),
+          last_name: new FormControl(this.fieldValue, [Validators.required]),
         });
         break;
       }
-      case ProfileDetailsFields.emailAddress: {
+      case ProfileDetailsFields.email: {
         this.formGroup = new FormGroup({
           email: new FormControl(this.fieldValue, [
             Validators.required,
@@ -45,17 +45,15 @@ export class EditProfileDetailPage implements OnInit {
         });
         break;
       }
-      case ProfileDetailsFields.sex: {
+      case ProfileDetailsFields.gender: {
         this.formGroup = new FormGroup({
-          sex: new FormControl(this.fieldValue, [
-            Validators.required,
-          ]),
+          gender: new FormControl(this.fieldValue, [Validators.required]),
         });
         break;
       }
-      case ProfileDetailsFields.birthday: {
+      case ProfileDetailsFields.date_of_birth: {
         this.formGroup = new FormGroup({
-          birthday: new FormControl(this.fieldValue, [
+          date_of_birth: new FormControl(this.fieldValue, [
             Validators.required,
           ]),
         });
@@ -67,45 +65,50 @@ export class EditProfileDetailPage implements OnInit {
 
   public handleAction(): void {
     let newValue;
+    let field = '';
     switch (this.fieldTitle) {
-      case ProfileDetailsFields.firstName: {
-        newValue = this.formGroup.get('firstName')?.value;
+      case ProfileDetailsFields.first_name: {
+        newValue = this.formGroup.get('first_name')?.value;
+        field = 'first_name';
         break;
       }
-      case ProfileDetailsFields.lastName: {
-        newValue = this.formGroup.get('lastName')?.value;
+      case ProfileDetailsFields.last_name: {
+        newValue = this.formGroup.get('last_name')?.value;
+        field = 'last_name';
         break;
       }
-      case ProfileDetailsFields.emailAddress: {
+      case ProfileDetailsFields.email: {
         newValue = this.formGroup.get('email')?.value;
+        field = 'email';
         break;
       }
-      case ProfileDetailsFields.sex: {
-        newValue = this.formGroup.get('sex')?.value;
+      case ProfileDetailsFields.gender: {
+        newValue = this.formGroup.get('gender')?.value;
+        field = 'gender';
         break;
       }
-      case ProfileDetailsFields.birthday: {
+      case ProfileDetailsFields.date_of_birth: {
         newValue = this.formattedDate;
+        field = 'date_of_birth';
         break;
       }
     }
     this.modalCtrl.dismiss({
-      fieldTitle: this.fieldTitle,
+      fieldTitle: field,
       fieldNewValue: newValue,
     });
   }
 
   public setFormattedBirth(event: any): void {
     this.formGroup
-      .get('birthday')!
+      .get('date_of_birth')!
       .setValue(new Date(event?.detail?.value).toISOString());
-    this.formattedDate = this.datePipe.transform(
-      new Date(event?.detail?.value),
-      'dd/MM/yyyy'
-    ) || undefined;
+    this.formattedDate =
+      this.datePipe.transform(new Date(event?.detail?.value), 'yyyy-MM-dd') ||
+      undefined;
   }
 
-  public handleChangeSexValue(sex: ProfileGenders): void {
-    this.formGroup.get('sex')?.setValue(sex);
+  public handleChangeSexValue(gender: ProfileGenders): void {
+    this.formGroup.get('gender')?.setValue(gender);
   }
 }

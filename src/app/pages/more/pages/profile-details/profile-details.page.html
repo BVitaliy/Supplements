@@ -15,22 +15,23 @@
 </ion-header>
 
 <ion-content>
-  <ion-list lines="full">
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+  <ion-list lines="full" *ngIf="!loading">
     <!-- Photo -->
     <ion-item>
       <div class="profile-details__list p-vertical--large">
         <div vertical="center" horizontal="center" direction="column">
           <!-- Img -->
-          <app-img
-            [src]="profileDetails?.photo"
-            cssClasses="img-fit-cover"
-            class="m-bottom--medium profile-details__photo"
-          ></app-img>
+          <app-img [src]="profileDetails?.image" cssClasses="img-fit-cover" *ngIf="profileDetails?.image"
+            class="m-bottom--medium profile-details__photo"></app-img>
           <!-- / Img -->
 
           <!-- Edit action -->
           <ion-button fill="clear" class="btn btn-link btn-orange" mode="md">
-            Change image
+            {{profileDetails?.image ? 'Change image' :'Add image'}}
           </ion-button>
           <!-- / Edit action -->
         </div>
@@ -45,24 +46,20 @@
           <div direction="column" class="p-right--medium">
             <!-- Title -->
             <div class="profile-details__title m-bottom--xx-small">
-              {{ profileDetailsFields.firstName }}
+              {{ profileDetailsFields?.first_name }}
             </div>
             <!-- / Title -->
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.firstName }}
+              {{ profileDetails.first_name }}
             </div>
             <!-- / Value -->
           </div>
 
           <!-- Edit action -->
-          <ion-button
-            fill="clear"
-            class="btn btn-link btn-orange m-right--xx-small"
-            mode="md"
-            (click)="showEditDetailModal(profileDetailsFields.firstName, profileDetails.firstName)"
-          >
+          <ion-button fill="clear" class="btn btn-link btn-orange m-right--xx-small" mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.first_name, profileDetails.first_name)">
             Edit
           </ion-button>
           <!-- / Edit action -->
@@ -78,24 +75,20 @@
           <div direction="column" class="p-right--medium">
             <!-- Title -->
             <div class="profile-details__title m-bottom--xx-small">
-              {{ profileDetailsFields.lastName }}
+              {{ profileDetailsFields.last_name }}
             </div>
             <!-- / Title -->
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.lastName }}
+              {{ profileDetails.last_name }}
             </div>
             <!-- / Value -->
           </div>
 
           <!-- Edit action -->
-          <ion-button
-            fill="clear"
-            class="btn btn-link btn-orange m-right--xx-small"
-            mode="md"
-            (click)="showEditDetailModal(profileDetailsFields.lastName, profileDetails.lastName)"
-          >
+          <ion-button fill="clear" class="btn btn-link btn-orange m-right--xx-small" mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.last_name, profileDetails.last_name)">
             Edit
           </ion-button>
           <!-- / Edit action -->
@@ -111,7 +104,7 @@
           <div direction="column" class="p-right--medium">
             <!-- Title -->
             <div class="profile-details__title m-bottom--xx-small">
-              {{ profileDetailsFields.emailAddress }}
+              {{ profileDetailsFields.email }}
             </div>
             <!-- / Title -->
 
@@ -123,12 +116,8 @@
           </div>
 
           <!-- Edit action -->
-          <ion-button
-            fill="clear"
-            class="btn btn-link btn-orange m-right--xx-small"
-            mode="md"
-            (click)="showEditDetailModal(profileDetailsFields.emailAddress, profileDetails.email)"
-          >
+          <ion-button fill="clear" class="btn btn-link btn-orange m-right--xx-small" mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.email, profileDetails.email)">
             Edit
           </ion-button>
           <!-- / Edit action -->
@@ -144,24 +133,21 @@
           <div direction="column" class="p-right--medium">
             <!-- Title -->
             <div class="profile-details__title m-bottom--xx-small">
-              {{ profileDetailsFields.sex }}
+              {{ profileDetailsFields.gender }}
             </div>
             <!-- / Title -->
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.sex }}
+              {{ profileDetails.gender === 0 ? 'Male' : '' }}
+              {{ profileDetails.gender === 1 ? 'Female' : '' }}
             </div>
             <!-- / Value -->
           </div>
 
           <!-- Edit action -->
-          <ion-button
-            fill="clear"
-            class="btn btn-link btn-orange m-right--xx-small"
-            mode="md"
-            (click)="showEditDetailModal(profileDetailsFields.sex, profileDetails.sex)"
-          >
+          <ion-button fill="clear" class="btn btn-link btn-orange m-right--xx-small" mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.gender, profileDetails.gender)">
             Edit
           </ion-button>
           <!-- / Edit action -->
@@ -177,24 +163,20 @@
           <div direction="column" class="p-right--medium">
             <!-- Title -->
             <div class="profile-details__title m-bottom--xx-small">
-              {{ profileDetailsFields.birthday }}
+              {{ profileDetailsFields.date_of_birth }}
             </div>
             <!-- / Title -->
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.birthday }}
+              {{ profileDetails.date_of_birth }}
             </div>
             <!-- / Value -->
           </div>
 
           <!-- Edit action -->
-          <ion-button
-            fill="clear"
-            class="btn btn-link btn-orange m-right--xx-small"
-            mode="md"
-            (click)="showEditDetailModal(profileDetailsFields.birthday, profileDetails.birthday)"
-          >
+          <ion-button fill="clear" class="btn btn-link btn-orange m-right--xx-small" mode="md"
+            (click)="showEditDetailModal(profileDetailsFields.date_of_birth, profileDetails.date_of_birth)">
             Edit
           </ion-button>
           <!-- / Edit action -->

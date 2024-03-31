@@ -16,9 +16,21 @@
       <form class="form" [formGroup]="form">
         <div class="form-control">
           <ion-item class="form-item" mode="ios" lines="none">
-            <ion-label position="stacked">Full name</ion-label>
-            <ion-input formControlName="name" type="text" inputmode="text" placeholder="Enter your full name"
+            <ion-label position="stacked">First name</ion-label>
+            <ion-input formControlName="first_name" type="text" inputmode="text" placeholder="Enter your first name"
               autocomplete="off"></ion-input>
+            <ion-note slot="error" *ngIf="form.get('first_name')!.invalid && form.get('first_name')!.touched">Field is
+              required</ion-note>
+          </ion-item>
+
+        </div>
+        <div class="form-control">
+          <ion-item class="form-item" mode="ios" lines="none">
+            <ion-label position="stacked">Last name</ion-label>
+            <ion-input formControlName="last_name" type="text" inputmode="text" placeholder="Enter your last name"
+              autocomplete="off"></ion-input>
+            <ion-note slot="error" *ngIf="form.get('last_name')!.invalid && form.get('last_name')!.touched">Field is
+              required</ion-note>
           </ion-item>
 
         </div>
@@ -27,39 +39,52 @@
             <ion-label position="stacked">Email address</ion-label>
             <ion-input formControlName="email" type="email" inputmode="email" placeholder="Enter your email address"
               autocomplete="off"></ion-input>
+            <ion-note slot="error" *ngIf="form.get('email')!.invalid && form.get('email')!.dirty">Invalid email
+              format</ion-note>
           </ion-item>
         </div>
         <div class="form-control relative-block">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Password</ion-label>
-            <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
-              placeholder="Enter your password" autocomplete="off"></ion-input>
+            <ion-input formControlName="password" [type]="showPassword === 'password' ? 'text' : 'password'"
+              inputmode="text" placeholder="Enter your password" autocomplete="off"></ion-input>
+            <ion-note slot="error" *ngIf="form.get('password')!.invalid && form.get('password')!.dirty">The password
+              must contain at least 8 characters, at least: 1 number, 1 special
+              character, 1 uppercase letter,
+              1
+              lowercase letter.</ion-note>
           </ion-item>
           <ion-icon
-            [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
-            [color]="showPassword ? 'primary' : 'medium'" slot="end"
+            [src]="showPassword === 'password'  ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+            [color]="showPassword === 'password'  ? 'primary' : 'medium'" slot="end"
             (click)="toggleShowPassword('password')"></ion-icon>
         </div>
         <div class="form-control relative-block">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Repeat password</ion-label>
-            <ion-input formControlName="confirm_password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
+            <ion-input formControlName="confirm_password"
+              [type]="showPassword ==='confirm_password' ? 'text' : 'password'" inputmode="text"
               placeholder="Enter your password again" autocomplete="off"></ion-input>
+            <ion-note slot="error"
+              *ngIf="form.get('confirm_password')!.invalid && form.get('confirm_password')!.dirty">Passwords does not
+              match</ion-note>
           </ion-item>
           <ion-icon
-            [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
-            [color]="showPassword ? 'primary' : 'medium'" slot="end"
+            [src]="showPassword === 'confirm_password'  ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+            [color]="showPassword === 'confirm_password'  ? 'primary' : 'medium'" slot="end"
             (click)="toggleShowPassword('confirm_password')"></ion-icon>
         </div>
 
         <div class="form-control">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Sex</ion-label>
-            <ion-select interface="popover" mode="ios" placeholder="Select" formControlName="sex"
+            <ion-select interface="popover" mode="ios" placeholder="Select" formControlName="gender"
               [interfaceOptions]="{alignment: 'center', arrow: false, side: 'bottom', size: 'cover'}">
-              <ion-select-option value="male">Male</ion-select-option>
-              <ion-select-option value="female">Female</ion-select-option>
+              <ion-select-option value="0">Male</ion-select-option>
+              <ion-select-option value="1">Female</ion-select-option>
             </ion-select>
+            <ion-note slot="error" *ngIf="form.get('gender')!.invalid && form.get('gender')!.touched">Field is
+              required</ion-note>
             <ion-icon slot="end" color="medium" src="./assets/img/icons/select-arrow.svg"></ion-icon>
           </ion-item>
         </div>
@@ -67,25 +92,34 @@
         <div class="form-control">
           <ion-item mode="ios" lines="none" id="open-modal" class="form-item">
             <ion-label position="stacked">Birthday</ion-label>
-            <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="DD/MM/YYYY"
-              autocomplete="off"></ion-input>
+            <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="YYYY-MM-DD"
+              formControlName="date_of_birth_text" autocomplete="off"></ion-input>
+            <ion-note slot="error" *ngIf="form.get('date_of_birth_text')!.invalid && form.get('gender')!.touched">Field
+              is
+              required</ion-note>
           </ion-item>
         </div>
 
-        <ion-modal #modal trigger="open-modal" handle="true">
+        <ion-modal class="date-modal" #modal trigger="open-modal" handle="true" [initialBreakpoint]="modalHeight"
+          [breakpoints]="[0, modalHeight]">
           <ng-template>
             <ion-content>
               <ion-grid>
                 <ion-datetime mode="ios" presentation="date" [preferWheel]="true" [showDefaultButtons]="true"
-                  placeholder="DD/MM/YYYY" formControlName="birth_date" (ionChange)="setFormattedBirth($event)">
+                  placeholder="YYYY-MM-DD" formControlName="date_of_birth" (ionChange)="setFormattedBirth($event)">
                 </ion-datetime><!-- locale="en-US-u-hc-h12" -->
               </ion-grid>
             </ion-content>
           </ng-template>
         </ion-modal>
+        <!-- <div class="form-error" *ngIf="form.get('password')!.invalid && form.get('password')!.dirty">
+          The password must contain at least 8 characters, at least: 1 number, 1 special character, 1 uppercase letter,
+          1
+          lowercase letter.
+        </div> -->
 
-        <div class="form-error" *ngIf="form?.invalid && form?.hasError(' wrongLogin')">
-          {{ form!.errors?.['wrongLogin'] }}
+        <div class="form-error" *ngIf="form?.invalid && form?.hasError('wrong')">
+          {{ form!.errors?.['wrong'] }}
         </div>
 
         <ion-button class="btn btn-primary mb-16" expand="block" fill="solid" mode="md" [disabled]="form.invalid"

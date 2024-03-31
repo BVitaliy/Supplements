@@ -13,16 +13,11 @@ import {
   ACCESS_TOKEN_STORAGE_NAME,
   APP_HOME_REDIRECT_URL,
   DEVICE_ID_STORAGE_NAME,
-  USER_ID_STORAGE_NAME,
-  USER_STORAGE_NAME,
-  VOIP_TOKEN_STORAGE_NAME,
+  REFRESH_TOKEN_STORAGE_NAME,
 } from 'src/app/app.config';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from '../../authentication.service';
-import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
-import { PushNotificationsService } from 'src/app/core/services/push-notifications.service';
 
-import { PushNotifications } from '@capacitor/push-notifications';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -40,9 +35,7 @@ export class LoginPage implements OnInit, ViewDidLeave {
     private loadingController: LoadingController,
     private storage: Storage,
     private alertService: AlertService,
-    private themeOptionsService: ThemeOptionsService,
-    private authenticationService: AuthenticationService,
-    private pushNotificationsService: PushNotificationsService
+    private authService: AuthenticationService
   ) {}
 
   async ngOnInit() {
@@ -53,7 +46,7 @@ export class LoginPage implements OnInit, ViewDidLeave {
       ]),
       password: new FormControl(null, [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
       ]),
     });
     if (this.platform.is('hybrid')) {
@@ -61,19 +54,45 @@ export class LoginPage implements OnInit, ViewDidLeave {
         if (playerID) {
           this.playerID = playerID;
           // this.faceId();
-        } else {
-          this.pushNotificationsService.getIds().then((ids: any) => {
-            this.playerID = ids?.userId;
-            this.storage.set(DEVICE_ID_STORAGE_NAME, ids?.userId);
-          });
         }
       });
     }
   }
 
   async logIn() {
-    this.storage.set(ACCESS_TOKEN_STORAGE_NAME, 'test-token');
-    this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
+    // this.storage.set(ACCESS_TOKEN_STORAGE_NAME, 'test-token');
+    // this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
+
+    const loading = await this.loadingController.create({
+      message: 'Wait...',
+      mode: 'ios',
+    });
+
+    this.authService
+      .login(this.loginForm.value)
+      .pipe(
+        finalize(() => {
+          loading?.dismiss();
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+
+          this.storage.set(ACCESS_TOKEN_STORAGE_NAME, data?.access);
+          this.storage.set(REFRESH_TOKEN_STORAGE_NAME, data?.refresh);
+          this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
+        },
+        (error: any) => {
+          this.loginForm?.setErrors({
+            wrongLogin: error?.error?.message,
+          });
+
+          if (error.status === 401) {
+            this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
   }
 
   toggleShowPassword() {
