@@ -58,7 +58,7 @@ export class AppInterceptor implements HttpInterceptor {
     return from(promise).pipe(
       mergeMap((token) => {
         let clonedReq = this.addToken(request, token);
-
+        console.log(request);
         clonedReq = request.clone({
           setHeaders: {
             Authorization: clonedReq.headers.get('Authorization')
@@ -90,7 +90,7 @@ export class AppInterceptor implements HttpInterceptor {
                 return throwError(err);
               } else if (
                 err.status === 401 &&
-                !request.url?.includes('/token/refresh')
+                !request.url?.includes('/token')
               ) {
                 if (!this.isRefreshing) {
                   this.isRefreshing = true;

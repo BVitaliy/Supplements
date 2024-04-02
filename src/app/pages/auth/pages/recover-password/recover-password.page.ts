@@ -194,7 +194,11 @@ export class RecoverPasswordPage
               this.recoverForm.get('token')?.setValue(data?.token);
               this.step = 3;
             },
-            (error: any) => {}
+            (error: any) => {
+              this.recoverForm?.setErrors({
+                wrongCode: error?.error?.error[0],
+              });
+            }
           );
       });
     }
@@ -223,8 +227,13 @@ export class RecoverPasswordPage
           .subscribe(
             (data: any) => {
               // this.presentModal();
+              this.step = 4;
             },
-            (error: any) => {}
+            (error: any) => {
+              this.recoverForm?.setErrors({
+                wrongPass: error?.error?.error[0],
+              });
+            }
           );
       }
     });

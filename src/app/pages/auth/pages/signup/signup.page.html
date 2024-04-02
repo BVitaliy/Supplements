@@ -39,8 +39,13 @@
             <ion-label position="stacked">Email address</ion-label>
             <ion-input formControlName="email" type="email" inputmode="email" placeholder="Enter your email address"
               autocomplete="off"></ion-input>
-            <ion-note slot="error" *ngIf="form.get('email')!.invalid && form.get('email')!.dirty">Invalid email
-              format</ion-note>
+            <ion-note slot="error"
+              *ngIf="form.get('email')!.invalid && form.get('email')!.touched &&  form.get('email')!.hasError('required')">
+              Field
+              is
+              required
+            </ion-note>
+            <ion-note slot="error" *ngIf="form?.hasError('email')">{{form!.errors?.['email'][0]}}</ion-note>
           </ion-item>
         </div>
         <div class="form-control relative-block">
@@ -48,6 +53,10 @@
             <ion-label position="stacked">Password</ion-label>
             <ion-input formControlName="password" [type]="showPassword === 'password' ? 'text' : 'password'"
               inputmode="text" placeholder="Enter your password" autocomplete="off"></ion-input>
+            <ion-note slot="error"
+              *ngIf="form.get('password')!.invalid && form.get('password')!.touched &&  form.get('email')!.hasError('required')">Field
+              is
+              required</ion-note>
             <ion-note slot="error" *ngIf="form.get('password')!.invalid && form.get('password')!.dirty">The password
               must contain at least 8 characters, at least: 1 number, 1 special
               character, 1 uppercase letter,
@@ -90,28 +99,36 @@
         </div>
 
         <div class="form-control">
-          <ion-item mode="ios" lines="none" id="open-modal" class="form-item">
+          <ion-item mode="ios" lines="none" class="form-item">
             <ion-label position="stacked">Birthday</ion-label>
-            <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="YYYY-MM-DD"
-              formControlName="date_of_birth_text" autocomplete="off"></ion-input>
-            <ion-note slot="error" *ngIf="form.get('date_of_birth_text')!.invalid && form.get('gender')!.touched">Field
+            <ion-input class="form-item-hidden" formControlName="date_of_birth" autocomplete="'off'"></ion-input>
+            <input class="native-input" formControlName="date_of_birth" type="text" placeholder="YYYY-MM-DD"
+              autocomplete="'off'" mask="0000-00-00" [showMaskTyped]="false" />
+            <!-- <ion-input type="text" inputmode="text" placeholder="YYYY-MM-DD" mask="9999-99-99"
+              formControlName="date_of_birth" autocomplete="off"></ion-input> -->
+            <ion-note slot="error"
+              *ngIf="form.get('date_of_birth')!.invalid && form.get('date_of_birth')!.touched && form.get('date_of_birth')!.hasError('required')">
+              Field
               is
-              required</ion-note>
+              required
+            </ion-note>
+            <ion-note slot="error"
+              *ngIf="form?.hasError('date_of_birth')">{{form!.errors?.['date_of_birth'][0]}}</ion-note>
           </ion-item>
         </div>
 
-        <ion-modal class="date-modal" #modal trigger="open-modal" handle="true" [initialBreakpoint]="modalHeight"
+        <!-- <ion-modal class="date-modal" #modal trigger="open-modal" handle="true" [initialBreakpoint]="modalHeight"
           [breakpoints]="[0, modalHeight]">
           <ng-template>
             <ion-content>
               <ion-grid>
                 <ion-datetime mode="ios" presentation="date" [preferWheel]="true" [showDefaultButtons]="true"
                   placeholder="YYYY-MM-DD" formControlName="date_of_birth" (ionChange)="setFormattedBirth($event)">
-                </ion-datetime><!-- locale="en-US-u-hc-h12" -->
-              </ion-grid>
-            </ion-content>
-          </ng-template>
-        </ion-modal>
+                </ion-datetime>  locale="en-US-u-hc-h12" 
+  </ion-grid>
+</ion-content>
+</ng-template>
+</ion-modal> -->
         <!-- <div class="form-error" *ngIf="form.get('password')!.invalid && form.get('password')!.dirty">
           The password must contain at least 8 characters, at least: 1 number, 1 special character, 1 uppercase letter,
           1

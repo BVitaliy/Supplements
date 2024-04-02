@@ -27,13 +27,15 @@ export class CabinetGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.storage.get(ACCESS_TOKEN_STORAGE_NAME).then((user) => {
-      if (user) {
-        return true;
-      } else {
-        this.navCtrl.navigateForward([APP_AUTH_REDIRECT_URL]);
-        return false;
-      }
+    return this.storage.create().then(() => {
+      return this.storage.get(ACCESS_TOKEN_STORAGE_NAME).then((user) => {
+        if (user) {
+          return true;
+        } else {
+          this.navCtrl.navigateForward([APP_AUTH_REDIRECT_URL]);
+          return false;
+        }
+      });
     });
   }
 }

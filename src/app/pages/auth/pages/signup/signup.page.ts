@@ -60,7 +60,7 @@ export class SignupPage implements OnInit {
           Validators.required,
           Validators.pattern(emailPattern),
         ]),
-        date_of_birth_text: new FormControl(null, [Validators.required]),
+        // date_of_birth_text: new FormControl(null),
         date_of_birth: new FormControl(null, [Validators.required]),
         gender: new FormControl(null, [Validators.required]),
         password: new FormControl(null, [
@@ -109,9 +109,20 @@ export class SignupPage implements OnInit {
       message: 'Wait...',
       mode: 'ios',
     });
+    let date = null;
+    if (
+      this.form.value?.date_of_birth &&
+      this.form.value?.date_of_birth?.length === 8
+    ) {
+      const birth = this.form.value?.date_of_birth;
+      const year = birth.substring(0, 4);
+      const month = birth.substring(4, 6);
+      const day = birth.substring(6, 8);
+      date = year + '-' + month + '-' + day;
+    }
 
     this.authService
-      .signup(this.form.value)
+      .signup({ ...this.form.value, date_of_birth: date })
       .pipe(
         finalize(() => {
           loading?.dismiss();
@@ -129,10 +140,16 @@ export class SignupPage implements OnInit {
           console.log(error);
 
           if (error?.error?.email) {
-            this.form?.setErrors({
-              wrong: error?.error?.email?.error,
+            this.form?.get('email')?.setErrors({
+              wrong: error?.error?.email[0],
             });
           }
+          if (error?.error?.date_of_birth) {
+            this.form?.get('date_of_birth')?.setErrors({
+              wrong: error?.error?.date_of_birth[0],
+            });
+          }
+          this.form?.setErrors(error?.error);
           // this.alertService.presentErrorAlert(error?.email?.error);
 
           console.log(this.form);

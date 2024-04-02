@@ -34,7 +34,7 @@
         </p>
 
 
-        <div class="form-error" *ngIf="loginForm?.invalid && loginForm?.hasError(' wrongLogin')">
+        <div class="form-error" *ngIf="loginForm?.hasError('wrongLogin')">
           {{ loginForm!.errors?.['wrongLogin'] }}
         </div>
 

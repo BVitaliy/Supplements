@@ -6,6 +6,7 @@ import { SignupPageRoutingModule } from './signup-routing.module';
 
 import { SignupPage } from './signup.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SignupPageRoutingModule,
     ReactiveFormsModule,
     SharedModule,
+    NgxMaskModule,
   ],
   declarations: [SignupPage],
 })

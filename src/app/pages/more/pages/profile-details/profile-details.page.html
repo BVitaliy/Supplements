@@ -30,7 +30,7 @@
           <!-- / Img -->
 
           <!-- Edit action -->
-          <ion-button fill="clear" class="btn btn-link btn-orange" mode="md">
+          <ion-button fill="clear" class="btn btn-link btn-orange" mode="md" (click)="openSourcePopover()">
             {{profileDetails?.image ? 'Change image' :'Add image'}}
           </ion-button>
           <!-- / Edit action -->
@@ -52,7 +52,7 @@
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.first_name }}
+              {{ profileDetails?.first_name }}
             </div>
             <!-- / Value -->
           </div>
@@ -81,7 +81,7 @@
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.last_name }}
+              {{ profileDetails?.last_name }}
             </div>
             <!-- / Value -->
           </div>
@@ -104,13 +104,13 @@
           <div direction="column" class="p-right--medium">
             <!-- Title -->
             <div class="profile-details__title m-bottom--xx-small">
-              {{ profileDetailsFields.email }}
+              {{ profileDetailsFields?.email }}
             </div>
             <!-- / Title -->
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.email }}
+              {{ profileDetails?.email }}
             </div>
             <!-- / Value -->
           </div>
@@ -133,14 +133,14 @@
           <div direction="column" class="p-right--medium">
             <!-- Title -->
             <div class="profile-details__title m-bottom--xx-small">
-              {{ profileDetailsFields.gender }}
+              {{ profileDetailsFields?.gender }}
             </div>
             <!-- / Title -->
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.gender === 0 ? 'Male' : '' }}
-              {{ profileDetails.gender === 1 ? 'Female' : '' }}
+              {{ profileDetails?.gender === 0 ? 'Male' : '' }}
+              {{ profileDetails?.gender === 1 ? 'Female' : '' }}
             </div>
             <!-- / Value -->
           </div>
@@ -163,13 +163,13 @@
           <div direction="column" class="p-right--medium">
             <!-- Title -->
             <div class="profile-details__title m-bottom--xx-small">
-              {{ profileDetailsFields.date_of_birth }}
+              {{ profileDetailsFields?.date_of_birth }}
             </div>
             <!-- / Title -->
 
             <!-- Value -->
             <div class="profile-details__value">
-              {{ profileDetails.date_of_birth }}
+              {{ profileDetails?.date_of_birth }}
             </div>
             <!-- / Value -->
           </div>

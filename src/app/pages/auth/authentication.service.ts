@@ -15,7 +15,7 @@ export class AuthenticationService {
   login(body: any): Observable<any> {
     return this.http.post(`${environment.origin}/token/`, body).pipe(
       catchError((error) => {
-        this.alertService.presentErrorAlert(error);
+        // this.alertService.presentErrorAlert(error);
         return throwError(error);
       })
     );
@@ -36,7 +36,7 @@ export class AuthenticationService {
   refreshToken(body: any): Observable<any> {
     return this.http.post(`${environment.origin}/token/refresh/`, body).pipe(
       catchError((error) => {
-        this.alertService.presentErrorAlert(error);
+        // this.alertService.presentErrorAlert(error);
         return throwError(error);
       })
     );

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, Platform } from '@ionic/angular';
 import { ProfileDetailsFields, ProfileGenders } from './profile-details.models';
 import { EditProfileDetailPage } from './edit-profile-detail/edit-profile-detail.page';
 import { jwtDecode } from 'jwt-decode';
@@ -8,6 +8,8 @@ import { Storage } from '@ionic/storage';
 import { ACCESS_TOKEN_STORAGE_NAME } from 'src/app/app.config';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { finalize } from 'rxjs';
+import { PhotoService } from 'src/app/core/services/photo.service';
+import { SourcePopoverComponent } from 'src/app/shared/components/source-popover/source-popover.component';
 
 @Component({
   selector: 'app-profile-details',
@@ -27,7 +29,10 @@ export class ProfileDetailsPage implements OnInit {
     private modalCtrl: ModalController,
     private storage: Storage,
     private profileService: ProfileService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private platform: Platform,
+    private modalController: ModalController,
+    private photoService: PhotoService
   ) {}
 
   public ngOnInit(): void {
@@ -151,6 +156,10 @@ export class ProfileDetailsPage implements OnInit {
   handleProfile(values: any) {
     this.loading = true;
     console.log(values);
+    if (!values.image) {
+      values.image =
+        'https://lh3.googleusercontent.com/a/ACg8ocK4cNWxa9nlVf85M-cUqi9rw0mvAMfN0X_rQrGqTDzthw0=s83-c-mo';
+    }
     this.profileService.updateProfile(this.userId, values).subscribe(
       (data: any) => {
         console.log(data);
@@ -165,5 +174,31 @@ export class ProfileDetailsPage implements OnInit {
         }
       }
     );
+  }
+
+  async openSourcePopover() {
+    const modalHeight =
+      Math.floor(
+        (100 * (210 + (this.platform.is('ios') ? 34 : 0))) / window.innerHeight
+      ) / 100;
+
+    const modal = await this.modalController.create({
+      component: SourcePopoverComponent,
+      cssClass: '',
+      mode: 'ios',
+      breakpoints: [0, modalHeight],
+      initialBreakpoint: modalHeight,
+      handle: true,
+    });
+
+    modal.onDidDismiss().then((returnedData: any) => {
+      if (returnedData && returnedData?.data) {
+        this.profileDetails.image = returnedData?.data;
+        // this.handleProfile();
+        console.log(returnedData);
+      }
+    });
+
+    return await modal.present();
   }
 }

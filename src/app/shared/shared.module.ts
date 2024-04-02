@@ -33,6 +33,7 @@ import { IngredientFilterGroupComponent } from './components/ingredient-filter-g
 import { OnboardingSearchProductComponent } from './components/onboarding-search-product/onboarding-search-product.component';
 import { ProductAlertPopupComponent } from './components/product-alert-popup/product-alert-popup.component';
 import { SetAvatarNamePipe } from './pipes/setAvatarName.pipe';
+import { MaskDirective } from './directives/mask.directives';
 
 const exportedDeclarations = [
   ImgComponent,

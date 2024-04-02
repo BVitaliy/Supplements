@@ -82,15 +82,18 @@ export class LoginPage implements OnInit, ViewDidLeave {
           this.storage.set(ACCESS_TOKEN_STORAGE_NAME, data?.access);
           this.storage.set(REFRESH_TOKEN_STORAGE_NAME, data?.refresh);
           this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
+          this.loginForm?.setErrors(null);
         },
         (error: any) => {
+          console.log(error);
           this.loginForm?.setErrors({
-            wrongLogin: error?.error?.message,
+            wrongLogin: error?.error?.detail,
           });
+          console.log(this.loginForm);
 
-          if (error.status === 401) {
-            this.alertService.presentErrorAlert('Something went wrong');
-          }
+          // if (error.status === 401) {
+          //   this.alertService.presentErrorAlert(error?.error?.detail);
+          // }
         }
       );
   }
