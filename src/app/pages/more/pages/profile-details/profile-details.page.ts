@@ -157,8 +157,8 @@ export class ProfileDetailsPage implements OnInit {
     this.loading = true;
     console.log(values);
     if (!values.image) {
-      values.image =
-        'https://lh3.googleusercontent.com/a/ACg8ocK4cNWxa9nlVf85M-cUqi9rw0mvAMfN0X_rQrGqTDzthw0=s83-c-mo';
+      // values.image =
+      //   'https://lh3.googleusercontent.com/a/ACg8ocK4cNWxa9nlVf85M-cUqi9rw0mvAMfN0X_rQrGqTDzthw0=s83-c-mo';
     }
     this.profileService.updateProfile(this.userId, values).subscribe(
       (data: any) => {

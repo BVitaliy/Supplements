@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -62,8 +62,12 @@ export class ProfileService {
   }
 
   updateProfile(id: any, data: any): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'multipart/form-data');
     return this.http
-      .patch(`${environment.origin}/users/${id}/profile/`, data)
+      .patch(`${environment.origin}/users/${id}/profile/`, data, {
+        headers: headers,
+      })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);

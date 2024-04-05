@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
+import { finalize } from 'rxjs';
 import { FilterModalComponent } from 'src/app/shared/components/filter-modal/filter-modal.component';
 import { SortModalComponent } from 'src/app/shared/components/sort-modal/sort-modal.component';
 import { Products } from 'src/mock/products';
+import { CatalogService } from '../../catalog.service';
 
 @Component({
   selector: 'app-catalog-detail',
@@ -11,13 +14,16 @@ import { Products } from 'src/mock/products';
   styleUrls: ['./catalog-detail.page.scss'],
 })
 export class CatalogDetailPage implements OnInit {
-  public listProducts: any[] = [...Products];
+  public listProducts: any[] = [];
   loading: boolean = false;
   filterForm!: FormGroup;
+  id: any;
 
   constructor(
     public navCtrl: NavController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private catalogService: CatalogService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -25,6 +31,11 @@ export class CatalogDetailPage implements OnInit {
       search: new FormControl(null),
       sort: new FormControl(null),
     });
+  }
+
+  ionViewWillEnter() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.getProducts(this.id);
   }
 
   search(event: any) {
@@ -76,5 +87,37 @@ export class CatalogDetailPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  // Рефреш даних користувача
+  doRefresh(event: any) {
+    this.getProducts(this.id, true, () => event.target.complete());
+  }
+
+  getProducts(id: string, refresh?: boolean, callbackFunction?: () => void) {
+    this.catalogService
+      .getProducts(id, refresh)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          if (callbackFunction) {
+            callbackFunction();
+          }
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          // this.profileDetails = data;
+          this.listProducts = data.results;
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
   }
 }

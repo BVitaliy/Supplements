@@ -4,7 +4,7 @@
   </div>
   <div class="content">
     <div (click)="openDetail()">
-      <div class="category medium">{{product?.category}}</div>
+      <div class="category medium">{{product?.category?.title}}</div>
       <div class="title text-s line-clamp-3 fw-600 dark">{{product?.title}}</div>
     </div>
     <div>
@@ -20,7 +20,9 @@
       </div>
 
       <div class="product-bottom">
-        <app-rating-count *ngIf="showRatingCount" [rating]="product?.score" [type]="'badge'"></app-rating-count>
+        <ng-container *ngIf="product?.score">
+          <app-rating-count *ngIf="showRatingCount" [rating]="product?.score" [type]="'badge'"></app-rating-count>
+        </ng-container>
         <app-favorite-btn *ngIf="showFavoriteBtn" (favorited)="favoriteHandle($event)"
           [product]="product"></app-favorite-btn>
       </div>

@@ -29,4 +29,24 @@ export class CatalogService {
         })
       );
   }
+
+  getProducts(id: string, refresh?: boolean): Observable<any> {
+    console.log(id);
+    let options!: { params?: { refreshReq?: boolean } };
+    if (refresh) {
+      options = {
+        params: {
+          refreshReq: refresh,
+        },
+      };
+    }
+    return this.http
+      .get(`${environment.origin}/supplements/categories/${id}`, options)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
 }

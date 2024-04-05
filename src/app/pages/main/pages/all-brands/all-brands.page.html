@@ -10,7 +10,13 @@
 </ion-header>
 
 <ion-content>
-  <div class="content">
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+
+
+  <div class="content" *ngIf="!loading">
     <!-- Search -->
     <div class="p-bottom--large" [formGroup]="searchForm">
       <ion-searchbar mode="ios" placeholder="Search..." show-clear-button="never"
@@ -22,7 +28,7 @@
     <ng-container *ngFor="let brandSection of brandList">
       <div *ngIf="brandSection.brands?.length" class="section">
         <!-- Section label -->
-        <div class="section-label m-bottom--x-small">
+        <div class="section-label m-bottom--x-small ion-text-uppercase">
           {{ brandSection.label }}
         </div>
         <!-- / Section label -->
@@ -30,7 +36,7 @@
           <ng-container *ngFor="let brand of brandSection.brands; let last = last">
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
               [routerLink]="['/home/tabs/tab/main/all-brands/', brand?.id]">
-              <div class="dark ">{{brand?.label}}</div>
+              <div class="dark">{{brand?.title}}</div>
 
             </ion-item>
           </ng-container>
