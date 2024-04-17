@@ -63,7 +63,8 @@ export class ProfileService {
 
   updateProfile(id: any, data: any): Observable<any> {
     let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'multipart/form-data');
+    // headers = headers.set('Accept', 'application/json');
+    headers = headers.set('Content-Type', 'multipart/form-data; boundary=--');
     return this.http
       .patch(`${environment.origin}/users/${id}/profile/`, data, {
         headers: headers,
@@ -94,5 +95,24 @@ export class ProfileService {
         return throwError(error);
       })
     );
+  }
+
+  getSubProducts(status: number, refresh?: boolean): Observable<any> {
+    let options!: { params?: { refreshReq?: boolean } };
+    if (refresh) {
+      options = {
+        params: {
+          refreshReq: refresh,
+        },
+      };
+    }
+    return this.http
+      .get(`${environment.origin}/requests/?status=${status}`, options)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
   }
 }

@@ -18,6 +18,14 @@ import {
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from '../../authentication.service';
 
+import {
+  Auth,
+  OAuthProvider,
+  signInWithPopup,
+  UserCredential,
+} from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -36,7 +44,9 @@ export class LoginPage implements OnInit, ViewDidLeave {
     private storage: Storage,
     private alertService: AlertService,
     private authService: AuthenticationService
-  ) {}
+  ) // private auth: Auth,
+  // private firestore: Firestore
+  {}
 
   async ngOnInit() {
     this.loginForm = new FormGroup({
@@ -104,5 +114,17 @@ export class LoginPage implements OnInit, ViewDidLeave {
 
   ionViewDidLeave() {
     this.loginForm.reset();
+  }
+
+  appleSignIn() {
+    this.signInAppleWeb();
+  }
+
+  signInAppleWeb() {
+    // const provider = new OAuthProvider('apple.com');
+    // console.log(provider);
+    // signInWithPopup(this.auth, provider).then((result: UserCredential) => {
+    //   console.log(result);
+    // });
   }
 }

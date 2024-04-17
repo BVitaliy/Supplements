@@ -46,5 +46,9 @@
       </div>
     </ng-container>
 
+    <ng-container *ngIf="!brandList.length && !loading">
+      <app-search-empty class="flex-grow  "></app-search-empty>
+    </ng-container>
+
   </div>
 </ion-content>

@@ -10,6 +10,11 @@
 </ion-header>
 
 <ion-content>
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+
   <div class="content">
     <!-- Search -->
     <div class="p-bottom--large" [formGroup]="searchForm">
@@ -18,6 +23,7 @@
         formControlName="search" class="highlighted-ingredients__search" (ionChange)="search($event)"></ion-searchbar>
     </div>
     <!-- / Search -->
+
 
     <ng-container *ngFor="let brandSection of brandList">
       <div *ngIf="brandSection.brands?.length" class="section">
@@ -38,6 +44,10 @@
 
 
       </div>
+    </ng-container>
+
+    <ng-container *ngIf="!brandList.length && !loading">
+      <app-search-empty class="flex-grow  "></app-search-empty>
     </ng-container>
 
   </div>

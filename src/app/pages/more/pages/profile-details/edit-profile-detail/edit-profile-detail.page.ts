@@ -88,7 +88,14 @@ export class EditProfileDetailPage implements OnInit {
         break;
       }
       case ProfileDetailsFields.date_of_birth: {
-        newValue = this.formattedDate;
+        let date = this.formGroup.get('date_of_birth')?.value;
+
+        if (date && date?.length === 8) {
+          const year = date.substring(0, 4);
+          const month = date.substring(4, 6);
+          const day = date.substring(6, 8);
+          newValue = year + '-' + month + '-' + day;
+        }
         field = 'date_of_birth';
         break;
       }
@@ -108,7 +115,16 @@ export class EditProfileDetailPage implements OnInit {
       undefined;
   }
 
-  public handleChangeSexValue(gender: ProfileGenders): void {
+  public handleChangeSexValue(gender: number): void {
+    console.log(gender);
+    // let value = 0;
+    // if (gender === 'Female') {
+    //   value = 1;
+    // } else if (gender === 'Other') {
+    //   value = 2;
+    // } else {
+    //   value = 0;
+    // }
     this.formGroup.get('gender')?.setValue(gender);
   }
 }

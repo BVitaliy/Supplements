@@ -8,6 +8,10 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
 import { SharedModule } from '../../../../shared/shared.module';
 
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +20,9 @@ import { SharedModule } from '../../../../shared/shared.module';
     LoginPageRoutingModule,
     ReactiveFormsModule,
     SharedModule,
+    provideFirebaseApp(() => initializeApp()),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
   declarations: [LoginPage],
 })

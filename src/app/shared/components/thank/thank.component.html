@@ -12,8 +12,8 @@
       <p *ngIf="description" class="dark text-m" [innerHTML]="description | safeHtml"></p>
     </div>
 
-    <ion-button class="btn btn-primary" expand="block" fill="solid" mode="md" type="submit"
-      *ngIf="buttonRouterUrl && buttonText" (click)="redirect()">
+    <ion-button class="btn btn-primary" expand="block" fill="solid" mode="md" type="submit" *ngIf="buttonText"
+      (click)="redirect()">
       {{ buttonText }}
     </ion-button>
   </ion-grid>

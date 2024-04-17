@@ -46,3 +46,10 @@
   border-radius: 50%;
   margin-right: 8px;
 }
+
+app-search-empty {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

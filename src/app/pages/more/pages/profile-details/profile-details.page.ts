@@ -160,7 +160,17 @@ export class ProfileDetailsPage implements OnInit {
       // values.image =
       //   'https://lh3.googleusercontent.com/a/ACg8ocK4cNWxa9nlVf85M-cUqi9rw0mvAMfN0X_rQrGqTDzthw0=s83-c-mo';
     }
-    this.profileService.updateProfile(this.userId, values).subscribe(
+
+    const formData = new FormData();
+
+    formData.append('date_of_birth', values?.date_of_birth);
+    formData.append('email', values?.email);
+    formData.append('first_name', values?.first_name);
+    formData.append('last_name', values?.last_name);
+    formData.append('gender', values?.gender);
+    // formData.append('image', values?.image);
+    console.log(formData);
+    this.profileService.updateProfile(this.userId, formData).subscribe(
       (data: any) => {
         console.log(data);
         this.profileDetails = data;
@@ -193,7 +203,7 @@ export class ProfileDetailsPage implements OnInit {
 
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
-        this.profileDetails.image = returnedData?.data;
+        this.profileDetails.image = returnedData?.data?.photo;
         // this.handleProfile();
         console.log(returnedData);
       }

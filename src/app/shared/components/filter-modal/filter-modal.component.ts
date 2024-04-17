@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ModalController, Platform } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { CatalogService } from 'src/app/pages/catalog/catalog.service';
 import {
   Brands,
   Categories,
@@ -23,13 +25,15 @@ export class FilterModalComponent implements OnInit {
   public productRating: any[] = [...ProductRating];
   public userRating: any[] = [...UserRating];
   public special: any[] = [...Special];
-
+  loading = false;
   selectedOptions: any[] = [];
   backBtnSubscription!: Subscription;
 
   constructor(
     private modalController: ModalController,
-    private platform: Platform
+    private platform: Platform,
+    private catalogService: CatalogService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -37,6 +41,44 @@ export class FilterModalComponent implements OnInit {
     this.form = new FormGroup({
       filters: new FormControl(this.filters || null),
     });
+  }
+
+  ionViewWillEnter() {
+    this.backBtnSubscription = this.platform.backButton.subscribeWithPriority(
+      9995,
+      () => {
+        this.cancelModal();
+      }
+    );
+    this.getData();
+  }
+
+  doRefresh(event: any) {
+    this.getData(true, () => event.target.complete());
+  }
+
+  getData(refresh?: boolean, callbackFunction?: () => void) {
+    // this.loading = true;
+    this.catalogService
+      .getFiltersRecords(refresh)
+      .pipe(
+        finalize(() => {
+          // this.loading = false;
+          if (callbackFunction) {
+            callbackFunction();
+          }
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+        },
+        (error: any) => {
+          if (error.status === 401) {
+            this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
   }
 
   public async handleApplyChanges() {
@@ -66,15 +108,6 @@ export class FilterModalComponent implements OnInit {
     //     this.handleChangeCheckboxState(false, option.id);
     //   }
     // }
-  }
-
-  ionViewWillEnter() {
-    this.backBtnSubscription = this.platform.backButton.subscribeWithPriority(
-      9995,
-      () => {
-        this.cancelModal();
-      }
-    );
   }
 
   async cancelModal() {

@@ -14,6 +14,7 @@ export class SourcePopoverComponent implements OnInit {
   backBtnSubscription!: Subscription;
   loadingPhoto: boolean = false;
   uploadPhoto: any;
+  format: any;
 
   constructor(
     private modalController: ModalController,
@@ -44,8 +45,9 @@ export class SourcePopoverComponent implements OnInit {
           // const photo64 = this.photoService.blobToBase64(blob);
           // const fd = new FormData();
           // fd.append('file', blob, 'filename.jpg');
-          console.log(imageData?.dataUrl);
+          console.log(imageData);
           this.uploadPhoto = imageData?.dataUrl;
+          this.format = imageData.format;
           this.cancelModal();
         } else {
           this.loadingPhoto = false;
@@ -64,14 +66,15 @@ export class SourcePopoverComponent implements OnInit {
     this.photoService.choosePicture(1).then(
       async (imageData: any) => {
         if (imageData && imageData?.photos?.length) {
-          console.log(imageData);
+          console.log('image data', imageData);
           for (const image of imageData?.photos) {
             const base64Response = await Filesystem.readFile({
               path: image.path,
             });
-            // const blob = this.photoService.base64toBlob(
-            //   `data:image/${image.format};base64,` + base64Response.data
-            // );
+            const blob = this.photoService.base64toBlob(
+              `data:image/${image.format};base64,` + base64Response.data
+            );
+
             // const fd = new FormData();
             // fd.append(
             //   'file',
@@ -81,6 +84,7 @@ export class SourcePopoverComponent implements OnInit {
             this.uploadPhoto =
               `data:image/${image.format};base64,` + base64Response.data;
             console.log(base64Response);
+            this.format = image.format;
           }
           this.cancelModal();
         } else {
@@ -98,7 +102,7 @@ export class SourcePopoverComponent implements OnInit {
     if (this.backBtnSubscription) {
       this.backBtnSubscription.unsubscribe();
     }
-    const onClosedData = this.uploadPhoto;
+    const onClosedData = { photo: this.uploadPhoto, format: this.format };
     await this.modalController.dismiss(onClosedData);
   }
 

@@ -12,27 +12,25 @@ export class ManageFavoriteListPage implements OnInit {
   public mode?: ManageFavoriteListModes;
   public titleText?: string;
   public buttonText?: string;
-  public listName?: string;
-  public listDescription?: string;
+  public name?: string;
+  public description?: string;
   public formGroup!: FormGroup;
+  public data!: any;
 
-  constructor(public modalCtrl: ModalController) { }
+  constructor(public modalCtrl: ModalController) {}
 
   public ngOnInit(): void {
+    console.log(this.data);
     this.formGroup = new FormGroup({
-      listName: new FormControl(this.listName, [
-        Validators.required,
-      ]),
-      listDescription: new FormControl(this.listDescription, [
-        Validators.required,
-      ]),
+      name: new FormControl(this.name, [Validators.required]),
+      description: new FormControl(this.description, [Validators.required]),
     });
   }
 
   public handleAction(): void {
     this.modalCtrl.dismiss({
-      listName: this.formGroup.get('listName')?.value,
-      listDescription: this.formGroup.get('listDescription')?.value,
+      name: this.formGroup.get('name')?.value,
+      description: this.formGroup.get('description')?.value,
       mode: this.mode,
     });
   }

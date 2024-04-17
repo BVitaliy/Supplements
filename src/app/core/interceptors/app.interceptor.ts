@@ -88,13 +88,12 @@ export class AppInterceptor implements HttpInterceptor {
                   location.replace('/home');
                 });
                 return throwError(err);
-              } else if (
-                err.status === 401 &&
-                !request.url?.includes('/token')
-              ) {
+              } else if (err.status === 401) {
+                console.log(this.isRefreshing);
                 if (!this.isRefreshing) {
                   this.isRefreshing = true;
                   this.refreshToken$.next(null);
+                  console.log(this.isRefreshing);
                   return this.authenticationService
                     .refreshToken({ refresh: this.refreshToken })
                     .pipe(
@@ -116,6 +115,7 @@ export class AppInterceptor implements HttpInterceptor {
                       })
                     );
                 } else {
+                  console.log(request.url);
                   if (request.url?.includes('/token/refresh')) {
                     this.destroyed$.next();
                     this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);

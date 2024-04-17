@@ -34,7 +34,7 @@
   }
 
   .title {
-    min-height: 48px;
+    // min-height: 48px;
     margin-bottom: 8px;
   }
   .category {
@@ -64,4 +64,30 @@
     letter-spacing: 0;
     color: #a3a3a3;
   }
+}
+
+.decline-text {
+  padding: 12px;
+  gap: 4px;
+  border-radius: 10px;
+  border: 1px solid #f2f2f2;
+  margin-bottom: 12px;
+  background-color: #f8f8f8;
+
+  + .btn {
+    --border-width: 1px;
+  }
+
+  p {
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+}
+.decline-title {
+  text-transform: uppercase;
+  font-size: 10px;
+  line-height: 1.3;
+  color: #ff001c;
+  margin-bottom: 5px;
 }

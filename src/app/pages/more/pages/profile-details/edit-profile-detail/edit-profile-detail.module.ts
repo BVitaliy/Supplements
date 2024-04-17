@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { EditProfileDetailPageRoutingModule } from './edit-profile-detail-routing.module';
 import { EditProfileDetailPage } from './edit-profile-detail.page';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { EditProfileDetailPage } from './edit-profile-detail.page';
     IonicModule,
     EditProfileDetailPageRoutingModule,
     ReactiveFormsModule,
+    NgxMaskModule,
   ],
   declarations: [EditProfileDetailPage],
 })

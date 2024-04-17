@@ -1,6 +1,6 @@
 export class FavoritesList {
   public id!: number;
-  public listName?: string;
-  public listDescription?: string;
+  public name?: string;
+  public description?: string;
   public products: any[] = [];
 }

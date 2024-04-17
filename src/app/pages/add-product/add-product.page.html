@@ -1,16 +1,22 @@
 <ion-header mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="cancelModal()">
         <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="md">Add product</ion-title>
+    <ion-title class="md">{{id ? 'Edit submission': 'Add product'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="content">
+  <ng-container *ngIf="id">
+    <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+    <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+      <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+    </ion-refresher>
+  </ng-container>
+  <div class="content" *ngIf="!id || id && !loading">
     <form class="form" [formGroup]="form">
       <div class="file-control">
         <ion-label>Product front packing image*</ion-label>
@@ -47,7 +53,7 @@
       <div class="form-control">
         <ion-item class="form-item sm" mode="ios" lines="none">
           <ion-label position="stacked">Product*</ion-label>
-          <ion-input formControlName="product" type="text" inputmode="text" placeholder="Enter product name"
+          <ion-input formControlName="title" type="text" inputmode="text" placeholder="Enter product name"
             autocomplete="off"></ion-input>
         </ion-item>
       </div>
@@ -89,9 +95,9 @@
   </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="!id || id && !loading">
   <ion-button class="btn btn-primary mb-5" expand="block" fill="solid" mode="md" [disabled]="form.invalid"
-    (click)="createProduct()">
+    (click)="requestProduct()">
     Submit
   </ion-button>
 </ion-footer>

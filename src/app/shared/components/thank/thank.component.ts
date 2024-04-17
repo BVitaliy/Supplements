@@ -42,7 +42,9 @@ export class ThankComponent implements OnInit {
   }
 
   redirect(): void {
-    this.navCtrl.navigateForward([this.buttonRouterUrl]);
+    if (this.buttonRouterUrl) {
+      this.navCtrl.navigateForward([this.buttonRouterUrl]);
+    }
     this.cancelModal();
   }
 

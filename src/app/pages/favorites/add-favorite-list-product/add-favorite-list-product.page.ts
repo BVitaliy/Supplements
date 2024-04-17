@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { ManageFavoriteListModel, ManageFavoriteListModes } from '../manage-favorite-list/manage-favorite-list.models';
+import {
+  ManageFavoriteListModel,
+  ManageFavoriteListModes,
+} from '../manage-favorite-list/manage-favorite-list.models';
 import { ManageFavoriteListPage } from '../manage-favorite-list/manage-favorite-list.page';
 import { ModalController } from '@ionic/angular';
 import { FavoritesList } from '../favorites.models';
@@ -13,20 +16,20 @@ export class AddFavoriteListProductPage {
   public favoritesList: FavoritesList[] = [
     {
       id: 1,
-      listName: 'My favorite supplements',
-      listDescription: 'Only favorite supplements will be in this list',
+      name: 'My favorite supplements',
+      description: 'Only favorite supplements will be in this list',
       products: [],
     },
     {
       id: 2,
-      listName: 'My favorite supplements 2',
-      listDescription: 'Only favorite supplements will be in this list 2',
+      name: 'My favorite supplements 2',
+      description: 'Only favorite supplements will be in this list 2',
       products: [],
     },
   ];
   public selectedListsIds: number[] = [];
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController) {}
 
   public async showCreateListModal(): Promise<void> {
     const dialogConf: ManageFavoriteListModel = {
@@ -44,7 +47,7 @@ export class AddFavoriteListProductPage {
         buttonText: dialogConf.buttonText,
       },
     });
-    modal.onDidDismiss().then(data => {
+    modal.onDidDismiss().then((data) => {
       if (data?.data) {
         // create favorite list
       }
@@ -60,7 +63,9 @@ export class AddFavoriteListProductPage {
 
   public checkboxChangeState(_e: any, id: number): void {
     if (!!this.selectedListsIds.find((el: number): boolean => el === id)) {
-      this.selectedListsIds = this.selectedListsIds.filter((el: number): boolean => el !== id);
+      this.selectedListsIds = this.selectedListsIds.filter(
+        (el: number): boolean => el !== id
+      );
     } else {
       this.selectedListsIds.push(id);
     }
