@@ -21,13 +21,14 @@
       <div class="file-control">
         <ion-label>Product front packing image*</ion-label>
         <ion-button class="btn btn-outline" expand="block" fill="outline" mode="md" (click)="openSourcePopover()"
-          *ngIf="!form.value?.photo">
+          *ngIf="!form.value?.photo && !form.value?.images?.length">
           <ion-icon src="./assets/img/product/upload.svg"></ion-icon>
           Upload image
         </ion-button>
 
-        <div class="product-image" (click)="openSourcePopover()" *ngIf="form.value?.photo">
-          <app-img [src]="form.value?.photo" cssClasses="img-fit-contain"></app-img>
+        <div class="product-image" (click)="openSourcePopover()"
+          *ngIf="form.value?.photo || form.value?.images?.length">
+          <app-img [src]="form.value?.photo || form.value?.images[0]?.image" cssClasses="img-fit-contain"></app-img>
         </div>
       </div>
       <div class="form-control relative-block">

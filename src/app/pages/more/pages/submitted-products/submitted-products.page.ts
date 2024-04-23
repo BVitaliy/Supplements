@@ -31,29 +31,29 @@ export class SubmittedProductsPage {
     this.getSubProducts();
   }
 
-  handleOpenEditDetails(id: any) {
-    console.log(id);
-    this.openProductEditModal(id);
-  }
+  // handleOpenEditDetails(id: any) {
+  //   console.log(id);
+  //   this.openProductEditModal(id);
+  // }
 
-  async openProductEditModal(id: any) {
-    const modal = await this.modalController.create({
-      component: AddProductPage,
-      cssClass: '',
-      mode: 'ios',
-      componentProps: {
-        id,
-      },
-    });
+  // async openProductEditModal(id: any) {
+  //   const modal = await this.modalController.create({
+  //     component: AddProductPage,
+  //     cssClass: '',
+  //     mode: 'ios',
+  //     componentProps: {
+  //       id,
+  //     },
+  //   });
 
-    modal.onDidDismiss().then((returnedData: any) => {
-      if (returnedData && returnedData?.data) {
-        console.log(returnedData);
-      }
-    });
+  //   modal.onDidDismiss().then((returnedData: any) => {
+  //     if (returnedData && returnedData?.data) {
+  //       console.log(returnedData);
+  //     }
+  //   });
 
-    return await modal.present();
-  }
+  //   return await modal.present();
+  // }
 
   doRefresh(event: any) {
     this.getSubProducts(true, () => event.target.complete());
@@ -105,6 +105,9 @@ export class SubmittedProductsPage {
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
         console.log(returnedData);
+        setTimeout(() => {
+          this.getSubProducts();
+        }, 1000);
       }
     });
 

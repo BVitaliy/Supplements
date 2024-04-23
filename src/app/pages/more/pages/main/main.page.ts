@@ -9,6 +9,8 @@ import {
 import { finalize, Subscription } from 'rxjs';
 import {
   ACCESS_TOKEN_STORAGE_NAME,
+  ACCESS_WITH_APPLE,
+  ACCESS_WITH_GOOGLE,
   APP_AUTH_REDIRECT_URL,
   REFRESH_TOKEN_STORAGE_NAME,
 } from 'src/app/app.config';
@@ -16,6 +18,7 @@ import { ProfileService } from '../../profile.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 
 import { jwtDecode } from 'jwt-decode';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-main',
@@ -25,6 +28,8 @@ import { jwtDecode } from 'jwt-decode';
 export class MainPage implements OnInit {
   profile: any;
   backBtnSubscription!: Subscription;
+  appleLogin = false;
+  googleLogin = false;
 
   constructor(
     public navCtrl: NavController,
@@ -33,8 +38,18 @@ export class MainPage implements OnInit {
     private alertController: AlertController,
     private profileService: ProfileService,
     private loadingController: LoadingController,
-    private alertService: AlertService
-  ) {}
+    private alertService: AlertService,
+    private auth: Auth
+  ) {
+    this.storage.get(ACCESS_WITH_APPLE).then((login) => {
+      console.log(login);
+      this.appleLogin = login;
+    });
+    this.storage.get(ACCESS_WITH_GOOGLE).then((login) => {
+      console.log(login);
+      this.googleLogin = login;
+    });
+  }
 
   public ngOnInit(): void {
     this.getUser();
@@ -43,33 +58,40 @@ export class MainPage implements OnInit {
   async logOut() {
     // this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
     // this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+
     const loading = await this.loadingController.create({
       message: 'Wait...',
       mode: 'ios',
     });
 
-    this.profileService
-      .logout({})
-      .pipe(
-        finalize(() => {
-          loading?.dismiss();
-        })
-      )
-      .subscribe(
-        (data: any) => {
-          console.log(data);
-          this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
-          this.storage.remove(REFRESH_TOKEN_STORAGE_NAME);
-          this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
-        },
-        (error: any) => {
-          // this.alertService.presentErrorAlert(error?.email?.error);
+    if (this.appleLogin) {
+      this.auth.signOut();
+    }
 
-          if (error.status === 401) {
-            this.alertService.presentErrorAlert('Something went wrong');
+    if (!this.appleLogin && !this.googleLogin) {
+      this.profileService
+        .logout({})
+        .pipe(
+          finalize(() => {
+            loading?.dismiss();
+          })
+        )
+        .subscribe(
+          (data: any) => {
+            console.log(data);
+            this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+            this.storage.remove(REFRESH_TOKEN_STORAGE_NAME);
+            this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+          },
+          (error: any) => {
+            // this.alertService.presentErrorAlert(error?.email?.error);
+
+            if (error.status === 401) {
+              this.alertService.presentErrorAlert('Something went wrong');
+            }
           }
-        }
-      );
+        );
+    }
   }
 
   getUser() {

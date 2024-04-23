@@ -61,6 +61,8 @@ export class AppInterceptor implements HttpInterceptor {
         console.log(request);
         clonedReq = request.clone({
           setHeaders: {
+            // 'Access-Control-Allow-Credentials': 'true',
+            // 'Access-Control-Allow-Origin': '*',
             Authorization: clonedReq.headers.get('Authorization')
               ? '' + clonedReq.headers.get('Authorization')
               : '',

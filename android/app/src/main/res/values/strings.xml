@@ -3,5 +3,5 @@
     <string name="app_name">Supplement</string>
     <string name="title_activity_main">Supplement</string>
     <string name="package_name">com.Supplement.app</string>
-    <string name="custom_url_scheme">com.Supplement.app</string>
+    <string name="custom_url_scheme">com.Supplement.app</string> 
 </resources>

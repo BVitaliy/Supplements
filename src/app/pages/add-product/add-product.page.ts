@@ -36,6 +36,7 @@ export class AddProductPage implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       photo: new FormControl(null),
+      images: new FormControl([]),
       id: new FormControl(null),
       barcode: new FormControl(null, [Validators.required]),
       status: new FormControl(0),
@@ -98,7 +99,7 @@ export class AddProductPage implements OnInit {
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
         this.form.get('photo')?.setValue(returnedData?.data?.photo);
-        console.log(returnedData);
+        console.log('returndata', returnedData);
         this.format = returnedData?.data?.format;
       }
     });
@@ -182,6 +183,7 @@ export class AddProductPage implements OnInit {
       this.format = 'svg';
     }
     delete data?.photo;
+    delete data?.images;
 
     console.log(data);
 
@@ -214,6 +216,7 @@ export class AddProductPage implements OnInit {
 
   uploadImage(id: any) {
     const image = this.form.value.photo;
+    console.log(image);
 
     if (image) {
       const blob = this.photoService.base64toBlob(image);
