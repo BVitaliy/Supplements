@@ -10,6 +10,11 @@
 </ion-header>
 
 <ion-content>
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+
   <div class="content">
     <!-- Search -->
     <div class="p-bottom--large" [formGroup]="searchForm">
@@ -19,10 +24,11 @@
     </div>
     <!-- / Search -->
 
+
     <ng-container *ngFor="let brandSection of brandList">
       <div *ngIf="brandSection.brands?.length" class="section">
         <!-- Section label -->
-        <div class="section-label m-bottom--x-small">
+        <div class="section-label m-bottom--x-small ion-text-uppercase">
           {{ brandSection.label }}
         </div>
         <!-- / Section label -->
@@ -31,13 +37,17 @@
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
               [routerLink]="['/home/tabs/tab/main/all-brands/', brand?.id]">
               <span class="indicator" [ngStyle]="{ 'background': brand?.color}"></span>
-              <div class="dark ">{{brand?.label}}</div>
+              <div class="dark ">{{brand?.title}}</div>
             </ion-item>
           </ng-container>
         </ion-list>
 
 
       </div>
+    </ng-container>
+
+    <ng-container *ngIf="!brandList.length && !loading">
+      <app-search-empty class="flex-grow  "></app-search-empty>
     </ng-container>
 
   </div>

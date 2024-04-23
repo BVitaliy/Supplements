@@ -9,16 +9,10 @@
     <!-- Selected product -->
     <div class="add-favorite-list-product__product-wrapper m-vertical--medium" vertical="center">
       <!-- Image -->
-      <div
-        class="add-favorite-list-product__product-img-wrapper m-right--small p-around--x-small"
-        vertical="center"
-        horizontal="center"
-      >
-        <app-img
-          [src]="'./assets/img/temp/product-1.png'"
-          cssClasses="img-fit-contain"
-          class="add-favorite-list-product__product-img"
-        ></app-img>
+      <div class="add-favorite-list-product__product-img-wrapper m-right--small p-around--x-small" vertical="center"
+        horizontal="center">
+        <app-img [src]="'./assets/img/temp/product-1.png'" cssClasses="img-fit-contain"
+          class="add-favorite-list-product__product-img"></app-img>
       </div>
       <!-- / Image -->
 
@@ -40,14 +34,8 @@
 
     <!-- Create list -->
     <div class="p-vertical--xx-small">
-      <ion-button
-        class="btn btn-sm"
-        expand="block"
-        fill="outline"
-        mode="md"
-        color="primary"
-        (click)="showCreateListModal()"
-      >
+      <ion-button class="btn btn-sm" expand="block" fill="outline" mode="md" color="primary"
+        (click)="showCreateListModal()">
         <ion-icon [src]="'./assets/img/icons/add-icon-orange.svg'" class="m-right--x-small"></ion-icon>
         <b>Create list</b>
       </ion-button>
@@ -61,22 +49,19 @@
           <div direction="column" class="p-right--medium">
             <!-- List name -->
             <div class="add-favorite-list-product__list-name m-bottom--xx-small">
-              {{ favorite.listName }}
+              {{ favorite.name }}
             </div>
             <!-- / List name -->
 
             <!-- List description -->
             <div class="add-favorite-list-product__list-description">
-              {{ favorite.listDescription }}
+              {{ favorite.description }}
             </div>
             <!-- / List description -->
           </div>
 
           <!-- List checkbox -->
-          <ion-checkbox
-            (ionChange)="checkboxChangeState($event, favorite.id)"
-            class="checkbox"
-          ></ion-checkbox>
+          <ion-checkbox (ionChange)="checkboxChangeState($event, favorite.id)" class="checkbox"></ion-checkbox>
           <!-- / List checkbox -->
         </div>
       </ion-item>
@@ -85,14 +70,8 @@
 
     <!-- Apply -->
     <div class="p-top--xx-small">
-      <ion-button
-        class="btn btn-sm btn-primary"
-        expand="block"
-        fill="solid"
-        mode="md"
-        [disabled]="!selectedListsIds.length"
-        (click)="handleApply()"
-      >
+      <ion-button class="btn btn-sm btn-primary" expand="block" fill="solid" mode="md"
+        [disabled]="!selectedListsIds.length" (click)="handleApply()">
         <b>Apply</b>
       </ion-button>
     </div>

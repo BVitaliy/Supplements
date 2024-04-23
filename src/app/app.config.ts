@@ -7,6 +7,8 @@ const USER_ID_STORAGE_NAME = 'user_id';
 const USER_STORAGE_NAME = 'user';
 const FIRST_OPEN_APP = 'first_open_app';
 const MODE_STORAGE_NAME = 'mode';
+const ACCESS_WITH_APPLE = 'logInWithApple';
+const ACCESS_WITH_GOOGLE = 'logInWithGoogle';
 
 // app redirects
 const APP_AUTH_REDIRECT_URL = '/auth';
@@ -23,4 +25,6 @@ export {
   MODE_STORAGE_NAME,
   APP_AUTH_REDIRECT_URL,
   APP_HOME_REDIRECT_URL,
+  ACCESS_WITH_APPLE,
+  ACCESS_WITH_GOOGLE,
 };

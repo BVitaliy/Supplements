@@ -9,7 +9,6 @@ import {
 } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { finalize } from 'rxjs';
-import { OrderService } from './main.service';
 
 import SwiperCore, { Scrollbar, SwiperOptions } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
@@ -48,8 +47,7 @@ export class MainPage implements OnInit {
     private storage: Storage,
     public navCtrl: NavController,
     private platform: Platform,
-    private modalController: ModalController,
-    private orderService: OrderService
+    private modalController: ModalController
   ) {
     this.products = Products;
   }

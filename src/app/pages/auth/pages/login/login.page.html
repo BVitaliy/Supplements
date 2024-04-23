@@ -47,12 +47,13 @@
           <span>or</span>
         </div>
 
-        <ion-item class="btn btn-sign mb-10" mode="ios" lines="none" detail="false" button>
-          <ion-icon [src]="'./assets/img/icons/apple-logo.svg'" slot="start" (click)="toggleShowPassword()"></ion-icon>
+        <ion-item class="btn btn-sign mb-10" mode="ios" lines="none" detail="false" button (click)="appleSignIn()"
+          *ngIf="platformName === 'ios'">
+          <ion-icon [src]="'./assets/img/icons/apple-logo.svg'" slot="start"></ion-icon>
           <ion-label>Continue with Apple</ion-label>
         </ion-item>
-        <ion-item class="btn btn-sign mb-16" mode="ios" lines="none" detail="false" button>
-          <ion-icon [src]="'./assets/img/icons/google-logo.svg'" slot="start" (click)="toggleShowPassword()"></ion-icon>
+        <ion-item class="btn btn-sign mb-16" mode="ios" lines="none" detail="false" button (click)="googleSignIn()">
+          <ion-icon [src]="'./assets/img/icons/google-logo.svg'" slot="start"></ion-icon>
           <ion-label>Continue with Google</ion-label>
         </ion-item>
 

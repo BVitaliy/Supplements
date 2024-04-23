@@ -34,6 +34,7 @@ import { OnboardingSearchProductComponent } from './components/onboarding-search
 import { ProductAlertPopupComponent } from './components/product-alert-popup/product-alert-popup.component';
 import { SetAvatarNamePipe } from './pipes/setAvatarName.pipe';
 import { MaskDirective } from './directives/mask.directives';
+import { SearchEmptyComponent } from './components/search-empty/search-empty-state.component';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -63,6 +64,7 @@ const exportedDeclarations = [
   IngredientFilterGroupComponent,
   OnboardingSearchProductComponent,
   ProductAlertPopupComponent,
+  SearchEmptyComponent,
 ];
 
 @NgModule({

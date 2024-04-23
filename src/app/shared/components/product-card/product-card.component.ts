@@ -16,6 +16,7 @@ export class ProductCardComponent implements OnInit {
   @Input() showFavoriteBtn: boolean = true;
   @Input() openInModal: boolean = false;
   @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() onOpenEdit: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
     public navCtrl: NavController,

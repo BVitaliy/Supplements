@@ -7,42 +7,27 @@
     <!-- / Title -->
 
     <!-- List name -->
-      <div class="form-control m-top--xx-small">
-        <ion-item class="form-item" mode="ios" lines="none">
-          <ion-label position="stacked">List name</ion-label>
-          <ion-input
-            formControlName="listName"
-            type="text"
-            inputmode="text"
-            placeholder="Enter list name"
-          ></ion-input>
-        </ion-item>
-      </div>
+    <div class="form-control m-top--xx-small">
+      <ion-item class="form-item" mode="ios" lines="none">
+        <ion-label position="stacked">List name</ion-label>
+        <ion-input formControlName="name" type="text" inputmode="text" placeholder="Enter list name"></ion-input>
+      </ion-item>
+    </div>
     <!-- / List name -->
 
     <!-- Description -->
     <div class="form-control">
       <ion-item class="form-item" mode="ios" lines="none">
         <ion-label position="stacked">Description</ion-label>
-        <ion-input
-          formControlName="listDescription"
-          type="text"
-          inputmode="text"
-          placeholder="Enter list description"
-        ></ion-input>
+        <ion-input formControlName="description" type="text" inputmode="text"
+          placeholder="Enter list description"></ion-input>
       </ion-item>
     </div>
     <!-- / Description -->
 
     <!-- Action -->
-    <ion-button
-      class="btn btn-sm btn-primary"
-      expand="block"
-      fill="solid"
-      mode="md"
-      [disabled]="!formGroup.valid"
-      (click)="handleAction()"
-    >
+    <ion-button class="btn btn-sm btn-primary" expand="block" fill="solid" mode="md" [disabled]="!formGroup.valid"
+      (click)="handleAction()">
       <b>{{ buttonText }}</b>
     </ion-button>
     <!-- / Action -->

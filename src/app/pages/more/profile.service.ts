@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -62,8 +62,13 @@ export class ProfileService {
   }
 
   updateProfile(id: any, data: any): Observable<any> {
+    let headers = new HttpHeaders();
+    // headers = headers.set('Accept', 'application/json');
+    headers = headers.set('Content-Type', 'multipart/form-data; boundary=--');
     return this.http
-      .patch(`${environment.origin}/users/${id}/profile/`, data)
+      .patch(`${environment.origin}/users/${id}/profile/`, data, {
+        headers: headers,
+      })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);
@@ -90,5 +95,24 @@ export class ProfileService {
         return throwError(error);
       })
     );
+  }
+
+  getSubProducts(status: number, refresh?: boolean): Observable<any> {
+    let options!: { params?: { refreshReq?: boolean } };
+    if (refresh) {
+      options = {
+        params: {
+          refreshReq: refresh,
+        },
+      };
+    }
+    return this.http
+      .get(`${environment.origin}/requests/?status=${status}`, options)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
   }
 }

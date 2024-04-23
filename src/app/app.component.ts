@@ -18,9 +18,7 @@ export class AppComponent {
     private screenOrientation: ScreenOrientation,
 
     private networkStatusService: NetworkStatusService,
-    private permissionsService: PermissionsService,
-
-    private authenticationService: AuthenticationService
+    private permissionsService: PermissionsService
   ) {
     this.initApp();
   }
@@ -28,6 +26,11 @@ export class AppComponent {
   async initApp() {
     this.platform.ready().then(() => {
       if (this.platform.is('hybrid')) {
+        // GoogleAuth.initialize({
+        //   grantOfflineAccess: true,
+        //   clientId:
+        //     '461332400284-kcms0r0hqi1ofebrga2jvqhi7jlotunr.apps.googleusercontent.com',
+        // });
         this.screenOrientation.lock(
           this.screenOrientation.ORIENTATIONS.PORTRAIT
         ); // 'portrait'

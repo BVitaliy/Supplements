@@ -1,13 +1,14 @@
 <div class="product" [ngClass]="type">
   <div class="image" (click)="openDetail()">
-    <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
+    <app-img [src]="product?.images[product?.images?.length - 1 || 0]?.image" cssClasses="img-fit-contain"
+      *ngIf="product?.images?.length"></app-img>
   </div>
   <div class="content">
     <div (click)="openDetail()">
-      <div class="category medium">{{product?.category}}</div>
+      <div class="category medium">{{product?.category?.title}}</div>
       <div class="title text-s line-clamp-3 fw-600 dark">{{product?.title}}</div>
     </div>
-    <div>
+    <div *ngIf="product?.status === 1">
       <div *ngIf="showStars" vertical="center" class="m-bottom--x-small">
         <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star"></ion-icon>
         <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
@@ -20,10 +21,22 @@
       </div>
 
       <div class="product-bottom">
-        <app-rating-count *ngIf="showRatingCount" [rating]="product?.score" [type]="'badge'"></app-rating-count>
-        <app-favorite-btn *ngIf="showFavoriteBtn" (favorited)="favoriteHandle($event)"
-          [product]="product"></app-favorite-btn>
+        <ng-container *ngIf="product?.score">
+          <app-rating-count [rating]="product?.score" [type]="'badge'"></app-rating-count>
+        </ng-container>
+        <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"></app-favorite-btn>
       </div>
     </div>
+
+    <ng-container *ngIf="product?.status === 2">
+      <div class="decline-text">
+        <div class="decline-title">Decline reason</div>
+        <p>{{product?.decline_reason}}</p>
+      </div>
+      <ion-button class="btn btn-sm" expand="block" fill="outline" mode="md" color="primary"
+        (click)="onOpenEdit.emit(product?.id)">
+        <b>Edit submission</b>
+      </ion-button>
+    </ng-container>
   </div>
 </div>
