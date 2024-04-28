@@ -47,6 +47,7 @@ export class ScannerPage implements OnInit {
         disableAnimations: false,
         disableSuccessBeep: false,
         // formats: 'QR_CODE',
+        prompt: 'Place a barcode inside the scan areas',
         torchOn: false,
       };
 

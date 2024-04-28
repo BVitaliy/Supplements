@@ -19,8 +19,8 @@
             <ion-label position="stacked">First name</ion-label>
             <ion-input formControlName="first_name" type="text" inputmode="text" placeholder="Enter your first name"
               autocomplete="off"></ion-input>
-            <ion-note slot="error" *ngIf="form.get('first_name')!.invalid && form.get('first_name')!.touched">Field is
-              required</ion-note>
+            <ion-note slot="error" *ngIf="form.get('first_name')!.invalid && form.get('first_name')!.touched">First name
+              should contain from 3 to N symbols</ion-note>
           </ion-item>
 
         </div>
@@ -29,8 +29,8 @@
             <ion-label position="stacked">Last name</ion-label>
             <ion-input formControlName="last_name" type="text" inputmode="text" placeholder="Enter your last name"
               autocomplete="off"></ion-input>
-            <ion-note slot="error" *ngIf="form.get('last_name')!.invalid && form.get('last_name')!.touched">Field is
-              required</ion-note>
+            <ion-note slot="error" *ngIf="form.get('last_name')!.invalid && form.get('last_name')!.touched">Last name
+              should contain from 3 to N symbols</ion-note>
           </ion-item>
 
         </div>
@@ -40,10 +40,8 @@
             <ion-input formControlName="email" type="email" inputmode="email" placeholder="Enter your email address"
               autocomplete="off"></ion-input>
             <ion-note slot="error"
-              *ngIf="form.get('email')!.invalid && form.get('email')!.touched &&  form.get('email')!.hasError('required')">
-              Field
-              is
-              required
+              *ngIf="form.get('email')!.invalid && form.get('email')!.touched && !form?.hasError('email')">
+              Please, double-check your email address
             </ion-note>
             <ion-note slot="error" *ngIf="form?.hasError('email')">{{form!.errors?.['email'][0]}}</ion-note>
           </ion-item>
@@ -51,37 +49,35 @@
         <div class="form-control relative-block">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Password</ion-label>
-            <ion-input formControlName="password" [type]="showPassword === 'password' ? 'text' : 'password'"
-              inputmode="text" placeholder="Enter your password" autocomplete="off"></ion-input>
-            <ion-note slot="error"
+            <ion-input formControlName="password" [type]="showPassword   ? 'text' : 'password'" inputmode="text"
+              placeholder="Enter your password" autocomplete="off"></ion-input>
+            <!-- <ion-note slot="error"
               *ngIf="form.get('password')!.invalid && form.get('password')!.touched &&  form.get('email')!.hasError('required')">Field
               is
-              required</ion-note>
-            <ion-note slot="error" *ngIf="form.get('password')!.invalid && form.get('password')!.dirty">The password
+              required</ion-note> -->
+            <ion-note slot="error" *ngIf="form.get('password')!.invalid && form.get('password')!.touched">The password
               must contain at least 8 characters, at least: 1 number, 1 special
               character, 1 uppercase letter,
               1
               lowercase letter.</ion-note>
           </ion-item>
           <ion-icon
-            [src]="showPassword === 'password'  ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
-            [color]="showPassword === 'password'  ? 'primary' : 'medium'" slot="end"
-            (click)="toggleShowPassword('password')"></ion-icon>
+            [src]="showPassword    ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+            [color]="showPassword   ? 'primary' : 'medium'" slot="end" (click)="toggleShowPassword()"></ion-icon>
         </div>
         <div class="form-control relative-block">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Repeat password</ion-label>
-            <ion-input formControlName="confirm_password"
-              [type]="showPassword ==='confirm_password' ? 'text' : 'password'" inputmode="text"
-              placeholder="Enter your password again" autocomplete="off"></ion-input>
+            <ion-input formControlName="confirm_password" [type]="showPasswordRepeat ? 'text' : 'password'"
+              inputmode="text" placeholder="Enter your password again" autocomplete="off"></ion-input>
             <ion-note slot="error"
               *ngIf="form.get('confirm_password')!.invalid && form.get('confirm_password')!.dirty">Passwords does not
               match</ion-note>
           </ion-item>
           <ion-icon
-            [src]="showPassword === 'confirm_password'  ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
-            [color]="showPassword === 'confirm_password'  ? 'primary' : 'medium'" slot="end"
-            (click)="toggleShowPassword('confirm_password')"></ion-icon>
+            [src]="showPasswordRepeat  ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
+            [color]="showPasswordRepeat  ? 'primary' : 'medium'" slot="end"
+            (click)="toggleShowPasswordRepeat()"></ion-icon>
         </div>
 
         <div class="form-control">
@@ -91,6 +87,7 @@
               [interfaceOptions]="{alignment: 'center', arrow: false, side: 'bottom', size: 'cover'}">
               <ion-select-option value="0">Male</ion-select-option>
               <ion-select-option value="1">Female</ion-select-option>
+              <ion-select-option value="2">Other</ion-select-option>
             </ion-select>
             <ion-note slot="error" *ngIf="form.get('gender')!.invalid && form.get('gender')!.touched">Field is
               required</ion-note>
@@ -107,10 +104,10 @@
             <!-- <ion-input type="text" inputmode="text" placeholder="YYYY-MM-DD" mask="9999-99-99"
               formControlName="date_of_birth" autocomplete="off"></ion-input> -->
             <ion-note slot="error"
-              *ngIf="form.get('date_of_birth')!.invalid && form.get('date_of_birth')!.touched && form.get('date_of_birth')!.hasError('required')">
+              *ngIf="form.get('date_of_birth')!.invalid && form.get('date_of_birth')!.touched && !form?.hasError('date_of_birth')">
               Field
               is
-              required
+              required. Use one of these formats instead: YYYY-MM-DD.
             </ion-note>
             <ion-note slot="error"
               *ngIf="form?.hasError('date_of_birth')">{{form!.errors?.['date_of_birth'][0]}}</ion-note>

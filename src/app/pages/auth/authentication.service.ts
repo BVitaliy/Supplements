@@ -24,7 +24,7 @@ import {
   REFRESH_TOKEN_STORAGE_NAME,
 } from 'src/app/app.config';
 import { NavController, Platform } from '@ionic/angular';
-
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,9 +36,8 @@ export class AuthenticationService {
     private navCtrl: NavController,
     private alertService: AlertService,
     private storage: Storage,
-    private platform: Platform
-  ) // private auth: Auth
-  {
+    private platform: Platform // private auth: Auth
+  ) {
     this.isWeb = !(this.platform.is('android') || this.platform.is('ios'));
   }
 
@@ -115,7 +114,21 @@ export class AuthenticationService {
       }
     );
   }
-  googleSignIn() {
+  async googleSignIn() {
+    const user = await GoogleAuth.signIn();
+    console.log(user);
+
+    if (user) {
+      const body = {
+        grant_type: 'convert_token',
+        client_id: 'Cgqcx1AeCEc7lwN4X4cl18Mt3ZwpVG1t3rOa5BkZ',
+        backend: 'google-oauth2',
+        client_secret:
+          'U4Iq1PAgWRLyGTZUc9mZ5a1vRhFeyLf5SlNoe9GscOERYZuLXBKZnKKu9wF8jBMMuxUn8Xz1Djwqynn3BQxGVechlg2KFHgXq3gYJrmuegawFwnnkc360ydqtUFtQ04P',
+        token: user?.authentication?.accessToken,
+      };
+      this.getConvertToken(body);
+    }
     // const provider = new GoogleAuthProvider();
     // provider.addScope('profile');
     // provider.addScope('email');
@@ -167,11 +180,12 @@ export class AuthenticationService {
   }
 
   forgotPassword(body: any): Observable<any> {
+    console.log('asdasd');
     return this.http
       .post(`${environment.origin}/users/forgot-password/`, body)
       .pipe(
         catchError((error) => {
-          // this.alertService.presentErrorAlert(error);
+          this.alertService.presentErrorAlert(error);
           return throwError(error);
         })
       );

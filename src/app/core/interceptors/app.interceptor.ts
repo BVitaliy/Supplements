@@ -90,7 +90,10 @@ export class AppInterceptor implements HttpInterceptor {
                   location.replace('/home');
                 });
                 return throwError(err);
-              } else if (err.status === 401) {
+              } else if (
+                err.status === 401 &&
+                !request.url?.includes('/token')
+              ) {
                 console.log(this.isRefreshing);
                 if (!this.isRefreshing) {
                   this.isRefreshing = true;

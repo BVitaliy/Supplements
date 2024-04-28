@@ -18,6 +18,7 @@ export class CatalogDetailPage implements OnInit {
   loading: boolean = false;
   filterForm!: FormGroup;
   id: any;
+  count = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -109,6 +110,7 @@ export class CatalogDetailPage implements OnInit {
         (data: any) => {
           console.log(data);
           // this.profileDetails = data;
+          this.count = data?.count || 0;
           this.listProducts = data.results;
         },
         (error: any) => {

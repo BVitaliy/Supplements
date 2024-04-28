@@ -13,6 +13,11 @@
       "splashFullScreen": false,
       "splashImmersive": false,
       "showSpinner": false
+    },
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "xxxxxx-xxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
     }
   }
 }

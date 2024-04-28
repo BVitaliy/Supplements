@@ -7,7 +7,7 @@
   font-weight: 500;
   line-height: 21px;
   letter-spacing: 0;
-  color: #9E9D9D;
+  color: #9e9d9d;
 }
 
 .profile-details__value {
@@ -15,11 +15,14 @@
   font-weight: 500;
   line-height: 21px;
   letter-spacing: 0;
-  color: #04002C;
+  color: #04002c;
 }
 
 .profile-details__photo {
   min-width: 100px;
   width: 100px;
   height: 100px;
+}
+ion-title {
+  padding-inline-end: 62px;
 }

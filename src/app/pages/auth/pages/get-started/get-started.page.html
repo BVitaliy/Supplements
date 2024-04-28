@@ -29,8 +29,9 @@
         <ion-icon [src]="'./assets/img/icons/apple-logo.svg'" slot="start"></ion-icon>
         <ion-label>Continue with Apple</ion-label>
       </ion-item>
-      <ion-item class="btn btn-sign mb-16" mode="ios" lines="none" detail="false" button>
-        <!-- (click)="authService.googleSignIn()" -->
+      <ion-item class="btn btn-sign mb-16" mode="ios" lines="none" detail="false" button
+        (click)="authService.googleSignIn()">
+
         <ion-icon [src]="'./assets/img/icons/google-logo.svg'" slot="start"></ion-icon>
         <ion-label>Continue with Google</ion-label>
       </ion-item>

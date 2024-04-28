@@ -5,6 +5,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 import { NetworkStatusService } from './core/services/network-status.service';
 import { PermissionsService } from './core/services/permissions.service';
 import { AuthenticationService } from './pages/auth/authentication.service';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Component({
   selector: 'app-root',
@@ -26,11 +27,11 @@ export class AppComponent {
   async initApp() {
     this.platform.ready().then(() => {
       if (this.platform.is('hybrid')) {
-        // GoogleAuth.initialize({
-        //   grantOfflineAccess: true,
-        //   clientId:
-        //     '461332400284-kcms0r0hqi1ofebrga2jvqhi7jlotunr.apps.googleusercontent.com',
-        // });
+        GoogleAuth.initialize({
+          grantOfflineAccess: true,
+          clientId:
+            '461332400284-kcms0r0hqi1ofebrga2jvqhi7jlotunr.apps.googleusercontent.com',
+        });
         this.screenOrientation.lock(
           this.screenOrientation.ORIENTATIONS.PORTRAIT
         ); // 'portrait'

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  origin: 'https://api.supplementscore.com/api/v1.0',
+  origin: 'https://supplements-1717832453.us-east-1.elb.amazonaws.com/api/v1.0',
   oneSignalAppId: '',
   firebase: {
     apiKey: 'AIzaSyCM3x4yV8au9Qpf_kD4Y2HbGZ9mug9o04E',

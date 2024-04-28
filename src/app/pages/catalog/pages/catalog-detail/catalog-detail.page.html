@@ -15,19 +15,20 @@
 
 <ion-content>
   <app-filter-row (onOpenSort)="openSortPopover()" (onOpenFilter)="openFiltersModal()"
-    [resultCount]="123"></app-filter-row>
+    [resultCount]="count"></app-filter-row>
 
-  <div class="content" [ngSwitch]="!!listProducts.length">
-    <!-- Products -->
-    <ng-container *ngSwitchCase="true">
-      <ion-list lines="full">
-        <ion-item *ngFor="let product of listProducts">
-          <div class="p-vertical--medium">
-            <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
-          </div>
-        </ion-item>
-      </ion-list>
-    </ng-container>
-    <!-- / Products -->
+  <div class="content" *ngIf="listProducts.length">
+
+    <ion-list lines="full">
+      <ion-item *ngFor="let product of listProducts">
+        <div class="p-vertical--medium">
+          <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
+        </div>
+      </ion-item>
+    </ion-list>
+
   </div>
+  <ng-container *ngIf="!listProducts.length && !loading">
+    <app-search-empty class="flex-grow  "></app-search-empty>
+  </ng-container>
 </ion-content>

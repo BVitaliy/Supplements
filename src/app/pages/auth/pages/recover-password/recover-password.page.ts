@@ -150,6 +150,7 @@ export class RecoverPasswordPage
     });
     await loading.present().then(() => {
       if (this.recoverForm.get('email')!.valid) {
+        console.log(this.recoverForm.value.email);
         this.authService
           .forgotPassword({ email: this.recoverForm.value.email })
           .pipe(
