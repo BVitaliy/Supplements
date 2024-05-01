@@ -23,52 +23,44 @@
 </ion-header>
 
 <ion-content>
-  <ng-container [ngSwitch]="!!favoritesList.length">
-    <!-- Empty list -->
-    <ng-container *ngSwitchCase="false">
-      <div direction="column" vertical="center" horizontal="center" class="favorites__empty-list">
-        <!-- Icon -->
-        <ion-icon
-          class="favorites__empty-list-icon m-bottom--large"
-          [src]="'./assets/img/icons/empty-favorites-list-icon.svg'"
-        ></ion-icon>
-        <!-- / Icon -->
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="!favoritesList?.length && !loading">
+    <div direction="column" vertical="center" horizontal="center" class="favorites__empty-list">
+      <!-- Icon -->
+      <ion-icon class="favorites__empty-list-icon m-bottom--large"
+        [src]="'./assets/img/icons/empty-favorites-list-icon.svg'"></ion-icon>
+      <!-- / Icon -->
 
-        <!-- Title -->
-        <div class="favorites__empty-list-title m-bottom--x-small">
-          It's still empty here
-        </div>
-        <!-- / Title -->
-
-        <!-- Description -->
-        <div class="favorites__empty-list-description m-bottom--large">
-          Add your first list of favorite products
-        </div>
-        <!-- / Description -->
-
-        <!-- Add action -->
-        <ion-button
-          class="btn btn-sm btn-primary favorites__empty-list-action"
-          expand="block"
-          fill="solid"
-          mode="md"
-          (click)="showCreateListModal()"
-        >
-          <ion-icon [src]="'./assets/img/icons/add-icon.svg'" class="m-right--x-small"></ion-icon>
-          <b>Create list</b>
-        </ion-button>
-        <!-- / Add action -->
+      <!-- Title -->
+      <div class="favorites__empty-list-title m-bottom--x-small">
+        It's still empty here
       </div>
-    </ng-container>
-    <!-- / Empty list -->
+      <!-- / Title -->
 
-    <!-- Favorites list -->
-    <ng-container *ngSwitchCase="true">
-      <app-favorites-list
-        [favoritesList]="favoritesList"
-        (onOpenDetails)="handleOpenListDetails($event)"
-      ></app-favorites-list>
-    </ng-container>
-    <!-- / Favorites list -->
+      <!-- Description -->
+      <div class="favorites__empty-list-description m-bottom--large">
+        Add your first list of favorite products
+      </div>
+      <!-- / Description -->
+
+      <!-- Add action -->
+      <ion-button class="btn btn-sm btn-primary favorites__empty-list-action" expand="block" fill="solid" mode="md"
+        (click)="showCreateListModal()">
+        <ion-icon [src]="'./assets/img/icons/add-icon.svg'" class="m-right--x-small"></ion-icon>
+        <b>Create list</b>
+      </ion-button>
+      <!-- / Add action -->
+    </div>
   </ng-container>
+  <!-- / Empty list -->
+
+  <!-- Favorites list -->
+  <ng-container *ngIf="favoritesList?.length && !loading">
+    <app-favorites-list [favoritesList]="favoritesList"
+      (onOpenDetails)="handleOpenListDetails($event)"></app-favorites-list>
+  </ng-container>
+
 </ion-content>

@@ -47,6 +47,11 @@ export class SignupPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.modalHeight =
+      Math.floor(
+        (100 * (270 + (this.platform.is('ios') ? 34 : 0))) / window.innerHeight
+      ) / 100;
+
     this.form = new FormGroup(
       {
         first_name: new FormControl(null, [
@@ -67,7 +72,7 @@ export class SignupPage implements OnInit {
         password: new FormControl(null, [
           Validators.required,
           Validators.pattern(
-            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,}/
           ),
         ]),
         confirm_password: new FormControl(null, [
@@ -79,10 +84,6 @@ export class SignupPage implements OnInit {
         validators: matchFieldsValidator('password', 'confirm_password'),
       }
     );
-    this.modalHeight =
-      Math.floor(
-        (100 * (270 + (this.platform.is('ios') ? 34 : 0))) / window.innerHeight
-      ) / 100;
   }
 
   toggleShowPassword() {
@@ -108,54 +109,52 @@ export class SignupPage implements OnInit {
       message: 'Wait...',
       mode: 'ios',
     });
-    let date = null;
-    if (
-      this.form.value?.date_of_birth
-      // && this.form.value?.date_of_birth?.length === 8
-    ) {
-      const birth = this.form.value?.date_of_birth;
-      const year = birth.substring(0, 4);
-      const month = birth.substring(4, 6);
-      const day = birth.substring(6, 8);
-      date = year + '-' + month + '-' + day;
-    }
+    await loading.present().then(() => {
+      let date = null;
+      if (
+        this.form.value?.date_of_birth
+        // && this.form.value?.date_of_birth?.length === 8
+      ) {
+        const birth = this.form.value?.date_of_birth;
+        const year = birth.substring(0, 4);
+        const month = birth.substring(4, 6);
+        const day = birth.substring(6, 8);
+        date = year + '-' + month + '-' + day;
+      }
 
-    this.authService
-      .signup({ ...this.form.value, date_of_birth: date })
-      .pipe(
-        finalize(() => {
-          loading?.dismiss();
-        })
-      )
-      .subscribe(
-        (data: any) => {
-          console.log(data);
+      this.authService
+        .signup({ ...this.form.value, date_of_birth: date })
+        .pipe(
+          finalize(() => {
+            loading?.dismiss();
+          })
+        )
+        .subscribe(
+          (data: any) => {
+            this.storage.set(ACCESS_TOKEN_STORAGE_NAME, data?.token?.access);
+            this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
+            this.presentModal();
+          },
+          (error: any) => {
+            if (error?.error?.email) {
+              this.form?.get('email')?.setErrors({
+                wrong: error?.error?.email[0],
+              });
+            }
+            if (error?.error?.date_of_birth) {
+              this.form?.get('date_of_birth')?.setErrors({
+                wrong: error?.error?.date_of_birth[0],
+              });
+            }
+            this.form?.setErrors(error?.error);
+            // this.alertService.presentErrorAlert(error?.email?.error);
 
-          this.storage.set(ACCESS_TOKEN_STORAGE_NAME, data?.token?.access);
-          this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
-          this.presentModal();
-        },
-        (error: any) => {
-          console.log(error);
-
-          if (error?.error?.email) {
-            this.form?.get('email')?.setErrors({
-              wrong: error?.error?.email[0],
-            });
+            if (error.status === 401) {
+              this.alertService.presentErrorAlert('Something went wrong');
+            }
           }
-          if (error?.error?.date_of_birth) {
-            this.form?.get('date_of_birth')?.setErrors({
-              wrong: error?.error?.date_of_birth[0],
-            });
-          }
-          this.form?.setErrors(error?.error);
-          // this.alertService.presentErrorAlert(error?.email?.error);
-
-          if (error.status === 401) {
-            this.alertService.presentErrorAlert('Something went wrong');
-          }
-        }
-      );
+        );
+    });
   }
 
   async presentModal() {

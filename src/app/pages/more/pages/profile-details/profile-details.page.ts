@@ -33,19 +33,17 @@ export class ProfileDetailsPage implements OnInit {
     private platform: Platform,
     private modalController: ModalController,
     private photoService: PhotoService
-  ) {}
-
-  public ngOnInit(): void {
-    // this.profileDetails = {
-    //   photo: './assets/img/temp/photo.png' || '',
-    //   firstName: 'Anna' || '',
-    //   lastName: 'Armas' || '',
-    //   email: 'annaarmas@email.com' || '',
-    //   sex: ProfileGenders.female || '',
-    //   birthday: '20/04/1995' || '',
-    // };
-    this.getUser();
+  ) {
+    this.storage.get('user').then((user) => {
+      if (user) {
+        this.profileDetails = JSON.parse(user);
+      } else {
+        this.getUser();
+      }
+    });
   }
+
+  public ngOnInit(): void {}
 
   // Рефреш даних користувача
   doRefresh(event: any) {
@@ -56,7 +54,7 @@ export class ProfileDetailsPage implements OnInit {
     this.storage.get(ACCESS_TOKEN_STORAGE_NAME).then((token) => {
       if (token) {
         const decoded: any = jwtDecode(token);
-        console.log(decoded);
+
         this.userId = decoded?.user_id;
         this.profileService
           .getProfile(decoded?.user_id, refresh)
@@ -70,7 +68,7 @@ export class ProfileDetailsPage implements OnInit {
           )
           .subscribe(
             (data: any) => {
-              console.log(data);
+              this.storage.set('user', JSON.stringify(data));
               this.profileDetails = data;
             },
             (error: any) => {

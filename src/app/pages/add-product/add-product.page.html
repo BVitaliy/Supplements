@@ -31,7 +31,7 @@
           <app-img [src]="form.value?.photo || form.value?.images[0]?.image" cssClasses="img-fit-contain"></app-img>
         </div>
       </div>
-      <div class="form-control relative-block">
+      <div class="form-control relative-block scan-control">
         <ion-item class="form-item sm" mode="ios" lines="none">
           <ion-label position="stacked">Barcode*</ion-label>
           <ion-input formControlName="barcode" type="text" inputmode="text" placeholder="Enter barcode or scan"
@@ -58,7 +58,7 @@
             autocomplete="off"></ion-input>
         </ion-item>
       </div>
-      <div class="form-control relative-block">
+      <div class="form-control relative-block scan-control">
         <ion-item class="form-item sm" mode="ios" lines="none">
           <ion-label position="stacked">Ingredients*</ion-label>
           <ion-textarea formControlName="ingredients" type="text" inputmode="text"
@@ -73,7 +73,7 @@
         </ion-button>
       </div>
 
-      <div class="form-control relative-block">
+      <div class="form-control relative-block scan-control">
         <ion-item class="form-item sm" mode="ios" lines="none">
           <ion-label position="stacked">Description</ion-label>
           <ion-textarea formControlName="description" type="text" inputmode="text"

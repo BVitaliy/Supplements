@@ -18,7 +18,8 @@ import { ProfileService } from '../../profile.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 
 import { jwtDecode } from 'jwt-decode';
-import { Auth } from '@angular/fire/auth';
+import { AuthenticationService } from 'src/app/pages/auth/authentication.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -39,7 +40,9 @@ export class MainPage implements OnInit {
     private profileService: ProfileService,
     private loadingController: LoadingController,
     private alertService: AlertService,
-    private auth: Auth
+    public route: ActivatedRoute,
+
+    public authService: AuthenticationService
   ) {
     this.storage.get(ACCESS_WITH_APPLE).then((login) => {
       console.log(login);
@@ -49,11 +52,18 @@ export class MainPage implements OnInit {
       console.log(login);
       this.googleLogin = login;
     });
+
+    this.storage.get('user').then((user) => {
+      console.log(user);
+      if (user) {
+        this.profile = JSON.parse(user);
+      } else {
+        this.getUser();
+      }
+    });
   }
 
-  public ngOnInit(): void {
-    this.getUser();
-  }
+  public ngOnInit(): void {}
 
   async logOut() {
     // this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
@@ -63,12 +73,8 @@ export class MainPage implements OnInit {
       message: 'Wait...',
       mode: 'ios',
     });
-
-    if (this.appleLogin) {
-      this.auth.signOut();
-    }
-
-    if (!this.appleLogin && !this.googleLogin) {
+    await loading.present().then(() => {
+      this.authService.logOut();
       this.profileService
         .logout({})
         .pipe(
@@ -91,7 +97,7 @@ export class MainPage implements OnInit {
             }
           }
         );
-    }
+    });
   }
 
   getUser() {
@@ -101,6 +107,7 @@ export class MainPage implements OnInit {
 
         this.profileService.getProfile(decoded?.user_id).subscribe(
           (data: any) => {
+            this.storage.set('user', JSON.stringify(data));
             console.log(data);
             this.profile = data;
           },

@@ -1,7 +1,12 @@
-ion-grid {
-  padding: 25px 15px 10px;
+.content {
   min-height: 100%;
-  .content {
-    width: 100%;
-  }
+  padding: 25px 15px 10px;
+  width: 100%;
+}
+ion-content {
+  --keyboard-offset: 0px !important;
+}
+
+ion-icon {
+  z-index: 10;
 }

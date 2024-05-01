@@ -690,3 +690,18 @@ ion-radio {
     }
   }
 }
+
+.form-control {
+  &.scan-control {
+    ion-input {
+      input {
+        padding-right: 31px !important;
+      }
+    }
+    ion-textarea {
+      textarea {
+        padding-right: 31px !important;
+      }
+    }
+  }
+}

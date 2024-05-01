@@ -14,10 +14,15 @@
 </ion-header>
 
 <ion-content>
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+
   <app-filter-row (onOpenSort)="openSortPopover()" (onOpenFilter)="openFiltersModal()"
     [resultCount]="count"></app-filter-row>
 
-  <div class="content" *ngIf="listProducts.length">
+  <div class="content" *ngIf="listProducts.length && !loading">
 
     <ion-list lines="full">
       <ion-item *ngFor="let product of listProducts">

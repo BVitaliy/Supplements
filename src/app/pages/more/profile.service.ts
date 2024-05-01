@@ -82,7 +82,7 @@ export class ProfileService {
       .put(`${environment.origin}/users/change-password/`, data)
       .pipe(
         catchError((error) => {
-          this.alertService.presentErrorAlert(error);
+          // this.alertService.presentErrorAlert(error);
           return throwError(error);
         })
       );

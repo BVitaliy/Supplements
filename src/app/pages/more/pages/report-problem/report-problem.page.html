@@ -31,6 +31,9 @@
         <ion-label position="stacked">Problem theme</ion-label>
         <ion-input formControlName="theme" type="text" inputmode="text" placeholder="Enter problem theme"
           autocomplete="off"></ion-input>
+        <ion-note slot="error" *ngIf="form.get('theme')!.invalid && form.get('theme')!.touched">Field
+          is
+          required</ion-note>
       </ion-item>
     </div>
     <!-- / Problem theme -->
@@ -40,6 +43,8 @@
       <ion-item class="form-item" mode="ios" lines="none">
         <ion-label position="stacked">Problem description</ion-label>
         <ion-textarea formControlName="message" placeholder="Please describe the problem" [rows]="4"></ion-textarea>
+        <ion-note slot="error" *ngIf="form.get('message')!.invalid && form.get('message')!.touched">Field
+          is required</ion-note>
       </ion-item>
     </div>
     <!-- / Problem description -->

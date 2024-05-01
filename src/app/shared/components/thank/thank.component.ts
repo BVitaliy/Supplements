@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class ThankComponent implements OnInit {
   @Input() imgSrc!: string;
+  @Input() svg!: string;
   @Input() title!: string;
   @Input() description!: string;
   @Input() buttonRouterUrl!: string;

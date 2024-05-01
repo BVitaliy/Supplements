@@ -121,32 +121,18 @@ export class AuthenticationService {
     if (user) {
       const body = {
         grant_type: 'convert_token',
-        client_id: 'Cgqcx1AeCEc7lwN4X4cl18Mt3ZwpVG1t3rOa5BkZ',
+        client_id: '0hTaY476fk6FI1QWqjzgPkAtVQXXlxYNjyonGBbr',
         backend: 'google-oauth2',
         client_secret:
-          'U4Iq1PAgWRLyGTZUc9mZ5a1vRhFeyLf5SlNoe9GscOERYZuLXBKZnKKu9wF8jBMMuxUn8Xz1Djwqynn3BQxGVechlg2KFHgXq3gYJrmuegawFwnnkc360ydqtUFtQ04P',
+          '0q3xDy6HVJvasOnjd3C4VLidmyib3yRZTLAJa3ACp0D4i6pnEkEoR7e9L00eJex8Vab4RhrpZ8fqxwGvLpA7yuJm9uNkIOHFPfeSLNXp1q6Wnv9GlrCDc350a4vvrj1f',
         token: user?.authentication?.accessToken,
       };
       this.getConvertToken(body);
     }
-    // const provider = new GoogleAuthProvider();
-    // provider.addScope('profile');
-    // provider.addScope('email');
-    // console.log(provider);
-    // signInWithPopup(this.auth, provider).then((result: any) => {
-    //   console.log(result);
-    //   if (result) {
-    //     const body = {
-    //       grant_type: 'convert_token',
-    //       client_id: 'Cgqcx1AeCEc7lwN4X4cl18Mt3ZwpVG1t3rOa5BkZ',
-    //       backend: 'google-oauth2',
-    //       client_secret:
-    //         'U4Iq1PAgWRLyGTZUc9mZ5a1vRhFeyLf5SlNoe9GscOERYZuLXBKZnKKu9wF8jBMMuxUn8Xz1Djwqynn3BQxGVechlg2KFHgXq3gYJrmuegawFwnnkc360ydqtUFtQ04P',
-    //       token: result?._tokenResponse?.oauthAccessToken,
-    //     };
-    //     this.getConvertToken(body);
-    //   }
-    // });
+  }
+
+  logOut() {
+    GoogleAuth.signOut();
   }
 
   login(body: any): Observable<any> {

@@ -9,11 +9,20 @@
     <div class="content">
       <h1 class="h1 pb-20 ion-text-center">Welcome</h1>
       <form class="form" [formGroup]="loginForm">
+
+
+
         <div class="form-control">
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Email address</ion-label>
             <ion-input formControlName="email" type="email" inputmode="email" placeholder="Enter your email address"
               autocomplete="off"></ion-input>
+            <ion-note slot="error"
+              *ngIf="loginForm?.hasError('email')">{{loginForm!.errors?.['password'][0]}}</ion-note>
+            <ion-note slot="error"
+              *ngIf="loginForm.get('email')!.invalid && loginForm.get('email')!.touched && !loginForm?.hasError('email')">
+              Please, double-check your email address
+            </ion-note>
           </ion-item>
         </div>
         <div class="form-control pb-10 relative-block">
@@ -21,14 +30,26 @@
             <ion-label position="stacked">Password</ion-label>
             <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
               placeholder="Enter your password" autocomplete="off"></ion-input>
+            <ion-note slot="error"
+              *ngIf="loginForm?.hasError('password')">{{loginForm!.errors?.['password'][0]}}</ion-note>
+            <ion-note slot="error"
+              *ngIf="loginForm.get('password')!.invalid && loginForm.get('password')!.touched && !loginForm?.hasError('password')">The
+              password
+              must contain at least 8 characters, at least: 1 number, 1 special
+              character, 1 uppercase letter,
+              1
+              lowercase letter.</ion-note>
           </ion-item>
-          <ion-icon
+
+          <!-- <ion-button (click)="toggleShowPassword()" shape="round" fill="clear"> -->
+          <ion-icon (click)="toggleShowPassword()"
             [src]="showPassword ? './assets/img/icons/icon-eye-open.svg' : './assets/img/icons/icon-eye-hide.svg'"
-            [color]="showPassword ? 'primary' : 'medium'" slot="end" (click)="toggleShowPassword()"></ion-icon>
+            [color]="showPassword ? 'primary' : 'medium'" slot="end"></ion-icon>
+          <!-- </ion-button> -->
         </div>
         <p class="mb-20">
           <ion-button class="btn btn-link ml-10" fill="clear" mode="md" color="primary"
-            (click)="navCtrl.navigateRoot('auth/recover-password')">
+            (click)="navCtrl.navigateForward('auth/recover-password', { relativeTo: route })">
             Forgot password?
           </ion-button>
         </p>
@@ -37,9 +58,9 @@
         <div class="form-error" *ngIf="loginForm?.hasError('wrongLogin')">
           {{ loginForm!.errors?.['wrongLogin'] }}
         </div>
-
-        <ion-button class="btn btn-primary mb-16" expand="block" fill="solid" mode="md" [disabled]="loginForm.invalid"
-          (click)="logIn()">
+        <!-- [disabled]="loginForm.invalid" -->
+        <ion-button class="btn btn-primary mb-16" expand="block" fill="solid" mode="md" (click)="logIn()"
+          [disabled]="loginForm.invalid">
           Log in
         </ion-button>
 
@@ -60,7 +81,7 @@
         <p class="ion-text-center bottom-text medium text-m">
           Don’t have an account?
           <ion-button class="btn btn-link ml-10" fill="clear" mode="md" color="primary"
-            (click)="navCtrl.navigateRoot('auth/signup')">
+            (click)="navCtrl.navigateForward('auth/signup', { relativeTo: route })">
             Sign up
           </ion-button>
         </p>

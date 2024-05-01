@@ -16,7 +16,7 @@
       <p class="ion-text-center medium text-m mb-30">Create your account to get all the benefits of Supplement Score</p>
 
       <ion-button class="btn btn-primary mb-16" expand="block" fill="solid" mode="md"
-        (click)="navCtrl.navigateRoot('auth/signup')">
+        (click)="navCtrl.navigateForward('auth/signup', { relativeTo: route })">
         Create account
       </ion-button>
 
@@ -40,7 +40,7 @@
       <p class="ion-text-center bottom-text medium text-m ">
         Already have an account?
         <ion-button class="btn btn-link ml-10" fill="clear" mode="md" color="primary"
-          (click)="navCtrl.navigateRoot('auth/login')">
+          (click)="navCtrl.navigateForward('auth/login', { relativeTo: route })">
           Log in
         </ion-button>
       </p>

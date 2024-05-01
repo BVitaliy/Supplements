@@ -18,8 +18,9 @@
   <!-- Tabs -->
 
   <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
-  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
-    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  <ion-refresher slot="fixed" mode="ios" color="primary" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" color="primary"
+      refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher>
   <div class="submitted-products__tabs-wrapper">
 
@@ -34,19 +35,43 @@
         Declined
       </ion-segment-button>
     </ion-segment>
-
+    <!-- <div class="submitted-products__tabs-wrapper">
+      <div class="submitted-products__tabs">
+     
+    <div class="submitted-products__tabs-item" vertical="center" horizontal="center"
+      [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === 0 }" (click)="handleChangeTab(0)">
+      On review
+    </div>
+ 
+ 
+    <div class="submitted-products__tabs-item" vertical="center" horizontal="center"
+      [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === 1 }" (click)="handleChangeTab(1)">
+      Approved
+    </div>
+   
+    <div class="submitted-products__tabs-item" vertical="center" horizontal="center"
+      [ngClass]="{ 'submitted-products__tabs-item--active': activeTab === 2 }" (click)="handleChangeTab(2)">
+      Declined
+    </div>
+    
+  </div>
+  </div> -->
   </div>
   <!-- / Tabs -->
 
 
-  <ion-list lines="full" *ngIf="!loading">
+  <ion-list lines="full" *ngIf="!loading && products.length">
     <ion-item *ngFor="let product of products">
-      <div class="p-vertical--medium">
+      <div class="p-vertical--medium card">
         <app-product-card [product]="product" [type]="'horizontal'"
           (onOpenEdit)="handleEditProduct($event)"></app-product-card>
       </div>
     </ion-item>
   </ion-list>
+
+  <ng-container *ngIf="!products.length && !loading">
+    <app-search-empty class="flex-grow"></app-search-empty>
+  </ng-container>
 
 
 </ion-content>

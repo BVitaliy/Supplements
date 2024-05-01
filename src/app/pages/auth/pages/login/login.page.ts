@@ -20,7 +20,7 @@ import { AuthenticationService } from '../../authentication.service';
 import { Capacitor } from '@capacitor/core';
 // import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -39,23 +39,13 @@ export class LoginPage implements OnInit, ViewDidLeave {
     private platform: Platform,
     private loadingController: LoadingController,
     private storage: Storage,
-    private alertService: AlertService,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
+    public route: ActivatedRoute
   ) {
     this.platformName = Capacitor.getPlatform();
   }
 
-  async ngOnInit() {
-    this.loginForm = new FormGroup({
-      email: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(emailPattern),
-      ]),
-      password: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
-    });
+  ngOnInit() {
     if (this.platform.is('hybrid')) {
       this.storage.get(DEVICE_ID_STORAGE_NAME).then((playerID) => {
         if (playerID) {
@@ -64,6 +54,19 @@ export class LoginPage implements OnInit, ViewDidLeave {
         }
       });
     }
+    this.loginForm = new FormGroup({
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(emailPattern),
+      ]),
+      password: new FormControl(null, [
+        Validators.required,
+        // Validators.minLength(8),
+        Validators.pattern(
+          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,}/
+        ),
+      ]),
+    });
   }
   googleSignIn() {
     this.authService.googleSignIn();
@@ -79,35 +82,40 @@ export class LoginPage implements OnInit, ViewDidLeave {
       message: 'Wait...',
       mode: 'ios',
     });
+    await loading.present().then(() => {
+      this.authService
+        .login(this.loginForm.value)
+        .pipe(
+          finalize(() => {
+            loading?.dismiss();
+          })
+        )
+        .subscribe(
+          (data: any) => {
+            console.log(data);
 
-    this.authService
-      .login(this.loginForm.value)
-      .pipe(
-        finalize(() => {
-          loading?.dismiss();
-        })
-      )
-      .subscribe(
-        (data: any) => {
-          console.log(data);
+            this.storage.set(ACCESS_TOKEN_STORAGE_NAME, data?.access);
+            this.storage.set(REFRESH_TOKEN_STORAGE_NAME, data?.refresh);
+            this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
+            this.loginForm?.setErrors(null);
+          },
+          (error: any) => {
+            console.log(error);
+            if (error?.error?.detail) {
+              this.loginForm?.setErrors({
+                wrongLogin: error?.error?.detail,
+              });
+            } else {
+              this.loginForm?.setErrors(error?.error);
+            }
+            console.log(this.loginForm);
 
-          this.storage.set(ACCESS_TOKEN_STORAGE_NAME, data?.access);
-          this.storage.set(REFRESH_TOKEN_STORAGE_NAME, data?.refresh);
-          this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
-          this.loginForm?.setErrors(null);
-        },
-        (error: any) => {
-          console.log(error);
-          this.loginForm?.setErrors({
-            wrongLogin: error?.error?.detail,
-          });
-          console.log(this.loginForm);
-
-          // if (error.status === 401) {
-          //   this.alertService.presentErrorAlert(error?.error?.detail);
-          // }
-        }
-      );
+            // if (error.status === 401) {
+            //   this.alertService.presentErrorAlert(error?.error?.detail);
+            // }
+          }
+        );
+    });
   }
 
   appleSignIn() {
@@ -122,6 +130,7 @@ export class LoginPage implements OnInit, ViewDidLeave {
 
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
+    console.log(this.showPassword);
   }
 
   ionViewDidLeave() {

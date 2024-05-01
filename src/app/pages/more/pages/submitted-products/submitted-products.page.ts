@@ -27,7 +27,7 @@ export class SubmittedProductsPage {
   }
 
   public handleChangeTab(event: any): void {
-    this.activeTab = event?.detail?.value;
+    this.activeTab = event.target.value;
     this.getSubProducts();
   }
 
@@ -71,19 +71,22 @@ export class SubmittedProductsPage {
           }
         })
       )
-      .subscribe(
-        (data: any) => {
+      .subscribe({
+        next: (data: any) => {
           console.log(data);
+          if (callbackFunction) {
+            callbackFunction();
+          }
           this.products = data?.results;
         },
-        (error: any) => {
+        error: (error: any) => {
           // this.alertService.presentErrorAlert(error?.email?.error);
 
           if (error.status === 401) {
             // this.alertService.presentErrorAlert('Something went wrong');
           }
-        }
-      );
+        },
+      });
   }
 
   handleEditProduct(event: any) {
