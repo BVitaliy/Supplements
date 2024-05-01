@@ -14,20 +14,26 @@
 </ion-header>
 
 <ion-content>
-  <app-filter-row (onOpenSort)="openSortPopover()" (onOpenFilter)="openFiltersModal()"
-    [resultCount]="123"></app-filter-row>
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
 
-  <div class="content" [ngSwitch]="!!listProducts.length">
-    <!-- Products -->
-    <ng-container *ngSwitchCase="true">
-      <ion-list lines="full">
-        <ion-item *ngFor="let product of listProducts">
-          <div class="p-vertical--medium">
-            <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
-          </div>
-        </ion-item>
-      </ion-list>
-    </ng-container>
-    <!-- / Products -->
+  <app-filter-row (onOpenSort)="openSortPopover()" (onOpenFilter)="openFiltersModal()"
+    [resultCount]="count"></app-filter-row>
+
+  <div class="content" *ngIf="listProducts.length && !loading">
+
+    <ion-list lines="full">
+      <ion-item *ngFor="let product of listProducts">
+        <div class="p-vertical--medium">
+          <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
+        </div>
+      </ion-item>
+    </ion-list>
+
   </div>
+  <ng-container *ngIf="!listProducts.length && !loading">
+    <app-search-empty class="flex-grow  "></app-search-empty>
+  </ng-container>
 </ion-content>

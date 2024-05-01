@@ -29,7 +29,7 @@ export class CatalogListPage implements OnInit {
     });
     this.getCategories();
     // setTimeout(() => {
-    this.openProductNotFound();
+    // this.openProductNotFound();
     // }, 3000);
   }
 

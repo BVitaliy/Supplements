@@ -14,50 +14,7 @@ export class AllBrandsPage implements OnInit {
   loading: boolean = false;
   searchForm!: FormGroup;
 
-  public brandList: any[] = [
-    {
-      label: '0-9',
-      brands: [
-        {
-          label: 'Brand name',
-          id: 1,
-        },
-        {
-          label: 'Brand name',
-          id: 2,
-        },
-        {
-          label: 'Brand name',
-          id: 3,
-        },
-        {
-          label: 'Brand name',
-          id: 4,
-        },
-      ],
-    },
-    {
-      label: 'A',
-      brands: [
-        {
-          label: 'Brand name',
-          id: 1,
-        },
-        {
-          label: 'Brand name',
-          id: 2,
-        },
-        {
-          label: 'Brand name',
-          id: 3,
-        },
-        {
-          label: 'Brand name',
-          id: 4,
-        },
-      ],
-    },
-  ];
+  public brandList: any[] = [];
 
   constructor(
     public navCtrl: NavController,

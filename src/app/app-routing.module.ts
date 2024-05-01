@@ -38,11 +38,6 @@ const routes: Routes = [
       import('./pages/more/more.module').then((m) => m.MorePageModule),
   },
   {
-    path: '',
-    redirectTo: 'info-steps',
-    pathMatch: 'full',
-  },
-  {
     path: 'add-product',
     loadChildren: () =>
       import('./pages/add-product/add-product.module').then(
@@ -53,6 +48,11 @@ const routes: Routes = [
     path: 'scanner',
     loadChildren: () =>
       import('./pages/scanner/scanner.module').then((m) => m.ScannerPageModule),
+  },
+  {
+    path: '',
+    redirectTo: 'info-steps',
+    pathMatch: 'full',
   },
 ];
 

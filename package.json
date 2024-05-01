@@ -1,5 +1,5 @@
 {
-  "name": "Supplement",
+  "name": "Supplement Score",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -48,7 +48,7 @@
     "@capacitor/push-notifications": "^4.1.2",
     "@capacitor/splash-screen": "^4.2.0",
     "@capacitor/status-bar": "4.1.1",
-    "@googlemaps/js-api-loader": "^1.16.2",
+    "@codetrix-studio/capacitor-google-auth": "^3.2.2",
     "@ionic/angular": "^6.1.9",
     "@ionic/storage-angular": "^3.0.6",
     "apexcharts": "^3.41.1",

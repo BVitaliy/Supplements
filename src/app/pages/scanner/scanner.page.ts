@@ -47,6 +47,7 @@ export class ScannerPage implements OnInit {
         disableAnimations: false,
         disableSuccessBeep: false,
         // formats: 'QR_CODE',
+        prompt: 'Place a barcode inside the scan areas',
         torchOn: false,
       };
 
@@ -91,7 +92,8 @@ export class ScannerPage implements OnInit {
     modal.onDidDismiss().then(() => {
       console.log(this.router.url);
       if (this.logged && !this.router.url.includes('add-product')) {
-        this.navCtrl.navigateForward(['/home/tabs/tab/main']);
+        // this.navCtrl.navigateForward(['/home/tabs/tab/main']);
+        this.navCtrl.back();
       }
       if (!this.logged) {
         this.navCtrl.navigateForward(['info-steps']);

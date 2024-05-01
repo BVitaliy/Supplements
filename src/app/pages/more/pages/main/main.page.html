@@ -10,7 +10,7 @@
   <div class="content-profile">
     <!-- Profile details -->
     <ion-item class="fw-600 text-m dark profile-item" button detail="false" lines="none" *ngIf="profile"
-      (click)="navCtrl.navigateRoot('home/tabs/tab/more/profile-details')">
+      (click)="navCtrl.navigateForward('home/tabs/tab/more/profile-details', { relativeTo: route })">
       <app-img [src]="profile?.image" cssClasses="img-fit-cover rounded" *ngIf="profile?.image"></app-img>
       <div class="avatar" *ngIf="!profile?.image" [innerHTML]="profile | setAvatarName"></div>
       <ion-label>
@@ -24,7 +24,7 @@
 
     <!-- History -->
     <ion-item class="fw-600 text-m dark" button detail="false" lines="none"
-      (click)="navCtrl.navigateRoot('home/tabs/tab/more/history')">
+      (click)="navCtrl.navigateForward('home/tabs/tab/more/history', { relativeTo: route })">
       <ion-icon size="large" [src]="'./assets/img/icons/icon-history.svg'" slot="start"></ion-icon>
       History
     </ion-item>
@@ -32,7 +32,7 @@
 
     <!-- Highlighted ingredients -->
     <ion-item class="fw-600 text-m dark" button detail="false" lines="none"
-      (click)="navCtrl.navigateRoot('home/tabs/tab/more/highlighted-ingredients')">
+      (click)="navCtrl.navigateForward('home/tabs/tab/more/highlighted-ingredients', { relativeTo: route })">
       <ion-icon size="large" [src]="'./assets/img/icons/icon-check-list.svg'" slot="start"></ion-icon>
       Highlighted ingredients
     </ion-item>
@@ -40,7 +40,7 @@
 
     <!-- Submitted products -->
     <ion-item class="fw-600 text-m dark" button detail="false" lines="none"
-      (click)="navCtrl.navigateRoot('home/tabs/tab/more/submitted-products')">
+      (click)="navCtrl.navigateForward('home/tabs/tab/more/submitted-products', { relativeTo: route })">
       <ion-icon size="large" [src]="'./assets/img/icons/icon-box.svg'" slot="start"></ion-icon>
       Submitted products
     </ion-item>
@@ -48,7 +48,7 @@
 
     <!-- Password -->
     <ion-item class="fw-600 text-m dark" button detail="false" lines="none"
-      (click)="navCtrl.navigateRoot('home/tabs/tab/more/change-password')">
+      (click)="navCtrl.navigateForward('home/tabs/tab/more/change-password', { relativeTo: route })">
       <ion-icon size="large" [src]="'./assets/img/icons/icon-lock.svg'" slot="start"></ion-icon>
       Password
     </ion-item>
@@ -56,7 +56,7 @@
 
     <!-- Notifications -->
     <ion-item class="fw-600 text-m dark" button detail="false" lines="none"
-      (click)="navCtrl.navigateRoot('home/tabs/tab/more/notifications')">
+      (click)="navCtrl.navigateForward('home/tabs/tab/more/notifications', { relativeTo: route })">
       <ion-icon size="large" [src]="'./assets/img/icons/icon-notifications.svg'" slot="start"></ion-icon>
       Notifications
     </ion-item>
@@ -72,7 +72,7 @@
 
     <!-- Report problem -->
     <ion-item class="fw-500 text-m dark" button detail="false" lines="none"
-      (click)="navCtrl.navigateRoot('home/tabs/tab/more/report-problem')">
+      (click)="navCtrl.navigateForward('home/tabs/tab/more/report-problem', { relativeTo: route })">
       Report problem
     </ion-item>
     <!-- / Report problem -->

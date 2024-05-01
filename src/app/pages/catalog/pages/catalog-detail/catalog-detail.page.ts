@@ -18,6 +18,7 @@ export class CatalogDetailPage implements OnInit {
   loading: boolean = false;
   filterForm!: FormGroup;
   id: any;
+  count = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -95,6 +96,7 @@ export class CatalogDetailPage implements OnInit {
   }
 
   getProducts(id: string, refresh?: boolean, callbackFunction?: () => void) {
+    this.loading = true;
     this.catalogService
       .getProducts(id, refresh)
       .pipe(
@@ -105,19 +107,33 @@ export class CatalogDetailPage implements OnInit {
           }
         })
       )
-      .subscribe(
-        (data: any) => {
+      .subscribe({
+        next: (data: any) => {
           console.log(data);
           // this.profileDetails = data;
+          this.count = data?.count || 0;
           this.listProducts = data.results;
+          if (callbackFunction) {
+            callbackFunction();
+          }
         },
-        (error: any) => {
+        error: (error: any) => {
           // this.alertService.presentErrorAlert(error?.email?.error);
 
           if (error.status === 401) {
             // this.alertService.presentErrorAlert('Something went wrong');
           }
-        }
-      );
+        },
+      });
   }
+}
+function next(
+  data: any,
+  any: any
+):
+  | ((value: any) => void)
+  | Partial<import('rxjs').Observer<any>>
+  | null
+  | undefined {
+  throw new Error('Function not implemented.');
 }

@@ -38,7 +38,7 @@ export class ChangePasswordPage {
         password: new FormControl(null, [
           Validators.required,
           Validators.pattern(
-            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,}/
           ),
         ]),
         confirm_password: new FormControl(null, [
@@ -52,12 +52,15 @@ export class ChangePasswordPage {
     );
   }
 
-  toggleShowPassword(field: string) {
-    if (this.showPassword === field) {
-      this.showPassword = '';
-    } else {
-      this.showPassword = field;
-    }
+  toggleShowPassword() {
+    this.showCurrentPassword = !this.showCurrentPassword;
+  }
+
+  toggleShowNewPassword() {
+    this.showNewPassword = !this.showNewPassword;
+  }
+  toggleShowRepeatPassword() {
+    this.showRepeatNewPassword = !this.showRepeatNewPassword;
   }
 
   public handleSaveChanges(): void {
@@ -82,9 +85,21 @@ export class ChangePasswordPage {
           });
         },
         (error: any) => {
-          if (error.status === 401) {
-            this.alertService.presentErrorAlert('Something went wrong');
+          if (error?.error?.old_password) {
+            this.form?.get('old_password')?.setErrors({
+              wrong: error?.error?.old_password[0],
+            });
           }
+          if (error?.error?.password) {
+            this.form?.get('password')?.setErrors({
+              wrong: error?.error?.password[0],
+            });
+          }
+          this.form?.setErrors(error?.error);
+          console.log(this.form);
+          // if (error.status === 401) {
+          //   this.alertService.presentErrorAlert('Something went wrong');
+          // }
         }
       );
   }

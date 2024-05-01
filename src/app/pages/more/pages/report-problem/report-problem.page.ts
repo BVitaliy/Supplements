@@ -11,7 +11,7 @@ import { ProfileService } from '../../profile.service';
   styleUrls: ['./report-problem.page.scss'],
 })
 export class ReportProblemPage {
-  public form!: FormGroup;
+  form!: FormGroup;
   loading = false;
 
   constructor(
@@ -20,7 +20,7 @@ export class ReportProblemPage {
     private alertService: AlertService
   ) {}
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.form = new FormGroup({
       theme: new FormControl(null, [Validators.required]),
       message: new FormControl(null, [Validators.required]),
