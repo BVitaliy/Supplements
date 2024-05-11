@@ -56,5 +56,16 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+
+ 
+	<key>CLIENT_ID</key>
+	<string>461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.Supplement.app</string>
+ 
 </dict>
 </plist>

@@ -1,6 +1,6 @@
 {
-  "appId": "com.supplementsocre.ss",
-  "appName": "Supplement Score",
+  "appId": "com.Supplement.ss",
+  "appName": "Supplement",
   "webDir": "www",
   "bundledWebRuntime": false,
   "plugins": {
@@ -17,6 +17,8 @@
     "GoogleAuth": {
       "scopes": ["profile", "email"],
       "serverClientId": "461332400284-kcms0r0hqi1ofebrga2jvqhi7jlotunr.apps.googleusercontent.com",
+      "clientId": "461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com",
+      "iosClientId":"com.googleusercontent.apps.461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p",
       "forceCodeForRefreshToken": true
     }
   }
