@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Products } from 'src/mock/products';
 
@@ -10,12 +11,16 @@ import { Products } from 'src/mock/products';
 export class BrandDetailPage implements OnInit {
   public listProducts: any[] = [...Products];
   loading: boolean = false;
+  title = '';
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, private route: ActivatedRoute) {}
 
   ngOnInit() {}
 
-  openSortPopover() {}
+  ionViewWillEnter() {
+    this.title = this.route.snapshot.paramMap.get('title') || '';
+  }
 
+  openSortPopover() {}
   openFilter() {}
 }

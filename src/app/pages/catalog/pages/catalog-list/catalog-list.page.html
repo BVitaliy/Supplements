@@ -31,7 +31,8 @@
           <ng-container *ngFor="let item of categories">
 
 
-            <ion-item button lines="none" mode="ios" [routerLink]="['/home/tabs/tab/catalog/',item?.id]">
+            <!-- [routerLink]="['/home/tabs/tab/catalog/',item?.id]" -->
+            <ion-item button lines="none" mode="ios" (click)="handleOpenDetails(item?.id, item?.title)">
               <ion-icon slot="start" [src]="item?.icon"></ion-icon>
               <ion-label class="fw-600 dark">{{item?.title}}</ion-label>
             </ion-item>

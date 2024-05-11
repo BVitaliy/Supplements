@@ -18,6 +18,7 @@ export class CatalogDetailPage implements OnInit {
   loading: boolean = false;
   filterForm!: FormGroup;
   id: any;
+  title: string = '';
   count = 0;
 
   constructor(
@@ -36,6 +37,7 @@ export class CatalogDetailPage implements OnInit {
 
   ionViewWillEnter() {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.title = this.route.snapshot.paramMap.get('title') || '';
     this.getProducts(this.id);
   }
 

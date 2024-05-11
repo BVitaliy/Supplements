@@ -58,7 +58,7 @@ export class AppInterceptor implements HttpInterceptor {
     return from(promise).pipe(
       mergeMap((token) => {
         let clonedReq = this.addToken(request, token);
-        console.log(request);
+
         clonedReq = request.clone({
           setHeaders: {
             // 'Access-Control-Allow-Credentials': 'true',
@@ -92,13 +92,13 @@ export class AppInterceptor implements HttpInterceptor {
                 return throwError(err);
               } else if (
                 err.status === 401 &&
-                !request.url?.includes('/token')
+                !request.url?.includes('/token') &&
+                !request.url?.includes('/refresh')
               ) {
                 console.log(this.isRefreshing);
                 if (!this.isRefreshing) {
                   this.isRefreshing = true;
                   this.refreshToken$.next(null);
-                  console.log(this.isRefreshing);
                   return this.authenticationService
                     .refreshToken({ refresh: this.refreshToken })
                     .pipe(
@@ -115,12 +115,12 @@ export class AppInterceptor implements HttpInterceptor {
                         );
                         return next.handle(this.addToken(request, new_token));
                       }),
+
                       finalize(() => {
                         this.isRefreshing = false;
                       })
                     );
                 } else {
-                  console.log(request.url);
                   if (request.url?.includes('/token/refresh')) {
                     this.destroyed$.next();
                     this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
@@ -141,6 +141,14 @@ export class AppInterceptor implements HttpInterceptor {
                     )
                   );
                 }
+              } else if (request.url?.includes('/refresh')) {
+                this.destroyed$.next();
+                this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+                this.storage.remove(REFRESH_TOKEN_STORAGE_NAME);
+                this.storage.remove(USER_ID_STORAGE_NAME);
+                this.storage.remove(USER_STORAGE_NAME);
+
+                this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
               }
             }
             return throwError(err);

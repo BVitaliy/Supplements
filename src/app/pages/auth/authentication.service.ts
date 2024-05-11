@@ -121,10 +121,10 @@ export class AuthenticationService {
     if (user) {
       const body = {
         grant_type: 'convert_token',
-        client_id: '0hTaY476fk6FI1QWqjzgPkAtVQXXlxYNjyonGBbr',
+        client_id: 'j0sqWImKXkbDW1e7SLjxgTFcEGZoreXRYJ3gB4ZI',
         backend: 'google-oauth2',
         client_secret:
-          '0q3xDy6HVJvasOnjd3C4VLidmyib3yRZTLAJa3ACp0D4i6pnEkEoR7e9L00eJex8Vab4RhrpZ8fqxwGvLpA7yuJm9uNkIOHFPfeSLNXp1q6Wnv9GlrCDc350a4vvrj1f',
+          'bfx11gJt0Y5WL0Uqt2ZjFbjbhVOi97RuZbDptkLFG5ENSPO4NtVZl2m1qbCkrHKU0dPmAGp2SLHq3OGsfSmWtVYFMH8QYcihyYWmE36dyXmKtMmCEg7KVCKSWxEtdEof',
         token: user?.authentication?.accessToken,
       };
       this.getConvertToken(body);

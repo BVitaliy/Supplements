@@ -56,7 +56,7 @@
         <ion-item class="form-item" mode="ios" lines="none">
           <ion-label position="stacked">Password</ion-label>
           <ion-input formControlName="password" [type]="showPassword   ? 'text' : 'password'" inputmode="text"
-            placeholder="Enter your password" autocomplete="off"></ion-input>
+            placeholder="Enter your password" autocomplete="off" clearOnEdit="false"></ion-input>
 
           <ion-note slot="error"
             *ngIf="form.get('password')!.invalid && form.get('password')!.touched && !form?.hasError('password')">The
@@ -75,7 +75,7 @@
         <ion-item class="form-item" mode="ios" lines="none">
           <ion-label position="stacked">Repeat password</ion-label>
           <ion-input formControlName="confirm_password" [type]="showPasswordRepeat ? 'text' : 'password'"
-            inputmode="text" placeholder="Enter your password again" autocomplete="off"></ion-input>
+            inputmode="text" placeholder="Enter your password again" autocomplete="off" clearOnEdit="false"></ion-input>
           <ion-note slot="error"
             *ngIf="form.get('confirm_password')!.invalid && form.get('confirm_password')!.dirty && !form?.hasError('confirm_password')">Passwords
             does not
