@@ -29,7 +29,7 @@
           <ion-item class="form-item" mode="ios" lines="none">
             <ion-label position="stacked">Password</ion-label>
             <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" inputmode="text"
-              placeholder="Enter your password" autocomplete="off"></ion-input>
+              placeholder="Enter your password" autocomplete="off" clearOnEdit="false"></ion-input>
             <ion-note slot="error"
               *ngIf="loginForm?.hasError('password')">{{loginForm!.errors?.['password'][0]}}</ion-note>
             <ion-note slot="error"

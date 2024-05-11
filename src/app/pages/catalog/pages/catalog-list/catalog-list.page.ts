@@ -91,4 +91,8 @@ export class CatalogListPage implements OnInit {
         }
       );
   }
+
+  public handleOpenDetails(id: number, title: string): void {
+    this.navCtrl.navigateForward([`/home/tabs/tab/catalog/${id}`, { title }]);
+  }
 }
