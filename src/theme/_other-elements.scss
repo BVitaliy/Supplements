@@ -300,3 +300,37 @@ ion-popover::part(arrow):after {
     }
   }
 }
+
+
+ng-otp-input{
+  .wrapper{
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
+.ios{
+  .submitted-products__tabs-wrapper { 
+    top: calc(var(--ion-safe-area-top) + 58px)!important;
+  }
+
+  .history__tabs-wrapper {
+    top: calc(var(--ion-safe-area-top) + 58px)!important;
+  }
+  .search-system__tabs-wrapper {
+    top: calc(var(--ion-safe-area-top) + 64px)!important;
+  }
+
+  ion-tab-bar {
+    ion-button{
+      bottom: calc(var(--ion-safe-area-top) - 10px)
+    }
+  }
+
+  ion-modal{
+    top: var(--ion-safe-area-top);
+    .ion-page{
+      // height: calc(100% - var(--ion-safe-area-top));
+    }
+  }
+}

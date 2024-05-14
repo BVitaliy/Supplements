@@ -41,7 +41,7 @@ export class AppComponent {
         GoogleAuth.initialize({
           grantOfflineAccess: true,
           clientId:
-            '461332400284-kcms0r0hqi1ofebrga2jvqhi7jlotunr.apps.googleusercontent.com',
+            '461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com',
         });
         this.screenOrientation.lock(
           this.screenOrientation.ORIENTATIONS.PORTRAIT
