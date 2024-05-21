@@ -19,7 +19,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from '../../authentication.service';
 import { Capacitor } from '@capacitor/core';
 // import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+// import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login',
@@ -69,7 +69,7 @@ export class LoginPage implements OnInit, ViewDidLeave {
     });
   }
   googleSignIn() {
-    this.authService.googleSignIn();
+    // this.authService.googleSignIn();
   }
 
   ionViewWillEnter() {

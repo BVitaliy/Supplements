@@ -84,3 +84,6 @@ export const ProductsD = [
       'Unfortunately, your photo is blurry, please replace the product photo and send the request again',
   },
 ];
+
+
+ 

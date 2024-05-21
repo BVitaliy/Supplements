@@ -1,8 +1,11 @@
 {
-  "appId": "com.Supplement.ss",
+  "appId": "com.supplementsocre.ss",
   "appName": "Supplement",
   "webDir": "www",
   "bundledWebRuntime": false,
+  "server": {
+		"androidScheme": "https"
+	},
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 1000,
@@ -15,11 +18,14 @@
       "showSpinner": false
     },
     "GoogleAuth": {
-      "scopes": ["profile", "email"],
-      "serverClientId": "461332400284-kcms0r0hqi1ofebrga2jvqhi7jlotunr.apps.googleusercontent.com",
-      "clientId": "461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com",
-      "iosClientId":"com.googleusercontent.apps.461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p",
+      "scopes": ["profile", "email"], 
+ 
       "forceCodeForRefreshToken": true
-    }
+    },
+    "FirebaseAuthentication": {
+		  "skipNativeAuth": false,
+		  "providers": ["google.com",  "apple.com"]
+		} 
+ 
   }
 }

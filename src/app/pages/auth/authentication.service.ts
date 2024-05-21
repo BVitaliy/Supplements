@@ -4,12 +4,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 // import {
-//   Auth,
-//   GoogleAuthProvider,
+//   getAdditionalUserInfo,
+// //   getAuth,
+// //   // Auth,
+// //   GoogleAuthProvider,
 //   OAuthProvider,
 //   signInWithCredential,
-//   signInWithPopup,
+// //   signInWithPopup,
 // } from '@angular/fire/auth';
 
 // import {
@@ -30,15 +33,40 @@ import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 })
 export class AuthenticationService {
   isWeb = false;
+  signInLoading = false;
 
   constructor(
     private http: HttpClient,
     private navCtrl: NavController,
     private alertService: AlertService,
     private storage: Storage,
-    private platform: Platform // private auth: Auth
+    private platform: Platform , //private authFire: Auth
   ) {
     this.isWeb = !(this.platform.is('android') || this.platform.is('ios'));
+  }
+
+
+  async loginViaApple(){
+    const result = await FirebaseAuthentication.signInWithApple({scopes:['displayName', 'email']}) 
+    console.log(result)
+        if (result) {
+          const body = {
+            grant_type: 'convert_token',
+            client_id: 'j0sqWImKXkbDW1e7SLjxgTFcEGZoreXRYJ3gB4ZI',
+            backend: 'apple-id',
+            client_secret:
+              'bfx11gJt0Y5WL0Uqt2ZjFbjbhVOi97RuZbDptkLFG5ENSPO4NtVZl2m1qbCkrHKU0dPmAGp2SLHq3OGsfSmWtVYFMH8QYcihyYWmE36dyXmKtMmCEg7KVCKSWxEtdEof',
+            token: result?.credential?.idToken,
+          };
+          this.getConvertToken(body);    
+        }     
+  }
+
+  async loginViaGoogle(){
+    console.log('google')
+    const result = await FirebaseAuthentication.signInWithGoogle({scopes:["profile", "email"],mode:'popup'});
+    // this.socialLoginData(result);
+    console.log(result);
   }
 
   // signInWithAppleWeb() {
@@ -72,31 +100,52 @@ export class AuthenticationService {
   //   );
   // }
   signInWithAppleNative() {
+    this.signInLoading = true;
     // let options: SignInWithAppleOptions = {
     //   clientId: 'com.supplementsocre.ss.signin',
     //   redirectURI:
     //     'https://supplement-score-ai.firebaseapp.com/__/auth/handler',
+    //     scopes: 'email',
+    //     state:'12345'
     // };
     // SignInWithApple.authorize(options).then(
     //   async (result: any | SignInWithAppleResponse) => {
     //     console.log(result);
+
+    //     if (result) {
+    //       const body = {
+    //         grant_type: 'convert_token',
+    //         client_id: 'j0sqWImKXkbDW1e7SLjxgTFcEGZoreXRYJ3gB4ZI',
+    //         backend: 'apple-id',
+    //         client_secret:
+    //           'bfx11gJt0Y5WL0Uqt2ZjFbjbhVOi97RuZbDptkLFG5ENSPO4NtVZl2m1qbCkrHKU0dPmAGp2SLHq3OGsfSmWtVYFMH8QYcihyYWmE36dyXmKtMmCEg7KVCKSWxEtdEof',
+    //         token: result?.response?.identityToken,
+    //       };
+    //       this.getConvertToken(body);    
+    //     }    
     //     const provider = new OAuthProvider('apple.com');
     //     const credential = provider.credential({
     //       idToken: result.response.identityToken,
     //     });
-    //     const userCredential = await signInWithCredential(
-    //       this.auth,
-    //       credential
-    //     );
-    //     this.setSession(
-    //       result?.user?.accessToken,
-    //       result?._tokenResponse?.refreshToken
-    //     );
-    //     console.log(userCredential);
+    //     // const user = getAdditionalUserInfo(credential)
+    //     // const auth = getAuth();
+    //     // console.log(auth)
+    //     // const userCredential = await this.signInWithAppleNative(
+    //     //   auth,
+    //     //   credential
+    //     // );
+    //     // this.setSession(
+    //     //   result?.user?.accessToken,
+    //     //   result?._tokenResponse?.refreshToken
+    //     // );
+    //     // console.log(userCredential);
     //   }
     // );
   }
-
+  // {"response":
+  // {"email":null,
+  // "identityToken":"eyJraWQiOiJCaDZIN3JIVm1iIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLnN1cHBsZW1lbnRzb2NyZS5zcyIsImV4cCI6MTcxNTg0MjA2OSwiaWF0IjoxNzE1NzU1NjY5LCJzdWIiOiIwMDE0NjQuZGRmMjcxN2RmNDllNGE2NGEwMzNlNWM2MThkMGMyMDAuMDY0NyIsImNfaGFzaCI6Iks0OXU1NXdOWGpTUF9pcnFLNVNTeEEiLCJhdXRoX3RpbWUiOjE3MTU3NTU2NjksIm5vbmNlX3N1cHBvcnRlZCI6dHJ1ZSwicmVhbF91c2VyX3N0YXR1cyI6Mn0.ptejLCQhQ7Fcc4vHE10dS9xpUI6My00YmFk8zAZUujuzcQSVmwkF7bXNm4gnJmPT7sRoPaWWS2ch1vqsWH-mgsXDuu3VQaGz4mHgqN9nbg71r_xCvacZ1g__ISTD14zs3e_6SjdBO4RApI5azeMVJ7VS9GoZ_-DQCv-HDZcdKAPcZ7063_PBSADOSaFbR8HBkgsFos02J9Qeh139V31GeUjhbPtxfh2fcGknGa-KoO8Y-HyD-y3jfX3gIhgrytJbgsDEmuejdJ-L0XfcETZ0axZYHiovIwG3IbwquPF87RnyJpZiTDW_gtvDk_4YA1931f6X8gIU31i7lYXHpGrzlQ",
+  // "authorizationCode":"c3eff0f52111b4707aaca89476b672153.0.pruwu.Gjef9xCUBDeQCCV95kOMAg","givenName":null,"user":"001464.ddf2717df49e4a64a033e5c618d0c200.0647","familyName":null}}
   setSession(accessToken: any, refreshToken: any) {
     this.storage.set(ACCESS_TOKEN_STORAGE_NAME, accessToken);
     this.storage.set(REFRESH_TOKEN_STORAGE_NAME, refreshToken);
@@ -104,6 +153,7 @@ export class AuthenticationService {
   }
 
   getConvertToken(body: any) {
+    console.log(body)
     this.convertToken(body).subscribe(
       (data: any) => {
         console.log(data);

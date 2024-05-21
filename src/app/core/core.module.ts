@@ -22,6 +22,7 @@ import { MultipleDocumentsPicker } from '@awesome-cordova-plugins/multiple-docum
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { Camera } from '@awesome-cordova-plugins/camera/ngx';
+import { FirebaseAppModule } from '@angular/fire/app';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -56,6 +57,7 @@ const maskConfig: Partial<IConfig> = {
     MultipleDocumentsPicker,
     AndroidPermissions,
     AndroidPermissions,
+    FirebaseAppModule,
     File,
     Camera,
     BarcodeScanner,

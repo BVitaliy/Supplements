@@ -3,12 +3,34 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com</string>
+	<string>274080642453-o31iec6l7s9ra52jq0t701db26kfmct1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p</string>
+	<string>com.googleusercontent.apps.274080642453-o31iec6l7s9ra52jq0t701db26kfmct1</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>274080642453-ce5itgi5si2ss8mtg4eiu83lq6ailam3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD2PFTgSC8EYeQbsc53a6mcl6Q5YDakqIU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>274080642453</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.Supplement.app</string>
+	<string>com.supplementsocre.ss</string>
+	<key>PROJECT_ID</key>
+	<string>supplement-score-ai</string>
+	<key>STORAGE_BUCKET</key>
+	<string>supplement-score-ai.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:274080642453:ios:656fa4db408730b894b29c</string>
 </dict>
 </plist>

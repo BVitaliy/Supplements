@@ -24,7 +24,7 @@
         <span>or</span>
       </div>
 
-      <ion-item class="btn btn-sign mb-10" mode="ios" lines="none" detail="false" button *ngIf="platformName === 'ios'">
+      <ion-item class="btn btn-sign mb-10" mode="ios" lines="none" detail="false" button *ngIf="platformName === 'ios'" (click)="authService.loginViaApple()">
         <!-- (click)="appleSignIn()" -->
         <ion-icon [src]="'./assets/img/icons/apple-logo.svg'" slot="start"></ion-icon>
         <ion-label>Continue with Apple</ion-label>

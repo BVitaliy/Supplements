@@ -13,7 +13,7 @@ import { AuthenticationService } from './pages/auth/authentication.service';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { App } from '@capacitor/app';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-root',
@@ -41,8 +41,9 @@ export class AppComponent {
         GoogleAuth.initialize({
           grantOfflineAccess: true,
           clientId:
-            '461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com',
+            '274080642453-o31iec6l7s9ra52jq0t701db26kfmct1.apps.googleusercontent.com',
         });
+        
         this.screenOrientation.lock(
           this.screenOrientation.ORIENTATIONS.PORTRAIT
         ); // 'portrait'
