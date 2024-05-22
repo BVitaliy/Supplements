@@ -6,7 +6,7 @@
           [src]="openedInModal ? './assets/img/icon/close-icon.svg' : './assets/img/icons/icon-back.svg'"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="sm">Description</ion-title>
+    <ion-title class="sm">{{product?.title || 'Description'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 

@@ -30,8 +30,6 @@ import { enterAnimation } from './core/animations/animationNavigation';
     // provideFirebaseApp(() => initializeApp(environment?.google)),
     // provideAuth(() => getAuth()),
     // provideFirestore(() => getFirestore()),
- 
-
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

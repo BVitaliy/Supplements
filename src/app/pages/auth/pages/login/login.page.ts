@@ -69,7 +69,7 @@ export class LoginPage implements OnInit, ViewDidLeave {
     });
   }
   googleSignIn() {
-    // this.authService.googleSignIn();
+    this.authService.googleSignIn();
   }
 
   ionViewWillEnter() {

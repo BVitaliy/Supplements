@@ -13,7 +13,7 @@ import { AuthenticationService } from './pages/auth/authentication.service';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { App } from '@capacitor/app';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -35,33 +35,37 @@ export class AppComponent {
   }
 
   async initApp() {
-    this.platform.ready().then(() => {
-      if (this.platform.is('hybrid')) {
-        StatusBar.setBackgroundColor({ color: '#ff4c00' });
-        GoogleAuth.initialize({
-          grantOfflineAccess: true,
-          clientId:
-            '274080642453-o31iec6l7s9ra52jq0t701db26kfmct1.apps.googleusercontent.com',
-        });
-        
-        this.screenOrientation.lock(
-          this.screenOrientation.ORIENTATIONS.PORTRAIT
-        ); // 'portrait'
-        this.storage.create().then(() => {
+    this.storage.create().then(() => {
+      this.platform.ready().then(() => {
+        if (this.platform.is('hybrid')) {
+          StatusBar.setBackgroundColor({ color: '#ff4c00' });
+          GoogleAuth.initialize({
+            grantOfflineAccess: true,
+            // clientId:'274080642453-o31iec6l7s9ra52jq0t701db26kfmct1.apps.googleusercontent.com',
+            // serverClientId:
+            //   '274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com',
+            clientId:
+              '274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com',
+          });
+
+          this.screenOrientation.lock(
+            this.screenOrientation.ORIENTATIONS.PORTRAIT
+          ); // 'portrait'
           this.networkStatusService.networkStatus();
           this.permissionsService.requestPermissions();
-        });
-        this.platform.backButton.subscribeWithPriority(-1, () => {
-          if (this.router.url === '/login' || this.router.url === '/home') {
-            console.log(this.router);
-            console.log(this.router.getCurrentNavigation());
-            console.log(this.routerOutlet?.canGoBack());
-            if (!this.routerOutlet?.canGoBack()) {
-              // App.exitApp();
+
+          this.platform.backButton.subscribeWithPriority(-1, () => {
+            if (this.router.url === '/login' || this.router.url === '/home') {
+              console.log(this.router);
+              console.log(this.router.getCurrentNavigation());
+              console.log(this.routerOutlet?.canGoBack());
+              if (!this.routerOutlet?.canGoBack()) {
+                // App.exitApp();
+              }
             }
-          }
-        });
-      }
+          });
+        }
+      });
     });
   }
 }

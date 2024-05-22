@@ -1,42 +1,49 @@
 {
   "project_info": {
-    "project_number": "461332400284",
-    "project_id": "supplements-d95b6",
-    "storage_bucket": "supplements-d95b6.appspot.com"
+    "project_number": "274080642453",
+    "project_id": "supplement-score-ai",
+    "storage_bucket": "supplement-score-ai.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:461332400284:android:427e586dd7857a91054559",
+        "mobilesdk_app_id": "1:274080642453:android:604d80d3d4bc764294b29c",
         "android_client_info": {
-          "package_name": "com.Supplement.app"
+          "package_name": "com.supplementsocre.ss"
         }
       },
       "oauth_client": [
         {
-          "client_id": "461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com",
+          "client_id": "274080642453-ce5itgi5si2ss8mtg4eiu83lq6ailam3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.Supplement.app",
+            "package_name": "com.supplementsocre.ss",
             "certificate_hash": "ccc508811a6713e500236bdd9822e92a82a44601"
           }
         },
         {
-          "client_id": "461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com",
+          "client_id": "274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBgF7PXSNx_dY6pQL8jyx923hoAJdgmv9g"
+          "current_key": "AIzaSyB4r0HoL45bTSM4qiQ6WzF6MINmeprbHMQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "461332400284-56pba0id0c9lvdlp1hqpbev2281qbn6p.apps.googleusercontent.com",
+              "client_id": "274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "274080642453-o31iec6l7s9ra52jq0t701db26kfmct1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.supplementsocre.ss"
+              }
             }
           ]
         }

@@ -1,11 +1,11 @@
 {
   "appId": "com.supplementsocre.ss",
-  "appName": "Supplement",
+  "appName": "Supplement Score",
   "webDir": "www",
   "bundledWebRuntime": false,
   "server": {
-		"androidScheme": "https"
-	},
+    "androidScheme": "https"
+  },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 1000,
@@ -18,14 +18,12 @@
       "showSpinner": false
     },
     "GoogleAuth": {
-      "scopes": ["profile", "email"], 
- 
+      "scopes": ["profile", "email"],
       "forceCodeForRefreshToken": true
     },
     "FirebaseAuthentication": {
-		  "skipNativeAuth": false,
-		  "providers": ["google.com",  "apple.com"]
-		} 
- 
+      "skipNativeAuth": false,
+      "providers": ["google.com", "apple.com"]
+    }
   }
 }

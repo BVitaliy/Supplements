@@ -1,5 +1,4 @@
-package com.Supplement.app;
-
+package com.supplementsocre.ss;
 import android.os.Bundle;
 
 import com.codetrixstudio.capacitor.GoogleAuth.GoogleAuth;
@@ -11,3 +10,5 @@ public class MainActivity extends BridgeActivity {
     registerPlugin(GoogleAuth.class);
   }
 }
+
+ 

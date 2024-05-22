@@ -49,7 +49,7 @@ export class ProductCardComponent implements OnInit {
     if (this.openInModal) {
       this.openProductInModal();
     } else {
-      this.navCtrl.navigateRoot(['/product/detail', 1]);
+      this.navCtrl.navigateRoot(['/product/detail', this.product?.id]);
     }
   }
 

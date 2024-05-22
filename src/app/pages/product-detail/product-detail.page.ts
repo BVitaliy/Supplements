@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
+import { finalize } from 'rxjs';
 import { IngredientOption } from 'src/app/core/models/highlighted-ingredients.models';
 import { ProductAlertPopupComponent } from 'src/app/shared/components/product-alert-popup/product-alert-popup.component';
+import { CatalogService } from '../catalog/catalog.service';
 import { IngredientDetailModalComponent } from './components/ingredient-detail-modal/ingredient-detail-modal.component';
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
 import { HighlightedIngredientsPage } from './pages/highlighted-ingredients/highlighted-ingredients.page';
@@ -25,81 +28,49 @@ export class ProductDetailPage implements OnInit {
     public navCtrl: NavController,
     // private loadingController: LoadingController,
     // private actionSheetController: ActionSheetController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private catalogService: CatalogService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.loading = false;
-
-      this.product = {
-        category: 'Athletic Greens',
-        title:
-          'Ultimate Daily, Whole Food Sourced  All in One Greens Supplement Powder',
-        score: 9.3,
-        favorite: false,
-        image: './assets/img/temp/product-detail.png',
-        benefits: {
-          title: 'Benefits',
-          count: 39,
-          color: '#22B51F',
-          ingredients: [
-            'Organic spirulina',
-            'Organic spirulina',
-            'Organic spirulina',
-            'Organic spirulina',
-          ],
-        },
-        weaknesses: {
-          title: 'Weaknesses',
-          count: 5,
-          color: '#FF001C',
-          ingredients: [
-            'Glycol',
-            'Glycerin',
-            'Titanium Dioxide',
-            'Caramel Color',
-            'Red 40',
-          ],
-        },
-        contaminants: {
-          title: 'Contaminants',
-          count: 3,
-          color: '#FF9635',
-          ingredients: [
-            'Organic spirulina',
-            'Organic spirulina',
-            'Organic spirulina',
-            'Organic spirulina',
-          ],
-        },
-        allergens: {
-          title: 'Allergens',
-          count: 4,
-          color: '#FDE334',
-          ingredients: [
-            'Organic spirulina',
-            'Organic spirulina',
-            'Organic spirulina',
-            'Organic spirulina',
-          ],
-        },
-      };
-    }, 1000);
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log(this.id);
+    this.getProduct();
   }
 
   // Рефреш продукту
   doRefresh(event: any) {
-    this.getProductById(true, () => event.target.complete());
+    this.getProduct(true, () => event.target.complete());
   }
 
-  getProductById(refresh?: boolean, callbackFunction?: () => void) {
-    setTimeout(() => {
-      this.loading = false;
-      if (callbackFunction) {
-        callbackFunction();
-      }
-    }, 1000);
+  getProduct(refresh?: boolean, callbackFunction?: () => void) {
+    this.loading = true;
+    this.catalogService
+      .getProductById(this.id, refresh)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          if (callbackFunction) {
+            callbackFunction();
+          }
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data) {
+            this.product = data;
+          }
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
   }
 
   shopNowProduct() {
