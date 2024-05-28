@@ -32,7 +32,7 @@ export class ChangePasswordPage {
         old_password: new FormControl(null, [
           Validators.required,
           Validators.pattern(
-            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,}/
           ),
         ]),
         password: new FormControl(null, [

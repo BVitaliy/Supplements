@@ -3,6 +3,7 @@
 }
 .step-image {
   height: 100%;
+  overflow: hidden;
 
   &.step-1 {
     padding: 6vh 10%;
@@ -11,6 +12,19 @@
   &.step-3,
   &.step-5 {
     padding: 25px 16px;
+  }
+
+  .image {
+    padding-top: 100%;
+    position: relative;
+    svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
 

@@ -74,7 +74,7 @@ export class MainPage implements OnInit {
       mode: 'ios',
     });
     await loading.present().then(() => {
-      // this.authService.logOut();
+      this.authService.logOut();
       this.profileService
         .logout({})
         .pipe(

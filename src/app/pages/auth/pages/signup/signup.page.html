@@ -20,7 +20,11 @@
           <ion-input formControlName="first_name" type="text" inputmode="text" placeholder="Enter your first name"
             autocomplete="off"></ion-input>
           <ion-note slot="error"
-            *ngIf="form.get('first_name')!.invalid && form.get('first_name')!.touched && !form?.hasError('first_name')">First
+            *ngIf="!form.get('first_name')?.value && form.get('first_name')!.invalid && form.get('first_name')!.touched && !form?.hasError('first_name')">
+            Field is required
+          </ion-note>
+          <ion-note slot="error"
+            *ngIf="form.get('first_name')?.value && form.get('first_name')!.invalid && form.get('first_name')!.touched && !form?.hasError('first_name')">First
             name
             should contain from 3 to N symbols</ion-note>
           <ion-note slot="error" *ngIf="form?.hasError('first_name')">{{form!.errors?.['first_name'][0]}}</ion-note>
@@ -33,9 +37,12 @@
           <ion-input formControlName="last_name" type="text" inputmode="text" placeholder="Enter your last name"
             autocomplete="off"></ion-input>
           <ion-note slot="error"
-            *ngIf="form.get('last_name')!.invalid && form.get('last_name')!.touched && !form?.hasError('last_name')">Last
-            name
-            should contain from 3 to N symbols</ion-note>
+            *ngIf="!form.get('last_name')?.value && form.get('last_name')!.invalid && form.get('last_name')!.touched && !form?.hasError('last_name')">
+            Field is required
+          </ion-note>
+          <ion-note slot="error"
+            *ngIf="form.get('last_name')?.value && form.get('last_name')!.invalid && form.get('last_name')!.touched && !form?.hasError('last_name')">Last
+            name should contain from 3 to N symbols</ion-note>
           <ion-note slot="error" *ngIf="form?.hasError('last_name')">{{form!.errors?.['last_name'][0]}}</ion-note>
         </ion-item>
 
@@ -45,8 +52,12 @@
           <ion-label position="stacked">Email address</ion-label>
           <ion-input formControlName="email" type="email" inputmode="email" placeholder="Enter your email address"
             autocomplete="off"></ion-input>
+          <ion-note slot="error" *ngIf="!form.get('email')?.value && form.get('email')!.invalid && form.get('email')!.touched && 
+                      !form?.hasError('email')">
+            Field is required
+          </ion-note>
           <ion-note slot="error"
-            *ngIf="form.get('email')!.invalid && form.get('email')!.touched && !form?.hasError('email')">
+            *ngIf="form.get('email')?.value && form.get('email')!.invalid && form.get('email')!.touched && !form?.hasError('email')">
             Please, double-check your email address
           </ion-note>
           <ion-note slot="error" *ngIf="form?.hasError('email')">{{form!.errors?.['email'][0]}}</ion-note>
@@ -57,14 +68,15 @@
           <ion-label position="stacked">Password</ion-label>
           <ion-input formControlName="password" [type]="showPassword   ? 'text' : 'password'" inputmode="text"
             placeholder="Enter your password" autocomplete="off" clearOnEdit="false"></ion-input>
-
+          <ion-note slot="error" *ngIf="!form.get('password')?.value && form.get('password')!.invalid && form.get('password')!.touched && 
+            !form?.hasError('password')">
+            Field is required
+          </ion-note>
           <ion-note slot="error"
-            *ngIf="form.get('password')!.invalid && form.get('password')!.touched && !form?.hasError('password')">The
+            *ngIf="form.get('password')?.value && form.get('password')!.invalid && form.get('password')!.touched && !form?.hasError('password')">The
             password
             must contain at least 8 characters, at least: 1 number, 1 special
-            character, 1 uppercase letter,
-            1
-            lowercase letter.</ion-note>
+            character, 1 uppercase letter, 1 lowercase letter.</ion-note>
           <ion-note slot="error" *ngIf="form?.hasError('password')">{{form!.errors?.['password'][0]}}</ion-note>
         </ion-item>
         <ion-icon
@@ -76,8 +88,12 @@
           <ion-label position="stacked">Repeat password</ion-label>
           <ion-input formControlName="confirm_password" [type]="showPasswordRepeat ? 'text' : 'password'"
             inputmode="text" placeholder="Enter your password again" autocomplete="off" clearOnEdit="false"></ion-input>
+          <ion-note slot="error" *ngIf="!form.get('confirm_password')?.value && form.get('confirm_password')!.invalid && 
+            form.get('confirm_password')!.touched && !form?.hasError('confirm_password')">
+            Field is required
+          </ion-note>
           <ion-note slot="error"
-            *ngIf="form.get('confirm_password')!.invalid && form.get('confirm_password')!.dirty && !form?.hasError('confirm_password')">Passwords
+            *ngIf="form.get('confirm_password')?.value && form.get('confirm_password')!.invalid && form.get('confirm_password')!.dirty && !form?.hasError('confirm_password')">Passwords
             does not
             match</ion-note>
           <ion-note slot="error"

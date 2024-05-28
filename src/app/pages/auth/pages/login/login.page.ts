@@ -68,9 +68,9 @@ export class LoginPage implements OnInit, ViewDidLeave {
       ]),
     });
   }
-  googleSignIn() {
-    this.authService.googleSignIn();
-  }
+  // googleSignIn() {
+  //   this.authService.googleSignIn();
+  // }
 
   ionViewWillEnter() {
     // this.storage.set(ACCESS_TOKEN_STORAGE_NAME, 'adasdasdasd');
@@ -124,7 +124,7 @@ export class LoginPage implements OnInit, ViewDidLeave {
     // if (Capacitor.getPlatform() === 'web') {
     //   this.authService.signInWithAppleWeb();
     // } else {
-    this.authService.signInWithAppleNative();
+    // this.authService.signInWithAppleNative();
     // }
   }
 

@@ -38,8 +38,9 @@ export class ProfileDetailsPage implements OnInit {
       if (user) {
         this.profileDetails = JSON.parse(user);
       } else {
-        this.getUser();
+        // this.getUser();
       }
+      this.getUser();
     });
   }
 
@@ -173,12 +174,22 @@ export class ProfileDetailsPage implements OnInit {
         console.log(data);
         this.profileDetails = data;
         this.loading = false;
+        this.alertService.createToast({
+          header: 'Profile was successfully updated!',
+          mode: 'ios',
+          position: 'bottom',
+        });
       },
       (error: any) => {
+        this.loading = false;
         // this.alertService.presentErrorAlert(error?.email?.error);
 
         if (error.status === 401) {
           this.alertService.presentErrorAlert('Something went wrong');
+        } else {
+          this.alertService.presentErrorAlert(
+            'The data is not updated. Check if all data has been filled'
+          );
         }
       }
     );

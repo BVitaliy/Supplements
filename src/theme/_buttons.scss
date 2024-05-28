@@ -47,6 +47,13 @@
     &::part(native) {
       --color: var(--ion-color-dark);
     }
+
+    ion-spinner {
+      margin: 0;
+      position: absolute;
+      right: 0px;
+      top: 10px;
+    }
   }
 
   // &.button-disabled {

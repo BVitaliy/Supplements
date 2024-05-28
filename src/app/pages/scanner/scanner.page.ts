@@ -119,8 +119,10 @@ export class ScannerPage implements OnInit {
       .subscribe(
         (data: any) => {
           console.log(data);
-          if (data) {
+          if (data?.id) {
             this.navCtrl.navigateForward(['/product/detail/', data?.id]);
+          } else {
+            this.openProductNotFound();
           }
         },
         (error: any) => {

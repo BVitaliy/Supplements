@@ -4,6 +4,6 @@
     <string name="title_activity_main">Supplement Score</string>
     <string name="package_name">com.supplementsocre.ss</string>
     <string name="custom_url_scheme">com.supplementsocre.ss</string>
-     <string name="server_client_id">274080642453-ce5itgi5si2ss8mtg4eiu83lq6ailam3.apps.googleusercontent.com</string> 
-    <string name="client_id">274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com"</string> 
+    <string name="server_client_id">274080642453-ce5itgi5si2ss8mtg4eiu83lq6ailam3.apps.googleusercontent.com</string> 
+    <string name="client_id">274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com</string> 
 </resources>
