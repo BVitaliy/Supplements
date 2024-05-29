@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { NavController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { FIRST_OPEN_APP } from 'src/app/app.config';
 
@@ -11,7 +12,11 @@ import { FIRST_OPEN_APP } from 'src/app/app.config';
 export class InfoStepsPage implements OnInit {
   currentStep = 1;
 
-  constructor(public navCtrl: NavController, private storage: Storage) {}
+  constructor(
+    public navCtrl: NavController,
+    private storage: Storage,
+    private platform: Platform
+  ) {}
 
   ngOnInit() {
     this.storage.get('onbording_not_finished').then((event: string) => {
@@ -20,6 +25,10 @@ export class InfoStepsPage implements OnInit {
         this.currentStep = 3;
       }
     });
+    if (this.platform.is('hybrid')) {
+      StatusBar.setBackgroundColor({ color: '#fff1dd' });
+      StatusBar.setStyle({ style: Style.Dark });
+    }
   }
 
   next() {

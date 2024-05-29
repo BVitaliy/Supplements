@@ -19,14 +19,14 @@
 
   <ng-container *ngIf="!loading">
     <div class="product-image">
-      <app-rating-count [rating]="9.1" [type]="'badge'"></app-rating-count>
+      <app-rating-count [rating]="product?.rating_score" [type]="'badge'"></app-rating-count>
       <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
     </div>
 
 
     <div class="product-main_info">
 
-      <div class="medium fw-500 pb-5">{{product?.category}}</div>
+      <div class="medium fw-500 pb-5">{{product?.category?.title}}</div>
       <div class="text-l fw-700 dark m-bottom--small">{{product?.title}}</div>
 
       <div vertical="center" class="m-bottom--medium">

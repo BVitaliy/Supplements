@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { NavController } from '@ionic/angular';
+import { StatusBar } from '@capacitor/status-bar';
+import { NavController, Platform } from '@ionic/angular';
 import { AuthenticationService } from '../../authentication.service';
 @Component({
   selector: 'app-get-started',
@@ -13,12 +14,17 @@ export class GetStartedPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public authService: AuthenticationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private platform: Platform
   ) {
     this.platformName = Capacitor.getPlatform();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.platform.is('hybrid')) {
+      StatusBar.setBackgroundColor({ color: '#ff4c00' });
+    }
+  }
 
   // appleSignIn() {
   //   this.authService.signInWithAppleNative();

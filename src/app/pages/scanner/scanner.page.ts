@@ -9,6 +9,7 @@ import { ProductNotFoundComponent } from 'src/app/shared/components/product-not-
 import { Router } from '@angular/router';
 import { CatalogService } from '../catalog/catalog.service';
 import { finalize } from 'rxjs';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-scanner',
@@ -82,6 +83,11 @@ export class ScannerPage implements OnInit {
   }
 
   async openProductNotFound() {
+    if (this.platform.is('hybrid')) {
+      StatusBar.setBackgroundColor({ color: '#00000099' });
+      StatusBar.setStyle({ style: Style.Light });
+    }
+
     const modal = await this.modalController.create({
       component: ProductNotFoundComponent,
       cssClass: '',
@@ -96,9 +102,17 @@ export class ScannerPage implements OnInit {
       if (this.logged && !this.router.url.includes('add-product')) {
         // this.navCtrl.navigateForward(['/home/tabs/tab/main']);
         this.navCtrl.back();
+        if (this.platform.is('hybrid')) {
+          StatusBar.setBackgroundColor({ color: '#ff4c00' });
+          StatusBar.setStyle({ style: Style.Light });
+        }
       }
       if (!this.logged) {
         this.navCtrl.navigateForward(['info-steps']);
+        if (this.platform.is('hybrid')) {
+          StatusBar.setBackgroundColor({ color: '#fff1dd' });
+          StatusBar.setStyle({ style: Style.Dark });
+        }
       }
     });
 

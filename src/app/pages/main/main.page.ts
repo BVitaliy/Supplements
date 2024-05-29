@@ -13,6 +13,7 @@ import { finalize } from 'rxjs';
 import SwiperCore, { Scrollbar, SwiperOptions } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 import { Products } from 'src/mock/products';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 SwiperCore.use([Scrollbar]);
 
@@ -56,6 +57,10 @@ export class MainPage implements OnInit {
     this.filterForm = new FormGroup({
       search: new FormControl(null),
     });
+    if (this.platform.is('hybrid')) {
+      StatusBar.setBackgroundColor({ color: '#ff4c00' });
+      StatusBar.setStyle({ style: Style.Light });
+    }
   }
 
   ionViewWillEnter() {
