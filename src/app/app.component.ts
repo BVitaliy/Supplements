@@ -45,7 +45,7 @@ export class AppComponent {
             // serverClientId:
             //   '274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com',
             clientId:
-              '461332400284-09cc46gd3n9lj56002u10l4tggkghck7.apps.googleusercontent.com',
+            '274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com',
           });
 
           this.screenOrientation.lock(

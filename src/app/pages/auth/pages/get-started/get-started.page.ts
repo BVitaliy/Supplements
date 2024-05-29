@@ -26,7 +26,13 @@ export class GetStartedPage implements OnInit {
     }
   }
 
-  // appleSignIn() {
-  //   this.authService.signInWithAppleNative();
-  // }
+  googleSignIn() {
+
+    if (Capacitor.getPlatform() === 'ios') {
+      this.authService.googleSignIn();
+    } else {
+    this.authService.loginViaGoogle();
+    }
+    // this.authService.signInWithAppleNative();
+  }
 }

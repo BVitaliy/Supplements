@@ -31,7 +31,7 @@
         <ion-spinner name="crescent" *ngIf="authService?.signInLoadingApple"></ion-spinner>
       </ion-item>
       <ion-item class="btn btn-sign mb-16" mode="ios" lines="none" detail="false" button
-        (click)="authService.loginViaGoogle()" [disabled]="authService?.signInLoading">
+        (click)="googleSignIn()" [disabled]="authService?.signInLoading">
         <ion-icon [src]="'./assets/img/icons/google-logo.svg'" slot="start"></ion-icon>
         <ion-label>Continue with Google</ion-label>
         <ion-spinner name="crescent" slot="end" color="primary" *ngIf="authService?.signInLoadingGoogle"></ion-spinner>

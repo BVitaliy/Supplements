@@ -1,0 +1,2 @@
+      "serverClientId": "274080642453-ce5itgi5si2ss8mtg4eiu83lq6ailam3.apps.googleusercontent.com",
+      "clientId": "274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com",
