@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Supplement</string>
+	<string>Supplement Score</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -36,14 +36,7 @@
 				<string>com.googleusercontent.apps.274080642453-o31iec6l7s9ra52jq0t701db26kfmct1</string>
 			</array>
 		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>274080642453-o31iec6l7s9ra52jq0t701db26kfmct1.apps.googleusercontent.com</string>
-			</array>
-		</dict>		 
+	 
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>

@@ -116,6 +116,8 @@ export class AuthenticationService {
       );
   }
   async googleSignIn() {
+    this.signInLoading = true;
+    this.signInLoadingGoogle = true;
     const user = await GoogleAuth.signIn();
     console.log(user);
 
@@ -129,6 +131,9 @@ export class AuthenticationService {
         token: user?.authentication?.accessToken,
       };
       this.getConvertToken(body);
+    } else {
+      this.signInLoading = false;
+      this.signInLoadingGoogle = false;
     }
   }
 
