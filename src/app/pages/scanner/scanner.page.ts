@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { CatalogService } from '../catalog/catalog.service';
 import { finalize } from 'rxjs';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 
 @Component({
   selector: 'app-scanner',
@@ -27,7 +28,8 @@ export class ScannerPage implements OnInit {
     public router: Router,
     private modalController: ModalController,
     private barcodeScanner: BarcodeScanner,
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
+    private themeOptions: ThemeOptionsService
   ) {}
 
   ngOnInit() {
@@ -103,15 +105,13 @@ export class ScannerPage implements OnInit {
         // this.navCtrl.navigateForward(['/home/tabs/tab/main']);
         this.navCtrl.back();
         if (this.platform.is('hybrid')) {
-          StatusBar.setBackgroundColor({ color: '#ff4c00' });
-          StatusBar.setStyle({ style: Style.Light });
+          this.themeOptions.setStatusBarWhite();
         }
       }
       if (!this.logged) {
         this.navCtrl.navigateForward(['info-steps']);
         if (this.platform.is('hybrid')) {
-          StatusBar.setBackgroundColor({ color: '#fff1dd' });
-          StatusBar.setStyle({ style: Style.Dark });
+          this.themeOptions.setStatusBarDark();
         }
       }
     });

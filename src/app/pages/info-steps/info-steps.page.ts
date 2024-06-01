@@ -3,6 +3,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { NavController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { FIRST_OPEN_APP } from 'src/app/app.config';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 
 @Component({
   selector: 'app-info-steps',
@@ -15,7 +16,8 @@ export class InfoStepsPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
-    private platform: Platform
+    private platform: Platform,
+    private themeOptions: ThemeOptionsService
   ) {}
 
   ngOnInit() {
@@ -26,8 +28,7 @@ export class InfoStepsPage implements OnInit {
       }
     });
     if (this.platform.is('hybrid')) {
-      StatusBar.setBackgroundColor({ color: '#fff1dd' });
-      StatusBar.setStyle({ style: Style.Dark });
+      this.themeOptions.setStatusBarDark();
     }
   }
 

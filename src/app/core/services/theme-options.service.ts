@@ -6,11 +6,11 @@ import { catchError, map } from 'rxjs/operators';
 import { AlertService } from './alert.service';
 import { ACCESS_TOKEN_STORAGE_NAME } from 'src/app/app.config';
 import { Storage } from '@ionic/storage';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ThemeOptionsService {
   optionsLoaded = false;
   public getOptions$: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -26,22 +26,32 @@ export class ThemeOptionsService {
   }
 
   loadOptions() {
-    return this.http.post(`${environment.origin}/api/driver/cabinet/getAppConfigsByTypes`, {
-      types: ['damage_types', 'review_conditions', 'updates_popup', 'vehicle_types', 'google_maps_key']
-    }).subscribe(
-      (data: any) => {
-        this.getOptions$.next(data);
+    return this.http
+      .post(`${environment.origin}/api/driver/cabinet/getAppConfigsByTypes`, {
+        types: [
+          'damage_types',
+          'review_conditions',
+          'updates_popup',
+          'vehicle_types',
+          'google_maps_key',
+        ],
+      })
+      .subscribe(
+        (data: any) => {
+          this.getOptions$.next(data);
 
-        if (!this.optionsLoaded) {
-          const key = data?.find((type: any) => type?.type === 'google_maps_key')?.value;
-          this.getGoogleMaps(key);
+          if (!this.optionsLoaded) {
+            const key = data?.find(
+              (type: any) => type?.type === 'google_maps_key'
+            )?.value;
+            this.getGoogleMaps(key);
+          }
+          this.optionsLoaded = true;
+        },
+        (error) => {
+          this.alertService.presentErrorAlert(error);
         }
-        this.optionsLoaded = true;
-      },
-      error => {
-        this.alertService.presentErrorAlert(error);
-      }
-    );
+      );
   }
 
   get getData() {
@@ -49,7 +59,9 @@ export class ThemeOptionsService {
   }
 
   getGoogleMaps(mapApiKey: string) {
-    mapApiKey = mapApiKey ? mapApiKey : 'AIzaSyBm97S5Vq-XjqHi1nn6sBbNKcgyRqNwvpE';
+    mapApiKey = mapApiKey
+      ? mapApiKey
+      : 'AIzaSyBm97S5Vq-XjqHi1nn6sBbNKcgyRqNwvpE';
     this.getMap$.next(mapApiKey);
   }
 
@@ -66,10 +78,19 @@ export class ThemeOptionsService {
           this.userToken.next(token);
         }
       })
-    )
+    );
   }
 
   get getToken(): any {
     return this.userToken;
+  }
+
+  setStatusBarWhite() {
+    StatusBar.setBackgroundColor({ color: '#ff4c00' });
+    StatusBar.setStyle({ style: Style.Light });
+  }
+  setStatusBarDark() {
+    StatusBar.setBackgroundColor({ color: '#fff1dd' });
+    StatusBar.setStyle({ style: Style.Dark });
   }
 }

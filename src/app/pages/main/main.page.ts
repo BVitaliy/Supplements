@@ -14,6 +14,7 @@ import SwiperCore, { Scrollbar, SwiperOptions } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 import { Products } from 'src/mock/products';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 
 SwiperCore.use([Scrollbar]);
 
@@ -48,7 +49,8 @@ export class MainPage implements OnInit {
     private storage: Storage,
     public navCtrl: NavController,
     private platform: Platform,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private themeOptions: ThemeOptionsService
   ) {
     this.products = Products;
   }
@@ -58,8 +60,7 @@ export class MainPage implements OnInit {
       search: new FormControl(null),
     });
     if (this.platform.is('hybrid')) {
-      StatusBar.setBackgroundColor({ color: '#ff4c00' });
-      StatusBar.setStyle({ style: Style.Light });
+      this.themeOptions.setStatusBarWhite();
     }
   }
 

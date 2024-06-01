@@ -14,6 +14,7 @@ import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { App } from '@capacitor/app';
 import { Router } from '@angular/router';
+import { ThemeOptionsService } from './core/services/theme-options.service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent {
     private networkStatusService: NetworkStatusService,
     private toastCtrl: ToastController,
     private permissionsService: PermissionsService,
+    private themeOptions: ThemeOptionsService,
     @Optional() private routerOutlet?: IonRouterOutlet
   ) {
     this.initApp();
@@ -38,7 +40,8 @@ export class AppComponent {
     this.storage.create().then(() => {
       this.platform.ready().then(() => {
         if (this.platform.is('hybrid')) {
-          StatusBar.setBackgroundColor({ color: '#ff4c00' });
+          this.themeOptions.setStatusBarWhite();
+
           GoogleAuth.initialize({
             grantOfflineAccess: true,
             // clientId:'274080642453-o31iec6l7s9ra52jq0t701db26kfmct1.apps.googleusercontent.com',
