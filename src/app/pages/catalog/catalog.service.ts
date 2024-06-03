@@ -85,7 +85,9 @@ export class CatalogService {
       .patch(`${environment.origin}/requests/${data?.id}`, data)
       .pipe(
         catchError((error) => {
-          this.alertService.presentErrorAlert(error);
+          this.alertService.presentErrorAlert(
+            'Something went wrong! Please try again'
+          );
           return throwError(error);
         })
       );

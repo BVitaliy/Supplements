@@ -20,7 +20,7 @@ export class ProfileDetailsPage implements OnInit {
   public profileDetails: any;
   public profileDetailsFields: typeof ProfileDetailsFields =
     ProfileDetailsFields;
-
+  format = '';
   loading = false;
   userId: any;
 
@@ -167,7 +167,10 @@ export class ProfileDetailsPage implements OnInit {
     formData.append('first_name', values?.first_name);
     formData.append('last_name', values?.last_name);
     formData.append('gender', values?.gender);
-    // formData.append('image', values?.image);
+    if (this.profileDetails.image && this.format) {
+      const blob = this.photoService.base64toBlob(this.profileDetails.image);
+      formData.append('image', blob, 'image.' + this.format);
+    }
     console.log(formData);
     this.profileService.updateProfile(this.userId, formData).subscribe(
       (data: any) => {
@@ -179,6 +182,7 @@ export class ProfileDetailsPage implements OnInit {
           mode: 'ios',
           position: 'bottom',
         });
+        this.format = '';
       },
       (error: any) => {
         this.loading = false;
@@ -211,10 +215,20 @@ export class ProfileDetailsPage implements OnInit {
     });
 
     modal.onDidDismiss().then((returnedData: any) => {
+      console.log(returnedData);
       if (returnedData && returnedData?.data) {
+        // this.profileDetails.image = this.photoService.base64toBlob(
+        //   returnedData?.data?.photo
+        // );
         this.profileDetails.image = returnedData?.data?.photo;
-        // this.handleProfile();
-        console.log(returnedData);
+        this.format = returnedData?.data?.format;
+        if (
+          returnedData?.data?.photo &&
+          returnedData?.data?.photo.includes('svg+xml')
+        ) {
+          this.format = 'svg';
+        }
+        this.handleProfile(this.profileDetails);
       }
     });
 

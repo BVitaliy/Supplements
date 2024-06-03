@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Camera, CameraResultType, CameraSource, CameraDirection } from '@capacitor/camera';
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  CameraDirection,
+} from '@capacitor/camera';
 import { MultipleDocumentsPicker } from '@awesome-cordova-plugins/multiple-document-picker/ngx';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PhotoService {
-  constructor(
-    private multipleDocumentsPicker: MultipleDocumentsPicker
-  ) {}
+  constructor(private multipleDocumentsPicker: MultipleDocumentsPicker) {}
 
   // Зробити фото - Capacitor Camera
   takePhoto(direction?: keyof typeof CameraDirection): Promise<any> {
@@ -24,8 +27,8 @@ export class PhotoService {
       // presentationStyle: 'fullscreen',
       promptLabelHeader: 'Виберіть один із варіантів', // 'Виберіть, де хочете взяти світлину'
       promptLabelCancel: 'Відмінити',
-      promptLabelPhoto : 'Галерея',
-      promptLabelPicture: 'Камера'
+      promptLabelPhoto: 'Галерея',
+      promptLabelPicture: 'Камера',
     };
     return Camera.getPhoto(options);
 
@@ -46,7 +49,6 @@ export class PhotoService {
     // return this.camera.getPicture(options);
   }
 
-
   // Вибрати фото - Capacitor Camera
   choosePicture(quantity?: number): Promise<any> {
     // Capacitor Gallery
@@ -55,7 +57,7 @@ export class PhotoService {
         quality: 100,
         // width: 300,
         // height: 300,
-        limit: quantity
+        limit: quantity,
       };
       return Camera.pickImages(options);
     } else {
@@ -71,8 +73,8 @@ export class PhotoService {
         // presentationStyle: 'fullscreen',
         promptLabelHeader: 'Виберіть один із варіантів', // 'Виберіть, де хочете взяти світлину'
         promptLabelCancel: 'Відмінити',
-        promptLabelPhoto : 'Галерея',
-        promptLabelPicture: 'Камера'
+        promptLabelPhoto: 'Галерея',
+        promptLabelPicture: 'Камера',
       };
       return Camera.getPhoto(options);
     }
@@ -110,6 +112,8 @@ export class PhotoService {
 
   // Перетворення із base64 у blob
   base64toBlob(dataURI: string) {
+    console.log(dataURI);
+    console.log(dataURI.split(','));
     let byteString: string;
     if (dataURI.split(',')[0].indexOf('base64') >= 0) {
       byteString = atob(dataURI.split(',')[1]);
@@ -127,12 +131,13 @@ export class PhotoService {
   }
 
   // Перетворення із blob у base64
-  blobToBase64 = (blob: Blob) => new Promise((resolve: any, reject: any) => {
-    const reader = new FileReader;
-    reader.onerror = reject;
-    reader.onload = () => {
-      resolve(reader.result) as string;
-    };
-    reader.readAsDataURL(blob)
-  })
+  blobToBase64 = (blob: Blob) =>
+    new Promise((resolve: any, reject: any) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(reader.result) as string;
+      };
+      reader.readAsDataURL(blob);
+    });
 }

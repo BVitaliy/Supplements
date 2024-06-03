@@ -39,12 +39,12 @@ export class AddProductPage implements OnInit {
       images: new FormControl([]),
       id: new FormControl(null),
       barcode: new FormControl(null, [Validators.required]),
-      status: new FormControl(2),
+      status: new FormControl(0),
       brand: new FormControl(null, [Validators.required]),
       title: new FormControl(null, [Validators.required]),
       ingredients: new FormControl(null, [Validators.required]),
       description: new FormControl(null),
-      decline_reason: new FormControl(null),
+      decline_reason: new FormControl('asdasd'),
     });
   }
 
@@ -203,13 +203,14 @@ export class AddProductPage implements OnInit {
           console.log(data);
           this.uploadImage(data?.id);
           this.loading = false;
-          this.createProductSuccess('/home/tabs/tab/catalog');
+          this.createProductSuccess('/home/tabs/tab/more/submitted-products');
         },
         (error: any) => {
           this.loading = false;
         }
       );
     } else {
+      data = { ...data, status: 0 };
       this.catalogService.updateRequestSupplement(data).subscribe(
         (data: any) => {
           this.uploadImage(data?.id);
@@ -265,9 +266,11 @@ export class AddProductPage implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
           if (data) {
             this.form.patchValue(data);
+            if (data?.images?.length) {
+              this.form.get('photo')?.setValue(data?.images[0]?.image);
+            }
           }
         },
         (error: any) => {

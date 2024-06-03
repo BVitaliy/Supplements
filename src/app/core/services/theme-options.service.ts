@@ -87,10 +87,10 @@ export class ThemeOptionsService {
 
   setStatusBarWhite() {
     StatusBar.setBackgroundColor({ color: '#ff4c00' });
-    StatusBar.setStyle({ style: Style.Light });
+    StatusBar.setStyle({ style: Style.Dark });
   }
   setStatusBarDark() {
     StatusBar.setBackgroundColor({ color: '#fff1dd' });
-    StatusBar.setStyle({ style: Style.Dark });
+    StatusBar.setStyle({ style: Style.Light });
   }
 }

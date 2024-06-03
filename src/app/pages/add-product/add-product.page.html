@@ -36,6 +36,10 @@
           <ion-label position="stacked">Barcode*</ion-label>
           <ion-input formControlName="barcode" type="text" inputmode="text" placeholder="Enter barcode or scan"
             autocomplete="off"></ion-input>
+          <ion-note slot="error" *ngIf="!form.get('barcode')?.value && 
+                          form.get('barcode')!.invalid && form.get('barcode')!.touched">
+            This field can’t be empty
+          </ion-note>
         </ion-item>
         <ion-button class="btn" fill="clear" mode="md" (click)="takeTextFromImage('barcode')" [disabled]="loading">
           <ion-spinner name="crescent" color="primary" *ngIf="loading && type ==='barcode'; else icon"></ion-spinner>
@@ -49,6 +53,10 @@
           <ion-label position="stacked">Brand*</ion-label>
           <ion-input formControlName="brand" type="text" inputmode="text" placeholder="Enter brand name"
             autocomplete="off"></ion-input>
+          <ion-note slot="error"
+            *ngIf="!form.get('brand')?.value && form.get('brand')!.invalid && form.get('brand')!.touched">
+            This field can’t be empty
+          </ion-note>
         </ion-item>
       </div>
       <div class="form-control">
@@ -56,6 +64,10 @@
           <ion-label position="stacked">Product*</ion-label>
           <ion-input formControlName="title" type="text" inputmode="text" placeholder="Enter product name"
             autocomplete="off"></ion-input>
+          <ion-note slot="error"
+            *ngIf="!form.get('title')?.value && form.get('title')!.invalid && form.get('title')!.touched">
+            This field can’t be empty
+          </ion-note>
         </ion-item>
       </div>
       <div class="form-control relative-block scan-control">
@@ -63,6 +75,10 @@
           <ion-label position="stacked">Ingredients*</ion-label>
           <ion-textarea formControlName="ingredients" type="text" inputmode="text"
             placeholder="Enter product ingredients or  scan" autocomplete="off"></ion-textarea>
+          <ion-note slot="error"
+            *ngIf="!form.get('ingredients')?.value && form.get('ingredients')!.invalid && form.get('ingredients')!.touched">
+            This field can’t be empty
+          </ion-note>
         </ion-item>
         <ion-button class="btn" fill="clear" mode="md" (click)="takeTextFromImage('ingredients')" [disabled]="loading">
           <ion-spinner name="crescent" color="primary"
