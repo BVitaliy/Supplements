@@ -82,7 +82,7 @@ export class CatalogService {
   updateRequestSupplement(data: any): Observable<any> {
     console.log(data);
     return this.http
-      .patch(`${environment.origin}/requests/${data?.id}`, data)
+      .patch(`${environment.origin}/requests/${data?.id}/`, data)
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(

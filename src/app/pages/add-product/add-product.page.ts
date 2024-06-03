@@ -44,7 +44,7 @@ export class AddProductPage implements OnInit {
       title: new FormControl(null, [Validators.required]),
       ingredients: new FormControl(null, [Validators.required]),
       description: new FormControl(null),
-      decline_reason: new FormControl('asdasd'),
+      decline_reason: new FormControl(null),
     });
   }
 
@@ -210,10 +210,12 @@ export class AddProductPage implements OnInit {
         }
       );
     } else {
-      data = { ...data, status: 0 };
+      data = { ...data, status: 2 };
       this.catalogService.updateRequestSupplement(data).subscribe(
         (data: any) => {
-          this.uploadImage(data?.id);
+          if (this.format) {
+            this.uploadImage(data?.id);
+          }
           this.loading = false;
           this.cancelModal();
           this.createProductSuccess();
