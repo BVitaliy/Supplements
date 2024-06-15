@@ -8,6 +8,7 @@ import { CatalogService } from '../catalog/catalog.service';
 import { IngredientDetailModalComponent } from './components/ingredient-detail-modal/ingredient-detail-modal.component';
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
 import { HighlightedIngredientsPage } from './pages/highlighted-ingredients/highlighted-ingredients.page';
+import { ReviewsPage } from './pages/reviews/reviews.page';
 
 @Component({
   selector: 'app-product-detail',
@@ -23,6 +24,7 @@ export class ProductDetailPage implements OnInit {
   backgroundColors = ['#22b51f', '#FF001C', '#FF9635', '#FDE334'];
   dataChart = [39, 5, 4, 5];
   addedHIngredientsOptions: IngredientOption[] = [];
+  reviews = [];
 
   constructor(
     public navCtrl: NavController,
@@ -37,6 +39,7 @@ export class ProductDetailPage implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     console.log(this.id);
     this.getProduct();
+    this.getProductReviewById();
   }
 
   // Рефреш продукту
@@ -61,6 +64,35 @@ export class ProductDetailPage implements OnInit {
           console.log(data);
           if (data) {
             this.product = data;
+          }
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
+  }
+
+  getProductReviewById(refresh?: boolean, callbackFunction?: () => void) {
+    this.loading = true;
+    this.catalogService
+      .getProductReviewById(this.id, refresh)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          if (callbackFunction) {
+            callbackFunction();
+          }
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data) {
+            this.reviews = data;
           }
         },
         (error: any) => {
@@ -171,7 +203,8 @@ export class ProductDetailPage implements OnInit {
     if (this.openedInModal) {
       this.openAlertModal();
     } else {
-      this.navCtrl.navigateForward('/product/reviews');
+      // this.navCtrl.navigateForward('/product/reviews');
+      this.openReviewModal();
     }
   }
 
@@ -188,6 +221,27 @@ export class ProductDetailPage implements OnInit {
       if (returnedData && returnedData?.data) {
         console.log(returnedData);
         this.cancelModal(true);
+      }
+    });
+
+    return await modal.present();
+  }
+
+  async openReviewModal() {
+    const modal = await this.modalController.create({
+      component: ReviewsPage,
+      cssClass: '',
+      mode: 'ios',
+      handle: false,
+      componentProps: {
+        product: this.product,
+        reviews: this.reviews,
+      },
+    });
+
+    modal.onDidDismiss().then((returnedData: any) => {
+      if (returnedData && returnedData?.data) {
+        console.log(returnedData);
       }
     });
 

@@ -233,7 +233,7 @@ export const Special = [
     id: 1,
     type: 'special',
     label: 'Sales & Offers',
-    count: 1,
+    count: 0,
     checked: false,
   },
 ];

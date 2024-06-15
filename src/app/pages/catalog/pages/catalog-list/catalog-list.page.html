@@ -25,15 +25,11 @@
         <h3 class="h3 mb-16 fw-700 dark">Supplements</h3>
 
         <div class="list">
-
-
-
           <ng-container *ngFor="let item of categories">
-
-
             <!-- [routerLink]="['/home/tabs/tab/catalog/',item?.id]" -->
             <ion-item button lines="none" mode="ios" (click)="handleOpenDetails(item?.id, item?.title)">
-              <ion-icon slot="start" [src]="item?.icon"></ion-icon>
+              <ion-icon slot="start"
+                [src]="'https://supplemets-backend-dev.s3.amazonaws.com/supplements/categories/7afcaa1a-878b-480b-a412-59c5337f34e1/icon.png?AWSAccessKeyId=AKIAU2QTJJHK272DFNEY&Signature=WmZ2%2B%2FNQOcnPo%2Fq9OXIZsT6VJmE%3D&Expires=1718365172'"></ion-icon>
               <ion-label class="fw-600 dark">{{item?.title}}</ion-label>
             </ion-item>
           </ng-container>

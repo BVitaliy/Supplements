@@ -60,8 +60,9 @@ export class CatalogDetailPage implements OnInit {
 
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
-        // this.addedHIngredientsOptions = returnedData?.data;
+        const values = returnedData?.data;
         console.log(returnedData);
+        this.filteredProduct(values);
       }
     });
 
@@ -128,14 +129,23 @@ export class CatalogDetailPage implements OnInit {
         },
       });
   }
-}
-function next(
-  data: any,
-  any: any
-):
-  | ((value: any) => void)
-  | Partial<import('rxjs').Observer<any>>
-  | null
-  | undefined {
-  throw new Error('Function not implemented.');
+
+  filteredProduct(data: any) {
+    this.loading = true;
+    this.catalogService
+      .searchProduct(data)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.count = data?.count || 0;
+          this.listProducts = data.results;
+        },
+        error: (error: any) => {},
+      });
+  }
 }

@@ -2,14 +2,16 @@
   <ion-toolbar>
     <!-- Back action -->
     <ion-buttons slot="start">
-      <ion-button class="btn btn-link btn-primary ml-10" fill="clear" mode="md" (click)="handleApplyChanges()">
+      <ion-button class="btn btn-link btn-primary ml-10" fill="clear" mode="md" (click)="cancelModal()">
         Cancel
       </ion-button>
     </ion-buttons>
     <!-- / Back action -->
 
     <!-- Header title -->
-    <ion-title class="sm">Filter (257)</ion-title>
+    <ion-title class="sm">Filter
+      <!-- (257) -->
+    </ion-title>
     <!-- / Header title -->
 
     <!-- Apply action -->
@@ -24,19 +26,19 @@
 
 <ion-content>
   <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
-  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+  <!-- <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher> -->
 
   <ion-accordion-group [multiple]="true">
-    <ion-accordion value="categories">
+    <ion-accordion value="categories" *ngIf="categories?.length">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Categories</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
 
-        <app-filter-group [options]="categories" [type]="'category'"
-          (filteredOptions)="filtered($event)"></app-filter-group>
+        <app-filter-group [options]="categories" [type]="'categories'"
+          (filteredOptions)="filtered($event, 'categories')"></app-filter-group>
 
       </div>
     </ion-accordion>
@@ -45,26 +47,29 @@
         <ion-label>Product Rating</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <app-filter-group [options]="productRating" [type]="'product_rating'"
-          (filteredOptions)="filtered($event)"></app-filter-group>
+        <app-filter-group [options]="productRating" [type]="'quality'"
+          (filteredOptions)="filtered($event,'quality')"></app-filter-group>
 
       </div>
     </ion-accordion>
-    <ion-accordion value="brands">
+    <ion-accordion value="brands" *ngIf="brands?.length">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Brands</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <app-filter-group [options]="brands" [type]="'brand'" (filteredOptions)="filtered($event)"></app-filter-group>
+        <app-filter-group [options]="brands" [type]="'brands'"
+          (filteredOptions)="filtered($event,'brands')"></app-filter-group>
       </div>
     </ion-accordion>
 
-    <ion-accordion value="ingredients">
+    <ion-accordion value="ingredients" *ngIf="ingredients?.length">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Ingredients</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <app-ingredient-filter-group></app-ingredient-filter-group>
+        <!-- <app-ingredient-filter-group></app-ingredient-filter-group> -->
+        <app-filter-group [options]="ingredients" [type]="'ingredients'"
+          (filteredOptions)="filtered($event,'ingredients')"></app-filter-group>
       </div>
     </ion-accordion>
 
@@ -73,8 +78,8 @@
         <ion-label>User Ratings</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <app-filter-group [options]="userRating" [type]="'user_rating'"
-          (filteredOptions)="filtered($event)"></app-filter-group>
+        <app-filter-group [options]="userRating" [type]="'rating_score'"
+          (filteredOptions)="filtered($event,'rating_score')"></app-filter-group>
       </div>
     </ion-accordion>
 
@@ -83,8 +88,8 @@
         <ion-label>Special Offers</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <app-filter-group [options]="special" [type]="'special'"
-          (filteredOptions)="filtered($event)"></app-filter-group>
+        <app-filter-group [options]="special" [type]="'special_offer'"
+          (filteredOptions)="filtered($event,'special_offer')"></app-filter-group>
       </div>
     </ion-accordion>
   </ion-accordion-group>

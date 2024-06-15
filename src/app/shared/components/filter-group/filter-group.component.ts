@@ -31,9 +31,10 @@ export class FilterGroupComponent implements OnInit {
       this.optionsToShow =
         el.length > 0
           ? this.options.filter((option) =>
-              option.label.toLowerCase().includes(el.toLowerCase())
+              option.title.toLowerCase().includes(el.toLowerCase())
             )
           : this.options;
+
       this.checkCount();
     });
   }
@@ -51,43 +52,47 @@ export class FilterGroupComponent implements OnInit {
   }
 
   public search(event: any): void {
-    console.log(event?.detail?.value);
     this.searchForm.get('search')?.setValue(event?.detail?.value);
   }
 
   public checkboxChangeState(_e: any, option?: any): void {
     if (
       option &&
-      this.addedOptions.every((el: any): boolean => el.id !== option.id)
+      this.addedOptions.every((el: any): boolean => el !== option.id)
     ) {
-      this.addedOptions.push(option);
-      if (option.id) {
-        this.handleChangeCheckboxState(true, option.id);
-      }
+      this.addedOptions.push(option?.id);
+      // if (option.id) {
+      //   this.handleChangeCheckboxState(true, option.id);
+      // }
     } else if (
       option &&
-      this.addedOptions.some((el: any): boolean => el.id === option.id)
+      this.addedOptions.some((el: any): boolean => el === option.id)
     ) {
       this.addedOptions = this.addedOptions.filter(
-        (el: any): boolean => el.id !== option.id
+        (el: any): boolean => el !== option.id
       );
-      if (option.id) {
-        this.handleChangeCheckboxState(false, option.id);
-      }
+      // if (option.id) {
+      //   this.handleChangeCheckboxState(false, option.id);
+      // }
     }
 
     this.filteredOptions.emit(this.addedOptions);
     console.log(this.addedOptions);
+    console.log(this.optionsToShow);
   }
 
   private handleChangeCheckboxState(value: boolean, id: number): void {
     this.optionsToShow = this.optionsToShow.map((option: any) => {
-      return option.id === id
+      return option === id
         ? {
             ...option,
             checked: value,
           }
         : option;
     });
+  }
+
+  isSelected(option: any): boolean {
+    return !!this.addedOptions.find((el: any) => el === option?.id);
   }
 }

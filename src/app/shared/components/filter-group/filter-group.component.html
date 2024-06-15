@@ -10,17 +10,18 @@
 <ion-list *ngIf="optionsToShow?.length">
   <ng-container *ngFor="let option of optionsToShow;let i = index">
     <!-- <ion-item lines="none" *ngIf="open">-->
-    <ion-item lines="none" *ngIf="i <= 9 || open && i >= 10">
+    <!-- i <= 9 || open && i>= 10 -->
+    <ion-item lines="none" *ngIf="i <= 9 || open && i>= 10">
       <ion-label class="dark fw-500">
         <ion-icon slot="start" class="m-right--x-small"
           [ngStyle]="{'width': option?.type === 'user_rating' ? '116px' : '20px'}" [src]="option?.icon"
           *ngIf="option?.icon"></ion-icon>
-        {{ option?.type !== 'user_rating' ? option?.label : ''}}
-        <span class="medium">({{option?.count || 0}})</span>
+        {{ option?.type !== 'user_rating' ? option?.title || option?.label : ''}}
+        <span class="medium" *ngIf="option?.count">({{option?.count || 0}})</span>
       </ion-label>
 
       <ion-checkbox slot="end" (ionChange)="checkboxChangeState($event, option)" class="checkbox flex-shrink--none"
-        [checked]="option.checked"></ion-checkbox>
+        [checked]="isSelected(option)"></ion-checkbox>
     </ion-item>
   </ng-container>
 </ion-list>

@@ -159,4 +159,35 @@ export class CatalogService {
         })
       );
   }
+
+  searchProduct(data: any): Observable<any> {
+    return this.http
+      .post(`${environment.origin}/supplements/search/`, data)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getProductReviewById(id: string, refresh?: boolean): Observable<any> {
+    console.log(id);
+    let options!: { params?: { refreshReq?: boolean } };
+    if (refresh) {
+      options = {
+        params: {
+          refreshReq: refresh,
+        },
+      };
+    }
+    return this.http
+      .get(`${environment.origin}/supplements/${id}/reviews/`, options)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
 }
