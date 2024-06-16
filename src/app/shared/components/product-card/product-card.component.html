@@ -8,13 +8,23 @@
       <div class="category medium">{{product?.category?.title}}</div>
       <div class="title text-s line-clamp-3 fw-600 dark">{{product?.title}}</div>
     </div>
-    <div *ngIf="product?.status === 1">
+    <div *ngIf="product?.status === 1 || !product?.status">
       <div *ngIf="showStars" vertical="center" class="m-bottom--x-small">
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.average_rating >= 1 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star"></ion-icon>
+        <ion-icon
+          [src]="product?.average_rating >= 2 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.average_rating >= 3 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.average_rating >= 4 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.average_rating >= 5 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
         <div class="review-count m-left--xx-small">
           32
         </div>

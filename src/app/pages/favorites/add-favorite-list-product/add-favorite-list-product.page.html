@@ -11,21 +11,21 @@
       <!-- Image -->
       <div class="add-favorite-list-product__product-img-wrapper m-right--small p-around--x-small" vertical="center"
         horizontal="center">
-        <app-img [src]="'./assets/img/temp/product-1.png'" cssClasses="img-fit-contain"
-          class="add-favorite-list-product__product-img"></app-img>
+        <app-img [src]="product?.photo" cssClasses="img-fit-contain" class="add-favorite-list-product__product-img"
+          *ngIf="product?.photo"></app-img>
       </div>
       <!-- / Image -->
 
       <div direction="column">
         <!-- Title -->
         <div class="add-favorite-list-product__product-title m-bottom--xxx-small">
-          Athletic Greens
+          {{product?.category?.title}}
         </div>
         <!-- / Title -->
 
         <!-- Description -->
         <div class="add-favorite-list-product__product-description">
-          Ultimate Daily, Whole Food Sourced  All in One Greens Supplement Powder
+          {{product?.title}}
         </div>
         <!-- / Description -->
       </div>
@@ -43,7 +43,7 @@
     <!-- / Create list -->
 
     <!-- Favorite lists -->
-    <ion-list lines="full" class="m-bottom--medium m-top--small">
+    <ion-list lines="full" class="m-bottom--medium m-top--small" *ngIf="!isLoading">
       <ion-item *ngFor="let favorite of favoritesList">
         <div class="add-favorite-list-product__list p-vertical--medium" vertical="center" horizontal="between">
           <div direction="column" class="p-right--medium">
@@ -66,6 +66,8 @@
         </div>
       </ion-item>
     </ion-list>
+    <div class="ion-text-center"><ion-spinner class="spinner" color="primary" name="lines"
+        *ngIf="isLoading"></ion-spinner></div>
     <!-- / Favorite lists -->
 
     <!-- Apply -->

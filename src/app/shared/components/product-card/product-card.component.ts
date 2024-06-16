@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
+import { FavoriteService } from 'src/app/pages/favorites/favorites.service';
 import { ProductDetailPage } from 'src/app/pages/product-detail/product-detail.page';
 import { AddFavoriteListProductPage } from '../../../pages/favorites/add-favorite-list-product/add-favorite-list-product.page';
 
@@ -20,7 +21,8 @@ export class ProductCardComponent implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private favoriteService: FavoriteService
   ) {}
 
   ngOnInit() {}
@@ -35,10 +37,19 @@ export class ProductCardComponent implements OnInit {
       component: AddFavoriteListProductPage,
       breakpoints: [0, 0.3, 0.5, 0.8],
       initialBreakpoint: 0.8,
+      componentProps: {
+        product: this.product,
+      },
     });
     modal.onDidDismiss().then((data) => {
       if (data?.data) {
+        const ids = data.data.selectedListsIds;
         console.log('selectedListsIds', data.data.selectedListsIds);
+        if (ids?.length) {
+          ids?.forEach((id: any) => {
+            this.setToFavorites(id);
+          });
+        }
         // add product to favorite list
       }
     });
@@ -73,5 +84,18 @@ export class ProductCardComponent implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  setToFavorites(id: any) {
+    const data = {
+      ids_to_add: [this.product?.id],
+    };
+    this.favoriteService.setProductToFavList(data, id).subscribe(
+      (data: any) => {
+        console.log(data);
+        // this.favoritesList = data.results;
+      },
+      (error: any) => {}
+    );
   }
 }

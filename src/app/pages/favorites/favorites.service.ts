@@ -75,4 +75,14 @@ export class FavoriteService {
       })
     );
   }
+  setProductToFavList(data: any, id: any): Observable<any> {
+    return this.http
+      .post(`${environment.origin}/favorite-lists/${id}/data/`, data)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
 }

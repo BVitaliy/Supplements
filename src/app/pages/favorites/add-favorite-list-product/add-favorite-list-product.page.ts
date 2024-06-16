@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   ManageFavoriteListModel,
   ManageFavoriteListModes,
@@ -6,6 +6,9 @@ import {
 import { ManageFavoriteListPage } from '../manage-favorite-list/manage-favorite-list.page';
 import { ModalController } from '@ionic/angular';
 import { FavoritesList } from '../favorites.models';
+import { finalize } from 'rxjs';
+import { FavoriteService } from '../favorites.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-add-favorite-list-product',
@@ -13,23 +16,18 @@ import { FavoritesList } from '../favorites.models';
   styleUrls: ['./add-favorite-list-product.page.scss'],
 })
 export class AddFavoriteListProductPage {
-  public favoritesList: FavoritesList[] = [
-    {
-      id: 1,
-      name: 'My favorite supplements',
-      description: 'Only favorite supplements will be in this list',
-      products: [],
-    },
-    {
-      id: 2,
-      name: 'My favorite supplements 2',
-      description: 'Only favorite supplements will be in this list 2',
-      products: [],
-    },
-  ];
+  @Input() product: any;
+  public favoritesList: FavoritesList[] = [];
   public selectedListsIds: number[] = [];
+  isLoading = false;
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(
+    private modalCtrl: ModalController,
+    private favoriteService: FavoriteService,
+    private alertService: AlertService
+  ) {
+    this.getFavorites();
+  }
 
   public async showCreateListModal(): Promise<void> {
     const dialogConf: ManageFavoriteListModel = {
@@ -48,11 +46,35 @@ export class AddFavoriteListProductPage {
       },
     });
     modal.onDidDismiss().then((data) => {
-      if (data?.data) {
-        // create favorite list
+      if (data?.data?.mode === 'Create') {
+        this.createList(data?.data);
       }
     });
     return await modal.present();
+  }
+
+  createList(data: any) {
+    this.isLoading = true;
+    this.favoriteService
+      .createFavList(data)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          // this.favoritesList = data.results;
+          this.alertService.createToast({
+            header: `List ${data?.name} was successfully created!`,
+            mode: 'ios',
+            position: 'bottom',
+          });
+          this.getFavorites();
+        },
+        (error: any) => {}
+      );
   }
 
   public handleApply(): void {
@@ -69,5 +91,23 @@ export class AddFavoriteListProductPage {
     } else {
       this.selectedListsIds.push(id);
     }
+  }
+
+  getFavorites() {
+    this.isLoading = true;
+    this.favoriteService
+      .getFavorites()
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.favoritesList = data.results;
+        },
+        (error: any) => {}
+      );
   }
 }

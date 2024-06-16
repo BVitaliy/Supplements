@@ -29,8 +29,6 @@ export class ReviewsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.product);
-    console.log(this.reviews);
     if (this.reviews) {
       this.calculateRatings();
       this.averageAmount = (
