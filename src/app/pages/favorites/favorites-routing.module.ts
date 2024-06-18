@@ -8,8 +8,11 @@ const routes: Routes = [
     component: FavoritesPage,
   },
   {
-    path: 'favorite-list-details/:id',
-    loadChildren: () => import('./favorite-list-details/favorite-list-details.module').then( m => m.FavoriteListDetailsPageModule),
+    path: 'favorite-list-details/:favoriteId',
+    loadChildren: () =>
+      import('./favorite-list-details/favorite-list-details.module').then(
+        (m) => m.FavoriteListDetailsPageModule
+      ),
   },
 ];
 

@@ -23,54 +23,63 @@
 </ion-header>
 
 <ion-content>
-  <ng-container [ngSwitch]="!!listProducts.length">
-    <!-- No products -->
-    <ng-container *ngSwitchCase="false">
-      <div direction="column" vertical="center" horizontal="center" class="favorite-list-details__empty-list">
-        <!-- Icon -->
-        <ion-icon class="favorite-list-details__empty-list-icon m-bottom--large"
-          [src]="'./assets/img/icons/empty-favorite-list-items-icon.svg'"></ion-icon>
-        <!-- / Icon -->
 
-        <!-- Title -->
-        <div class="favorite-list-details__empty-list-title m-bottom--x-small">
-          The list is empty
-        </div>
-        <!-- / Title -->
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="!loading">
 
-        <!-- Description -->
-        <div class="favorite-list-details__empty-list-description m-bottom--large">
-          Add your favorite products right now
-        </div>
-        <!-- / Description -->
+    <ng-container [ngSwitch]="!!listProducts.length">
+      <!-- No products -->
+      <ng-container *ngSwitchCase="false">
+        <div direction="column" vertical="center" horizontal="center" class="favorite-list-details__empty-list">
+          <!-- Icon -->
+          <ion-icon class="favorite-list-details__empty-list-icon m-bottom--large"
+            [src]="'./assets/img/icons/empty-favorite-list-items-icon.svg'"></ion-icon>
+          <!-- / Icon -->
 
-        <!-- Catalog action -->
-        <ion-button class="btn btn-sm btn-primary favorite-list-details__empty-list-action" expand="block" fill="solid"
-          mode="md" (click)="navCtrl.navigateRoot('home/tabs/tab/catalog')">
-          <b>Catalog</b>
-        </ion-button>
-        <!-- / Catalog action -->
-
-        <!-- Scan action -->
-        <ion-button class="btn btn-sm favorite-list-details__empty-list-action m-top--x-small" expand="block"
-          fill="outline" mode="md" color="primary" (click)="navCtrl.navigateForward('/scanner')">
-          <b>Scan</b>
-        </ion-button>
-        <!-- / Scan action -->
-      </div>
-    </ng-container>
-    <!-- / No products -->
-
-    <!-- Products -->
-    <ng-container *ngSwitchCase="true">
-      <ion-list lines="full">
-        <ion-item *ngFor="let product of listProducts">
-          <div class="p-vertical--medium">
-            <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
+          <!-- Title -->
+          <div class="favorite-list-details__empty-list-title m-bottom--x-small">
+            The list is empty
           </div>
-        </ion-item>
-      </ion-list>
+          <!-- / Title -->
+
+          <!-- Description -->
+          <div class="favorite-list-details__empty-list-description m-bottom--large">
+            Add your favorite products right now
+          </div>
+          <!-- / Description -->
+
+          <!-- Catalog action -->
+          <ion-button class="btn btn-sm btn-primary favorite-list-details__empty-list-action" expand="block"
+            fill="solid" mode="md" (click)="navCtrl.navigateRoot('home/tabs/tab/catalog')">
+            <b>Catalog</b>
+          </ion-button>
+          <!-- / Catalog action -->
+
+          <!-- Scan action -->
+          <ion-button class="btn btn-sm favorite-list-details__empty-list-action m-top--x-small" expand="block"
+            fill="outline" mode="md" color="primary" (click)="navCtrl.navigateForward('/scanner')">
+            <b>Scan</b>
+          </ion-button>
+          <!-- / Scan action -->
+        </div>
+      </ng-container>
+      <!-- / No products -->
+
+      <!-- Products -->
+      <ng-container *ngSwitchCase="true">
+        <ion-list lines="full">
+          <ion-item *ngFor="let product of listProducts">
+            <div class="p-vertical--medium">
+              <app-product-card [product]="product" [type]="'horizontal'" [favorite]="true"
+                (reloadPage)="reloadPage()"></app-product-card>
+            </div>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+      <!-- / Products -->
     </ng-container>
-    <!-- / Products -->
   </ng-container>
 </ion-content>

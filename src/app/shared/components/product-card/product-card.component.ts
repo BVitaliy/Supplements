@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
 import { FavoriteService } from 'src/app/pages/favorites/favorites.service';
 import { ProductDetailPage } from 'src/app/pages/product-detail/product-detail.page';
@@ -16,20 +17,30 @@ export class ProductCardComponent implements OnInit {
   @Input() showRatingCount: boolean = true;
   @Input() showFavoriteBtn: boolean = true;
   @Input() openInModal: boolean = false;
+  @Input() favorite: boolean = false;
   @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() onOpenEdit: EventEmitter<number> = new EventEmitter<number>();
+  @Output() reloadPage: EventEmitter<boolean> = new EventEmitter<boolean>();
+  idFavorilteList: any;
 
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.idFavorilteList = this.route.snapshot.paramMap.get('favoriteId');
+    console.log(this.idFavorilteList);
+  }
 
   favoriteHandle($event: any) {
-    console.log($event);
-    this.showListActionsModal();
+    if (this.favorite) {
+      this.removeToFavorites(this.idFavorilteList);
+    } else {
+      this.showListActionsModal();
+    }
   }
 
   public async showListActionsModal(): Promise<void> {
@@ -93,6 +104,21 @@ export class ProductCardComponent implements OnInit {
     this.favoriteService.setProductToFavList(data, id).subscribe(
       (data: any) => {
         console.log(data);
+        // this.favoritesList = data.results;
+      },
+      (error: any) => {}
+    );
+  }
+
+  removeToFavorites(id: any) {
+    const data = {
+      ids_to_delete: [this.product?.id],
+    };
+    this.favoriteService.setProductToFavList(data, id).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.reloadPage.emit(true);
+        this.favorite = false;
         // this.favoritesList = data.results;
       },
       (error: any) => {}

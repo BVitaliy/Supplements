@@ -82,7 +82,8 @@ export class FavoritesPage {
   }
 
   public handleOpenListDetails(listId: number): void {
-    const detail = this.favoritesList.find((el) => el.id === listId);
+    let detail = this.favoritesList.find((el) => el.id === listId);
+    detail.favoriteId = detail.id;
     this.navCtrl.navigateForward([
       `home/tabs/tab/favorites/favorite-list-details/${listId}`,
       { item: JSON.stringify(detail) },

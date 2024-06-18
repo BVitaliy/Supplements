@@ -34,7 +34,8 @@
         <ng-container *ngIf="product?.score">
           <app-rating-count [rating]="product?.score" [type]="'badge'"></app-rating-count>
         </ng-container>
-        <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"></app-favorite-btn>
+        <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"
+          [favorite]="favorite"></app-favorite-btn>
       </div>
     </div>
 

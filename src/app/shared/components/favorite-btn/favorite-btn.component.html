@@ -1,4 +1,4 @@
 <ion-button (click)="favoriteHandle()" shape="round" fill="outline" [ngClass]="size">
   <ion-icon slot="icon-only"
-    [src]="product?.favorite ? './assets/img/icons/icon-heart-active.svg': './assets/img/icons/icon-heart-empty.svg'"></ion-icon>
+    [src]="product?.favorite || favorite ? './assets/img/icons/icon-heart-active.svg': './assets/img/icons/icon-heart-empty.svg'"></ion-icon>
 </ion-button>

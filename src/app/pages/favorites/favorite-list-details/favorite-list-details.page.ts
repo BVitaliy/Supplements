@@ -32,7 +32,7 @@ export class FavoriteListDetailsPage {
   ) {}
 
   ionViewWillEnter() {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('favoriteId');
     this.getFavoritesDetail(this.id);
 
     const getValue = this.route.snapshot.paramMap.get('item') || '';
@@ -183,5 +183,9 @@ export class FavoriteListDetailsPage {
           }
         }
       );
+  }
+
+  reloadPage() {
+    this.getFavoritesDetail(this.id);
   }
 }

@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class FavoriteBtnComponent implements OnInit {
   @Output() favorited: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() product: any;
+  @Input() favorite: boolean = false;
   @Input() size = ''; //md
 
   constructor() {}
