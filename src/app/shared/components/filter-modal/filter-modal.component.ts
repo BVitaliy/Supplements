@@ -124,8 +124,11 @@ export class FilterModalComponent implements OnInit {
   getBrands(refresh?: boolean, callbackFunction?: () => void) {
     this.loading = true;
     this.brands = [];
+    const data = {
+      limit: 500,
+    };
     this.mainService
-      .getBrands(refresh)
+      .getBrands(data)
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -154,8 +157,11 @@ export class FilterModalComponent implements OnInit {
   }
   getIngredients() {
     this.loading = true;
+    const data = {
+      limit: 500,
+    };
     this.mainService
-      .getIngredients()
+      .getIngredients(data)
       .pipe(
         finalize(() => {
           this.loading = false;

@@ -1,4 +1,4 @@
-<div class="rating-count" [ngClass]="type">
+<div class="rating-count" [ngClass]="type" *ngIf="!isLoading">
   <!-- <div class="icon"> -->
 
   <ion-icon *ngIf="rating < 4" [src]="'./assets/img/icons/state-bad.svg'"></ion-icon>
@@ -9,4 +9,10 @@
   <span *ngIf="rating" class="text-s fw-600 dark">{{rating}}</span>
   <span *ngIf="text">{{text}}</span>
   <span *ngIf="count">({{count}})</span>
+</div>
+
+<div class="rating-count" [ngClass]="type" *ngIf="isLoading">
+  <ion-skeleton-text class="icon" [animated]="true"></ion-skeleton-text>
+
+  <ion-skeleton-text class="text-loader" [animated]="true"></ion-skeleton-text>
 </div>

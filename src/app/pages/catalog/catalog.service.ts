@@ -20,8 +20,9 @@ export class CatalogService {
         },
       };
     }
+
     return this.http
-      .get(`${environment.origin}/supplements/categories/`, options)
+      .get(`${environment.origin}/supplements/categories/?limit=500`, options)
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);
@@ -160,9 +161,25 @@ export class CatalogService {
       );
   }
 
+  // Function to clean the object
+  cleanObject(obj: any): any {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (
+          obj[key] === null ||
+          (Array.isArray(obj[key]) && obj[key].length === 0)
+        ) {
+          delete obj[key];
+        }
+      }
+    }
+    return obj;
+  }
+
   searchProduct(data: any): Observable<any> {
+    const values = this.cleanObject(data);
     return this.http
-      .post(`${environment.origin}/supplements/search/`, data)
+      .post(`${environment.origin}/supplements/search/`, values)
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);

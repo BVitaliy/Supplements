@@ -16,7 +16,7 @@ export class FavoriteBtnComponent implements OnInit {
   ngOnInit() {}
 
   favoriteHandle() {
-    this.product.favorite = !this.product?.favorite;
-    this.favorited.emit(this.product.favorite);
+    // this.product.in_favorite = !this.product?.in_favorite;
+    this.favorited.emit(true);
   }
 }

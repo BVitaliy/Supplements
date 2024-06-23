@@ -12,7 +12,7 @@ import { CatalogService } from '../../catalog.service';
   styleUrls: ['./catalog-list.page.scss'],
 })
 export class CatalogListPage implements OnInit {
-  public loading: boolean = false;
+  public isLoading: boolean = false;
   public filterForm!: FormGroup;
   public isSearchActive: boolean = false;
   categories: Array<any> = [];
@@ -66,11 +66,12 @@ export class CatalogListPage implements OnInit {
   }
 
   getCategories(refresh?: boolean, callbackFunction?: () => void) {
+    this.isLoading = true;
     this.catalogService
       .getCategories(refresh)
       .pipe(
         finalize(() => {
-          this.loading = false;
+          this.isLoading = false;
           if (callbackFunction) {
             callbackFunction();
           }

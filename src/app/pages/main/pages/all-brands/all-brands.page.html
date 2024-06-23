@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
-  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher>
 
