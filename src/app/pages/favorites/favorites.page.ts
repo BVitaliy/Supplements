@@ -19,26 +19,6 @@ import { AlertService } from 'src/app/core/services/alert.service';
 export class FavoritesPage {
   loading = true;
   public favoritesList: Array<any> = [];
-  // FavoritesList[] = [
-  //   {
-  //     id: 1,
-  //     listName: 'My favorite supplements',
-  //     listDescription: 'Only favorite supplements will be in this list',
-  //     products: [...Products, ...Products],
-  //   },
-  //   {
-  //     id: 2,
-  //     listName: 'My favorite supplements 2',
-  //     listDescription: 'Only favorite supplements will be in this list 2',
-  //     products: [...Products],
-  //   },
-  //   {
-  //     id: 3,
-  //     listName: 'My favorite supplements 3',
-  //     listDescription: 'Only favorite supplements will be in this list 3',
-  //     products: [],
-  //   },
-  // ];
 
   constructor(
     public navCtrl: NavController,
@@ -100,6 +80,7 @@ export class FavoritesPage {
   }
 
   getFavorites(refresh?: boolean, callbackFunction?: () => void) {
+    this.loading = true;
     this.favoriteService
       .getFavorites(refresh)
       .pipe(

@@ -9,6 +9,9 @@ import {
   ReasonOption,
 } from '../../../../core/models/highlighted-ingredients.models';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MainService } from 'src/app/pages/main/main.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-highlighted-ingredients',
@@ -18,7 +21,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class HighlightedIngredientsPage implements OnInit {
   @ViewChild('reasonsSwiper') reasonsSwiper!: SwiperComponent;
   @ViewChild('ingredientsSwiper') ingredientsSwiper!: SwiperComponent;
-
+  loading = false;
   public searchForm!: FormGroup;
   public activeReasonFilter: string = '';
   public reasonsSlideOpts: SwiperOptions = {
@@ -59,90 +62,13 @@ export class HighlightedIngredientsPage implements OnInit {
   ];
   public addedIngredientsOptions: IngredientOption[] = [];
   public optionsToShow: IngredientsSection[] = [];
-  public options: IngredientsSection[] = [
-    {
-      label: 'A',
-      ingredients: [
-        {
-          color: '#22B51F',
-          label: 'Aloe Vera',
-          id: 1,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Alpha-Carotene',
-          id: 3,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Alpha-Ketoglutaric Acid',
-          id: 4,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Apple Pectin',
-          id: 5,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-      ],
-    },
-    {
-      label: 'B',
-      ingredients: [
-        {
-          color: '#22B51F',
-          label: 'Basil',
-          id: 6,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Beet Root',
-          id: 7,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Berberine',
-          id: 8,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#FF001C',
-          label: 'Beta - Glucans',
-          id: 9,
-          status: ReasonLabels.weakness,
-          checked: false,
-        },
-        {
-          color: '#FDE334',
-          label: 'Bilberry',
-          id: 10,
-          status: ReasonLabels.allergen,
-          checked: false,
-        },
-        {
-          color: '#FF9635',
-          label: 'Some test',
-          id: 11,
-          status: ReasonLabels.contaminant,
-          checked: false,
-        },
-      ],
-    },
-  ];
+  public options: IngredientsSection[] = [];
 
-  constructor(public navCtrl: NavController) {}
+  constructor(
+    public navCtrl: NavController,
+    private mainService: MainService,
+    private alertService: AlertService
+  ) {}
 
   public ngOnInit(): void {
     this.searchForm = new FormGroup({
@@ -185,10 +111,10 @@ export class HighlightedIngredientsPage implements OnInit {
     }
   }
 
-  public search(event: any): void {
-    console.log(event?.detail?.value);
-    this.searchForm.get('search')?.setValue(event?.detail?.value);
-  }
+  // public search(event: any): void {
+  //   console.log(event?.detail?.value);
+  //   this.searchForm.get('search')?.setValue(event?.detail?.value);
+  // }
 
   public checkboxChangeState(_e: any, ingredient?: IngredientOption): void {
     if (
@@ -232,5 +158,85 @@ export class HighlightedIngredientsPage implements OnInit {
         ),
       } as IngredientsSection;
     });
+  }
+
+  ionViewWillEnter() {
+    this.getData();
+  }
+
+  public search(event: any): void {
+    this.searchForm.get('search')?.setValue(event?.detail?.value);
+    this.searchIngrediens(event?.detail?.value);
+  }
+
+  doRefresh(event: any) {
+    this.getData(() => event.target.complete());
+  }
+
+  getData(callbackFunction?: () => void) {
+    this.loading = true;
+    const data = {
+      highlighted: true,
+      limit: 500,
+    };
+    this.mainService
+      .getIngredients(data)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          if (callbackFunction) {
+            callbackFunction();
+          }
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.options = this.objectToArray(data?.results);
+          console.log(this.options);
+        },
+        (error: any) => {
+          if (error.status === 401) {
+            this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
+  }
+
+  searchIngrediens(search: string) {
+    this.loading = true;
+    const data = {
+      highlighted: true,
+      query: search,
+      limit: 500,
+    };
+    this.mainService
+      .searchIngredients(data)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.options = this.objectToArray(data?.results);
+          console.log(this.options);
+        },
+        (error: any) => {
+          if (error.status === 401) {
+            this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
+  }
+
+  objectToArray(obj: {
+    [key: string]: any;
+  }): { label: string; ingredients: any }[] {
+    return Object.keys(obj).map((key) => ({
+      label: key,
+      ingredients: obj[key],
+    }));
   }
 }

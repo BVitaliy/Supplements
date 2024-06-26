@@ -8,6 +8,7 @@ import { FavoritesList } from '../favorites.models';
 })
 export class FavoritesListPage {
   @Input() favoritesList!: FavoritesList[];
+  @Input() isLoading = false;
 
   @Output() onOpenDetails: EventEmitter<number> = new EventEmitter<number>();
 

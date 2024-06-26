@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-list lines="full">
+  <ion-list lines="full" *ngIf="!isLoading">
     <ion-item *ngFor="let favorite of favoritesList" (click)="onOpenDetails.emit(favorite.id)">
       <div class="favorites-list__list p-vertical--medium">
         <div vertical="center" horizontal="between">
@@ -42,6 +42,35 @@
           </div>
         </div>
         <!-- / Products -->
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-list lines="full" *ngIf="isLoading">
+    <ion-item *ngFor="let favorite of [1,2,3,4]">
+      <div class="favorites-list__list p-vertical--medium">
+        <div vertical="center" horizontal="between">
+          <div direction="column" class="p-right--medium">
+            <!-- List name -->
+            <div class="favorites-list__list-name m-bottom--xx-small">
+              <ion-skeleton-text [animated]="true" style="width: 50%;height: 12px;"></ion-skeleton-text>
+            </div>
+            <!-- / List name -->
+
+            <!-- List description -->
+            <div class="favorites-list__list-description">
+              <ion-skeleton-text [animated]="true" style="width: 100%; height: 12px;"></ion-skeleton-text>
+            </div>
+            <!-- / List description -->
+          </div>
+
+          <!-- List actions -->
+          <ion-button class="btn btn-link m-right--x-small" fill="clear" mode="md">
+            <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
+          </ion-button>
+          <!-- / List actions -->
+        </div>
+
+
       </div>
     </ion-item>
   </ion-list>

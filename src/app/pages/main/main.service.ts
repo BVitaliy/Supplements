@@ -38,19 +38,8 @@ export class MainService {
   }
 
   getIngredients(data?: any): Observable<any> {
-    // let options!: { params?: { refreshReq?: boolean } };
-    // if (refresh) {
-    //   options = {
-    //     params: {
-    //       refreshReq: refresh,
-    //     },
-    //   };
-    // }
-
-    // if(data){
-
     const params: HttpParams = queryParams(data);
-    // }
+
     return this.http
       .get(`${environment.origin}/supplements/ingredients/by-letter/`, {
         params,
@@ -62,12 +51,27 @@ export class MainService {
         })
       );
   }
+  getHighlighted(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
 
-  searchIngredients(search?: string): Observable<any> {
     return this.http
-      .get(
-        `${environment.origin}/supplements/ingredients/by-letter/?query=${search}`
-      )
+      .get(`${environment.origin}/supplements/ingredients/highlighted/`, {
+        params,
+      })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  searchIngredients(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/ingredients/by-letter/`, {
+        params,
+      })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);

@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ModalController, NavController } from '@ionic/angular';
-import { finalize } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  finalize,
+  Subject,
+  takeUntil,
+} from 'rxjs';
 import { FilterModalComponent } from 'src/app/shared/components/filter-modal/filter-modal.component';
 import { ProductNotFoundComponent } from 'src/app/shared/components/product-not-found/product-not-found.component';
 import { CatalogService } from '../../catalog.service';
@@ -16,6 +22,7 @@ export class CatalogListPage implements OnInit {
   public filterForm!: FormGroup;
   public isSearchActive: boolean = false;
   categories: Array<any> = [];
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     public navCtrl: NavController,
@@ -28,18 +35,22 @@ export class CatalogListPage implements OnInit {
       search: new FormControl(''),
     });
     this.getCategories();
-    // setTimeout(() => {
-    // this.openProductNotFound();
-    // }, 3000);
+    this.filterForm
+      .get('search')
+      ?.valueChanges.pipe(
+        debounceTime(500), // Adjust debounce time as needed
+        distinctUntilChanged(),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((value) => { 
+        this.getCategories(value ? { query: value } : {});
+      });
   }
-
-  public search(event: any): void {
-    console.log(event?.detail?.value);
-    this.filterForm.get('search')?.setValue(event?.detail?.value);
-  }
+ 
 
   public onSearchFocus(_event: any): void {
-    this.isSearchActive = true;
+    // this.isSearchActive = true;
+    // this.getData();
   }
 
   public handleCancelSearch(): void {
@@ -59,16 +70,36 @@ export class CatalogListPage implements OnInit {
 
     return await modal.present();
   }
+  getData() {
+    // this.loading = true;
+    this.catalogService
+      .getFiltersRecords()
+      .pipe(
+        finalize(() => {
+          // this.loading = false;
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+        },
+        (error: any) => {
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
+  }
 
   // Рефреш даних користувача
   doRefresh(event: any) {
     this.getCategories(true, () => event.target.complete());
   }
 
-  getCategories(refresh?: boolean, callbackFunction?: () => void) {
+  getCategories(data?: any, callbackFunction?: () => void) {
     this.isLoading = true;
     this.catalogService
-      .getCategories(refresh)
+      .getCategories(data)
       .pipe(
         finalize(() => {
           this.isLoading = false;

@@ -23,8 +23,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
-  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher>
   <ng-container *ngIf="!favoritesList?.length && !loading">
@@ -62,5 +61,9 @@
     <app-favorites-list [favoritesList]="favoritesList"
       (onOpenDetails)="handleOpenListDetails($event)"></app-favorites-list>
   </ng-container>
+
+  <!-- <ng-container *ngIf="loading"> -->
+  <app-favorites-list [isLoading]="loading"></app-favorites-list>
+  <!-- </ng-container> -->
 
 </ion-content>

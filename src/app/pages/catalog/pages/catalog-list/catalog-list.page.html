@@ -4,7 +4,7 @@
     <div vertical="center">
       <ion-searchbar #searchbar mode="ios" placeholder="Search" show-clear-button="never"
         [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
-        formControlName="search" (ionChange)="search($event)" (ionFocus)="onSearchFocus($event)"></ion-searchbar>
+        formControlName="search" (ionFocus)="onSearchFocus($event)"></ion-searchbar>
 
       <!-- Cancel search state -->
       <div *ngIf="isSearchActive" vertical="center" class="m-left--small flex-shrink--none">
@@ -18,7 +18,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="isLoading"></ion-spinner>
+  <!-- <ion-spinner class="spinner" color="primary" name="lines" *ngIf="isLoading"></ion-spinner> -->
   <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>

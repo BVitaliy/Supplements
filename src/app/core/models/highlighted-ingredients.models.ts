@@ -1,6 +1,7 @@
 export class IngredientOption {
   public color?: string;
   public label?: string;
+  public name?: string;
   public id?: number;
   public status?: ReasonLabels;
   public checked?: boolean;

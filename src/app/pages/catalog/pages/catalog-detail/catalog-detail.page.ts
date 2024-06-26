@@ -44,6 +44,8 @@ export class CatalogDetailPage implements OnInit {
   search(event: any) {
     console.log(event?.detail?.value);
     this.filterForm.get('search')?.setValue(event?.detail?.value);
+    const search = event?.detail?.value;
+    this.filteredProduct(search ? { query: search } : {});
   }
 
   // Відкривання модалки Filters

@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { queryParams } from 'src/app/core/functions/query-params';
 
 @Injectable({
   providedIn: 'root',
@@ -11,18 +12,12 @@ import { AlertService } from 'src/app/core/services/alert.service';
 export class CatalogService {
   constructor(private http: HttpClient, private alertService: AlertService) {}
 
-  getCategories(refresh?: boolean): Observable<any> {
-    let options!: { params?: { refreshReq?: boolean } };
-    if (refresh) {
-      options = {
-        params: {
-          refreshReq: refresh,
-        },
-      };
-    }
-
+  getCategories(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
     return this.http
-      .get(`${environment.origin}/supplements/categories/?limit=500`, options)
+      .get(`${environment.origin}/supplements/categories/?limit=500`, {
+        params,
+      })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);
@@ -51,17 +46,10 @@ export class CatalogService {
       );
   }
 
-  getFiltersRecords(refresh?: boolean): Observable<any> {
-    let options!: { params?: { refreshReq?: boolean } };
-    if (refresh) {
-      options = {
-        params: {
-          refreshReq: refresh,
-        },
-      };
-    }
+  getFiltersRecords(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
     return this.http
-      .get(`${environment.origin}/supplements/search-records/`, options)
+      .get(`${environment.origin}/supplements/search-records/`, { params })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);
