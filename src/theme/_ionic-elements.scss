@@ -454,7 +454,7 @@ ion-badge {
 ***********************************************/
 ion-modal {
   --border-radius: 0;
-  --background: var(--ion-color-quaternary) !important;
+  --background: var(--ion-color-light) !important;
 
   &:not(.transparent-modal) {
     --backdrop-opacity: 1;
@@ -464,9 +464,10 @@ ion-modal {
   }
 
   &.modal-sheet {
-    --border-radius: 20px;
+    // --border-radius: 20px;
+    --border-radius: 20px 20px 0 0;
     .ion-page {
-      --border-radius: 20px;
+      --border-radius: 20px 20px 0 0;
       border-radius: 20px 20px 0px 0px;
     }
   }
@@ -619,6 +620,10 @@ ion-modal {
       background: #fff;
       border-radius: 10px;
     }
+  }
+
+  &.auto-height {
+    --height: auto;
   }
 }
 

@@ -48,8 +48,9 @@ export class ProductCardComponent implements OnInit {
   public async showListActionsModal(): Promise<void> {
     const modal: HTMLIonModalElement = await this.modalController.create({
       component: AddFavoriteListProductPage,
+      cssClass: 'auto-height',
       breakpoints: [0, 0.3, 0.5, 1],
-      initialBreakpoint: 0.1,
+      initialBreakpoint: 1,
       componentProps: {
         product: this.product,
       },

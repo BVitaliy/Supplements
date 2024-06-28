@@ -40,6 +40,7 @@ export class ProductDetailPage implements OnInit {
     console.log(this.id);
     this.getProduct();
     this.getProductReviewById();
+    this.setProductAsViewed();
   }
 
   // Рефреш продукту
@@ -103,6 +104,13 @@ export class ProductDetailPage implements OnInit {
           }
         }
       );
+  }
+
+  setProductAsViewed() {
+    this.catalogService.setToHistory(this.id).subscribe(
+      (data: any) => {},
+      (error: any) => {}
+    );
   }
 
   shopNowProduct() {

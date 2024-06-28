@@ -1,7 +1,7 @@
 <div class="product" [ngClass]="type" *ngIf="!isLoading">
 
   <div class="image" (click)="openDetail()">
-    <app-img [src]="product?.images[product?.images?.length - 1 || 0]?.image" cssClasses="img-fit-contain"
+    <app-img [src]="product?.images[product?.images?.length - 1 || 0]?.url" cssClasses="img-fit-contain"
       *ngIf="product?.images?.length"></app-img>
   </div>
   <div class="content">
