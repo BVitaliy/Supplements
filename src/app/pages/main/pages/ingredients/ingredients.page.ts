@@ -44,7 +44,7 @@ export class IngredientsPage implements OnInit {
   getData(refresh?: boolean, callbackFunction?: () => void) {
     this.loading = true;
     this.mainService
-      .getIngredients(refresh)
+      .getIngredients()
       .pipe(
         finalize(() => {
           this.loading = false;

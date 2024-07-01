@@ -50,6 +50,11 @@ const routes: Routes = [
       import('./pages/scanner/scanner.module').then((m) => m.ScannerPageModule),
   },
   {
+    path: 'article',
+    loadChildren: () =>
+      import('./pages/article/article.module').then((m) => m.ArticlePageModule),
+  },
+  {
     path: '',
     redirectTo: 'info-steps',
     pathMatch: 'full',

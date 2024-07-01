@@ -10,6 +10,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { createWorker } from 'tesseract.js';
 import { finalize, Subscription } from 'rxjs';
 import { CatalogService } from '../catalog/catalog.service';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.page.html',
@@ -30,7 +31,8 @@ export class AddProductPage implements OnInit {
     private platform: Platform,
     private photoService: PhotoService,
     private alertService: AlertService,
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
+    private themeOptions: ThemeOptionsService
   ) {}
 
   ngOnInit() {
@@ -46,6 +48,9 @@ export class AddProductPage implements OnInit {
       description: new FormControl(null),
       decline_reason: new FormControl(null),
     });
+    if (this.platform.is('hybrid')) {
+      this.themeOptions.setStatusBarDark();
+    }
   }
 
   ionViewWillEnter() {

@@ -63,8 +63,8 @@
   <ion-list lines="full" *ngIf="!loading && products.length">
     <ion-item *ngFor="let product of products">
       <div class="p-vertical--medium card">
-        <app-product-card [product]="product" [type]="'horizontal'"
-          (onOpenEdit)="handleEditProduct($event)"></app-product-card>
+        <app-product-card [product]="product" [type]="'horizontal'" (onOpenEdit)="handleEditProduct($event)"
+          [detailDisabled]="true"></app-product-card>
       </div>
     </ion-item>
   </ion-list>

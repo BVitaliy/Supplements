@@ -4,6 +4,9 @@
 .step-image {
   height: 100%;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.step-1 {
     padding: 6vh 10%;
@@ -17,6 +20,7 @@
   .image {
     padding-top: 100%;
     position: relative;
+    width: 100%;
     svg {
       position: absolute;
       left: 0;

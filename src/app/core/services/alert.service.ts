@@ -1,16 +1,14 @@
-import {Injectable} from '@angular/core';
-import {AlertController, ToastController} from '@ionic/angular';
+import { Injectable } from '@angular/core';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class AlertService {
   constructor(
     private toastController: ToastController,
     private alertController: AlertController
-  ) {
-  }
+  ) {}
 
   async presentErrorAlert(err: any) {
     if (err?.status === 0 || err?.status === 401) {
@@ -23,11 +21,11 @@ export class AlertService {
     const errCode = err.error && err.error.code ? err.error.code : err.code;
     const buttonsArr: any = ['OK'];
 
-    if (typeof (err?.error?.message) === 'string') {
+    if (typeof err?.error?.message === 'string') {
       mess = err.error.message;
-    } else if (typeof (err.message) === 'string') {
+    } else if (typeof err.message === 'string') {
       mess = err.message;
-    } else if (typeof (err) === 'string') {
+    } else if (typeof err === 'string') {
       mess = err;
     }
 
@@ -35,7 +33,7 @@ export class AlertService {
       header: 'Error',
       message: mess ? mess : 'An unknown error has occurred',
       buttons: buttonsArr,
-      mode: 'ios'
+      mode: 'ios',
     });
 
     await alert.present();
@@ -46,7 +44,7 @@ export class AlertService {
       header: 'Error',
       message: 'Lost connection',
       backdropDismiss: false,
-      mode: 'ios'
+      mode: 'ios',
     });
     await alert.present();
     if (cb) {
@@ -55,20 +53,20 @@ export class AlertService {
   }
 
   async createAlert(options: any) {
-    const {header, message, backdropDismiss, buttons, cssClass} = options;
+    const { header, message, backdropDismiss, buttons, cssClass } = options;
     const alert = await this.alertController.create({
       header,
       message,
       backdropDismiss,
       buttons,
       cssClass,
-      mode: 'ios'
+      mode: 'ios',
     });
     await alert.present();
   }
 
   async createToast(options: any) {
-    const {header, mode, position} = options;
+    const { header, mode, position } = options;
     const toast = await this.toastController.create({
       header,
       mode,
@@ -79,7 +77,7 @@ export class AlertService {
         {
           icon: 'close',
           side: 'end',
-          role: 'cancel'
+          role: 'cancel',
         },
       ],
     });
@@ -91,7 +89,7 @@ export class AlertService {
       header: 'Warning!',
       message,
       mode: 'ios',
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }

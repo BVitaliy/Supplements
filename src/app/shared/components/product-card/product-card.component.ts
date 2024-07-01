@@ -12,6 +12,8 @@ import { AddFavoriteListProductPage } from '../../../pages/favorites/add-favorit
 })
 export class ProductCardComponent implements OnInit {
   @Input() type = 'vertical'; //horizontal
+  @Input() isLoading: any = false;
+  @Input() detailDisabled: any = false;
   @Input() product: any;
   @Input() showStars: boolean = true;
   @Input() showRatingCount: boolean = true;
@@ -36,7 +38,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   favoriteHandle($event: any) {
-    if (this.favorite) {
+    if (this.product!.in_favorite) {
       this.removeToFavorites(this.idFavorilteList);
     } else {
       this.showListActionsModal();
@@ -46,8 +48,9 @@ export class ProductCardComponent implements OnInit {
   public async showListActionsModal(): Promise<void> {
     const modal: HTMLIonModalElement = await this.modalController.create({
       component: AddFavoriteListProductPage,
-      breakpoints: [0, 0.3, 0.5, 0.8],
-      initialBreakpoint: 0.8,
+      cssClass: 'auto-height',
+      breakpoints: [0, 0.3, 0.5, 1],
+      initialBreakpoint: 1,
       componentProps: {
         product: this.product,
       },
@@ -68,10 +71,12 @@ export class ProductCardComponent implements OnInit {
   }
 
   openDetail() {
-    if (this.openInModal) {
-      this.openProductInModal();
-    } else {
-      this.navCtrl.navigateRoot(['/product/detail', this.product?.id]);
+    if (!this.detailDisabled) {
+      if (this.openInModal) {
+        this.openProductInModal();
+      } else {
+        this.navCtrl.navigateRoot(['/product/detail', this.product?.id]);
+      }
     }
   }
 
@@ -104,6 +109,7 @@ export class ProductCardComponent implements OnInit {
     this.favoriteService.setProductToFavList(data, id).subscribe(
       (data: any) => {
         console.log(data);
+        this.product.in_favorite = true;
         // this.favoritesList = data.results;
       },
       (error: any) => {}
@@ -118,8 +124,6 @@ export class ProductCardComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.reloadPage.emit(true);
-        this.favorite = false;
-        // this.favoritesList = data.results;
       },
       (error: any) => {}
     );

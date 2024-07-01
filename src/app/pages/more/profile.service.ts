@@ -115,4 +115,21 @@ export class ProfileService {
         })
       );
   }
+
+  getPolicy(): Observable<any> {
+    return this.http.get(`${environment.origin}/privacy-policy/`).pipe(
+      catchError((error) => {
+        this.alertService.presentErrorAlert(error);
+        return throwError(error);
+      })
+    );
+  }
+  getTerms(): Observable<any> {
+    return this.http.get(`${environment.origin}/terms-of-use/`).pipe(
+      catchError((error) => {
+        this.alertService.presentErrorAlert(error);
+        return throwError(error);
+      })
+    );
+  }
 }

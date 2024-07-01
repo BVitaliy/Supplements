@@ -1,4 +1,5 @@
-<ion-content>
+<!-- <ion-content> -->
+<div class="content">
   <div direction="column" class="p-around--medium">
     <!-- Title -->
     <div class="add-favorite-list-product__title p-bottom--xx-small">
@@ -43,8 +44,8 @@
     <!-- / Create list -->
 
     <!-- Favorite lists -->
-    <ion-list lines="full" class="m-bottom--medium m-top--small" *ngIf="!isLoading">
-      <ion-item *ngFor="let favorite of favoritesList">
+    <ion-list lines="full" class="m-top--small" *ngIf="!isLoading">
+      <ion-item *ngFor="let favorite of favoritesList" lines="none">
         <div class="add-favorite-list-product__list p-vertical--medium" vertical="center" horizontal="between">
           <div direction="column" class="p-right--medium">
             <!-- List name -->
@@ -71,12 +72,22 @@
     <!-- / Favorite lists -->
 
     <!-- Apply -->
-    <div class="p-top--xx-small">
+    <!-- <div class="p-top--xx-small">
       <ion-button class="btn btn-sm btn-primary" expand="block" fill="solid" mode="md"
         [disabled]="!selectedListsIds.length" (click)="handleApply()">
         <b>Apply</b>
       </ion-button>
-    </div>
+    </div> -->
     <!-- / Apply -->
   </div>
-</ion-content>
+</div>
+<!-- </ion-content> -->
+
+<ion-footer>
+  <div class="p-vertical--x-small p-horizontal--medium">
+    <ion-button class="btn btn-sm btn-primary" expand="block" fill="solid" mode="md"
+      [disabled]="!selectedListsIds.length" (click)="handleApply()">
+      <b>Apply</b>
+    </ion-button>
+  </div>
+</ion-footer>

@@ -240,4 +240,8 @@ export class MainPage implements OnInit {
       this.backBtnSubscription.unsubscribe();
     }
   }
+
+  goToArticle(slug: any) {
+    this.navCtrl.navigateForward(['article', { slug }]);
+  }
 }

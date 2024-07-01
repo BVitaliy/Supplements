@@ -23,29 +23,29 @@
 </ion-header>
 
 <ion-content>
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
   <!-- Tips -->
   <div vertical="start" class="p-around--medium highlighted-ingredients__border-bottom">
     <ion-icon src="./assets/img/icons/info-icon-2.svg" class="m-right--x-small m-top--xx-small"></ion-icon>
 
     <div class="highlighted-ingredients__tips-text">
-      Add ingredients that you would like to highlight based on your diet, allergies, or other reasons that you have, if this ingredient is present in the product, it will appear in this list
+      Add ingredients that you would like to highlight based on your diet, allergies, or other reasons that you have, if
+      this ingredient is present in the product, it will appear in this list
     </div>
   </div>
   <!-- / Tips -->
 
   <!-- Reasons filter -->
-  <div class="p-vertical--medium p-left--medium highlighted-ingredients__reason-swiper-wrapper">
+  <div class="p-vertical--medium p-left--medium highlighted-ingredients__reason-swiper-wrapper"
+    *ngIf="options.length && !loading">
     <swiper #reasonsSwiper [config]="reasonsSlideOpts">
       <ng-template swiperSlide *ngFor="let reason of reasonsOptions">
-        <ion-chip
-          [outline]="true"
-          (click)="handleSelectReasonFilter(reason.label)"
-          [ngClass]="{ 'highlighted-ingredients__reason-swiper-chip--active': activeReasonFilter === reason.label }"
-        >
-          <div
-            class="highlighted-ingredients__badge m-right--x-small"
-            [ngStyle]="{ 'background': reason.color }"
-          ></div>
+        <ion-chip [outline]="true" (click)="handleSelectReasonFilter(reason.label)"
+          [ngClass]="{ 'highlighted-ingredients__reason-swiper-chip--active': activeReasonFilter === reason.label }">
+          <div class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': reason.color }"></div>
           <div class="highlighted-ingredients__item-label">
             {{ reason.label }}
           </div>
@@ -56,18 +56,10 @@
   <!-- / Reasons filter -->
 
   <!-- Ingredients added -->
-  <div
-    *ngIf="addedIngredientsOptions.length"
-    vertical="center"
-    class="p-vertical--medium p-left--medium m-bottom--medium highlighted-ingredients__ingredients-added-wrapper highlighted-ingredients__border-vertical"
-  >
+  <div *ngIf="addedIngredientsOptions.length" vertical="center"
+    class="p-vertical--medium p-left--medium m-bottom--medium highlighted-ingredients__ingredients-added-wrapper highlighted-ingredients__border-vertical">
     <!-- Clear button -->
-    <ion-button
-      class="btn btn-link m-right--small"
-      mode="md"
-      fill="clear"
-      (click)="handleClearAllAddedIngredients()"
-    >
+    <ion-button class="btn btn-link m-right--small" mode="md" fill="clear" (click)="handleClearAllAddedIngredients()">
       <span class="highlighted-ingredients__clear-all-added-ingredients-text">Clear all</span>
     </ion-button>
     <!-- / Clear button -->
@@ -75,18 +67,13 @@
       <ng-template swiperSlide *ngFor="let ingredient of addedIngredientsOptions">
         <ion-chip [outline]="true">
           <div vertical="center">
-            <div
-              class="highlighted-ingredients__badge m-right--xx-small"
-              [ngStyle]="{ 'background': ingredient.color }"
-            ></div>
+            <div class="highlighted-ingredients__badge m-right--xx-small"
+              [ngStyle]="{ 'background': ingredient.color }"></div>
             <div class="highlighted-ingredients__ingredient-label">
-              {{ ingredient.label }}
+              {{ ingredient.name }}
             </div>
-            <ion-icon
-              src="./assets/img/icon/close-icon.svg"
-              class="highlighted-ingredients__close-icon m-left--x-small"
-              (click)="handleClearAddedIngredient(ingredient.id)"
-            ></ion-icon>
+            <ion-icon src="./assets/img/icon/close-icon.svg" class="highlighted-ingredients__close-icon m-left--x-small"
+              (click)="handleClearAddedIngredient(ingredient.id)"></ion-icon>
           </div>
         </ion-chip>
       </ng-template>
@@ -95,58 +82,42 @@
   <!-- / Ingredients added -->
 
   <!-- Search -->
-  <div class="p-horizontal--medium p-bottom--large" [formGroup]="searchForm">
-    <ion-searchbar
-      mode="ios"
-      placeholder="Search..."
-      show-clear-button="never"
-      [searchIcon]="'./assets/img/icons/search-icon-grey.svg'"
-      [clearIcon]="'./assets/img/icon/close-icon.svg'"
-      formControlName="search"
-      class="highlighted-ingredients__search"
-      (ionChange)="search($event)"
-    ></ion-searchbar>
+  <div class="p-horizontal--medium p-bottom--large" [formGroup]="searchForm" *ngIf="options.length && !loading">
+    <ion-searchbar mode="ios" placeholder="Search..." show-clear-button="never"
+      [searchIcon]="'./assets/img/icons/search-icon-grey.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
+      formControlName="search" class="highlighted-ingredients__search" (ionChange)="search($event)"></ion-searchbar>
   </div>
   <!-- / Search -->
 
 
-  <!-- Options -->
-  <ng-container *ngFor="let option of optionsToShow">
-    <div
-      *ngIf="option.ingredients?.length"
-      class="p-bottom--large p-horizontal--medium"
-    >
-      <!-- Section label -->
-      <div class="highlighted-ingredients__section-label m-bottom--x-small">
-        {{ option.label }}
-      </div>
-      <!-- / Section label -->
-
-      <!-- Ingredients -->
-      <div
-        *ngFor="let ingredient of option.ingredients; let last = last"
-        vertical="center"
-        horizontal="between"
-        [ngClass]="{ 'm-bottom--large': !last }"
-      >
-        <div vertical="center" class="p-right--x-small">
-          <div
-            class="highlighted-ingredients__badge m-right--x-small"
-            [ngStyle]="{ 'background': ingredient.color }"
-          ></div>
-          <div class="highlighted-ingredients__item-label">
-            {{ ingredient.label }}
-          </div>
+  <ng-container *ngIf="options.length && !loading">
+    <ng-container *ngFor="let option of options">
+      <div *ngIf="option.ingredients?.length" class="p-bottom--large p-horizontal--medium">
+        <!-- Section label -->
+        <div class="highlighted-ingredients__section-label m-bottom--x-small">
+          {{ option.label }}
         </div>
+        <!-- / Section label -->
 
-        <ion-checkbox
-          (ionChange)="checkboxChangeState($event, ingredient)"
-          class="checkbox flex-shrink--none"
-          [checked]="ingredient.checked"
-        ></ion-checkbox>
+        <!-- Ingredients -->
+        <div *ngFor="let ingredient of option.ingredients; let last = last" vertical="center" horizontal="between"
+          [ngClass]="{ 'm-bottom--large': !last }">
+          <div vertical="center" class="p-right--x-small">
+            <div class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': ingredient.color }">
+            </div>
+            <div class="highlighted-ingredients__item-label">
+              {{ ingredient.name }}
+            </div>
+          </div>
+
+          <ion-checkbox (ionChange)="checkboxChangeState($event, ingredient)" class="checkbox flex-shrink--none"
+            [checked]="ingredient.checked"></ion-checkbox>
+        </div>
+        <!-- / Ingredients -->
       </div>
-      <!-- / Ingredients -->
-    </div>
+    </ng-container>
   </ng-container>
-  <!-- / Options -->
+  <ng-container *ngIf="!options.length && !loading">
+    <app-search-empty class="flex-grow"></app-search-empty>
+  </ng-container>
 </ion-content>

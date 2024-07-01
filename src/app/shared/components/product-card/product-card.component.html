@@ -1,6 +1,7 @@
-<div class="product" [ngClass]="type">
+<div class="product" [ngClass]="type" *ngIf="!isLoading">
+
   <div class="image" (click)="openDetail()">
-    <app-img [src]="product?.images[product?.images?.length - 1 || 0]?.image" cssClasses="img-fit-contain"
+    <app-img [src]="product?.images[product?.images?.length - 1 || 0]?.url" cssClasses="img-fit-contain"
       *ngIf="product?.images?.length"></app-img>
   </div>
   <div class="content">
@@ -25,17 +26,60 @@
         <ion-icon
           [src]="product?.average_rating >= 5 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
           class="star m-left--xx-small"></ion-icon>
-        <div class="review-count m-left--xx-small">
-          32
-        </div>
+        <!-- <div class="review-count m-left--xx-small">
+          {{product?.average_rating}}
+        </div> -->
       </div>
 
       <div class="product-bottom">
-        <ng-container *ngIf="product?.score">
-          <app-rating-count [rating]="product?.score" [type]="'badge'"></app-rating-count>
+        <ng-container *ngIf="product?.average_rating">
+          <app-rating-count [rating]="product?.average_rating" [type]="'badge'"></app-rating-count>
         </ng-container>
         <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"
-          [favorite]="favorite"></app-favorite-btn>
+          [favorite]="product?.in_favorite"></app-favorite-btn>
+      </div>
+    </div>
+
+    <ng-container *ngIf="product?.status === 2">
+      <div class="decline-text">
+        <div class="decline-title">Decline reason</div>
+        <p>{{product?.decline_reason}}</p>
+      </div>
+      <ion-button class="btn btn-sm" expand="block" fill="outline" mode="md" color="primary"
+        (click)="onOpenEdit.emit(product?.id)">
+        <b>Edit submission</b>
+      </ion-button>
+    </ng-container>
+  </div>
+</div>
+<div class="product loader" [ngClass]="type" *ngIf="isLoading">
+  <div class="image  ">
+    <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+  </div>
+  <div class="content">
+    <div>
+      <div class="category medium"><ion-skeleton-text [animated]="true"
+          style="width: 70%;margin-bottom: 3px;"></ion-skeleton-text></div>
+      <div class="title text-s line-clamp-3 fw-600 dark">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 75%"></ion-skeleton-text>
+      </div>
+    </div>
+    <div *ngIf="product?.status === 1 || !product?.status">
+      <div *ngIf="showStars" vertical="center" class="m-bottom--x-small">
+        <ion-icon [src]="'./assets/img/icons/star-default.svg'" class="star"></ion-icon>
+        <ion-icon [src]="'./assets/img/icons/star-default.svg'" class="star m-left--xx-small"
+          *ngFor="let item of [1,2,3,4]"></ion-icon>
+
+      </div>
+
+      <div class="product-bottom">
+        <app-rating-count [rating]="product?.average_rating" [type]="'badge'"
+          [isLoading]="isLoading"></app-rating-count>
+
+        <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"
+          [favorite]="product?.in_favorite"></app-favorite-btn>
       </div>
     </div>
 

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HistoryTabs } from './history.models';
 import { Products } from '../../../../../mock/products';
+import { CatalogService } from 'src/app/pages/catalog/catalog.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-history',
@@ -11,17 +13,48 @@ import { Products } from '../../../../../mock/products';
 export class HistoryPage {
   public historyTabs: typeof HistoryTabs = HistoryTabs;
   public activeTab = 'viewed';
-  public viewedProducts: any[] = [...Products];
-  public scannedProducts: any[] = [...Products];
-  public reviewedProducts: any[] = [...Products];
+  public products: any[] = [];
+  isLoading = false;
 
-  constructor(public navCtrl: NavController) {}
+  constructor(
+    public navCtrl: NavController,
+    private catalogService: CatalogService
+  ) {}
 
-  // public handleChangeTab(tab: HistoryTabs): void {
-  //   this.activeTab = tab;
-  // }
+  ionViewWillEnter() {
+    this.getProducts();
+  }
+
+  doRefresh(event: any) {
+    this.getProducts(() => event.target.complete());
+  }
 
   handleChangeTab(event: any) {
     this.activeTab = event?.detail?.value;
+    this.getProducts();
+  }
+
+  getProducts(callbackFunction?: () => void) {
+    this.isLoading = true;
+    const data = {
+      [this.activeTab]: true,
+    };
+    this.catalogService
+      .getHistory(data)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          if (callbackFunction) {
+            callbackFunction();
+          }
+        })
+      )
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.products = data?.results;
+        },
+        error: (error: any) => {},
+      });
   }
 }

@@ -14,7 +14,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <!-- <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner> -->
   <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher>
@@ -22,14 +22,23 @@
   <app-filter-row (onOpenSort)="openSortPopover()" (onOpenFilter)="openFiltersModal()"
     [resultCount]="count"></app-filter-row>
 
-  <div class="content" *ngIf="listProducts.length && !loading">
+  <div class="content">
 
-    <ion-list lines="full">
-      <ion-item *ngFor="let product of listProducts">
-        <div class="p-vertical--medium">
+    <ion-list lines="full" *ngIf="listProducts.length && !loading">
+      <ng-container *ngFor="let product of listProducts">
+        <div class="p-around--medium card">
           <app-product-card [product]="product" [type]="'horizontal'"></app-product-card>
         </div>
-      </ion-item>
+      </ng-container>
+    </ion-list>
+
+    <ion-list lines="full" *ngIf="loading">
+      <ng-container *ngFor="let product of [1,2,3,4]">
+        <div class="p-around--medium card">
+          <app-product-card [product]="product" [type]="'horizontal'" [favorite]="true"
+            [isLoading]="loading"></app-product-card>
+        </div>
+      </ng-container>
     </ion-list>
 
   </div>

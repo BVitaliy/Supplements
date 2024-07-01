@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
+import { queryParams } from 'src/app/core/functions/query-params';
 
 @Injectable({
   providedIn: 'root',
@@ -11,17 +12,10 @@ import { DatePipe } from '@angular/common';
 export class MainService {
   constructor(private http: HttpClient, private alertService: AlertService) {}
 
-  getBrands(refresh?: boolean): Observable<any> {
-    let options!: { params?: { refreshReq?: boolean } };
-    if (refresh) {
-      options = {
-        params: {
-          refreshReq: refresh,
-        },
-      };
-    }
+  getBrands(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
     return this.http
-      .get(`${environment.origin}/supplements/brands/by-letter/`, options)
+      .get(`${environment.origin}/supplements/brands/by-letter/`, { params })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);
@@ -43,17 +37,27 @@ export class MainService {
       );
   }
 
-  getIngredients(refresh?: boolean): Observable<any> {
-    let options!: { params?: { refreshReq?: boolean } };
-    if (refresh) {
-      options = {
-        params: {
-          refreshReq: refresh,
-        },
-      };
-    }
+  getIngredients(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+
     return this.http
-      .get(`${environment.origin}/supplements/ingredients/by-letter/`, options)
+      .get(`${environment.origin}/supplements/ingredients/by-letter/`, {
+        params,
+      })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+  getHighlighted(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+
+    return this.http
+      .get(`${environment.origin}/supplements/ingredients/highlighted/`, {
+        params,
+      })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);
@@ -62,11 +66,12 @@ export class MainService {
       );
   }
 
-  searchIngredients(search?: string): Observable<any> {
+  searchIngredients(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
     return this.http
-      .get(
-        `${environment.origin}/supplements/ingredients/by-letter/?query=${search}`
-      )
+      .get(`${environment.origin}/supplements/ingredients/by-letter/`, {
+        params,
+      })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);

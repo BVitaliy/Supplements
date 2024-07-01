@@ -9,6 +9,7 @@ export class RatingCountComponent implements OnInit {
   @Input() count: number = 0;
   @Input() rating: number = 0;
   @Input() text = '';
+  @Input() isLoading!: boolean;
   @Input() type = ''; //badge
 
   constructor() {}
