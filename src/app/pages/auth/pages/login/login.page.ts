@@ -136,4 +136,13 @@ export class LoginPage implements OnInit, ViewDidLeave {
   ionViewDidLeave() {
     this.loginForm.reset();
   }
+
+  googleSignIn() {
+    if (Capacitor.getPlatform() === 'ios') {
+      this.authService.googleSignIn();
+    } else {
+      this.authService.loginViaGoogle();
+    }
+    // this.authService.signInWithAppleNative();
+  }
 }
