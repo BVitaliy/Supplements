@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- Header title -->
+    <ion-title class="sm">{{ type === 'privacy' ? 'Privacy Policy':'Terms of Service'}}</ion-title>
+    <!-- / Header title -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content p-around--medium">
+    <div class="article" [innerHTML]="data | safeHtml"></div>
+  </div>
+</ion-content>
