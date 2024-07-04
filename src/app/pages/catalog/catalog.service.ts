@@ -208,6 +208,16 @@ export class CatalogService {
       );
   }
 
+  sortProduct(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http.get(`${environment.origin}/supplements/`, { params }).pipe(
+      catchError((error) => {
+        this.alertService.presentErrorAlert(error);
+        return throwError(error);
+      })
+    );
+  }
+
   setToHistory(id?: any): Observable<any> {
     return this.http
       .post(`${environment.origin}/supplements/${id}/viewed/`, {})
@@ -218,4 +228,19 @@ export class CatalogService {
         })
       );
   }
+
+  getBrandsProduct(data?: any, id?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/brands/${id}`, { params })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  // user rating - rating_score
+  // product rating - hide
 }

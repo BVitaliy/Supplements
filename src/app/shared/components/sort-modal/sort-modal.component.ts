@@ -47,4 +47,8 @@ export class SortModalComponent implements OnInit {
       this.backBtnSubscription.unsubscribe();
     }
   }
+
+  sortFn($event: any) {
+    this.cancelModal();
+  }
 }

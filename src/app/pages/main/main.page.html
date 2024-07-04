@@ -10,10 +10,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
-  <!-- <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+  <!-- <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner> -->
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
-  </ion-refresher> -->
+  </ion-refresher>
 
   <ion-grid *ngIf="!loading">
 
@@ -22,21 +22,6 @@
         <img src="./assets/img/placeholder.svg" alt="">
       </div>
     </ng-container>
-
-
-    <div class="section">
-      <div class="section-header">
-        <h3 class="h3">Recent products</h3>
-      </div>
-
-      <div class="swiper-body" *ngIf="products?.length">
-        <swiper #swiper [config]="slideOpts" class="main-swiper">
-          <ng-template swiperSlide *ngFor="let product of products; let i=index">
-            <app-product-card [product]="product"></app-product-card>
-          </ng-template>
-        </swiper>
-      </div>
-    </div>
 
     <div class="section">
       <div class="section-header">
@@ -47,14 +32,44 @@
         </ion-button>
       </div>
 
-      <div class="swiper-body" *ngIf="products?.length">
+      <div class="swiper-body">
         <swiper #swiper [config]="slideOpts" class="main-swiper">
-          <ng-template swiperSlide *ngFor="let product of products; let i=index">
-            <app-product-card [product]="product"></app-product-card>
-          </ng-template>
+          <ng-container *ngIf="!isLoadingTrending && products?.trending?.length">
+            <ng-template swiperSlide *ngFor="let product of products?.trending; let i=index">
+              <app-product-card [product]="product"></app-product-card>
+            </ng-template>
+          </ng-container>
+          <ng-container *ngIf="isLoadingTrending">
+            <ng-template swiperSlide *ngFor="let product of [1,2,3]; let i=index">
+              <app-product-card [product]="product" [isLoading]="isLoadingTrending"></app-product-card>
+            </ng-template>
+          </ng-container>
         </swiper>
       </div>
     </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h3 class="h3">Recent products</h3>
+      </div>
+
+      <div class="swiper-body">
+        <swiper #swiper [config]="slideOpts" class="main-swiper">
+          <ng-container *ngIf="!isLoadingRecent && products!.recent?.length">
+            <ng-template swiperSlide *ngFor="let product of products!.recent; let i=index">
+              <app-product-card [product]="product?.product"></app-product-card>
+            </ng-template>
+          </ng-container>
+          <ng-container *ngIf="isLoadingRecent">
+            <ng-template swiperSlide *ngFor="let product of [1,2,3]; let i=index">
+              <app-product-card [product]="product" [isLoading]="isLoadingRecent"></app-product-card>
+            </ng-template>
+          </ng-container>
+        </swiper>
+      </div>
+    </div>
+
+
 
     <div class="section">
       <div class="section-header">
@@ -100,7 +115,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <!-- <div class="section">
       <div class="section-header">
         <h3 class="h3">Sales and offers</h3>
 
@@ -116,7 +131,7 @@
           </ng-template>
         </swiper>
       </div>
-    </div>
+    </div> -->
 
 
   </ion-grid>

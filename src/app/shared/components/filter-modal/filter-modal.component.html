@@ -31,7 +31,7 @@
   </ion-refresher> -->
 
   <ion-accordion-group [multiple]="true">
-    <ion-accordion value="categories" *ngIf="categories?.length">
+    <ion-accordion value="categories" *ngIf="categories?.length && page !== 'categories'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Categories</ion-label>
       </ion-item>
@@ -52,7 +52,7 @@
 
       </div>
     </ion-accordion>
-    <ion-accordion value="brands" *ngIf="brands?.length">
+    <ion-accordion value="brands" *ngIf="brands?.length && page !== 'brand'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Brands</ion-label>
       </ion-item>
@@ -62,7 +62,7 @@
       </div>
     </ion-accordion>
 
-    <ion-accordion value="ingredients" *ngIf="ingredients?.length">
+    <ion-accordion value="ingredients" *ngIf="ingredients?.length && page !== 'ingredient'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Ingredients</ion-label>
       </ion-item>

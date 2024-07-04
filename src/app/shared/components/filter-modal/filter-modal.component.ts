@@ -20,6 +20,7 @@ import {
 })
 export class FilterModalComponent implements OnInit {
   @Input() filters!: any;
+  @Input() page!: any;
   public form!: FormGroup;
   public categories: any[] = [];
   public brands: any[] = [];
@@ -59,9 +60,15 @@ export class FilterModalComponent implements OnInit {
       }
     );
     // this.getData();
-    this.getCategories();
-    this.getBrands();
-    this.getIngredients();
+    if (this.page !== 'categories') {
+      this.getCategories();
+    }
+    if (this.page !== 'brand') {
+      this.getBrands();
+    }
+    if (this.page !== 'ingredient') {
+      this.getIngredients();
+    }
   }
 
   doRefresh(event: any) {

@@ -15,6 +15,7 @@ import { SwiperComponent } from 'swiper/angular';
 import { Products } from 'src/mock/products';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
+import { CatalogService } from '../catalog/catalog.service';
 
 SwiperCore.use([Scrollbar]);
 
@@ -34,7 +35,7 @@ export class MainPage implements OnInit {
   statuses!: any;
   selectedStatus: any;
   disableInfinity = false;
-  products: Array<any> = [];
+  products: any;
 
   @ViewChild('swiper') swiper!: SwiperComponent;
   slideOpts: SwiperOptions = {
@@ -44,13 +45,16 @@ export class MainPage implements OnInit {
     speed: 400,
     freeMode: true,
   };
+  isLoadingRecent = false;
+  isLoadingTrending = false;
 
   constructor(
     private storage: Storage,
     public navCtrl: NavController,
     private platform: Platform,
     private modalController: ModalController,
-    private themeOptions: ThemeOptionsService
+    private themeOptions: ThemeOptionsService,
+    private catalogService: CatalogService
   ) {
     this.products = Products;
   }
@@ -65,12 +69,8 @@ export class MainPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // this.getOrders();
-  }
-
-  // Рефреш даних користувача
-  doRefresh(event: any) {
-    // this.getOrders(true, () => event.target.complete());
+    this.getRecent();
+    this.getTrending();
   }
 
   // Пошук
@@ -80,18 +80,54 @@ export class MainPage implements OnInit {
     // this.getOrders(true);
   }
 
-  // Підгрузка результатів
-  // loadData() {
-  //   if (!this.disableInfinity) {
-  //     setTimeout(() => {
-  //       this.filterForm.get('current_page')?.setValue(1);
-  //       this.filterForm
-  //         .get('items_per_page')
-  //         ?.setValue(this.filterForm.get('items_per_page')?.value + 10);
-  //       this.getOrders(true);
-  //     }, 500);
-  //   } else {
-  //     this.disableInfinity = true;
-  //   }
-  // }
+  // Рефреш даних користувача
+  doRefresh(event: any) {
+    this.getRecent(() => event.target.complete());
+    this.getTrending();
+  }
+  getRecent(callbackFunction?: () => void) {
+    this.isLoadingRecent = true;
+    const data = {
+      viewed: true,
+    };
+    this.catalogService
+      .getHistory(data)
+      .pipe(
+        finalize(() => {
+          this.isLoadingRecent = false;
+          if (callbackFunction) {
+            callbackFunction();
+          }
+        })
+      )
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.products.recent = data?.results;
+        },
+        error: (error: any) => {},
+      });
+  }
+
+  getTrending() {
+    this.isLoadingTrending = true;
+    const data = {
+      ordering: '-average_rating',
+      limit: 10,
+    };
+    this.catalogService
+      .sortProduct(data)
+      .pipe(
+        finalize(() => {
+          this.isLoadingTrending = false;
+        })
+      )
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.products.trending = data?.results;
+        },
+        error: (error: any) => {},
+      });
+  }
 }

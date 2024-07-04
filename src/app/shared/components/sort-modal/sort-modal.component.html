@@ -9,22 +9,22 @@
     </div>
     <ng-container [formGroup]="sortForm">
 
-      <ion-radio-group mode="md" formControlName="sort">
-        <ion-item lines="none">
+      <ion-radio-group mode="md" formControlName="sort" (ionChange)="sortFn($event)">
+        <!-- <ion-item lines="none">
           <ion-label>Featured</ion-label>
           <ion-radio value="featured" slot="end"></ion-radio>
-        </ion-item>
+        </ion-item> -->
         <ion-item lines="none">
           <ion-label>Product rating: Bad to Good</ion-label>
-          <ion-radio value="bad" slot="end">Product rating: Bad to Good</ion-radio>
+          <ion-radio value="average_rating" slot="end">Product rating: Bad to Good</ion-radio>
         </ion-item>
         <ion-item lines="none">
           <ion-label>Product rating: Good to Bad</ion-label>
-          <ion-radio value="good" slot="end">Product rating: Good to Bad</ion-radio>
+          <ion-radio value="-average_rating" slot="end">Product rating: Good to Bad</ion-radio>
         </ion-item>
         <ion-item lines="none">
           <ion-label>Most Rated</ion-label>
-          <ion-radio value="rated" slot="end">Most Rated</ion-radio>
+          <ion-radio value="average_rating" slot="end">Most Rated</ion-radio>
         </ion-item>
       </ion-radio-group>
     </ng-container>

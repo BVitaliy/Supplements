@@ -35,9 +35,8 @@
         <ion-list class="list">
           <ng-container *ngFor="let brand of brandSection.brands; let last = last">
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
-              [routerLink]="['/home/tabs/tab/main/all-brands/', brand?.id, {title: brand?.title}]">
+              [routerLink]="['/home/tabs/tab/main/all-brands/', brand?.id, {title: brand?.title, type:'brand'}]">
               <div class="dark">{{brand?.title}}</div>
-
             </ion-item>
           </ng-container>
         </ion-list>

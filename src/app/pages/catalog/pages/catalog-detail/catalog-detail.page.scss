@@ -8,6 +8,10 @@ ion-content {
 ion-toolbar {
   ion-title {
     position: relative;
+    -webkit-padding-start: 50px;
+    padding-inline-start: 50px;
+    -webkit-padding-end: 50px;
+    padding-inline-end: 50px;
   }
 }
 

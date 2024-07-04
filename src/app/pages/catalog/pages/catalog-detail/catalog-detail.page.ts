@@ -56,7 +56,7 @@ export class CatalogDetailPage implements OnInit {
       mode: 'ios',
       handle: true,
       componentProps: {
-        // addedHIngredientsOptions: this.addedHIngredientsOptions,
+        page: 'categories',
       },
     });
 
@@ -71,7 +71,7 @@ export class CatalogDetailPage implements OnInit {
     return await modal.present();
   }
 
-  // Відкривання модалки ingredient detail
+  // Відкривання модалки sort
   async openSortPopover() {
     const modal = await this.modalController.create({
       component: SortModalComponent,
@@ -89,6 +89,7 @@ export class CatalogDetailPage implements OnInit {
       if (returnedData && returnedData?.data) {
         // this.addedHIngredientsOptions = returnedData?.data;
         console.log(returnedData);
+        this.sortProduct(returnedData?.data);
       }
     });
 
@@ -136,6 +137,29 @@ export class CatalogDetailPage implements OnInit {
     this.loading = true;
     this.catalogService
       .searchProduct(data)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.count = data?.count || 0;
+          this.listProducts = data.results;
+        },
+        error: (error: any) => {},
+      });
+  }
+
+  sortProduct(sort: any) {
+    this.loading = true;
+    const data = {
+      ordering: '-' + sort,
+      limit: 200,
+    };
+    this.catalogService
+      .sortProduct(data)
       .pipe(
         finalize(() => {
           this.loading = false;

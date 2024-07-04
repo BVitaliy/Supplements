@@ -1,17 +1,26 @@
-ion-grid {
+// ion-grid {
+// min-height: 100%;
+.content {
   padding: 24px 15px;
-  .content {
-    width: 100%;
-  }
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
+// }
 
 ion-toolbar {
   ion-title {
     position: relative;
+    -webkit-padding-start: 50px;
+    padding-inline-start: 50px;
+    -webkit-padding-end: 50px;
+    padding-inline-end: 50px;
   }
 }
 
 .list {
+  width: 100%;
   ion-item {
     margin-bottom: 8px;
     --padding-top: 12px;
@@ -36,4 +45,9 @@ ion-toolbar {
     min-width: 24px;
     margin: 0;
   }
+}
+app-search-empty {
+  height: calc(100% - 65px);
+  display: block;
+  width: 100%;
 }
