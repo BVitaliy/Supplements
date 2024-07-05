@@ -11,7 +11,7 @@ export class FilterGroupComponent implements OnInit {
   @Input() options: Array<any> = [];
   @Input() type = '';
   @Output() filteredOptions: EventEmitter<any> = new EventEmitter<any>();
-  addedOptions: any[] = [];
+  @Input() addedOptions: any[] = [];
   optionsToShow: any[] = [];
 
   open = false;
@@ -24,7 +24,7 @@ export class FilterGroupComponent implements OnInit {
       search: new FormControl(null),
     });
     this.optionsToShow = this.options;
-    console.log(this.optionsToShow);
+
     this.checkCount();
 
     this.searchForm.get('search')?.valueChanges.subscribe((el) => {
@@ -77,8 +77,6 @@ export class FilterGroupComponent implements OnInit {
     }
 
     this.filteredOptions.emit(this.addedOptions);
-    console.log(this.addedOptions);
-    console.log(this.optionsToShow);
   }
 
   private handleChangeCheckboxState(value: boolean, id: number): void {

@@ -59,7 +59,10 @@ export class BrandDetailPage implements OnInit {
 
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
-        const values = returnedData?.data;
+        const values = {
+          ...returnedData?.data,
+          [this.type]: [this.id],
+        };
         console.log(returnedData);
         this.filteredProduct(values);
       }
@@ -137,7 +140,7 @@ export class BrandDetailPage implements OnInit {
     const data = {
       limit: 120,
     };
-    if (this.type === 'brand') {
+    if (this.type === 'brands') {
       this.catalogService
         .getBrandsProduct(data, this.id)
         .pipe(

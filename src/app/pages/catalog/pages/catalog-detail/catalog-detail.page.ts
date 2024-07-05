@@ -32,6 +32,12 @@ export class CatalogDetailPage implements OnInit {
     this.filterForm = new FormGroup({
       search: new FormControl(null),
       sort: new FormControl(null),
+      categories: new FormControl([]),
+      brands: new FormControl([]),
+      ingredients: new FormControl([]),
+      quality: new FormControl(null),
+      special_offer: new FormControl(false),
+      rating_score: new FormControl(null),
     });
   }
 
@@ -56,14 +62,20 @@ export class CatalogDetailPage implements OnInit {
       mode: 'ios',
       handle: true,
       componentProps: {
+        filters: this.filterForm.value,
         page: 'categories',
       },
     });
 
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
-        const values = returnedData?.data;
-        console.log(returnedData);
+        this.filterForm.patchValue(returnedData?.data);
+        const values = {
+          ...returnedData?.data,
+          categories: [this.id],
+        };
+
+        console.log(values);
         this.filteredProduct(values);
       }
     });

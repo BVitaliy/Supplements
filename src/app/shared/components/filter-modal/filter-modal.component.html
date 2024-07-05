@@ -30,7 +30,7 @@
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher> -->
 
-  <ion-accordion-group [multiple]="true">
+  <ion-accordion-group [multiple]="true" [formGroup]="form">
     <ion-accordion value="categories" *ngIf="categories?.length && page !== 'categories'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Categories</ion-label>
@@ -38,11 +38,11 @@
       <div class="ion-padding" slot="content">
 
         <app-filter-group [options]="categories" [type]="'categories'"
-          (filteredOptions)="filtered($event, 'categories')"></app-filter-group>
+          (filteredOptions)="filtered($event, 'categories')" [addedOptions]="form.value.categories"></app-filter-group>
 
       </div>
     </ion-accordion>
-    <ion-accordion value="rating">
+    <!-- <ion-accordion value="rating">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Product Rating</ion-label>
       </ion-item>
@@ -51,25 +51,25 @@
           (filteredOptions)="filtered($event,'quality')"></app-filter-group>
 
       </div>
-    </ion-accordion>
-    <ion-accordion value="brands" *ngIf="brands?.length && page !== 'brand'">
+    </ion-accordion> -->
+    <ion-accordion value="brands" *ngIf="brands?.length && page !== 'brands'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Brands</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <app-filter-group [options]="brands" [type]="'brands'"
-          (filteredOptions)="filtered($event,'brands')"></app-filter-group>
+        <app-filter-group [options]="brands" [type]="'brands'" (filteredOptions)="filtered($event,'brands')"
+          [addedOptions]="form.value.brands"></app-filter-group>
       </div>
     </ion-accordion>
 
-    <ion-accordion value="ingredients" *ngIf="ingredients?.length && page !== 'ingredient'">
+    <ion-accordion value="ingredients" *ngIf="ingredients?.length && page !== 'ingredients'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Ingredients</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <!-- <app-ingredient-filter-group></app-ingredient-filter-group> -->
         <app-filter-group [options]="ingredients" [type]="'ingredients'"
-          (filteredOptions)="filtered($event,'ingredients')"></app-filter-group>
+          (filteredOptions)="filtered($event,'ingredients')" [addedOptions]="form.value.ingredients"></app-filter-group>
       </div>
     </ion-accordion>
 
@@ -78,8 +78,25 @@
         <ion-label>User Ratings</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <app-filter-group [options]="userRating" [type]="'rating_score'"
-          (filteredOptions)="filtered($event,'rating_score')"></app-filter-group>
+        <ion-radio-group formControlName="rating_score">
+          <ion-list>
+            <ng-container *ngFor="let option of userRating;let i = index">
+
+              <ion-item lines="none">
+                <ion-label class="dark fw-500">
+                  <ion-icon slot="start" class="m-right--x-small" [ngStyle]="{'width': '116px' }" [src]="option?.icon"
+                    *ngIf="option?.icon"></ion-icon>
+                  {{ option?.title}}
+                  <span class="medium" *ngIf="option?.count">({{option?.count || 0}})</span>
+                </ion-label>
+
+                <ion-radio slot="end" mode="md" [value]="option?.id"></ion-radio>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ion-radio-group>
+        <!-- <app-filter-group [options]="userRating" [type]="'rating_score'"
+          (filteredOptions)="filtered($event,'rating_score')"></app-filter-group> -->
       </div>
     </ion-accordion>
 
