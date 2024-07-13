@@ -106,11 +106,18 @@
         </ion-button>
       </div>
 
-      <div class="swiper-body" *ngIf="products?.length">
+      <div class="swiper-body">
         <swiper #swiper [config]="slideOpts" class="main-swiper">
-          <ng-template swiperSlide *ngFor="let product of products; let i=index">
-            <app-product-card [product]="product"></app-product-card>
-          </ng-template>
+          <ng-container *ngIf="!isLoadingForYou && products!.forYou?.length">
+            <ng-template swiperSlide *ngFor="let product of products!.forYou; let i=index">
+              <app-product-card [product]="product"></app-product-card>
+            </ng-template>
+          </ng-container>
+          <ng-container *ngIf="isLoadingForYou">
+            <ng-template swiperSlide *ngFor="let product of [1,2,3]; let i=index">
+              <app-product-card [product]="product" [isLoading]="isLoadingForYou"></app-product-card>
+            </ng-template>
+          </ng-container>
         </swiper>
       </div>
     </div>

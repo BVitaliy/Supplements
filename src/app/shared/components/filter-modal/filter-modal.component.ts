@@ -133,7 +133,7 @@ export class FilterModalComponent implements OnInit {
     this.loading = true;
     this.brands = [];
     const data = {
-      limit: 100,
+      limit: 300,
     };
     this.mainService
       .getBrands(data)
@@ -166,7 +166,7 @@ export class FilterModalComponent implements OnInit {
   getIngredients() {
     this.loading = true;
     const data = {
-      limit: 100,
+      limit: 300,
     };
     this.mainService
       .getIngredients(data)

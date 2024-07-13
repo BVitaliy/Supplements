@@ -32,6 +32,12 @@ export class BrandDetailPage implements OnInit {
     this.form = new FormGroup({
       // search: new FormControl(null),
       sort: new FormControl(null),
+      categories: new FormControl([]),
+      brands: new FormControl([]),
+      ingredients: new FormControl([]),
+      quality: new FormControl(null),
+      special_offer: new FormControl(false),
+      rating_score: new FormControl(null),
     });
   }
 
@@ -54,6 +60,7 @@ export class BrandDetailPage implements OnInit {
       handle: true,
       componentProps: {
         page: this.type,
+        filters: this.form.value,
       },
     });
 
@@ -63,6 +70,7 @@ export class BrandDetailPage implements OnInit {
           ...returnedData?.data,
           [this.type]: [this.id],
         };
+        this.form.patchValue(returnedData?.data);
         console.log(returnedData);
         this.filteredProduct(values);
       }
@@ -137,10 +145,10 @@ export class BrandDetailPage implements OnInit {
 
   getProducts(callbackFunction?: () => void) {
     this.isLoading = true;
-    const data = {
-      limit: 120,
-    };
     if (this.type === 'brands') {
+      const data = {
+        limit: 120,
+      };
       this.catalogService
         .getBrandsProduct(data, this.id)
         .pipe(
@@ -159,8 +167,12 @@ export class BrandDetailPage implements OnInit {
           error: (error: any) => {},
         });
     } else {
+      const data = {
+        ingredient_id: this.id,
+        limit: 120,
+      };
       this.catalogService
-        .getBrandsProduct(data, this.id)
+        .sortProduct(data)
         .pipe(
           finalize(() => {
             this.isLoading = false;

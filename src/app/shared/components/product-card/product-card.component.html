@@ -6,7 +6,7 @@
   </div>
   <div class="content">
     <div (click)="openDetail()">
-      <div class="category medium">{{product?.category?.title}}</div>
+      <div class="category medium">{{product?.category?.title || product?.brand?.title}}</div>
       <div class="title text-s line-clamp-3 fw-600 dark">{{product?.title}}</div>
     </div>
     <div *ngIf="product?.status === 1 || !product?.status">

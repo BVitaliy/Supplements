@@ -333,3 +333,12 @@ ng-otp-input {
     }
   }
 }
+
+.product-image {
+  app-img {
+    height: 100%;
+  }
+  .img-wrap {
+    padding-bottom: 0 !important;
+  }
+}

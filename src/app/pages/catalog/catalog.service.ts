@@ -217,6 +217,17 @@ export class CatalogService {
       })
     );
   }
+  getTopRated(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/trending/`, { params })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
 
   setToHistory(id?: any): Observable<any> {
     return this.http
@@ -233,6 +244,29 @@ export class CatalogService {
     const params: HttpParams = queryParams(data);
     return this.http
       .get(`${environment.origin}/supplements/brands/${id}`, { params })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getProductAnalysis(id?: any): Observable<any> {
+    return this.http
+      .get(`${environment.origin}/supplements/${id}/ingredients/analisis/`, {})
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getForYouProduct(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/for-you/`, { params })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);

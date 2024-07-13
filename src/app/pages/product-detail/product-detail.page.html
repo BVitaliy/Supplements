@@ -20,7 +20,8 @@
   <ng-container *ngIf="!loading">
     <div class="product-image">
       <app-rating-count [rating]="product?.rating_score" [type]="'badge'"></app-rating-count>
-      <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
+      <app-img [src]="product?.images[product?.images?.length-1]?.url" cssClasses="img-fit-cover" [zooming]="true"
+        *ngIf="product?.images?.length"></app-img>
     </div>
 
 
@@ -30,13 +31,23 @@
       <div class="text-l fw-700 dark m-bottom--small">{{product?.title}}</div>
 
       <div vertical="center" class="m-bottom--medium">
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 1 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 2 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 3 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 4 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 5 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
         <div class="review-count m-left--x-small text-s">
-          32
+          {{reviews?.length}}
         </div>
       </div>
 
@@ -66,7 +77,7 @@
           <app-chart [data]="dataChart" [backgroundColor]="backgroundColors"></app-chart>
 
           <div class="chart-text">
-            <p class="h2 dark">52</p>
+            <p class="h2 dark">{{countChart}}</p>
             <p class="medium text-m">Ingredients</p>
           </div>
         </div>
@@ -88,7 +99,7 @@
               <span class="indicator green"></span>
               <div class="dark ">Benefits</div>
               <div class="count medium m-left--x-small">
-                32
+                {{this.analysis?.benefits}}
               </div>
             </ion-item>
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
@@ -96,7 +107,7 @@
               <span class="indicator danger-bg"></span>
               <div class="dark ">Weaknesses</div>
               <div class="count medium m-left--x-small">
-                7
+                {{this.analysis?.weaknesses}}
               </div>
             </ion-item>
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
@@ -104,7 +115,7 @@
               <span class="indicator primary-bg"></span>
               <div class="dark">Contaminants</div>
               <div class="count medium m-left--x-small">
-                3
+                {{this.analysis?.contamintants}}
               </div>
             </ion-item>
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
@@ -112,7 +123,7 @@
               <span class="indicator warning-bg"></span>
               <div class="dark">Allergens</div>
               <div class="count medium m-left--x-small">
-                5
+                {{this.analysis?.allergens}}
               </div>
             </ion-item>
           </ion-list>

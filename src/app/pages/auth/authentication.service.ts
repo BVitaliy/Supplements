@@ -50,6 +50,9 @@ export class AuthenticationService {
   async loginViaApple() {
     const result = await FirebaseAuthentication.signInWithApple({
       scopes: ['displayName', 'email'],
+    }).catch(() => {
+      this.signInLoading = false;
+      this.signInLoadingGoogle = false;
     });
     console.log(result);
     if (result) {
@@ -71,6 +74,9 @@ export class AuthenticationService {
     const result = await FirebaseAuthentication.signInWithGoogle({
       scopes: ['profile', 'email'],
       mode: 'popup',
+    }).finally(() => {
+      this.signInLoading = false;
+      this.signInLoadingGoogle = false;
     });
     console.log(result);
     if (result) {

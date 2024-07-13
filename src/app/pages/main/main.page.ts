@@ -47,6 +47,7 @@ export class MainPage implements OnInit {
   };
   isLoadingRecent = false;
   isLoadingTrending = false;
+  isLoadingForYou = false;
 
   constructor(
     private storage: Storage,
@@ -71,6 +72,7 @@ export class MainPage implements OnInit {
   ionViewWillEnter() {
     this.getRecent();
     this.getTrending();
+    this.getForYou();
   }
 
   // Пошук
@@ -84,6 +86,7 @@ export class MainPage implements OnInit {
   doRefresh(event: any) {
     this.getRecent(() => event.target.complete());
     this.getTrending();
+    this.getForYou();
   }
   getRecent(callbackFunction?: () => void) {
     this.isLoadingRecent = true;
@@ -126,6 +129,27 @@ export class MainPage implements OnInit {
         next: (data: any) => {
           console.log(data);
           this.products.trending = data?.results;
+        },
+        error: (error: any) => {},
+      });
+  }
+
+  getForYou() {
+    this.isLoadingForYou = true;
+    const data = {
+      limit: 20,
+    };
+    this.catalogService
+      .getForYouProduct(data)
+      .pipe(
+        finalize(() => {
+          this.isLoadingForYou = false;
+        })
+      )
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.products.forYou = data?.results;
         },
         error: (error: any) => {},
       });

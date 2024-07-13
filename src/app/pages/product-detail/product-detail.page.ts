@@ -20,11 +20,13 @@ export class ProductDetailPage implements OnInit {
   @Input() id: any;
   loading: boolean = true;
   product: any;
+  analysis: any;
   type = 'ingredient';
   backgroundColors = ['#22b51f', '#FF001C', '#FF9635', '#FDE334'];
-  dataChart = [39, 5, 4, 5];
+  dataChart: any;
   addedHIngredientsOptions: IngredientOption[] = [];
   reviews = [];
+  countChart = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -41,11 +43,13 @@ export class ProductDetailPage implements OnInit {
     this.getProduct();
     this.getProductReviewById();
     this.setProductAsViewed();
+    this.getProductAnalysis();
   }
 
   // Рефреш продукту
   doRefresh(event: any) {
     this.getProduct(true, () => event.target.complete());
+    this.getProductAnalysis();
   }
 
   getProduct(refresh?: boolean, callbackFunction?: () => void) {
@@ -94,6 +98,38 @@ export class ProductDetailPage implements OnInit {
           console.log(data);
           if (data) {
             this.reviews = data;
+          }
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
+  }
+
+  getProductAnalysis() {
+    this.catalogService
+      .getProductAnalysis(this.id)
+      .pipe(finalize(() => {}))
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data) {
+            this.analysis = data;
+            this.dataChart = [
+              data?.benefits,
+              data?.weaknesses,
+              data?.contamintants,
+              data?.allergens,
+            ];
+            this.countChart =
+              data?.benefits +
+              data?.weaknesses +
+              data?.contamintants +
+              data?.allergens;
           }
         },
         (error: any) => {
