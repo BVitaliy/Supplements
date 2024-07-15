@@ -31,7 +31,15 @@ const routes: Routes = [
   },
   {
     path: 'ingredients',
-    loadChildren: () => import('./pages/ingredients/ingredients.module').then( m => m.IngredientsPageModule)
+    loadChildren: () =>
+      import('./pages/ingredients/ingredients.module').then(
+        (m) => m.IngredientsPageModule
+      ),
+  },
+  {
+    path: 'for-you',
+    loadChildren: () =>
+      import('./pages/for-you/for-you.module').then((m) => m.ForYouPageModule),
   },
 ];
 

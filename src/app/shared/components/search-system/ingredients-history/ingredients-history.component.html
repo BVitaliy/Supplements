@@ -1,24 +1,18 @@
 <ion-list lines="full">
-  <ion-item
-    *ngFor="let ingredient of ingredientsHistory"
-    [routerLink]="['/home/tabs/tab/catalog/1']"
-    mode="ios"
-    button
-  >
+  <ion-item *ngFor="let ingredient of ingredientsHistory"
+    [routerLink]="['/home/tabs/tab/main/all-brands/', ingredient?.id, {title: ingredient?.name, type:'ingredients'}]"
+    mode="ios" button>
     <div class="ingredients-history__wrapper p-vertical--medium" vertical="center" horizontal="between">
       <div vertical="center" class="p-right--medium">
-        <div
-          class="ingredients-history__badge m-right--x-small"
-          [ngStyle]="{ 'background': ingredient.color }"
-        ></div>
+        <!-- <div class="ingredients-history__badge m-right--x-small" [ngStyle]="{ 'background': ingredient.color }"></div> -->
         <div class="ingredients-history__item-label">
-          {{ ingredient.label }}
+          {{ ingredient.name }}
         </div>
       </div>
     </div>
   </ion-item>
 </ion-list>
-
+<!-- 
 <div *ngIf="isHistory" class="p-horizontal--medium p-top--medium p-bottom--xx-large">
   <ion-button
     class="btn btn-sm"
@@ -30,4 +24,4 @@
   >
     <b>Clean history</b>
   </ion-button>
-</div>
+</div> -->

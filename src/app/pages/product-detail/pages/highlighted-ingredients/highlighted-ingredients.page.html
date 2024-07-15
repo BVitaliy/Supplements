@@ -64,7 +64,7 @@
             <div class="highlighted-ingredients__badge m-right--xx-small"
               [ngStyle]="{ 'background': ingredient.color }"></div>
             <div class="highlighted-ingredients__ingredient-label">
-              {{ ingredient.label }}
+              {{ ingredient.name }}
             </div>
             <ion-icon src="./assets/img/icon/close-icon.svg" class="highlighted-ingredients__close-icon m-left--x-small"
               (click)="handleClearAddedIngredient(ingredient.id)"></ion-icon>
@@ -96,15 +96,21 @@
       <div *ngFor="let ingredient of option.ingredients; let last = last" vertical="center" horizontal="between"
         [ngClass]="{ 'm-bottom--large': !last }">
         <div vertical="center" class="p-right--x-small">
-          <div class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': ingredient.color }">
-          </div>
+          <div *ngIf="ingredient?.is_benefit" class="highlighted-ingredients__badge m-right--x-small"
+            [ngStyle]="{ 'background': '#22B51F' }"></div>
+          <div *ngIf="ingredient?.is_weaknesses" class="highlighted-ingredients__badge m-right--x-small"
+            [ngStyle]="{ 'background': '#FF001C' }"></div>
+          <div *ngIf="ingredient?.is_contamintant" class="highlighted-ingredients__badge m-right--x-small"
+            [ngStyle]="{ 'background': '#FF9635' }"></div>
+          <div *ngIf="ingredient?.is_allergen" class="highlighted-ingredients__badge m-right--x-small"
+            [ngStyle]="{ 'background': '#FDE334' }"></div>
           <div class="highlighted-ingredients__item-label">
-            {{ ingredient.label }}
+            {{ ingredient.name }}
           </div>
         </div>
 
         <ion-checkbox (ionChange)="checkboxChangeState($event, ingredient)" class="checkbox flex-shrink--none"
-          [checked]="ingredient.checked"></ion-checkbox>
+          [checked]="isSelected(ingredient)"></ion-checkbox>
       </div>
       <!-- / Ingredients -->
     </div>

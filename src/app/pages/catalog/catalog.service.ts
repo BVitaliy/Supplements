@@ -164,10 +164,23 @@ export class CatalogService {
     return obj;
   }
 
-  searchProduct(data: any): Observable<any> {
+  searchProduct(data: any, parameters?: any): Observable<any> {
+    const params: HttpParams = queryParams(parameters);
     const values = this.cleanObject(data);
     return this.http
-      .post(`${environment.origin}/supplements/search/`, values)
+      .post(`${environment.origin}/supplements/search/`, values, { params })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  searchIngredient(data: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/ingredients/`, { params })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);

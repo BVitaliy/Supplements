@@ -49,6 +49,8 @@ export class MainPage implements OnInit {
   isLoadingTrending = false;
   isLoadingForYou = false;
 
+  isSearchActive = false;
+
   constructor(
     private storage: Storage,
     public navCtrl: NavController,
@@ -153,5 +155,15 @@ export class MainPage implements OnInit {
         },
         error: (error: any) => {},
       });
+  }
+
+  public onSearchFocus(_event: any): void {
+    this.isSearchActive = true;
+    // this.getData();
+  }
+
+  public handleCancelSearch(): void {
+    this.isSearchActive = false;
+    this.filterForm.reset();
   }
 }

@@ -1,11 +1,20 @@
 <ion-header mode="ios">
 
   <ion-toolbar [formGroup]="filterForm">
-    <ion-icon slot="start" [src]="'./assets/img/logo.svg'"></ion-icon>
-    <ion-searchbar #searchbar mode="ios" placeholder="Search for a product or ingredient..." show-clear-button="never"
-      [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
-      formControlName="search" (ionChange)="search($event)">
-    </ion-searchbar>
+    <ion-icon slot="start" [src]="'./assets/img/logo.svg'" *ngIf="!isSearchActive"></ion-icon>
+    <div vertical="center">
+      <ion-searchbar #searchbar mode="ios" placeholder="Search for a product or ingredient..." show-clear-button="never"
+        [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
+        formControlName="search" (ionFocus)="onSearchFocus($event)" (ionChange)="search($event)">
+      </ion-searchbar>
+      <!-- Cancel search state -->
+      <div *ngIf="isSearchActive" vertical="center" class="m-left--small flex-shrink--none">
+        <ion-button class="btn btn-link btn-primary" fill="clear" mode="md" (click)="handleCancelSearch()">
+          Cancel
+        </ion-button>
+      </div>
+    </div>
+    <!-- / Cancel search state -->
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +24,7 @@
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher>
 
-  <ion-grid *ngIf="!loading">
+  <ion-grid *ngIf="!isSearchActive">
 
     <ng-container *ngIf="!products?.length">
       <div class="data-placeholder type-2">
@@ -68,9 +77,6 @@
         </swiper>
       </div>
     </div>
-
-
-
     <div class="section">
       <div class="section-header">
         <h3 class="h3">Shop by</h3>
@@ -101,7 +107,7 @@
       <div class="section-header">
         <h3 class="h3">For you</h3>
 
-        <ion-button class="btn btn-link ml-10" fill="clear" mode="md" [routerLink]="['/home/tabs/tab/main/trending']">
+        <ion-button class="btn btn-link ml-10" fill="clear" mode="md" [routerLink]="['/home/tabs/tab/main/for-you']">
           <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
         </ion-button>
       </div>
@@ -142,6 +148,10 @@
 
 
   </ion-grid>
+
+  <!-- Search system -->
+  <app-search-system *ngIf="isSearchActive" [searchValue]="filterForm.get('search')?.value"></app-search-system>
+  <!-- / Search system -->
   <!-- <ng-container *ngIf="!loading">
     <ion-infinite-scroll threshold="0" (ionInfinite)="loadData()" position="bottom" [disabled]="disableInfinity">
       <ion-infinite-scroll-content loadingSpinner="bubbles">

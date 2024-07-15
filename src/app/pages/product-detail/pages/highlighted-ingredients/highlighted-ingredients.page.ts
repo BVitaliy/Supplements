@@ -10,7 +10,8 @@ import {
 } from 'src/app/core/models/highlighted-ingredients.models';
 import { SwiperComponent } from 'swiper/angular';
 import { SwiperOptions } from 'swiper';
-import { Subscription } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
+import { MainService } from 'src/app/pages/main/main.service';
 
 @Component({
   selector: 'app-highlighted-ingredients',
@@ -60,94 +61,15 @@ export class HighlightedIngredientsPage implements OnInit {
       isActive: false,
     },
   ];
+  loading = false;
 
-  public optionsToShow: IngredientsSection[] = [];
-  public options: IngredientsSection[] = [
-    {
-      label: 'A',
-      ingredients: [
-        {
-          color: '#22B51F',
-          label: 'Aloe Vera',
-          id: 1,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Alpha-Carotene',
-          id: 3,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Alpha-Ketoglutaric Acid',
-          id: 4,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Apple Pectin',
-          id: 5,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-      ],
-    },
-    {
-      label: 'B',
-      ingredients: [
-        {
-          color: '#22B51F',
-          label: 'Basil',
-          id: 6,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Beet Root',
-          id: 7,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#22B51F',
-          label: 'Berberine',
-          id: 8,
-          status: ReasonLabels.benefit,
-          checked: false,
-        },
-        {
-          color: '#FF001C',
-          label: 'Beta - Glucans',
-          id: 9,
-          status: ReasonLabels.weakness,
-          checked: false,
-        },
-        {
-          color: '#FDE334',
-          label: 'Bilberry',
-          id: 10,
-          status: ReasonLabels.allergen,
-          checked: false,
-        },
-        {
-          color: '#FF9635',
-          label: 'Some test',
-          id: 11,
-          status: ReasonLabels.contaminant,
-          checked: false,
-        },
-      ],
-    },
-  ];
+  public optionsToShow: any[] = [];
+  public options: any[] = [];
 
   constructor(
     public navCtrl: NavController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private mainService: MainService
   ) {
     console.log(this.addedIngredientsOptions);
   }
@@ -156,16 +78,17 @@ export class HighlightedIngredientsPage implements OnInit {
     this.searchForm = new FormGroup({
       search: new FormControl(null),
     });
-    this.optionsToShow = this.options;
+
     console.log(this.addedIngredientsOptions);
     setTimeout(() => {
-      if (this.optionsToShow && this.addedIngredientsOptions?.length) {
-        this.addedIngredientsOptions?.map((item: any) => {
-          this.handleChangeCheckboxState(true, item?.id);
-        });
-      }
+      // if (this.optionsToShow && this.addedIngredientsOptions?.length) {
+      //   this.addedIngredientsOptions?.map((item: any) => {
+      //     this.handleChangeCheckboxState(true, item?.id);
+      //   });
+      // }
       console.log(this.optionsToShow);
     }, 500);
+    this.searchIngrediens();
   }
 
   public async handleApplyChanges() {
@@ -213,31 +136,28 @@ export class HighlightedIngredientsPage implements OnInit {
   public search(event: any): void {
     console.log(event?.detail?.value);
     this.searchForm.get('search')?.setValue(event?.detail?.value);
+    this.searchIngrediens(event?.detail?.value);
   }
 
-  public checkboxChangeState(_e: any, ingredient?: IngredientOption): void {
+  public checkboxChangeState(_e: any, option?: any): void {
     if (
-      ingredient &&
-      this.addedIngredientsOptions.every(
-        (el: IngredientOption): boolean => el.id !== ingredient.id
-      )
+      option &&
+      this.addedIngredientsOptions.every((el: any): boolean => el !== option.id)
     ) {
-      this.addedIngredientsOptions.push(ingredient);
-      if (ingredient.id) {
-        this.handleChangeCheckboxState(true, ingredient.id);
-      }
+      this.addedIngredientsOptions.push(option);
+      // if (option.id) {
+      //   this.handleChangeCheckboxState(true, option.id);
+      // }
     } else if (
-      ingredient &&
-      this.addedIngredientsOptions.some(
-        (el: IngredientOption): boolean => el.id === ingredient.id
-      )
+      option &&
+      this.addedIngredientsOptions.some((el: any): boolean => el === option.id)
     ) {
       this.addedIngredientsOptions = this.addedIngredientsOptions.filter(
-        (el: IngredientOption): boolean => el.id !== ingredient.id
+        (el: any): boolean => el !== option.id
       );
-      if (ingredient.id) {
-        this.handleChangeCheckboxState(false, ingredient.id);
-      }
+      // if (option.id) {
+      //   this.handleChangeCheckboxState(false, option.id);
+      // }
     }
   }
 
@@ -260,5 +180,47 @@ export class HighlightedIngredientsPage implements OnInit {
 
   cancelModal() {
     this.modalController.dismiss();
+  }
+
+  public items: any[] = [];
+
+  doRefresh(event: any) {
+    this.searchIngrediens();
+  }
+
+  searchIngrediens(search?: string) {
+    this.loading = true;
+    this.mainService
+      .searchIngredients({ query: search })
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.optionsToShow = this.objectToArray(data?.results);
+          this.options = this.objectToArray(data?.results);
+        },
+        (error: any) => {
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
+  }
+
+  objectToArray(obj: {
+    [key: string]: any;
+  }): { label: string; ingredients: any }[] {
+    return Object.keys(obj).map((key) => ({
+      label: key,
+      ingredients: obj[key],
+    }));
+  }
+
+  isSelected(option: any): boolean {
+    return !!this.addedIngredientsOptions.find((el: any) => el === option?.id);
   }
 }

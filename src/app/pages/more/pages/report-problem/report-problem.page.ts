@@ -46,6 +46,7 @@ export class ReportProblemPage {
             mode: 'ios',
             position: 'bottom',
           });
+          this.navCtrl.back();
         },
         (error: any) => {
           if (error.status === 401) {
