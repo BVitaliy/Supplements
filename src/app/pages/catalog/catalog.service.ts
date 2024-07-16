@@ -288,6 +288,20 @@ export class CatalogService {
       );
   }
 
+  switchHighlightedIng(id?: any): Observable<any> {
+    return this.http
+      .post(
+        `${environment.origin}/supplements/ingredients/${id}/highlighted/`,
+        {}
+      )
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
   // user rating - rating_score
   // product rating - hide
 }

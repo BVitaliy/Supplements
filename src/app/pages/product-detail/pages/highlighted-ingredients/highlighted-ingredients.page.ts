@@ -44,21 +44,25 @@ export class HighlightedIngredientsPage implements OnInit {
       color: '#22B51F',
       label: ReasonLabels.benefit,
       isActive: false,
+      type: 'is_benefit',
     },
     {
       color: '#FF001C',
       label: ReasonLabels.weakness,
       isActive: false,
+      type: 'is_weaknesses',
     },
     {
       color: '#FF9635',
       label: ReasonLabels.contaminant,
       isActive: false,
+      type: 'is_contamintant',
     },
     {
       color: '#FDE334',
       label: ReasonLabels.allergen,
       isActive: false,
+      type: 'is_allergen',
     },
   ];
   loading = false;
@@ -97,20 +101,23 @@ export class HighlightedIngredientsPage implements OnInit {
     await this.modalController.dismiss(this.addedIngredientsOptions);
   }
 
-  public handleSelectReasonFilter(label?: ReasonLabels | string): void {
-    if (this.activeReasonFilter === label) {
+  public handleSelectReasonFilter(option?: any): void {
+    console.log(option);
+    this.searchIngrediens(this.searchForm.value.search, option?.type);
+
+    if (this.activeReasonFilter === option.label) {
       this.activeReasonFilter = '';
-      this.optionsToShow = this.options;
+      // this.optionsToShow = this.options;
     } else {
-      this.activeReasonFilter = label || '';
-      this.optionsToShow = this.options.map((el: IngredientsSection) => {
-        return {
-          ...el,
-          ingredients: el.ingredients?.filter(
-            (option: IngredientOption): boolean => option.status === label
-          ),
-        };
-      });
+      this.activeReasonFilter = option.label || '';
+      //   this.optionsToShow = this.options.map((el: IngredientsSection) => {
+      //     return {
+      //       ...el,
+      //       ingredients: el.ingredients?.filter(
+      //         (option: IngredientOption): boolean => option.status === label
+      //       ),
+      //     };
+      //   });
     }
   }
 
@@ -188,10 +195,21 @@ export class HighlightedIngredientsPage implements OnInit {
     this.searchIngrediens();
   }
 
-  searchIngrediens(search?: string) {
+  searchIngrediens(search?: string, type?: any) {
     this.loading = true;
+    let data = {
+      query: search,
+    };
+
+    if (type && this.activeReasonFilter) {
+      data = {
+        ...data,
+        [type]: true,
+      };
+    }
+
     this.mainService
-      .searchIngredients({ query: search })
+      .searchIngredients(data)
       .pipe(
         finalize(() => {
           this.loading = false;

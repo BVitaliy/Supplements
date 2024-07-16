@@ -8,13 +8,13 @@
 }
 
 .search-empty-state__empty-list-title {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 16px;
   font-weight: 700;
   line-height: 21px;
   letter-spacing: 0;
   text-align: center;
-  color: #04002C;
+  color: #04002c;
 }
 
 .search-empty-state__empty-list-description {
@@ -23,5 +23,13 @@
   line-height: 21px;
   letter-spacing: 0;
   text-align: center;
-  color: #9E9D9D;
+  color: #9e9d9d;
+}
+
+:host {
+  &.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
