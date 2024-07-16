@@ -39,7 +39,9 @@ export class ProductCardComponent implements OnInit {
 
   favoriteHandle($event: any) {
     if (this.product!.in_favorite) {
-      this.removeToFavorites(this.idFavorilteList);
+      if (this.idFavorilteList) {
+        this.removeToFavorites(this.idFavorilteList);
+      }
     } else {
       this.showListActionsModal();
     }

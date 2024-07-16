@@ -12,6 +12,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MainService } from 'src/app/pages/main/main.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { finalize } from 'rxjs';
+import { CatalogService } from 'src/app/pages/catalog/catalog.service';
 
 @Component({
   selector: 'app-highlighted-ingredients',
@@ -43,31 +44,36 @@ export class HighlightedIngredientsPage implements OnInit {
       color: '#22B51F',
       label: ReasonLabels.benefit,
       isActive: false,
+      type: 'is_benefit',
     },
     {
       color: '#FF001C',
       label: ReasonLabels.weakness,
       isActive: false,
+      type: 'is_weaknesses',
     },
     {
       color: '#FF9635',
       label: ReasonLabels.contaminant,
       isActive: false,
+      type: 'is_contamintant',
     },
     {
       color: '#FDE334',
       label: ReasonLabels.allergen,
       isActive: false,
+      type: 'is_allergen',
     },
   ];
-  public addedIngredientsOptions: IngredientOption[] = [];
-  public optionsToShow: IngredientsSection[] = [];
-  public options: IngredientsSection[] = [];
+  public addedIngredientsOptions: any[] = [];
+  public optionsToShow: any[] = [];
+  public options: any[] = [];
 
   constructor(
     public navCtrl: NavController,
     private mainService: MainService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private catalogService: CatalogService
   ) {}
 
   public ngOnInit(): void {
@@ -77,25 +83,29 @@ export class HighlightedIngredientsPage implements OnInit {
     this.optionsToShow = this.options;
   }
 
+  // apply changes
   public handleApplyChanges(): void {
-    // apply changes
+    console.log(this.addedIngredientsOptions);
+    this.addedIngredientsOptions.forEach((el, index) => {
+      this.switchHighlightedIng(el);
+
+      if (index === this.addedIngredientsOptions.length - 1) {
+        setTimeout(() => {
+          this.searchIngrediens(this.searchForm.value.search);
+        }, 300);
+      }
+    });
   }
 
-  public handleSelectReasonFilter(label?: ReasonLabels | string): void {
-    if (this.activeReasonFilter === label) {
+  public handleSelectReasonFilter(option?: any): void {
+    console.log(option);
+
+    if (this.activeReasonFilter === option.label) {
       this.activeReasonFilter = '';
-      this.optionsToShow = this.options;
     } else {
-      this.activeReasonFilter = label || '';
-      this.optionsToShow = this.options.map((el: IngredientsSection) => {
-        return {
-          ...el,
-          ingredients: el.ingredients?.filter(
-            (option: IngredientOption): boolean => option.status === label
-          ),
-        };
-      });
+      this.activeReasonFilter = option.label || '';
     }
+    this.searchIngrediens(this.searchForm.value.search, option?.type);
   }
 
   public handleClearAllAddedIngredients(): void {
@@ -177,7 +187,7 @@ export class HighlightedIngredientsPage implements OnInit {
     this.loading = true;
     const data = {
       highlighted: true,
-      limit: 500,
+      limit: 200,
     };
     this.mainService
       .getIngredients(data)
@@ -203,13 +213,20 @@ export class HighlightedIngredientsPage implements OnInit {
       );
   }
 
-  searchIngrediens(search: string) {
+  searchIngrediens(search: string, type?: any) {
     this.loading = true;
-    const data = {
+    let data = {
       highlighted: true,
       query: search,
-      limit: 500,
+      limit: 200,
     };
+
+    if (type && this.activeReasonFilter) {
+      data = {
+        ...data,
+        [type]: true,
+      };
+    }
     this.mainService
       .searchIngredients(data)
       .pipe(
@@ -219,9 +236,7 @@ export class HighlightedIngredientsPage implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
           this.options = this.objectToArray(data?.results);
-          console.log(this.options);
         },
         (error: any) => {
           if (error.status === 401) {
@@ -238,5 +253,23 @@ export class HighlightedIngredientsPage implements OnInit {
       label: key,
       ingredients: obj[key],
     }));
+  }
+
+  switchHighlightedIng(item: any) {
+    this.catalogService
+      .switchHighlightedIng(item.id)
+      .pipe(finalize(() => {}))
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
   }
 }

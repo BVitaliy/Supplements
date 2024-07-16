@@ -164,10 +164,23 @@ export class CatalogService {
     return obj;
   }
 
-  searchProduct(data: any): Observable<any> {
+  searchProduct(data: any, parameters?: any): Observable<any> {
+    const params: HttpParams = queryParams(parameters);
     const values = this.cleanObject(data);
     return this.http
-      .post(`${environment.origin}/supplements/search/`, values)
+      .post(`${environment.origin}/supplements/search/`, values, { params })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  searchIngredient(data: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/ingredients/`, { params })
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);
@@ -208,6 +221,27 @@ export class CatalogService {
       );
   }
 
+  sortProduct(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http.get(`${environment.origin}/supplements/`, { params }).pipe(
+      catchError((error) => {
+        this.alertService.presentErrorAlert(error);
+        return throwError(error);
+      })
+    );
+  }
+  getTopRated(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/trending/`, { params })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
   setToHistory(id?: any): Observable<any> {
     return this.http
       .post(`${environment.origin}/supplements/${id}/viewed/`, {})
@@ -218,4 +252,56 @@ export class CatalogService {
         })
       );
   }
+
+  getBrandsProduct(data?: any, id?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/brands/${id}`, { params })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getProductAnalysis(id?: any): Observable<any> {
+    return this.http
+      .get(`${environment.origin}/supplements/${id}/ingredients/analisis/`, {})
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getForYouProduct(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+    return this.http
+      .get(`${environment.origin}/supplements/for-you/`, { params })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  switchHighlightedIng(id?: any): Observable<any> {
+    return this.http
+      .post(
+        `${environment.origin}/supplements/ingredients/${id}/highlighted/`,
+        {}
+      )
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
+  // user rating - rating_score
+  // product rating - hide
 }

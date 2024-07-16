@@ -12,7 +12,7 @@
 
 <ion-content>
   <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
-  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher>
 
@@ -20,7 +20,8 @@
   <ng-container *ngIf="!loading">
     <div class="product-image">
       <app-rating-count [rating]="product?.rating_score" [type]="'badge'"></app-rating-count>
-      <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
+      <app-img [src]="product?.images[product?.images?.length-1]?.url" cssClasses="img-fit-cover" [zooming]="true"
+        *ngIf="product?.images?.length"></app-img>
     </div>
 
 
@@ -30,13 +31,23 @@
       <div class="text-l fw-700 dark m-bottom--small">{{product?.title}}</div>
 
       <div vertical="center" class="m-bottom--medium">
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
-        <ion-icon [src]="'./assets/img/icons/star-icon.svg'" class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 1 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 2 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 3 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 4 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
+        <ion-icon
+          [src]="product?.rating_score >= 5 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
+          class="star m-left--xx-small"></ion-icon>
         <div class="review-count m-left--x-small text-s">
-          32
+          {{reviews?.length}}
         </div>
       </div>
 
@@ -66,7 +77,7 @@
           <app-chart [data]="dataChart" [backgroundColor]="backgroundColors"></app-chart>
 
           <div class="chart-text">
-            <p class="h2 dark">52</p>
+            <p class="h2 dark">{{countChart}}</p>
             <p class="medium text-m">Ingredients</p>
           </div>
         </div>
@@ -88,7 +99,7 @@
               <span class="indicator green"></span>
               <div class="dark ">Benefits</div>
               <div class="count medium m-left--x-small">
-                32
+                {{this.analysis?.benefits}}
               </div>
             </ion-item>
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
@@ -96,7 +107,7 @@
               <span class="indicator danger-bg"></span>
               <div class="dark ">Weaknesses</div>
               <div class="count medium m-left--x-small">
-                7
+                {{this.analysis?.weaknesses}}
               </div>
             </ion-item>
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
@@ -104,7 +115,7 @@
               <span class="indicator primary-bg"></span>
               <div class="dark">Contaminants</div>
               <div class="count medium m-left--x-small">
-                3
+                {{this.analysis?.contamintants}}
               </div>
             </ion-item>
             <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
@@ -112,7 +123,7 @@
               <span class="indicator warning-bg"></span>
               <div class="dark">Allergens</div>
               <div class="count medium m-left--x-small">
-                5
+                {{this.analysis?.allergens}}
               </div>
             </ion-item>
           </ion-list>
@@ -180,13 +191,16 @@
           other reasons that you have, if this
           ingredient is present in the product, it will appear in this list</p>
 
-        <ng-container *ngIf="addedHIngredientsOptions?.length">
+        <ng-container *ngIf="ingredients?.length">
           <ion-list class="list list-ingredients m-bottom--x-small m-top--xx-small">
-            <ion-item class="text-m dark" button detail="false" lines="none"
-              *ngFor="let option of addedHIngredientsOptions"
-              (click)="openIngredientModal(option?.label, option?.color)">
-              <span class="indicator" [ngStyle]="{ 'background': option?.color}"></span>
-              <div class="primary fw-500">{{option?.label}}</div>
+            <ion-item class="text-m dark" button detail="false" lines="none" *ngFor="let option of ingredients">
+              <!-- (click)="openIngredientModal(option?.label, option?.color)" -->
+              <div *ngIf="option?.is_benefit" class="indicator" [ngStyle]="{ 'background': '#22B51F' }"></div>
+              <div *ngIf="option?.is_weaknesses" class="indicator" [ngStyle]="{ 'background': '#FF001C' }"></div>
+              <div *ngIf="option?.is_contamintant" class="indicator" [ngStyle]="{ 'background': '#FF9635' }"></div>
+              <div *ngIf="option?.is_allergen" class="indicator" [ngStyle]="{ 'background': '#FDE334' }"></div>
+              <!-- <span class="indicator" [ngStyle]="{ 'background': option?.color}"></span> -->
+              <div class="primary fw-500">{{option?.title}}</div>
             </ion-item>
           </ion-list>
         </ng-container>
@@ -194,7 +208,7 @@
 
         <ion-button class="btn btn-primary btn-sm" expand="block" fill="outline" mode="md"
           (click)="openHighlightedModal()">
-          {{addedHIngredientsOptions && addedHIngredientsOptions?.length ? 'Edit' : 'Add Ingredients'}}
+          {{ingredients && ingredients?.length ? 'Edit' : 'Add Ingredients'}}
         </ion-button>
       </div>
 

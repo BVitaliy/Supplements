@@ -5,6 +5,7 @@ import { finalize } from 'rxjs';
 import { IngredientOption } from 'src/app/core/models/highlighted-ingredients.models';
 import { ProductAlertPopupComponent } from 'src/app/shared/components/product-alert-popup/product-alert-popup.component';
 import { CatalogService } from '../catalog/catalog.service';
+import { MainService } from '../main/main.service';
 import { IngredientDetailModalComponent } from './components/ingredient-detail-modal/ingredient-detail-modal.component';
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
 import { HighlightedIngredientsPage } from './pages/highlighted-ingredients/highlighted-ingredients.page';
@@ -20,11 +21,14 @@ export class ProductDetailPage implements OnInit {
   @Input() id: any;
   loading: boolean = true;
   product: any;
+  analysis: any;
   type = 'ingredient';
   backgroundColors = ['#22b51f', '#FF001C', '#FF9635', '#FDE334'];
-  dataChart = [39, 5, 4, 5];
+  dataChart: any;
   addedHIngredientsOptions: IngredientOption[] = [];
   reviews = [];
+  countChart = 0;
+  public ingredients: any[] = [];
 
   constructor(
     public navCtrl: NavController,
@@ -32,7 +36,8 @@ export class ProductDetailPage implements OnInit {
     // private actionSheetController: ActionSheetController,
     private modalController: ModalController,
     private catalogService: CatalogService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private mainService: MainService
   ) {}
 
   ngOnInit() {
@@ -41,11 +46,41 @@ export class ProductDetailPage implements OnInit {
     this.getProduct();
     this.getProductReviewById();
     this.setProductAsViewed();
+    this.getProductAnalysis();
+    this.getIngrediens();
   }
 
   // Рефреш продукту
   doRefresh(event: any) {
     this.getProduct(true, () => event.target.complete());
+    this.getProductAnalysis();
+    this.getIngrediens();
+  }
+
+  getIngrediens() {
+    let data = {
+      highlighted: true,
+      limit: 200,
+    };
+    this.ingredients = [];
+    this.mainService
+      .searchIngredients(data)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          const ingredients = this.objectToArray(data?.results);
+
+          ingredients.forEach((brand: any) => {
+            console.log(brand);
+            this.ingredients = [...this.ingredients, ...brand?.brands];
+          });
+        },
+        (error: any) => {}
+      );
   }
 
   getProduct(refresh?: boolean, callbackFunction?: () => void) {
@@ -94,6 +129,38 @@ export class ProductDetailPage implements OnInit {
           console.log(data);
           if (data) {
             this.reviews = data;
+          }
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
+  }
+
+  getProductAnalysis() {
+    this.catalogService
+      .getProductAnalysis(this.id)
+      .pipe(finalize(() => {}))
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data) {
+            this.analysis = data;
+            this.dataChart = [
+              data?.benefits,
+              data?.weaknesses,
+              data?.contamintants,
+              data?.allergens,
+            ];
+            this.countChart =
+              data?.benefits +
+              data?.weaknesses +
+              data?.contamintants +
+              data?.allergens;
           }
         },
         (error: any) => {
@@ -187,12 +254,38 @@ export class ProductDetailPage implements OnInit {
       modal.onDidDismiss().then((returnedData: any) => {
         if (returnedData && returnedData?.data) {
           this.addedHIngredientsOptions = returnedData?.data;
-          console.log(returnedData);
+
+          this.addedHIngredientsOptions.forEach((el, index) => {
+            this.switchHighlightedIng(el);
+            if (index === this.addedHIngredientsOptions.length - 1) {
+              setTimeout(() => {
+                this.getIngrediens();
+              }, 300);
+            }
+          });
         }
       });
 
       return await modal.present();
     }
+  }
+
+  switchHighlightedIng(item: any) {
+    this.catalogService
+      .switchHighlightedIng(item.id)
+      .pipe(finalize(() => {}))
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+        },
+        (error: any) => {
+          // this.alertService.presentErrorAlert(error?.email?.error);
+
+          if (error.status === 401) {
+            // this.alertService.presentErrorAlert('Something went wrong');
+          }
+        }
+      );
   }
 
   async cancelModal(closeAll = false) {
@@ -254,5 +347,8 @@ export class ProductDetailPage implements OnInit {
     });
 
     return await modal.present();
+  }
+  objectToArray(obj: { [key: string]: any }): { label: string; brands: any }[] {
+    return Object.keys(obj).map((key) => ({ label: key, brands: obj[key] }));
   }
 }

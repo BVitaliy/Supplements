@@ -1,42 +1,36 @@
 <ion-header mode="ios">
 
   <ion-toolbar [formGroup]="filterForm">
-    <ion-icon slot="start" [src]="'./assets/img/logo.svg'"></ion-icon>
-    <ion-searchbar #searchbar mode="ios" placeholder="Search for a product or ingredient..." show-clear-button="never"
-      [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
-      formControlName="search" (ionChange)="search($event)">
-    </ion-searchbar>
+    <ion-icon slot="start" [src]="'./assets/img/logo.svg'" *ngIf="!isSearchActive"></ion-icon>
+    <div vertical="center">
+      <ion-searchbar #searchbar mode="ios" placeholder="Search for a product or ingredient..." show-clear-button="never"
+        [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
+        formControlName="search" (ionFocus)="onSearchFocus($event)" (ionChange)="search($event)">
+      </ion-searchbar>
+      <!-- Cancel search state -->
+      <div *ngIf="isSearchActive" vertical="center" class="m-left--small flex-shrink--none">
+        <ion-button class="btn btn-link btn-primary" fill="clear" mode="md" (click)="handleCancelSearch()">
+          Cancel
+        </ion-button>
+      </div>
+    </div>
+    <!-- / Cancel search state -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
-  <!-- <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)" *ngIf="!loading">
+  <!-- <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner> -->
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
-  </ion-refresher> -->
+  </ion-refresher>
 
-  <ion-grid *ngIf="!loading">
+  <ion-grid *ngIf="!isSearchActive">
 
     <ng-container *ngIf="!products?.length">
       <div class="data-placeholder type-2">
         <img src="./assets/img/placeholder.svg" alt="">
       </div>
     </ng-container>
-
-
-    <div class="section">
-      <div class="section-header">
-        <h3 class="h3">Recent products</h3>
-      </div>
-
-      <div class="swiper-body" *ngIf="products?.length">
-        <swiper #swiper [config]="slideOpts" class="main-swiper">
-          <ng-template swiperSlide *ngFor="let product of products; let i=index">
-            <app-product-card [product]="product"></app-product-card>
-          </ng-template>
-        </swiper>
-      </div>
-    </div>
 
     <div class="section">
       <div class="section-header">
@@ -47,15 +41,42 @@
         </ion-button>
       </div>
 
-      <div class="swiper-body" *ngIf="products?.length">
+      <div class="swiper-body">
         <swiper #swiper [config]="slideOpts" class="main-swiper">
-          <ng-template swiperSlide *ngFor="let product of products; let i=index">
-            <app-product-card [product]="product"></app-product-card>
-          </ng-template>
+          <ng-container *ngIf="!isLoadingTrending && products?.trending?.length">
+            <ng-template swiperSlide *ngFor="let product of products?.trending; let i=index">
+              <app-product-card [product]="product"></app-product-card>
+            </ng-template>
+          </ng-container>
+          <ng-container *ngIf="isLoadingTrending">
+            <ng-template swiperSlide *ngFor="let product of [1,2,3]; let i=index">
+              <app-product-card [product]="product" [isLoading]="isLoadingTrending"></app-product-card>
+            </ng-template>
+          </ng-container>
         </swiper>
       </div>
     </div>
 
+    <div class="section">
+      <div class="section-header">
+        <h3 class="h3">Recent products</h3>
+      </div>
+
+      <div class="swiper-body">
+        <swiper #swiper [config]="slideOpts" class="main-swiper">
+          <ng-container *ngIf="!isLoadingRecent && products!.recent?.length">
+            <ng-template swiperSlide *ngFor="let product of products!.recent; let i=index">
+              <app-product-card [product]="product?.product"></app-product-card>
+            </ng-template>
+          </ng-container>
+          <ng-container *ngIf="isLoadingRecent">
+            <ng-template swiperSlide *ngFor="let product of [1,2,3]; let i=index">
+              <app-product-card [product]="product" [isLoading]="isLoadingRecent"></app-product-card>
+            </ng-template>
+          </ng-container>
+        </swiper>
+      </div>
+    </div>
     <div class="section">
       <div class="section-header">
         <h3 class="h3">Shop by</h3>
@@ -86,21 +107,28 @@
       <div class="section-header">
         <h3 class="h3">For you</h3>
 
-        <ion-button class="btn btn-link ml-10" fill="clear" mode="md" [routerLink]="['/home/tabs/tab/main/trending']">
+        <ion-button class="btn btn-link ml-10" fill="clear" mode="md" [routerLink]="['/home/tabs/tab/main/for-you']">
           <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
         </ion-button>
       </div>
 
-      <div class="swiper-body" *ngIf="products?.length">
+      <div class="swiper-body">
         <swiper #swiper [config]="slideOpts" class="main-swiper">
-          <ng-template swiperSlide *ngFor="let product of products; let i=index">
-            <app-product-card [product]="product"></app-product-card>
-          </ng-template>
+          <ng-container *ngIf="!isLoadingForYou && products!.forYou?.length">
+            <ng-template swiperSlide *ngFor="let product of products!.forYou; let i=index">
+              <app-product-card [product]="product"></app-product-card>
+            </ng-template>
+          </ng-container>
+          <ng-container *ngIf="isLoadingForYou">
+            <ng-template swiperSlide *ngFor="let product of [1,2,3]; let i=index">
+              <app-product-card [product]="product" [isLoading]="isLoadingForYou"></app-product-card>
+            </ng-template>
+          </ng-container>
         </swiper>
       </div>
     </div>
 
-    <div class="section">
+    <!-- <div class="section">
       <div class="section-header">
         <h3 class="h3">Sales and offers</h3>
 
@@ -116,10 +144,14 @@
           </ng-template>
         </swiper>
       </div>
-    </div>
+    </div> -->
 
 
   </ion-grid>
+
+  <!-- Search system -->
+  <app-search-system *ngIf="isSearchActive" [searchValue]="filterForm.get('search')?.value"></app-search-system>
+  <!-- / Search system -->
   <!-- <ng-container *ngIf="!loading">
     <ion-infinite-scroll threshold="0" (ionInfinite)="loadData()" position="bottom" [disabled]="disableInfinity">
       <ion-infinite-scroll-content loadingSpinner="bubbles">

@@ -83,6 +83,7 @@ export class ChangePasswordPage {
             mode: 'ios',
             position: 'bottom',
           });
+          this.navCtrl.back();
         },
         (error: any) => {
           if (error?.error?.old_password) {

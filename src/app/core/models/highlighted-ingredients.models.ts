@@ -15,6 +15,7 @@ export class IngredientsSection {
 export class ReasonOption {
   public color?: string;
   public label?: ReasonLabels;
+  public type?: string;
   public isActive?: boolean;
 }
 

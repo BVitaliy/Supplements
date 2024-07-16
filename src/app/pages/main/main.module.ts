@@ -7,9 +7,8 @@ import { MainPage } from './main.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { SwiperModule } from 'swiper/angular';
-import {
-  AddFavoriteListProductPageModule,
-} from '../favorites/add-favorite-list-product/add-favorite-list-product.module';
+import { AddFavoriteListProductPageModule } from '../favorites/add-favorite-list-product/add-favorite-list-product.module';
+import { SearchSystemModule } from 'src/app/shared/components/search-system';
 
 @NgModule({
   imports: [
@@ -22,6 +21,7 @@ import {
     MaterialModule,
     SwiperModule,
     AddFavoriteListProductPageModule,
+    SearchSystemModule,
   ],
   declarations: [MainPage],
 })

@@ -27,6 +27,7 @@
   <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher>
+
   <!-- Tips -->
   <div vertical="start" class="p-around--medium highlighted-ingredients__border-bottom">
     <ion-icon src="./assets/img/icons/info-icon-2.svg" class="m-right--x-small m-top--xx-small"></ion-icon>
@@ -39,11 +40,10 @@
   <!-- / Tips -->
 
   <!-- Reasons filter -->
-  <div class="p-vertical--medium p-left--medium highlighted-ingredients__reason-swiper-wrapper"
-    *ngIf="options.length && !loading">
+  <div class="p-vertical--medium p-left--medium highlighted-ingredients__reason-swiper-wrapper">
     <swiper #reasonsSwiper [config]="reasonsSlideOpts">
       <ng-template swiperSlide *ngFor="let reason of reasonsOptions">
-        <ion-chip [outline]="true" (click)="handleSelectReasonFilter(reason.label)"
+        <ion-chip [outline]="true" (click)="handleSelectReasonFilter(reason)"
           [ngClass]="{ 'highlighted-ingredients__reason-swiper-chip--active': activeReasonFilter === reason.label }">
           <div class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': reason.color }"></div>
           <div class="highlighted-ingredients__item-label">
@@ -67,8 +67,14 @@
       <ng-template swiperSlide *ngFor="let ingredient of addedIngredientsOptions">
         <ion-chip [outline]="true">
           <div vertical="center">
-            <div class="highlighted-ingredients__badge m-right--xx-small"
-              [ngStyle]="{ 'background': ingredient.color }"></div>
+            <div *ngIf="ingredient?.is_benefit" class="highlighted-ingredients__badge m-right--x-small"
+              [ngStyle]="{ 'background': '#22B51F' }"></div>
+            <div *ngIf="ingredient?.is_weaknesses" class="highlighted-ingredients__badge m-right--x-small"
+              [ngStyle]="{ 'background': '#FF001C' }"></div>
+            <div *ngIf="ingredient?.is_contamintant" class="highlighted-ingredients__badge m-right--x-small"
+              [ngStyle]="{ 'background': '#FF9635' }"></div>
+            <div *ngIf="ingredient?.is_allergen" class="highlighted-ingredients__badge m-right--x-small"
+              [ngStyle]="{ 'background': '#FDE334' }"></div>
             <div class="highlighted-ingredients__ingredient-label">
               {{ ingredient.name }}
             </div>
@@ -82,7 +88,7 @@
   <!-- / Ingredients added -->
 
   <!-- Search -->
-  <div class="p-horizontal--medium p-bottom--large" [formGroup]="searchForm" *ngIf="options.length && !loading">
+  <div class="p-horizontal--medium p-bottom--large" [formGroup]="searchForm" *ngIf="!loading">
     <ion-searchbar mode="ios" placeholder="Search..." show-clear-button="never"
       [searchIcon]="'./assets/img/icons/search-icon-grey.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
       formControlName="search" class="highlighted-ingredients__search" (ionChange)="search($event)"></ion-searchbar>

@@ -20,6 +20,7 @@ import {
 })
 export class FilterModalComponent implements OnInit {
   @Input() filters!: any;
+  @Input() page!: any;
   public form!: FormGroup;
   public categories: any[] = [];
   public brands: any[] = [];
@@ -49,6 +50,7 @@ export class FilterModalComponent implements OnInit {
       special_offer: new FormControl(false),
       rating_score: new FormControl(null),
     });
+    this.form.patchValue(this.filters);
   }
 
   ionViewWillEnter() {
@@ -59,9 +61,15 @@ export class FilterModalComponent implements OnInit {
       }
     );
     // this.getData();
-    this.getCategories();
-    this.getBrands();
-    this.getIngredients();
+    if (this.page !== 'categories') {
+      this.getCategories();
+    }
+    if (this.page !== 'brands') {
+      this.getBrands();
+    }
+    if (this.page !== 'ingredients') {
+      this.getIngredients();
+    }
   }
 
   doRefresh(event: any) {
@@ -125,7 +133,7 @@ export class FilterModalComponent implements OnInit {
     this.loading = true;
     this.brands = [];
     const data = {
-      limit: 500,
+      limit: 300,
     };
     this.mainService
       .getBrands(data)
@@ -158,7 +166,7 @@ export class FilterModalComponent implements OnInit {
   getIngredients() {
     this.loading = true;
     const data = {
-      limit: 500,
+      limit: 300,
     };
     this.mainService
       .getIngredients(data)

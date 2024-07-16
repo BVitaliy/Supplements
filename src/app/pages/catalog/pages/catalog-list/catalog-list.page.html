@@ -22,21 +22,21 @@
   <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
-  <ng-container [ngSwitch]="isSearchActive">
-    <!-- Catalog list -->
-    <ion-grid *ngSwitchCase="false">
-      <div class="content">
-        <h3 class="h3 mb-16 fw-700 dark">Supplements</h3>
+  <!-- <ng-container [ngSwitch]="isSearchActive"> -->
+  <!-- Catalog list -->
+  <!-- <ion-grid *ngSwitchCase="false"> -->
+  <div class="content">
+    <h3 class="h3 mb-16 fw-700 dark" *ngIf="categories.length">Supplements</h3>
 
-        <div class="list" *ngIf="!isLoading">
-          <ng-container *ngFor="let item of categories">
-            <!-- [routerLink]="['/home/tabs/tab/catalog/',item?.id]" -->
-            <ion-item button lines="none" mode="ios" (click)="handleOpenDetails(item?.id, item?.title)">
-              <ion-icon slot="start" [src]="item?.icon"></ion-icon>
-              <ion-label class="fw-600 dark">{{item?.title}}</ion-label>
-            </ion-item>
-          </ng-container>
-          <!-- <ion-item button lines="none" mode="ios" [routerLink]="['/home/tabs/tab/catalog/1']">
+    <div class="list" *ngIf="!isLoading">
+      <ng-container *ngFor="let item of categories">
+        <!-- [routerLink]="['/home/tabs/tab/catalog/',item?.id]" -->
+        <ion-item button lines="none" mode="ios" (click)="handleOpenDetails(item?.id, item?.title)">
+          <ion-icon slot="start" [src]="item?.icon"></ion-icon>
+          <ion-label class="fw-600 dark">{{item?.title}}</ion-label>
+        </ion-item>
+      </ng-container>
+      <!-- <ion-item button lines="none" mode="ios" [routerLink]="['/home/tabs/tab/catalog/1']">
             <ion-icon slot="start" [src]="'./assets/img/catalog/vitamines.svg'"></ion-icon>
             <ion-label class="fw-600 dark">Vitamins</ion-label>
           </ion-item>
@@ -72,26 +72,28 @@
             <ion-icon slot="start" [src]="'./assets/img/catalog/sleep.svg'"></ion-icon>
             <ion-label class="fw-600 dark">Hair, Skin & Nails</ion-label>
           </ion-item> -->
-        </div>
+    </div>
 
-        <div class="list" *ngIf="isLoading">
-          <ng-container *ngFor="let item of [1,2,3,4,5,6,7]">
-            <ion-item button lines="none" mode="ios">
-              <ion-skeleton-text [animated]="true"
-                style="width: 24px;height: 24px;border-radius: 50%;"></ion-skeleton-text>
+    <div class="list" *ngIf="isLoading">
+      <ng-container *ngFor="let item of [1,2,3,4,5,6,7]">
+        <ion-item button lines="none" mode="ios">
+          <ion-skeleton-text [animated]="true" style="width: 24px;height: 24px;border-radius: 50%;"></ion-skeleton-text>
 
-              <ion-label class="fw-600 dark">
-                <ion-skeleton-text [animated]="true" style="width: 88%;"></ion-skeleton-text>
-              </ion-label>
-            </ion-item>
-          </ng-container>
-        </div>
-      </div>
-    </ion-grid>
-    <!-- / Catalog list -->
+          <ion-label class="fw-600 dark">
+            <ion-skeleton-text [animated]="true" style="width: 88%;"></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </div>
+    <ng-container *ngIf="!categories.length && !isLoading">
+      <app-search-empty class="flex-grow"></app-search-empty>
+    </ng-container>
+  </div>
+  <!-- </ion-grid> -->
+  <!-- / Catalog list -->
 
-    <!-- Search system -->
-    <app-search-system *ngSwitchCase="true" [searchValue]="filterForm.get('search')?.value"></app-search-system>
-    <!-- / Search system -->
-  </ng-container>
+  <!-- Search system -->
+  <!-- <app-search-system *ngSwitchCase="true" [searchValue]="filterForm.get('search')?.value"></app-search-system> -->
+  <!-- / Search system -->
+  <!-- </ng-container> -->
 </ion-content>

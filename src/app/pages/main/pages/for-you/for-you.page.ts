@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { finalize } from 'rxjs';
 import { CatalogService } from 'src/app/pages/catalog/catalog.service';
-import { Products } from 'src/mock/products';
 
 @Component({
-  selector: 'app-trending',
-  templateUrl: './trending.page.html',
-  styleUrls: ['./trending.page.scss'],
+  selector: 'app-for-you',
+  templateUrl: './for-you.page.html',
+  styleUrls: ['./for-you.page.scss'],
 })
-export class TrendingPage implements OnInit {
+export class ForYouPage implements OnInit {
   public products: any[] = [];
   isLoading: boolean = false;
 
@@ -21,20 +20,20 @@ export class TrendingPage implements OnInit {
   ngOnInit() {}
 
   doRefresh(event: any) {
-    this.getTrending(() => event.target.complete());
+    this.getProduct(() => event.target.complete());
   }
 
   ionViewWillEnter() {
-    this.getTrending();
+    this.getProduct();
   }
 
-  getTrending(callbackFunction?: () => void) {
+  getProduct(callbackFunction?: () => void) {
     this.isLoading = true;
     const data = {
-      limit: 100,
+      limit: 60,
     };
     this.catalogService
-      .getTopRated(data)
+      .getForYouProduct(data)
       .pipe(
         finalize(() => {
           this.isLoading = false;

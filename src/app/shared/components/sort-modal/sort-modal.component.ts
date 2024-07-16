@@ -21,7 +21,7 @@ export class SortModalComponent implements OnInit {
   ngOnInit() {
     console.log(this.sort);
     this.sortForm = new FormGroup({
-      sort: new FormControl(this.sort || 'featured'),
+      sort: new FormControl(this.sort || 'average_rating'),
     });
   }
 
@@ -46,5 +46,9 @@ export class SortModalComponent implements OnInit {
     if (this.backBtnSubscription) {
       this.backBtnSubscription.unsubscribe();
     }
+  }
+
+  sortFn($event: any) {
+    this.cancelModal();
   }
 }

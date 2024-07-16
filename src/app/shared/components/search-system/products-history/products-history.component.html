@@ -1,26 +1,18 @@
 <ion-list lines="full">
-  <ion-item
-    *ngFor="let product of productsHistory"
-    [routerLink]="['/home/tabs/tab/catalog/1']"
-    mode="ios"
-    button
-  >
+  <ion-item *ngFor="let product of productsHistory" [routerLink]="['product/detail',product?.id]" mode="ios" button>
     <div class="products-history__wrapper p-vertical--medium" vertical="center" horizontal="between">
       <div class="p-right--medium" vertical="center">
         <!-- Image -->
-        <div
-          vertical="center"
-          horizontal="center"
-          class="products-history__product p-around--x-small m-right--small"
-        >
-          <app-img [src]="product?.image" cssClasses="img-fit-contain" class="products-history__product-img"></app-img>
+        <div vertical="center" horizontal="center" class="products-history__product p-around--x-small m-right--small">
+          <app-img [src]="product?.images[product?.images?.length - 1]?.url" cssClasses="img-fit-contain"
+            class="products-history__product-img"></app-img>
         </div>
         <!-- / Image -->
 
         <div direction="column">
           <!-- Name -->
           <div class="products-history__name m-bottom--xx-small">
-            {{ product?.category }}
+            {{ product?.category || product?.brand?.title }}
           </div>
           <!-- / Name -->
 
@@ -37,14 +29,8 @@
 
 <ng-container [ngSwitch]="isHistory">
   <div *ngSwitchCase="true" class="p-horizontal--medium p-top--medium p-bottom--xx-large">
-    <ion-button
-      class="btn btn-sm"
-      expand="block"
-      fill="outline"
-      mode="md"
-      color="primary"
-      (click)="onCleanHistory.emit()"
-    >
+    <ion-button class="btn btn-sm" expand="block" fill="outline" mode="md" color="primary"
+      (click)="onCleanHistory.emit()">
       <b>Clean history</b>
     </ion-button>
   </div>
@@ -56,12 +42,7 @@
       </div>
 
       <ion-list lines="full">
-        <ion-item
-          *ngFor="let category of categories"
-          [routerLink]="['/home/tabs/tab/catalog/1']"
-          mode="ios"
-          button
-        >
+        <ion-item *ngFor="let category of categories" [routerLink]="['/home/tabs/tab/catalog/1']" mode="ios" button>
           <div class="products-history__wrapper p-vertical--medium" vertical="center">
             <!-- Image -->
             <ion-icon slot="start" [src]="category.image" class="products-history__category-image"></ion-icon>
