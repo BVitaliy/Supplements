@@ -129,7 +129,7 @@ export class AppInterceptor implements HttpInterceptor {
                     this.storage.remove(USER_STORAGE_NAME);
 
                     this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
-                    return throwError(err);
+                    // return throwError(err);
                   }
 
                   return this.refreshToken$.pipe(

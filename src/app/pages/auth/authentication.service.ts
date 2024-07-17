@@ -179,10 +179,7 @@ export class AuthenticationService {
   // Оновлення токена
   refreshToken(body: any): Observable<any> {
     return this.http.post(`${environment.origin}/token/refresh/`, body).pipe(
-      catchError((error) => {
-        // this.alertService.presentErrorAlert(error);
-        return throwError(error);
-      })
+ 
     );
   }
 
