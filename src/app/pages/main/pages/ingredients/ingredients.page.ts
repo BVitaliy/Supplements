@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { finalize } from 'rxjs';
+import { getPriorityValue } from 'src/app/core/functions/priority-value';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { MainService } from '../../main.service';
 
@@ -90,5 +91,9 @@ export class IngredientsPage implements OnInit {
 
   objectToArray(obj: { [key: string]: any }): { label: string; brands: any }[] {
     return Object.keys(obj).map((key) => ({ label: key, brands: obj[key] }));
+  }
+
+  getPriorityValue(data: any) {
+    return getPriorityValue(data);
   }
 }

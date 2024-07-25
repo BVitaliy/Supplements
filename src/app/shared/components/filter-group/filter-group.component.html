@@ -16,6 +16,16 @@
         <ion-icon slot="start" class="m-right--x-small"
           [ngStyle]="{'width': option?.type === 'user_rating' ? '116px' : '20px'}" [src]="option?.icon"
           *ngIf="option?.icon"></ion-icon>
+        <ng-container *ngIf="type === 'ingredients'">
+          <div *ngIf="option?.is_benefit && getPriorityValue(option) === 'is_benefit'"
+            class="ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#22B51F' }"></div>
+          <div *ngIf="option?.is_weaknesses && getPriorityValue(option) === 'is_weaknesses'"
+            class="ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FF001C' }"></div>
+          <div *ngIf="option?.is_contamintant && getPriorityValue(option) === 'is_contamintant'"
+            class="ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FF9635' }"></div>
+          <div *ngIf="option?.is_allergen && getPriorityValue(option) === 'is_allergen'"
+            class="ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FDE334' }"></div>
+        </ng-container>
         {{ option?.type !== 'user_rating' ? option?.title || option?.label : ''}}
         <span class="medium" *ngIf="option?.count">({{option?.count || 0}})</span>
       </ion-label>

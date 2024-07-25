@@ -65,6 +65,7 @@ export class BrandDetailPage implements OnInit {
     });
 
     modal.onDidDismiss().then((returnedData: any) => {
+      this.form.reset();
       if (returnedData && returnedData?.data) {
         const values = {
           ...returnedData?.data,

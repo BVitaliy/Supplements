@@ -30,6 +30,7 @@ export class ChartComponent implements OnInit {
           borderWidth: 1,
         },
       };
+      console.log(this.chartData);
     }
   }
 }

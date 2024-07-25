@@ -34,7 +34,6 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit() {
     this.idFavorilteList = this.route.snapshot.paramMap.get('favoriteId');
-    console.log(this.idFavorilteList);
   }
 
   favoriteHandle($event: any) {
@@ -60,7 +59,6 @@ export class ProductCardComponent implements OnInit {
     modal.onDidDismiss().then((data) => {
       if (data?.data) {
         const ids = data.data.selectedListsIds;
-        console.log('selectedListsIds', data.data.selectedListsIds);
         if (ids?.length) {
           ids?.forEach((id: any) => {
             this.setToFavorites(id);
@@ -96,7 +94,6 @@ export class ProductCardComponent implements OnInit {
 
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
-        console.log(returnedData);
         this.closeModal.emit(true);
       }
     });
@@ -110,7 +107,6 @@ export class ProductCardComponent implements OnInit {
     };
     this.favoriteService.setProductToFavList(data, id).subscribe(
       (data: any) => {
-        console.log(data);
         this.product.in_favorite = true;
         // this.favoritesList = data.results;
       },
@@ -124,7 +120,6 @@ export class ProductCardComponent implements OnInit {
     };
     this.favoriteService.setProductToFavList(data, id).subscribe(
       (data: any) => {
-        console.log(data);
         this.reloadPage.emit(true);
       },
       (error: any) => {}

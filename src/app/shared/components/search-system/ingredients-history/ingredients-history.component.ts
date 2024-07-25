@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { getPriorityValue } from 'src/app/core/functions/priority-value';
 import { IngredientOption } from 'src/app/core/models/highlighted-ingredients.models';
 
 @Component({
@@ -11,4 +12,8 @@ export class IngredientsHistoryComponent {
   @Input() isHistory: boolean = true;
 
   @Output() onCleanHistory: EventEmitter<void> = new EventEmitter<void>();
+
+  getPriorityValue(data: any) {
+    return getPriorityValue(data);
+  }
 }

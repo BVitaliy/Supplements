@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { getPriorityValue } from 'src/app/core/functions/priority-value';
 
 @Component({
   selector: 'app-filter-group',
@@ -61,9 +62,6 @@ export class FilterGroupComponent implements OnInit {
       this.addedOptions.every((el: any): boolean => el !== option.id)
     ) {
       this.addedOptions.push(option?.id);
-      // if (option.id) {
-      //   this.handleChangeCheckboxState(true, option.id);
-      // }
     } else if (
       option &&
       this.addedOptions.some((el: any): boolean => el === option.id)
@@ -71,26 +69,16 @@ export class FilterGroupComponent implements OnInit {
       this.addedOptions = this.addedOptions.filter(
         (el: any): boolean => el !== option.id
       );
-      // if (option.id) {
-      //   this.handleChangeCheckboxState(false, option.id);
-      // }
     }
 
     this.filteredOptions.emit(this.addedOptions);
   }
 
-  private handleChangeCheckboxState(value: boolean, id: number): void {
-    this.optionsToShow = this.optionsToShow.map((option: any) => {
-      return option === id
-        ? {
-            ...option,
-            checked: value,
-          }
-        : option;
-    });
-  }
-
   isSelected(option: any): boolean {
     return !!this.addedOptions.find((el: any) => el === option?.id);
+  }
+
+  getPriorityValue(data: any) {
+    return getPriorityValue(data);
   }
 }

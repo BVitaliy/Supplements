@@ -14,8 +14,14 @@
   font-weight: 500;
   line-height: 21px;
   letter-spacing: 0;
-  color: #04002C;
+  color: #04002c;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.ingredients__badge {
+  width: 10px;
+  min-width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }

@@ -44,22 +44,24 @@ export class MainPage implements OnInit {
 
     public authService: AuthenticationService
   ) {
-    this.storage.get(ACCESS_WITH_APPLE).then((login) => {
-      console.log(login);
-      this.appleLogin = login;
-    });
-    this.storage.get(ACCESS_WITH_GOOGLE).then((login) => {
-      console.log(login);
-      this.googleLogin = login;
-    });
+    // this.storage.get(ACCESS_WITH_APPLE).then((login) => {
+    //   console.log(login);
+    //   this.appleLogin = login;
+    // });
+    // this.storage.get(ACCESS_WITH_GOOGLE).then((login) => {
+    //   console.log(login);
+    //   this.googleLogin = login;
+    // });
+  }
 
+  ionViewWillEnter() {
     this.storage.get('user').then((user) => {
-      console.log(user);
       if (user) {
         this.profile = JSON.parse(user);
       } else {
         this.getUser();
       }
+      console.log(this.profile);
     });
   }
 
@@ -108,8 +110,8 @@ export class MainPage implements OnInit {
         this.profileService.getProfile(decoded?.user_id).subscribe(
           (data: any) => {
             this.storage.set('user', JSON.stringify(data));
-            console.log(data);
             this.profile = data;
+            console.log(this.profile);
           },
           (error: any) => {
             // this.alertService.presentErrorAlert(error?.email?.error);

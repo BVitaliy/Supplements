@@ -49,7 +49,7 @@ export class FavoriteService {
 
   updateFavoritesDetail(id: string, data: any): Observable<any> {
     return this.http
-      .patch(`${environment.origin}/favorite-lists/${id}`, data)
+      .patch(`${environment.origin}/favorite-lists/${id}/`, data)
       .pipe(
         catchError((error) => {
           this.alertService.presentErrorAlert(error);

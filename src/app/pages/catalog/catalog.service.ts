@@ -121,12 +121,14 @@ export class CatalogService {
   }
 
   getProductByBarcode(data: any): Observable<any> {
-    return this.http.post(`${environment.origin}/requests/scan/`, data).pipe(
-      catchError((error) => {
-        this.alertService.presentErrorAlert(error);
-        return throwError(error);
-      })
-    );
+    return this.http
+      .post(`${environment.origin}/requests/scan/`, data)
+      .pipe
+      // catchError((error) => {
+      //   this.alertService.presentErrorAlert(error);
+      //   return throwError(error);
+      // })
+      ();
   }
 
   getProductById(id: string, refresh?: boolean): Observable<any> {
@@ -302,6 +304,14 @@ export class CatalogService {
       );
   }
 
-  // user rating - rating_score
-  // product rating - hide
+  clearHistory(): Observable<any> {
+    return this.http
+      .delete(`${environment.origin}/supplements/search-records/`)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
 }

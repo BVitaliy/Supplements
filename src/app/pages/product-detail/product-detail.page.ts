@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
 import { finalize } from 'rxjs';
@@ -30,6 +37,11 @@ export class ProductDetailPage implements OnInit {
   countChart = 0;
   public ingredients: any[] = [];
 
+  isCollapsed: boolean = true;
+  isButtonVisible: boolean = false;
+
+  @ViewChild('textContent') textContent!: ElementRef;
+
   constructor(
     public navCtrl: NavController,
     // private loadingController: LoadingController,
@@ -48,6 +60,10 @@ export class ProductDetailPage implements OnInit {
     this.setProductAsViewed();
     this.getProductAnalysis();
     this.getIngrediens();
+  }
+
+  toggleText() {
+    this.isCollapsed = !this.isCollapsed;
   }
 
   // Рефреш продукту
@@ -100,6 +116,14 @@ export class ProductDetailPage implements OnInit {
           console.log(data);
           if (data) {
             this.product = data;
+            if (data?.description) {
+              setTimeout(() => {
+                const textHeight = this.textContent.nativeElement.scrollHeight;
+                if (textHeight > 90) {
+                  this.isButtonVisible = true;
+                }
+              }, 200);
+            }
           }
         },
         (error: any) => {

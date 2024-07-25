@@ -5,6 +5,10 @@ export class IngredientOption {
   public id?: number;
   public status?: ReasonLabels;
   public checked?: boolean;
+  is_contamintant?: boolean;
+  is_allergen?: boolean;
+  is_weaknesses?: boolean;
+  is_benefit?: boolean;
 }
 
 export class IngredientsSection {

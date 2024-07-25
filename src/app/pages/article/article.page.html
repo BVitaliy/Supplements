@@ -13,6 +13,11 @@
 
 <ion-content>
   <div class="content p-around--medium">
+
+    <ion-spinner class="spinner" color="primary" name="lines" *ngIf="isLoading"></ion-spinner>
+    <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+    </ion-refresher>
     <div class="article" [innerHTML]="data | safeHtml"></div>
   </div>
 </ion-content>

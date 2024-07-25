@@ -19,7 +19,7 @@
   <ion-grid>
     <div class="product-detail">
       <div class="image">
-        <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
+        <app-img [src]="product?.images[0]" cssClasses="img-fit-contain" *ngIf="product?.images?.length"></app-img>
       </div>
       <ion-text>
         <p class="text-xs medium fw-400 ion-text-uppercase m-bottom--xxx-small">{{product?.category?.title}}</p>
@@ -30,7 +30,7 @@
     <div class="content">
       <div class="review-detail">
         <div class="review-detail__counts">
-          <div class="average dark fw-700">{{ averageAmount }}</div>
+          <div class="average dark fw-700">{{ reviews?.length ? averageAmount : 0 }}</div>
           <div vertical="center">
             <ion-icon
               [src]="averageAmount >= 1 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"

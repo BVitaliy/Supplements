@@ -74,7 +74,7 @@
         <div class="title text-l fw-600 dark m-bottom--x-large">Ingredients summary</div>
 
         <div class="chart">
-          <app-chart [data]="dataChart" [backgroundColor]="backgroundColors"></app-chart>
+          <app-chart [data]="dataChart" [backgroundColor]="backgroundColors" *ngIf="dataChart"></app-chart>
 
           <div class="chart-text">
             <p class="h2 dark">{{countChart}}</p>
@@ -94,32 +94,32 @@
 
         <ng-container *ngIf="type === 'ingredient'">
           <ion-list class="list list-ingredients">
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
-              (click)="openIngredientsModal(product?.benefits)">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+              <!-- (click)="openIngredientsModal(product?.benefits)" -->
               <span class="indicator green"></span>
               <div class="dark ">Benefits</div>
               <div class="count medium m-left--x-small">
                 {{this.analysis?.benefits}}
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
-              (click)="openIngredientsModal(product?.weaknesses)">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+              <!-- (click)="openIngredientsModal(product?.weaknesses)" -->
               <span class="indicator danger-bg"></span>
               <div class="dark ">Weaknesses</div>
               <div class="count medium m-left--x-small">
                 {{this.analysis?.weaknesses}}
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
-              (click)="openIngredientsModal(product?.contaminants)">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+              <!-- (click)="openIngredientsModal(product?.contaminants)" -->
               <span class="indicator primary-bg"></span>
               <div class="dark">Contaminants</div>
               <div class="count medium m-left--x-small">
                 {{this.analysis?.contamintants}}
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
-              (click)="openIngredientsModal(product?.allergens)">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+              <!-- (click)="openIngredientsModal(product?.allergens)" -->
               <span class="indicator warning-bg"></span>
               <div class="dark">Allergens</div>
               <div class="count medium m-left--x-small">
@@ -212,18 +212,12 @@
         </ion-button>
       </div>
 
-      <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
+      <div class="section p-vertical--medium p-horizontal--medium m-bottom--large" *ngIf="product?.description">
         <div class="title text-l fw-600 dark pb-5">Product description</div>
-        <p class="medium fw-500 mb-5">Athletic Greens is the delicious daily habit that sets you up for a healthy
-          future. No
-          other drink or supplement does as
-          much for your body as Athletic Greens: - The antioxidant equivalent of 12 servings of vegetables and fruits in
-          a single
-          serving - 10 years of research and ongoing development - Formulated by nutritionists and doctors - Made in
-          100% Pure New
-          Zealand - Gluten and dairy free - Paleo,</p>
+        <div class="medium fw-500 mb-5" #textContent>{{product?.description}}</div>
 
-        <ion-button class="btn btn-link" fill="clear" mode="md" color="primary">
+        <ion-button class="btn btn-link" fill="clear" mode="md" color="primary" *ngIf="isButtonVisible"
+          (click)="toggleText()">
           Read All
         </ion-button>
       </div>

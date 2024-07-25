@@ -199,13 +199,17 @@ export class FilterModalComponent implements OnInit {
 
   public async handleApplyChanges() {
     // apply changes
-    // console.log(this.addedIngredientsOptions);
+    console.log(this.form.value);
     const values = this.form.value || null;
     this.cancelModal(values);
   }
 
   filtered($event: any, type: string) {
     console.log($event);
+    console.log(type);
+    if (type === 'ingredients') {
+      this.form.get('ingredients')?.setValue($event);
+    }
     if (type === 'categories') {
       this.form.get('categories')?.setValue($event);
     }

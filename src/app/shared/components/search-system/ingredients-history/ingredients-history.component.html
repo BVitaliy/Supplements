@@ -1,27 +1,34 @@
 <ion-list lines="full">
-  <ion-item *ngFor="let ingredient of ingredientsHistory"
-    [routerLink]="['/home/tabs/tab/main/all-brands/', ingredient?.id, {title: ingredient?.name, type:'ingredients'}]"
-    mode="ios" button>
-    <div class="ingredients-history__wrapper p-vertical--medium" vertical="center" horizontal="between">
-      <div vertical="center" class="p-right--medium">
-        <!-- <div class="ingredients-history__badge m-right--x-small" [ngStyle]="{ 'background': ingredient.color }"></div> -->
-        <div class="ingredients-history__item-label">
-          {{ ingredient.name }}
+  <ng-container *ngFor="let ingredient of ingredientsHistory">
+
+
+
+    <ion-item
+      [routerLink]="['/home/tabs/tab/main/all-brands/', ingredient?.id, {title: ingredient?.name, type:'ingredients'}]"
+      mode="ios" button *ngIf="ingredient.name">
+      <div class="ingredients-history__wrapper p-vertical--medium" vertical="center" horizontal="between">
+        <div vertical="center" class="p-right--medium">
+          <!-- <div class="ingredients-history__badge m-right--x-small" [ngStyle]="{ 'background': ingredient.color }"></div> -->
+          <div *ngIf="ingredient?.is_benefit && getPriorityValue(ingredient) === 'is_benefit'"
+            class="ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#22B51F' }"></div>
+          <div *ngIf="ingredient?.is_weaknesses && getPriorityValue(ingredient) === 'is_weaknesses'"
+            class="ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FF001C' }"></div>
+          <div *ngIf="ingredient?.is_contamintant && getPriorityValue(ingredient) === 'is_contamintant'"
+            class="ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FF9635' }"></div>
+          <div *ngIf="ingredient?.is_allergen && getPriorityValue(ingredient) === 'is_allergen'"
+            class="ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FDE334' }"></div>
+          <div class="ingredients-history__item-label">
+            {{ ingredient.name }}
+          </div>
         </div>
       </div>
-    </div>
-  </ion-item>
+    </ion-item>
+  </ng-container>
 </ion-list>
-<!-- 
-<div *ngIf="isHistory" class="p-horizontal--medium p-top--medium p-bottom--xx-large">
-  <ion-button
-    class="btn btn-sm"
-    expand="block"
-    fill="outline"
-    mode="md"
-    color="primary"
-    (click)="onCleanHistory.emit()"
-  >
+
+<div *ngIf="ingredientsHistory?.length" class="p-horizontal--medium p-top--medium p-bottom--xx-large">
+  <ion-button class="btn btn-sm" expand="block" fill="outline" mode="md" color="primary"
+    (click)="onCleanHistory.emit()">
     <b>Clean history</b>
   </ion-button>
-</div> -->
+</div>

@@ -13,6 +13,7 @@ import { MainService } from 'src/app/pages/main/main.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { finalize } from 'rxjs';
 import { CatalogService } from 'src/app/pages/catalog/catalog.service';
+import { getPriorityValue } from 'src/app/core/functions/priority-value';
 
 @Component({
   selector: 'app-highlighted-ingredients',
@@ -271,5 +272,9 @@ export class HighlightedIngredientsPage implements OnInit {
           }
         }
       );
+  }
+
+  getPriorityValue(data: any) {
+    return getPriorityValue(data);
   }
 }

@@ -18,16 +18,27 @@
     <!-- Products tab content -->
     <ng-container *ngSwitchCase="searchTabs.products">
 
-      <!-- / Products history -->
-      <ng-container *ngIf="productsItems?.length">
-        <app-products-history [productsHistory]="productsItems" (onCleanHistory)="handleCleanProductsHistory()"
-          [isHistory]="false"></app-products-history>
+      <ng-container *ngIf="!searchValue">
+        <app-products-history [productsHistory]="productsHistoryItems" [searchValue]="searchValue"
+          [categories]="categories" (onCleanHistory)="handleCleanProductsHistory()"
+          *ngIf="productsHistoryItems?.length"></app-products-history>
+
+        <app-search-empty-state class="flex-grow" *ngIf="!productsHistoryItems?.length"></app-search-empty-state>
       </ng-container>
 
-      <!-- Empty state -->
-      <ng-container *ngIf="!productsItems?.length">
-        <app-search-empty-state class="flex-grow"></app-search-empty-state>
+      <ng-container *ngIf="searchValue">
+        <ng-container *ngIf="productsItems?.length">
+          <app-products-history [productsHistory]="productsItems"></app-products-history>
+        </ng-container>
+
+        <!-- Empty state -->
+        <ng-container *ngIf="!productsItems?.length">
+          <app-search-empty class="flex-grow"></app-search-empty>
+        </ng-container>
       </ng-container>
+
+
+
 
       <!-- / Empty search value -->
     </ng-container>
@@ -35,20 +46,27 @@
 
     <!-- Ingredients tab content -->
     <ng-container *ngSwitchCase="searchTabs.ingredients">
+      <ng-container *ngIf="!searchValue">
+        <app-ingredients-history [ingredientsHistory]="ingredientsHistoryItems"
+          (onCleanHistory)="handleCleanProductsHistory()"
+          *ngIf="ingredientsHistoryItems?.length"></app-ingredients-history>
 
-
-      <!-- Ingredients history -->
-      <ng-container *ngIf="ingredientsItems?.length">
-        <app-ingredients-history [ingredientsHistory]="ingredientsItems"
-          (onCleanHistory)="handleCleanIngredientsHistory()"></app-ingredients-history>
+        <app-search-empty-state class="flex-grow" *ngIf="!ingredientsHistoryItems?.length"></app-search-empty-state>
       </ng-container>
-      <!-- / Ingredients history -->
 
-      <!-- Empty state -->
-      <ng-container *ngIf="!ingredientsItems?.length">
-        <app-search-empty-state class="flex-grow"></app-search-empty-state>
+      <ng-container *ngIf="searchValue">
+        <ng-container *ngIf="ingredientsItems?.length">
+          <app-ingredients-history [ingredientsHistory]="ingredientsItems"
+            (onCleanHistory)="handleCleanIngredientsHistory()"></app-ingredients-history>
+        </ng-container>
+        <!-- / Ingredients history -->
+
+        <!-- Empty state -->
+        <ng-container *ngIf="!ingredientsItems?.length">
+          <app-search-empty class="flex-grow"></app-search-empty>
+        </ng-container>
+        <!-- / Empty state -->
       </ng-container>
-      <!-- / Empty state -->
     </ng-container>
     <!-- / Empty search value -->
 

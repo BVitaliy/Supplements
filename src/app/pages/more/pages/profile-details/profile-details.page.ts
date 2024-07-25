@@ -33,15 +33,16 @@ export class ProfileDetailsPage implements OnInit {
     private platform: Platform,
     private modalController: ModalController,
     private photoService: PhotoService
-  ) {
-    this.storage.get('user').then((user) => {
-      if (user) {
-        this.profileDetails = JSON.parse(user);
-      } else {
-        // this.getUser();
-      }
-      this.getUser();
-    });
+  ) {}
+
+  ionViewWillEnter() {
+    // this.storage.get('user').then((user) => {
+    //   if (user) {
+    //     this.profileDetails = JSON.parse(user);
+    //   } else {
+    this.getUser();
+    //   }
+    // });
   }
 
   public ngOnInit(): void {}
@@ -101,9 +102,7 @@ export class ProfileDetailsPage implements OnInit {
     });
     modal.onDidDismiss().then((data) => {
       if (data?.data) {
-        // save new value
         let body = null;
-        console.log(data?.data);
         switch (data?.data.fieldTitle) {
           case 'first_name': {
             body = {
@@ -111,7 +110,7 @@ export class ProfileDetailsPage implements OnInit {
               first_name: data?.data?.fieldNewValue,
             };
             console.log(body);
-            this.handleProfile(body);
+            this.handleProfile(body, 'first_name');
             break;
           }
           case 'last_name': {
@@ -119,7 +118,7 @@ export class ProfileDetailsPage implements OnInit {
               ...this.profileDetails,
               last_name: data?.data?.fieldNewValue,
             };
-            this.handleProfile(body);
+            this.handleProfile(body, 'last_name');
             break;
           }
           case 'email': {
@@ -127,7 +126,7 @@ export class ProfileDetailsPage implements OnInit {
               ...this.profileDetails,
               email: data?.data?.fieldNewValue,
             };
-            this.handleProfile(body);
+            this.handleProfile(body, 'email');
             break;
           }
           case 'gender': {
@@ -135,7 +134,7 @@ export class ProfileDetailsPage implements OnInit {
               ...this.profileDetails,
               gender: data?.data?.fieldNewValue,
             };
-            this.handleProfile(body);
+            this.handleProfile(body, 'gender');
             break;
           }
           case 'date_of_birth': {
@@ -143,7 +142,7 @@ export class ProfileDetailsPage implements OnInit {
               ...this.profileDetails,
               date_of_birth: data?.data?.fieldNewValue,
             };
-            this.handleProfile(body);
+            this.handleProfile(body, 'date_of_birth');
             break;
           }
         }
@@ -152,30 +151,19 @@ export class ProfileDetailsPage implements OnInit {
     return await modal.present();
   }
 
-  handleProfile(values: any) {
+  handleProfile(values: any, field: string) {
     this.loading = true;
-    console.log(values);
-    if (!values.image) {
-      // values.image =
-      //   'https://lh3.googleusercontent.com/a/ACg8ocK4cNWxa9nlVf85M-cUqi9rw0mvAMfN0X_rQrGqTDzthw0=s83-c-mo';
-    }
 
     const formData = new FormData();
-
-    formData.append('date_of_birth', values?.date_of_birth);
-    formData.append('email', values?.email);
-    formData.append('first_name', values?.first_name);
-    formData.append('last_name', values?.last_name);
-    formData.append('gender', values?.gender);
+    formData.append(field, values[field]);
     if (this.profileDetails.image && this.format) {
       const blob = this.photoService.base64toBlob(this.profileDetails.image);
       formData.append('image', blob, 'image.' + this.format);
     }
-    console.log(formData);
     this.profileService.updateProfile(this.userId, formData).subscribe(
       (data: any) => {
-        console.log(data);
         this.profileDetails = data;
+        this.storage.set('user', JSON.stringify(data));
         this.loading = false;
         this.alertService.createToast({
           header: 'Profile was successfully updated!',
@@ -228,7 +216,7 @@ export class ProfileDetailsPage implements OnInit {
         ) {
           this.format = 'svg';
         }
-        this.handleProfile(this.profileDetails);
+        this.handleProfile(this.profileDetails, 'image');
       }
     });
 

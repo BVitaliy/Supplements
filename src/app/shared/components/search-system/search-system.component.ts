@@ -20,32 +20,12 @@ export class SearchSystemComponent implements OnChanges {
 
   public searchActiveTab: SearchSystemTabs = SearchSystemTabs.products;
   public searchTabs: typeof SearchSystemTabs = SearchSystemTabs;
-  public categories: any[] = [
-    {
-      image: './assets/img/catalog/vitamines.svg',
-      label: 'Vitamins',
-    },
-    {
-      image: './assets/img/catalog/minerales.svg',
-      label: 'Minerals',
-    },
-    {
-      image: './assets/img/catalog/sleep.svg',
-      label: 'Sleep',
-    },
-  ];
+  public categories: any[] = [];
   public productsHistoryItems: any[] = [];
   public productsItems: any[] = [];
-  public ingredientsHistoryItems: IngredientOption[] = [
-    // {
-    //   color: '#22B51F',
-    //   label: 'Aloe Vera',
-    //   id: 1,
-    //   status: ReasonLabels.benefit,
-    //   checked: false,
-    // },
-  ];
+  public ingredientsHistoryItems: IngredientOption[] = [];
   public ingredientsItems: any[] = [];
+  lastSearchRecord: any;
 
   constructor(private catalogService: CatalogService) {
     this.getData();
@@ -73,11 +53,21 @@ export class SearchSystemComponent implements OnChanges {
   }
 
   public handleCleanProductsHistory(): void {
-    this.productsHistoryItems = [];
+    this.cleatHistory();
   }
 
   public handleCleanIngredientsHistory(): void {
-    this.ingredientsHistoryItems = [];
+    this.cleatHistory();
+  }
+
+  cleatHistory() {
+    this.catalogService.clearHistory().subscribe(
+      (data: any) => {
+        this.productsHistoryItems = [];
+        this.ingredientsHistoryItems = [];
+      },
+      (error: any) => {}
+    );
   }
 
   getData() {
@@ -91,7 +81,11 @@ export class SearchSystemComponent implements OnChanges {
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
+          if (data?.results?.length) {
+            this.lastSearchRecord = data?.results[0];
+            this.searchProduct(this.lastSearchRecord);
+          }
+          console.log(this.lastSearchRecord);
         },
         (error: any) => {
           // if (error.status === 401) {
@@ -101,14 +95,23 @@ export class SearchSystemComponent implements OnChanges {
       );
   }
 
-  searchProduct() {
+  searchProduct(firstSearchDate?: any) {
     this.isLoading = true;
-    const data = {
-      query: this.searchValue,
-    };
-    const params = {
-      limit: 50,
-    };
+    let data: any;
+    let params: any;
+    if (firstSearchDate) {
+      data = firstSearchDate;
+      params = {
+        limit: 4,
+      };
+    } else {
+      data = {
+        query: this.searchValue,
+      };
+      params = {
+        limit: 50,
+      };
+    }
     this.catalogService
       .searchProduct(data, params)
       .pipe(
@@ -118,8 +121,21 @@ export class SearchSystemComponent implements OnChanges {
       )
       .subscribe({
         next: (data: any) => {
-          this.productsItems = data?.results;
-          console.log(data);
+          if (firstSearchDate) {
+            if (data?.results?.length) {
+              data?.results?.forEach((el: any, index: number) => {
+                if (index < 4) {
+                  this.productsHistoryItems.push(el);
+                  if (el.ingredients?.length) {
+                    this.ingredientsHistoryItems =
+                      this.ingredientsHistoryItems.concat(el.ingredients);
+                  }
+                }
+              });
+            }
+          } else {
+            this.productsItems = data?.results;
+          }
         },
         error: (error: any) => {},
       });

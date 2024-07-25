@@ -1,5 +1,5 @@
 <ion-list lines="full">
-  <ion-item *ngFor="let product of productsHistory" [routerLink]="['product/detail',product?.id]" mode="ios" button>
+  <ion-item *ngFor="let product of productsHistory" [routerLink]="['/product/detail',product?.id]" mode="ios" button>
     <div class="products-history__wrapper p-vertical--medium" vertical="center" horizontal="between">
       <div class="p-right--medium" vertical="center">
         <!-- Image -->
@@ -12,7 +12,7 @@
         <div direction="column">
           <!-- Name -->
           <div class="products-history__name m-bottom--xx-small">
-            {{ product?.category || product?.brand?.title }}
+            {{ product?.category?.title || product?.brand?.title }}
           </div>
           <!-- / Name -->
 
@@ -27,35 +27,13 @@
   </ion-item>
 </ion-list>
 
-<ng-container [ngSwitch]="isHistory">
-  <div *ngSwitchCase="true" class="p-horizontal--medium p-top--medium p-bottom--xx-large">
+<ng-container *ngIf="productsHistory?.length">
+  <div class="p-horizontal--medium p-top--medium p-bottom--xx-large">
     <ion-button class="btn btn-sm" expand="block" fill="outline" mode="md" color="primary"
       (click)="onCleanHistory.emit()">
       <b>Clean history</b>
     </ion-button>
   </div>
 
-  <ng-container *ngSwitchCase="false">
-    <ng-container *ngIf="categories.length">
-      <div class="products-history__search-text p-horizontal--medium p-top--medium p-bottom--x-small">
-        Search “<span class="products-history__search-value">{{ searchValue }}</span>” in
-      </div>
 
-      <ion-list lines="full">
-        <ion-item *ngFor="let category of categories" [routerLink]="['/home/tabs/tab/catalog/1']" mode="ios" button>
-          <div class="products-history__wrapper p-vertical--medium" vertical="center">
-            <!-- Image -->
-            <ion-icon slot="start" [src]="category.image" class="products-history__category-image"></ion-icon>
-            <!-- / Image -->
-
-            <!-- Label -->
-            <div class="products-history__category-label m-left--small">
-              {{ category.label }}
-            </div>
-            <!-- / Label -->
-          </div>
-        </ion-item>
-      </ion-list>
-    </ng-container>
-  </ng-container>
 </ng-container>

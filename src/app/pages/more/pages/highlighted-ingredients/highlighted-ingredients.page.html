@@ -109,8 +109,14 @@
         <div *ngFor="let ingredient of option.ingredients; let last = last" vertical="center" horizontal="between"
           [ngClass]="{ 'm-bottom--large': !last }">
           <div vertical="center" class="p-right--x-small">
-            <div class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': ingredient.color }">
-            </div>
+            <div *ngIf="ingredient?.is_benefit && getPriorityValue(ingredient) === 'is_benefit'"
+              class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#22B51F' }"></div>
+            <div *ngIf="ingredient?.is_weaknesses && getPriorityValue(ingredient) === 'is_weaknesses'"
+              class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FF001C' }"></div>
+            <div *ngIf="ingredient?.is_contamintant && getPriorityValue(ingredient) === 'is_contamintant'"
+              class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FF9635' }"></div>
+            <div *ngIf="ingredient?.is_allergen && getPriorityValue(ingredient) === 'is_allergen'"
+              class="highlighted-ingredients__badge m-right--x-small" [ngStyle]="{ 'background': '#FDE334' }"></div>
             <div class="highlighted-ingredients__item-label">
               {{ ingredient.name }}
             </div>
