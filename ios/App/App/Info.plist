@@ -52,6 +52,8 @@
 	<string>To be able to call/chat</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To select photos from the library</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>To save the captured photos to the gallery</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

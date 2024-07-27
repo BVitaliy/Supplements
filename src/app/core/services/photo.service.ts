@@ -25,10 +25,10 @@ export class PhotoService {
       source: CameraSource.Camera,
       direction: CameraDirection[direction || 'Rear'],
       // presentationStyle: 'fullscreen',
-      promptLabelHeader: 'Виберіть один із варіантів', // 'Виберіть, де хочете взяти світлину'
-      promptLabelCancel: 'Відмінити',
-      promptLabelPhoto: 'Галерея',
-      promptLabelPicture: 'Камера',
+      promptLabelHeader: 'Choose one of the options', // 'Choose where you want to take the picture'
+      promptLabelCancel: 'Cancel',
+      promptLabelPhoto: 'Gallery',
+      promptLabelPicture: 'Camera',
     };
     return Camera.getPhoto(options);
 
@@ -71,10 +71,10 @@ export class PhotoService {
         source: CameraSource.Photos,
         direction: CameraDirection.Front,
         // presentationStyle: 'fullscreen',
-        promptLabelHeader: 'Виберіть один із варіантів', // 'Виберіть, де хочете взяти світлину'
-        promptLabelCancel: 'Відмінити',
-        promptLabelPhoto: 'Галерея',
-        promptLabelPicture: 'Камера',
+        promptLabelHeader: 'Choose one of the options', // 'Choose where you want to take the picture'
+        promptLabelCancel: 'Cancel',
+        promptLabelPhoto: 'Gallery',
+        promptLabelPicture: 'Camera',
       };
       return Camera.getPhoto(options);
     }
