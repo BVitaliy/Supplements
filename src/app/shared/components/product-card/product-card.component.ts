@@ -88,7 +88,7 @@ export class ProductCardComponent implements OnInit {
       handle: true,
       componentProps: {
         openedInModal: true,
-        id: 1,
+        id: this.product?.id,
       },
     });
 

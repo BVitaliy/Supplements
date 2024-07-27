@@ -10,15 +10,41 @@
     </div>
     <!-- / Search -->
 
-    <ion-list lines="full" *ngIf="searchText.length">
+    <!-- <ion-list lines="full" *ngIf="searchText.length">
       <ion-item *ngFor="let product of products">
         <div class="p-vertical--medium">
           <app-product-card [product]="product" [type]="'horizontal'" [openInModal]="openInModal"
             (closeModal)="cancelModal(true)"></app-product-card>
         </div>
       </ion-item>
+    </ion-list> -->
+
+    <ion-list lines="full" *ngIf="products.length && !isLoading">
+      <ng-container *ngFor="let product of products">
+        <div class="p-around--medium card">
+          <app-product-card [product]="product" [type]="'horizontal'" [openInModal]="openInModal"
+            (closeModal)="cancelModal(true)"></app-product-card>
+        </div>
+      </ng-container>
     </ion-list>
 
-  </div>
+    <ion-list lines="full" *ngIf="isLoading">
+      <ng-container *ngFor="let product of [1,2,3,4]">
+        <div class="p-around--medium card">
+          <app-product-card [product]="product" [type]="'horizontal'" [favorite]="true"
+            [isLoading]="isLoading"></app-product-card>
+        </div>
+      </ng-container>
+    </ion-list>
 
+    <ng-container *ngIf="!products.length && !isLoading">
+      <ng-container *ngIf="searchText.length">
+        <app-search-empty class="flex-grow"></app-search-empty>
+      </ng-container>
+      <ng-container *ngIf="!searchText.length">
+        <app-search-empty-state class="flex-grow"></app-search-empty-state>
+      </ng-container>
+    </ng-container>
+
+  </div>
 </ion-content>

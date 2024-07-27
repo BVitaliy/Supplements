@@ -73,7 +73,7 @@
       <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
         <div class="title text-l fw-600 dark m-bottom--x-large">Ingredients summary</div>
 
-        <div class="chart">
+        <div class="chart" *ngIf="countChart">
           <app-chart [data]="dataChart" [backgroundColor]="backgroundColors" *ngIf="dataChart"></app-chart>
 
           <div class="chart-text">
@@ -218,7 +218,7 @@
 
         <ion-button class="btn btn-link" fill="clear" mode="md" color="primary" *ngIf="isButtonVisible"
           (click)="toggleText()">
-          Read All
+          {{ isCollapsed ? 'Read All' : 'Read Less' }}
         </ion-button>
       </div>
 

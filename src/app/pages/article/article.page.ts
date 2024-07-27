@@ -33,6 +33,7 @@ export class ArticlePage implements OnInit {
   }
 
   getData(callbackFunction?: () => void) {
+    this.isLoading = true;
     if (this.type === 'privacy') {
       this.profileService
         .getPolicy()

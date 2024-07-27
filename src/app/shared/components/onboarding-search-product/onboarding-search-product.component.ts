@@ -1,6 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Products } from 'src/mock/products';
+import { finalize } from 'rxjs';
+import { ACCESS_TOKEN_STORAGE_NAME } from 'src/app/app.config';
+import { CatalogService } from 'src/app/pages/catalog/catalog.service';
 
 @Component({
   selector: 'app-onboarding-search-product',
@@ -12,9 +14,12 @@ export class OnboardingSearchProductComponent implements OnInit {
   modalHeight = 0;
   searchText = '';
   openInModal = true;
-  constructor(private modalController: ModalController) {
-    this.products = Products;
-  }
+  isLoading = false;
+
+  constructor(
+    private modalController: ModalController,
+    private catalogService: CatalogService
+  ) {}
 
   ngOnInit() {
     this.modalHeight = Math.floor(0.9 * window.innerHeight);
@@ -23,6 +28,22 @@ export class OnboardingSearchProductComponent implements OnInit {
   public search(event: any): void {
     console.log(event?.detail?.value);
     this.searchText = event?.detail?.value;
+
+    this.isLoading = true;
+    this.catalogService
+      .searchProduct({ query: this.searchText })
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.products = data.results;
+        },
+        error: (error: any) => {},
+      });
   }
 
   async cancelModal(closeModal = false) {

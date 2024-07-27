@@ -109,7 +109,7 @@ export class SearchSystemComponent implements OnChanges {
         query: this.searchValue,
       };
       params = {
-        limit: 50,
+        limit: 30,
       };
     }
     this.catalogService

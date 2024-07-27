@@ -53,8 +53,8 @@ export class ProductDetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    console.log(this.id);
+    this.id = this.id || this.route.snapshot.paramMap.get('id');
+
     this.getProduct();
     this.getProductReviewById();
     this.setProductAsViewed();
@@ -113,7 +113,6 @@ export class ProductDetailPage implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
           if (data) {
             this.product = data;
             if (data?.description) {

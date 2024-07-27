@@ -1,3 +1,7 @@
+:host {
+  display: block;
+  width: 100%;
+}
 .product {
   &.vertical {
     border-radius: 10px;
@@ -37,6 +41,11 @@
       justify-content: space-between;
       width: calc(100% - 122px);
     }
+  }
+
+  .inner {
+    display: block;
+    text-align: left;
   }
 
   .title {

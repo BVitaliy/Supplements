@@ -23,4 +23,6 @@ ion-list {
 .content {
   overflow: auto;
   padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }

@@ -48,9 +48,6 @@ export class AddProductPage implements OnInit {
       description: new FormControl(null),
       decline_reason: new FormControl(null),
     });
-    if (this.platform.is('hybrid')) {
-      this.themeOptions.setStatusBarDark();
-    }
   }
 
   ionViewWillEnter() {
@@ -60,6 +57,9 @@ export class AddProductPage implements OnInit {
         this.cancelModal();
       }
     );
+    if (this.platform.is('hybrid')) {
+      this.themeOptions.setStatusBarWhite();
+    }
     if (this.id) {
       this.getProduct();
     }

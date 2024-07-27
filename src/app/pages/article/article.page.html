@@ -18,6 +18,6 @@
     <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
       <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
     </ion-refresher>
-    <div class="article" [innerHTML]="data | safeHtml"></div>
+    <div class="article" [innerHTML]="data | safeHtml" *ngIf="!isLoading"></div>
   </div>
 </ion-content>

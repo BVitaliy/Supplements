@@ -464,8 +464,7 @@ ion-modal {
   }
 
   &.modal-sheet {
-    // --border-radius: 20px;
-    --border-radius: 20px 20px 0 0;
+    --border-radius: 20px;
     .ion-page {
       --border-radius: 20px 20px 0 0;
       border-radius: 20px 20px 0px 0px;

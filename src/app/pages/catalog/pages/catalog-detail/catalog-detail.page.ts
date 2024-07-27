@@ -69,15 +69,15 @@ export class CatalogDetailPage implements OnInit {
 
     modal.onDidDismiss().then((returnedData: any) => {
       this.filterForm.reset();
+      console.log(returnedData);
+      console.log(this.filterForm);
       if (returnedData && returnedData?.data) {
-        console.log();
         this.filterForm.patchValue(returnedData?.data);
         const values = {
           ...returnedData?.data,
           categories: [this.id],
         };
 
-        console.log(values);
         this.filteredProduct(values);
       }
     });

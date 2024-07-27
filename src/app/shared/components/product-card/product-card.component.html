@@ -1,8 +1,9 @@
 <div class="product" [ngClass]="type" *ngIf="!isLoading">
 
   <div class="image" (click)="openDetail()">
-    <app-img [src]="product?.images[product?.images?.length - 1 || 0]?.url" cssClasses="img-fit-contain"
-      *ngIf="product?.images?.length"></app-img>
+    <app-img
+      [src]="product?.images[product?.images?.length - 1 || 0]?.url || product?.images[product?.images?.length - 1 || 0]?.image"
+      cssClasses="img-fit-contain" *ngIf="product?.images?.length"></app-img>
   </div>
   <div class="content">
     <div (click)="openDetail()">
@@ -57,7 +58,7 @@
     <ion-skeleton-text [animated]="true"></ion-skeleton-text>
   </div>
   <div class="content">
-    <div>
+    <div class="inner">
       <div class="category medium"><ion-skeleton-text [animated]="true"
           style="width: 70%;margin-bottom: 3px;"></ion-skeleton-text></div>
       <div class="title text-s line-clamp-3 fw-600 dark">
