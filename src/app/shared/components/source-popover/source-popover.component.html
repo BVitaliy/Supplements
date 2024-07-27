@@ -3,12 +3,12 @@
   <div class="content">
     <div class="title dark h2 fw-700">Select image source</div>
 
-    <ion-item class="fw-600 text-m dark" button detail="false" lines="none" (click)="openCamera()">
+    <ion-item class="fw-600 text-m dark" button detail="false" lines="none" (click)="checkCameraPermissions()">
       <ion-icon size="large" [src]="'./assets/img/product/camera.svg'" slot="start"></ion-icon>
       Take a photo
     </ion-item>
 
-    <ion-item class="fw-600 text-m dark" button detail="false" lines="none" (click)="openGallery()">
+    <ion-item class="fw-600 text-m dark" button detail="false" lines="none" (click)="getPhotoFromGallery()">
       <ion-icon size="large" [src]="'./assets/img/product/library.svg'" slot="start"></ion-icon>
       Use photo from library
     </ion-item>

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { PhotoService } from 'src/app/core/services/photo.service';
 import { Filesystem } from '@capacitor/filesystem';
+import { Camera } from '@capacitor/camera';
 
 @Component({
   selector: 'app-source-popover',
@@ -98,6 +99,52 @@ export class SourcePopoverComponent implements OnInit {
     );
   }
 
+  async checkCameraPermissions() {
+    if (this.platform.is('android')) {
+      this.openCamera();
+    } else {
+      const status = await Camera.checkPermissions();
+
+      if (status.photos === 'denied') {
+        this.showSettingsAlert();
+      } else if (status.photos === 'prompt') {
+        const result = await Camera.requestPermissions();
+        if (result.photos === 'denied') {
+          this.showSettingsAlert();
+        } else {
+          this.openCamera();
+        }
+      } else {
+        this.openCamera();
+      }
+    }
+  }
+
+  async getPhotoFromGallery() {
+    if (this.platform.is('android')) {
+      this.openGallery();
+    } else {
+      const status = await Camera.checkPermissions();
+
+      if (status.photos === 'denied') {
+        this.showSettingsAlert();
+      } else if (status.photos === 'prompt') {
+        const result = await Camera.requestPermissions();
+        if (result.photos === 'denied') {
+          this.showSettingsAlert();
+        } else {
+          this.openGallery();
+        }
+      } else {
+        this.openGallery();
+      }
+    }
+  }
+
+  showSettingsAlert() {
+    // Use your preferred alert method, this is just an example
+    alert('Please enable photo permissions in the app settings.');
+  }
   async cancelModal() {
     if (this.backBtnSubscription) {
       this.backBtnSubscription.unsubscribe();
