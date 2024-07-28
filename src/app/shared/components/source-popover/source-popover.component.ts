@@ -127,7 +127,13 @@ export class SourcePopoverComponent implements OnInit {
       const status = await Camera.checkPermissions();
 
       if (status.photos === 'denied') {
-        this.showSettingsAlert();
+        // this.showSettingsAlert();
+        const result = await Camera.requestPermissions();
+        if (result.photos === 'denied') {
+          this.showSettingsAlert();
+        } else {
+          this.openGallery();
+        }
       } else if (status.photos === 'prompt') {
         const result = await Camera.requestPermissions();
         if (result.photos === 'denied') {

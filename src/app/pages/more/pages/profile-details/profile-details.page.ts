@@ -158,7 +158,10 @@ export class ProfileDetailsPage implements OnInit {
     formData.append(field, values[field]);
     if (this.profileDetails.image && this.format) {
       const blob = this.photoService.base64toBlob(this.profileDetails.image);
+      console.log(this.format);
       formData.append('image', blob, 'image.' + this.format);
+      console.log(formData);
+      console.log(blob);
     }
     this.profileService.updateProfile(this.userId, formData).subscribe(
       (data: any) => {

@@ -178,9 +178,12 @@ export class AddProductPage implements OnInit {
       const onClosedData = this.form.value || null;
       await this.modalController.dismiss(onClosedData);
     } else {
-      this.navCtrl.back();
+      // this.navCtrl.back();
+      this.navCtrl.navigateBack(['home/tabs/tab/main']);
     }
   }
+
+  goToMainPage() {}
 
   ionViewDidLeave() {
     if (this.backBtnSubscription) {
