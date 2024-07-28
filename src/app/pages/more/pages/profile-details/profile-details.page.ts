@@ -162,32 +162,35 @@ export class ProfileDetailsPage implements OnInit {
       formData.append('image', blob, 'image.' + this.format);
       console.log(formData);
       console.log(blob);
+      setTimeout(() => {}, 300);
     }
-    this.profileService.updateProfile(this.userId, formData).subscribe(
-      (data: any) => {
-        this.profileDetails = data;
-        this.storage.set('user', JSON.stringify(data));
-        this.loading = false;
-        this.alertService.createToast({
-          header: 'Profile was successfully updated!',
-          mode: 'ios',
-          position: 'bottom',
-        });
-        this.format = '';
-      },
-      (error: any) => {
-        this.loading = false;
-        // this.alertService.presentErrorAlert(error?.email?.error);
+    setTimeout(() => {
+      this.profileService.updateProfile(this.userId, formData).subscribe(
+        (data: any) => {
+          this.profileDetails = data;
+          this.storage.set('user', JSON.stringify(data));
+          this.loading = false;
+          this.alertService.createToast({
+            header: 'Profile was successfully updated!',
+            mode: 'ios',
+            position: 'bottom',
+          });
+          this.format = '';
+        },
+        (error: any) => {
+          this.loading = false;
+          // this.alertService.presentErrorAlert(error?.email?.error);
 
-        if (error.status === 401) {
-          this.alertService.presentErrorAlert('Something went wrong');
-        } else {
-          this.alertService.presentErrorAlert(
-            'The data is not updated. Check if all data has been filled'
-          );
+          if (error.status === 401) {
+            this.alertService.presentErrorAlert('Something went wrong');
+          } else {
+            this.alertService.presentErrorAlert(
+              'The data is not updated. Check if all data has been filled'
+            );
+          }
         }
-      }
-    );
+      );
+    }, 400);
   }
 
   async openSourcePopover() {
