@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { finalize } from 'rxjs';
-import { ACCESS_TOKEN_STORAGE_NAME } from 'src/app/app.config';
 import { CatalogService } from 'src/app/pages/catalog/catalog.service';
 
 @Component({

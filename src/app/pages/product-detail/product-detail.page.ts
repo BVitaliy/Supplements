@@ -37,7 +37,7 @@ export class ProductDetailPage implements OnInit {
   countChart = 0;
   public ingredients: any[] = [];
 
-  isCollapsed: boolean = true;
+  isExpanded: boolean = true;
   isButtonVisible: boolean = false;
 
   @ViewChild('textContent') textContent!: ElementRef;
@@ -63,7 +63,7 @@ export class ProductDetailPage implements OnInit {
   }
 
   toggleText() {
-    this.isCollapsed = !this.isCollapsed;
+    this.isExpanded = !this.isExpanded;
   }
 
   // Рефреш продукту

@@ -214,11 +214,13 @@
 
       <div class="section p-vertical--medium p-horizontal--medium m-bottom--large" *ngIf="product?.description">
         <div class="title text-l fw-600 dark pb-5">Product description</div>
-        <div class="medium fw-500 mb-5" #textContent>{{product?.description}}</div>
+        <div class="medium fw-500 mb-5 description" #textContent
+          [ngStyle]="{'-webkit-line-clamp': !isExpanded ? 'inherit': 5}">
+          {{product?.description}}</div>
 
         <ion-button class="btn btn-link" fill="clear" mode="md" color="primary" *ngIf="isButtonVisible"
           (click)="toggleText()">
-          {{ isCollapsed ? 'Read All' : 'Read Less' }}
+          {{ isExpanded ? 'Read All' : 'Read Less' }}
         </ion-button>
       </div>
 

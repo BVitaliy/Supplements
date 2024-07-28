@@ -170,3 +170,8 @@
   --border-radius: 10px;
   margin-top: 12px;
 }
+.description {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
