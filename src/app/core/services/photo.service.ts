@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import {
   Camera,
   CameraResultType,
@@ -11,7 +11,10 @@ import { MultipleDocumentsPicker } from '@awesome-cordova-plugins/multiple-docum
   providedIn: 'root',
 })
 export class PhotoService {
-  constructor(private multipleDocumentsPicker: MultipleDocumentsPicker) {}
+  constructor(
+    private multipleDocumentsPicker: MultipleDocumentsPicker,
+    public ngZone: NgZone
+  ) {}
 
   // Зробити фото - Capacitor Camera
   takePhoto(direction?: keyof typeof CameraDirection): Promise<any> {
@@ -133,11 +136,34 @@ export class PhotoService {
   // Перетворення із blob у base64
   blobToBase64 = (blob: Blob) =>
     new Promise((resolve: any, reject: any) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = () => {
-        resolve(reader.result) as string;
-      };
-      reader.readAsDataURL(blob);
+      this.ngZone.run(() => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => {
+          resolve(reader.result) as string;
+        };
+        reader.readAsDataURL(blob);
+      });
     });
+
+  getFileReader(): FileReader {
+    const fileReader = new FileReader();
+    const zoneOriginalInstance = (fileReader as any)
+      .__zone_symbol__originalInstance;
+    return zoneOriginalInstance || fileReader;
+  }
+
+  // blobToBase64(blob: Blob) {
+  //   const reader = this.getFileReader();
+  //   // let progress = 0;
+  //   console.log(reader);
+  //   return this.ngZone.run(() => {
+  //     reader.readAsDataURL(blob);
+  //     reader.onloadend = (e: any) => {
+  //       const buffer = e.target?.result;
+  //       console.log(buffer);
+  //       return buffer;
+  //     };
+  //   });
+  // }
 }

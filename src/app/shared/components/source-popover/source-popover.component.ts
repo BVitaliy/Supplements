@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -16,6 +16,7 @@ export class SourcePopoverComponent implements OnInit {
   loadingPhoto: boolean = false;
   uploadPhoto: any;
   format: any;
+  @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
 
   constructor(
     private modalController: ModalController,
@@ -86,6 +87,7 @@ export class SourcePopoverComponent implements OnInit {
               `data:image/${image.format};base64,` + base64Response.data;
             console.log(base64Response);
             this.format = image.format;
+            console.log(image.format);
           }
           this.cancelModal();
         } else {
@@ -162,6 +164,28 @@ export class SourcePopoverComponent implements OnInit {
   ionViewDidLeave() {
     if (this.backBtnSubscription) {
       this.backBtnSubscription.unsubscribe();
+    }
+  }
+
+  triggerFileInput() {
+    this.fileInput.nativeElement.click();
+  }
+
+  // photo from gallery
+  takeAvatar(event: any) {
+    this.loadingPhoto = true;
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      this.uploadPhoto = file;
+      const format = file?.type?.replace('image/', '');
+      this.format = format === 'svg+xml' ? 'svg' : format;
+      console.log(this.format);
+
+      this.cancelModal();
+    } else {
+      this.loadingPhoto = false;
     }
   }
 }

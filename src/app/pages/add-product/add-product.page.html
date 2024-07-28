@@ -28,7 +28,8 @@
 
         <div class="product-image" (click)="openSourcePopover()"
           *ngIf="form.value?.photo || form.value?.images?.length">
-          <app-img [src]="form.value?.photo || form.value?.images[0]?.image" cssClasses="img-fit-contain"></app-img>
+          <app-img [src]="image || form.value?.photo || form.value?.images[0]?.image"
+            cssClasses="img-fit-contain"></app-img>
         </div>
       </div>
       <div class="form-control relative-block scan-control">

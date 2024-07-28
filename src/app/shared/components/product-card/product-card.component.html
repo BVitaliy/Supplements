@@ -33,7 +33,7 @@
         </div> -->
       </div>
 
-      <div class="product-bottom">
+      <div class="product-bottom" *ngIf="!detailDisabled">
         <ng-container *ngIf="product?.average_rating">
           <app-rating-count [rating]="product?.average_rating" [type]="'badge'"></app-rating-count>
         </ng-container>

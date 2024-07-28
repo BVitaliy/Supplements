@@ -23,6 +23,7 @@ export class ProfileDetailsPage implements OnInit {
   format = '';
   loading = false;
   userId: any;
+  filePhoto: any;
 
   constructor(
     public navCtrl: NavController,
@@ -151,18 +152,67 @@ export class ProfileDetailsPage implements OnInit {
     return await modal.present();
   }
 
+  async openSourcePopover() {
+    const modalHeight =
+      Math.floor(
+        (100 * (210 + (this.platform.is('ios') ? 34 : 0))) / window.innerHeight
+      ) / 100;
+
+    const modal = await this.modalController.create({
+      component: SourcePopoverComponent,
+      cssClass: '',
+      mode: 'ios',
+      breakpoints: [0, modalHeight],
+      initialBreakpoint: modalHeight,
+      handle: true,
+    });
+
+    modal.onDidDismiss().then((returnedData: any) => {
+      console.log(returnedData);
+      if (returnedData && returnedData?.data) {
+        this.profileDetails.image = returnedData?.data?.photo;
+        this.format = returnedData?.data?.format;
+
+        if (returnedData?.data?.photo?.name) {
+          this.filePhoto = returnedData?.data?.photo;
+
+          this.handleProfile(this.profileDetails, 'image');
+        } else {
+          if (
+            returnedData?.data?.photo &&
+            returnedData?.data?.photo.includes('svg+xml')
+          ) {
+            this.format = 'svg';
+          }
+          this.handleProfile(this.profileDetails, 'image');
+        }
+      }
+    });
+
+    return await modal.present();
+  }
+
   handleProfile(values: any, field: string) {
     this.loading = true;
 
     const formData = new FormData();
-    formData.append(field, values[field]);
+
     if (this.profileDetails.image && this.format) {
-      const blob = this.photoService.base64toBlob(this.profileDetails.image);
+      let blob: any;
+      if (this.filePhoto) {
+        blob = this.filePhoto;
+      } else {
+        blob = this.photoService.base64toBlob(this.profileDetails.image);
+      }
+
       console.log(this.format);
-      formData.append('image', blob, 'image.' + this.format);
-      console.log(formData);
       console.log(blob);
-      setTimeout(() => {}, 300);
+      setTimeout(() => {
+        formData.append('image', blob, 'image.' + this.format);
+        console.log(formData);
+      }, 400);
+    } else {
+      formData.append(field, values[field]);
     }
     setTimeout(() => {
       this.profileService.updateProfile(this.userId, formData).subscribe(
@@ -190,42 +240,6 @@ export class ProfileDetailsPage implements OnInit {
           }
         }
       );
-    }, 400);
-  }
-
-  async openSourcePopover() {
-    const modalHeight =
-      Math.floor(
-        (100 * (210 + (this.platform.is('ios') ? 34 : 0))) / window.innerHeight
-      ) / 100;
-
-    const modal = await this.modalController.create({
-      component: SourcePopoverComponent,
-      cssClass: '',
-      mode: 'ios',
-      breakpoints: [0, modalHeight],
-      initialBreakpoint: modalHeight,
-      handle: true,
-    });
-
-    modal.onDidDismiss().then((returnedData: any) => {
-      console.log(returnedData);
-      if (returnedData && returnedData?.data) {
-        // this.profileDetails.image = this.photoService.base64toBlob(
-        //   returnedData?.data?.photo
-        // );
-        this.profileDetails.image = returnedData?.data?.photo;
-        this.format = returnedData?.data?.format;
-        if (
-          returnedData?.data?.photo &&
-          returnedData?.data?.photo.includes('svg+xml')
-        ) {
-          this.format = 'svg';
-        }
-        this.handleProfile(this.profileDetails, 'image');
-      }
-    });
-
-    return await modal.present();
+    }, 700);
   }
 }

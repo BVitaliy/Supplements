@@ -114,6 +114,20 @@ export class AddProductPage implements OnInit {
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
         this.form.get('photo')?.setValue(returnedData?.data?.photo);
+        if (returnedData?.data?.photo?.name) {
+          // this.image = this.photoService.blobToBase64(
+          //   returnedData?.data?.photo
+          // );
+          const reader = this.photoService.getFileReader();
+          console.log(reader);
+          this.photoService.ngZone.run(() => {
+            reader.readAsDataURL(returnedData?.data?.photo);
+            reader.onloadend = (e: any) => {
+              this.image = e.target?.result;
+              console.log(this.image);
+            };
+          });
+        }
         console.log('returndata', returnedData);
         this.format = returnedData?.data?.format;
       }
@@ -195,9 +209,14 @@ export class AddProductPage implements OnInit {
     this.loading = true;
     let data = {
       ...this.form.value,
+      status: 0,
     };
     console.log(this.form.value.photo);
-    if (this.form.value.photo && this.form.value.photo.includes('svg+xml')) {
+    if (
+      this.form.value.photo &&
+      !this.form.value.photo?.name &&
+      this.form.value.photo.includes('svg+xml')
+    ) {
       this.format = 'svg';
     }
     delete data?.photo;
@@ -240,7 +259,13 @@ export class AddProductPage implements OnInit {
     console.log(image);
 
     if (image) {
-      const blob = this.photoService.base64toBlob(image);
+      let blob: any;
+      if (image?.name) {
+        blob = image;
+      } else {
+        blob = this.photoService.base64toBlob(image);
+      }
+
       const formData = new FormData();
       formData.append('image', blob, 'image.' + this.format);
       console.log(blob);
