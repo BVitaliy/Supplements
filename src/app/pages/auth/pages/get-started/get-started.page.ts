@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { NavController, Platform } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 import { AuthenticationService } from '../../authentication.service';
 @Component({
@@ -17,7 +18,8 @@ export class GetStartedPage implements OnInit {
     public authService: AuthenticationService,
     public route: ActivatedRoute,
     private platform: Platform,
-    private themeOptions: ThemeOptionsService
+    private themeOptions: ThemeOptionsService,
+    private storage: Storage
   ) {
     this.platformName = Capacitor.getPlatform();
   }
@@ -28,6 +30,7 @@ export class GetStartedPage implements OnInit {
       // StatusBar.setBackgroundColor({ color: '#ff4c00' });
       // StatusBar.setStyle({ style: Style.Light });
     }
+    this.storage.remove('user');
   }
 
   googleSignIn() {

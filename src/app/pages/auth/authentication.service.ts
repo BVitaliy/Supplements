@@ -124,7 +124,10 @@ export class AuthenticationService {
   async googleSignIn() {
     this.signInLoading = true;
     this.signInLoadingGoogle = true;
-    const user = await GoogleAuth.signIn();
+    const user = await GoogleAuth.signIn().catch(data => {
+      this.signInLoading = false;
+      this.signInLoadingGoogle = false;
+    });
     console.log(user);
 
     if (user) {

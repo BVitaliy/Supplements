@@ -67,6 +67,8 @@ export class LoginPage implements OnInit, ViewDidLeave {
         ),
       ]),
     });
+
+    this.storage.remove('user');
   }
   // googleSignIn() {
   //   this.authService.googleSignIn();
