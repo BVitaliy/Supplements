@@ -12,8 +12,10 @@
       <!-- Image -->
       <div class="add-favorite-list-product__product-img-wrapper m-right--small p-around--x-small" vertical="center"
         horizontal="center">
-        <app-img [src]="product?.photo" cssClasses="img-fit-contain" class="add-favorite-list-product__product-img"
-          *ngIf="product?.photo"></app-img>
+        <app-img
+          [src]="product?.images[product?.images?.length - 1 || 0]?.url || product?.images[product?.images?.length - 1 || 0]?.image"
+          cssClasses="img-fit-contain" class="add-favorite-list-product__product-img"
+          *ngIf="product?.images?.length"></app-img>
       </div>
       <!-- / Image -->
 
