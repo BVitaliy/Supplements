@@ -31,6 +31,9 @@ export class FilterModalComponent implements OnInit {
   loading = false;
   selectedOptions: any[] = [];
   backBtnSubscription!: Subscription;
+  ingredientLoading = false;
+  categoriesLoading = false;
+  brandsLoading = false;
 
   constructor(
     private modalController: ModalController,
@@ -102,14 +105,14 @@ export class FilterModalComponent implements OnInit {
   }
 
   getCategories() {
+    this.categoriesLoading = true;
     this.catalogService
       .getCategories()
-      // .pipe(
-      //   finalize(() => {
-      //     this.loading = false;
-
-      //   })
-      // )
+      .pipe(
+        finalize(() => {
+          this.categoriesLoading = false;
+        })
+      )
       .subscribe(
         (data: any) => {
           console.log(data);
@@ -130,7 +133,7 @@ export class FilterModalComponent implements OnInit {
   }
 
   getBrands(refresh?: boolean, callbackFunction?: () => void) {
-    this.loading = true;
+    this.brandsLoading = true;
     this.brands = [];
     const data = {
       limit: 300,
@@ -139,7 +142,7 @@ export class FilterModalComponent implements OnInit {
       .getBrands(data)
       .pipe(
         finalize(() => {
-          this.loading = false;
+          this.brandsLoading = false;
           if (callbackFunction) {
             callbackFunction();
           }
@@ -164,7 +167,7 @@ export class FilterModalComponent implements OnInit {
       );
   }
   getIngredients() {
-    this.loading = true;
+    this.ingredientLoading = true;
     const data = {
       limit: 300,
     };
@@ -172,7 +175,7 @@ export class FilterModalComponent implements OnInit {
       .getIngredients(data)
       .pipe(
         finalize(() => {
-          this.loading = false;
+          this.ingredientLoading = false;
         })
       )
       .subscribe(

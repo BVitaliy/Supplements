@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { SourcePopoverComponent } from 'src/app/shared/components/source-popover/source-popover.component';
@@ -25,6 +25,8 @@ export class AddProductPage implements OnInit {
   backBtnSubscription!: Subscription;
   format: any;
 
+  imageLoading = false;
+
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
@@ -32,7 +34,8 @@ export class AddProductPage implements OnInit {
     private photoService: PhotoService,
     private alertService: AlertService,
     private catalogService: CatalogService,
-    private themeOptions: ThemeOptionsService
+    private themeOptions: ThemeOptionsService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -124,11 +127,13 @@ export class AddProductPage implements OnInit {
             reader.readAsDataURL(returnedData?.data?.photo);
             reader.onloadend = (e: any) => {
               this.image = e.target?.result;
-              console.log(this.image);
+              this.changeDetectorRef.detectChanges();
+              setTimeout(() => {
+                this.changeDetectorRef.detectChanges();
+              }, 300);
             };
           });
         }
-        console.log('returndata', returnedData);
         this.format = returnedData?.data?.format;
       }
     });
@@ -222,8 +227,6 @@ export class AddProductPage implements OnInit {
     delete data?.photo;
     delete data?.images;
 
-    console.log(data);
-
     if (!this.id) {
       this.catalogService.requestSupplement(data).subscribe(
         (data: any) => {
@@ -237,15 +240,22 @@ export class AddProductPage implements OnInit {
         }
       );
     } else {
-      data = { ...data, status: 2 };
+      data = { ...data, status: 0 };
       this.catalogService.updateRequestSupplement(data).subscribe(
         (data: any) => {
           if (this.format) {
             this.uploadImage(data?.id);
           }
           this.loading = false;
+          setTimeout(() => {
+            this.alertService.createToast({
+              header: 'Product was successfully updated!',
+              mode: 'ios',
+              position: 'bottom',
+            });
+          }, 300);
           this.cancelModal();
-          this.createProductSuccess();
+          // this.createProductSuccess();
         },
         (error: any) => {
           this.loading = false;
@@ -267,7 +277,7 @@ export class AddProductPage implements OnInit {
       }
 
       const formData = new FormData();
-      formData.append('image', blob, 'image.' + this.format);
+      formData.append('images', blob, 'image.' + this.format);
       console.log(blob);
       console.log(formData);
       this.catalogService.uploadImage(id, formData).subscribe(

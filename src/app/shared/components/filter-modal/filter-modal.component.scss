@@ -7,8 +7,17 @@
   font-size: 14px;
   font-weight: 700;
   --border-style: none;
+  &.loader {
+    --padding-top: 13px;
+    --padding-bottom: 12px;
+    border-bottom: 1px solid #e9e9e9;
+  }
 
   ion-label {
+    margin: 0;
+    position: relative;
+  }
+  ion-spinner {
     margin: 0;
   }
 }

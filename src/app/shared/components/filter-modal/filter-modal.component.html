@@ -31,15 +31,19 @@
   </ion-refresher> -->
 
   <ion-accordion-group [multiple]="true" [formGroup]="form">
+
+    <ion-item class="item-header loader" color="light" *ngIf="categoriesLoading">
+      <ion-label>Categories
+      </ion-label>
+      <ion-spinner slot="end" color="primary" name="crescent"></ion-spinner>
+    </ion-item>
     <ion-accordion value="categories" *ngIf="categories?.length && page !== 'categories'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Categories</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-
         <app-filter-group [options]="categories" [type]="'categories'"
           (filteredOptions)="filtered($event, 'categories')" [addedOptions]="form.value.categories"></app-filter-group>
-
       </div>
     </ion-accordion>
     <!-- <ion-accordion value="rating">
@@ -52,6 +56,11 @@
 
       </div>
     </ion-accordion> -->
+    <ion-item class="item-header loader" color="light" *ngIf="brandsLoading">
+      <ion-label>Brands
+      </ion-label>
+      <ion-spinner slot="end" color="primary" name="crescent"></ion-spinner>
+    </ion-item>
     <ion-accordion value="brands" *ngIf="brands?.length && page !== 'brands'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Brands</ion-label>
@@ -62,6 +71,11 @@
       </div>
     </ion-accordion>
 
+    <ion-item class="item-header loader" color="light" *ngIf="ingredientLoading">
+      <ion-label>Ingredients
+      </ion-label>
+      <ion-spinner slot="end" color="primary" name="crescent"></ion-spinner>
+    </ion-item>
     <ion-accordion value="ingredients" *ngIf="ingredients?.length && page !== 'ingredients'">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>Ingredients</ion-label>

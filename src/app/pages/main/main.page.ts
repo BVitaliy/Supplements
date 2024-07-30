@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   IonContent,
@@ -57,7 +57,8 @@ export class MainPage implements OnInit {
     private platform: Platform,
     private modalController: ModalController,
     private themeOptions: ThemeOptionsService,
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     this.products = Products;
   }
@@ -159,6 +160,7 @@ export class MainPage implements OnInit {
 
   public onSearchFocus(_event: any): void {
     this.isSearchActive = true;
+    this.changeDetectorRef.detectChanges();
     // this.getData();
   }
 

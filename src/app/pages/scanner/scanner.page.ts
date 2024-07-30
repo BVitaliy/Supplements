@@ -71,6 +71,9 @@ export class ScannerPage implements OnInit {
         })
         .catch((error) => {
           this.openProductNotFound();
+          if (this.platform.is('ios')) {
+            this.navCtrl.back();
+          }
           // this.scanningInfo = null;
           this.loading = false;
         });
@@ -78,6 +81,9 @@ export class ScannerPage implements OnInit {
       // this.scanningInfo = null;
       this.loading = false;
       this.openProductNotFound();
+      if (this.platform.is('ios')) {
+        this.navCtrl.back();
+      }
       // setTimeout(() => { // Видалити !!!
       //   this.getUserInfoByQrCode('89770172'); // '42110929'
       // }, 1000);
