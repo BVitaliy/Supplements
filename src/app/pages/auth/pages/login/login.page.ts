@@ -67,14 +67,13 @@ export class LoginPage implements OnInit, ViewDidLeave {
         ),
       ]),
     });
-
-    this.storage.remove('user');
   }
   // googleSignIn() {
   //   this.authService.googleSignIn();
   // }
 
   ionViewWillEnter() {
+    this.storage.remove('user');
     // this.storage.set(ACCESS_TOKEN_STORAGE_NAME, 'adasdasdasd');
     // this.storage.set(REFRESH_TOKEN_STORAGE_NAME, 'asd8762837h8as7dh');
   }

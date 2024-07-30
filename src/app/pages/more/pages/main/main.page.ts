@@ -88,7 +88,8 @@ export class MainPage implements OnInit {
           (data: any) => {
             console.log(data);
             this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
-            this.storage.remove(REFRESH_TOKEN_STORAGE_NAME);
+            this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+            this.storage.remove('user');
             this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
           },
           (error: any) => {

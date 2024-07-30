@@ -30,15 +30,13 @@ export class GetStartedPage implements OnInit {
       // StatusBar.setBackgroundColor({ color: '#ff4c00' });
       // StatusBar.setStyle({ style: Style.Light });
     }
-    this.storage.remove('user');
   }
 
   googleSignIn() {
-
     if (Capacitor.getPlatform() === 'ios') {
       this.authService.googleSignIn();
     } else {
-    this.authService.loginViaGoogle();
+      this.authService.loginViaGoogle();
     }
     // this.authService.signInWithAppleNative();
   }

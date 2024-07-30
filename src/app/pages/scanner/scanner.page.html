@@ -1,3 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn btn-link ml-10" fill="clear" mode="md" (click)="navCtrl.back()">
+        <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- Header title -->
+    <ion-title class="sm">Scanner</ion-title>
+    <!-- / Header title -->
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
 
+  <ion-fab slot="fixed" vertical="center" horizontal="center">
+    <ion-fab-button size="big" (click)="openCameraToScanning()">
+      <div class="icon">
+        <ion-icon src="./assets/img/icons/icon-scanner.svg"></ion-icon>
+      </div>
+    </ion-fab-button>
+
+  </ion-fab>
 </ion-content>
