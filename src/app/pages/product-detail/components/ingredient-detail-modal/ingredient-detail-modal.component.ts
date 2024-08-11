@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { getPriorityValue } from 'src/app/core/functions/priority-value';
 
 @Component({
   selector: 'app-ingredient-detail-modal',
@@ -8,9 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./ingredient-detail-modal.component.scss'],
 })
 export class IngredientDetailModalComponent implements OnInit {
-  @Input() title = '';
-  @Input() color = '';
-  @Input() indregientDetail: any;
+  @Input() item: any;
   backBtnSubscription!: Subscription;
   constructor(
     private modalController: ModalController,
@@ -18,6 +17,10 @@ export class IngredientDetailModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.title);
+    console.log(this.item);
+  }
+
+  getPriorityValue(data: any) {
+    return getPriorityValue(data);
   }
 }

@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
 import { finalize } from 'rxjs';
@@ -17,6 +18,10 @@ import { IngredientDetailModalComponent } from './components/ingredient-detail-m
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
 import { HighlightedIngredientsPage } from './pages/highlighted-ingredients/highlighted-ingredients.page';
 import { ReviewsPage } from './pages/reviews/reviews.page';
+import { ACCESS_TOKEN_STORAGE_NAME } from 'src/app/app.config';
+import { SwiperComponent } from 'swiper/angular';
+import Swiper, { SwiperOptions } from 'swiper';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-product-detail',
@@ -42,6 +47,20 @@ export class ProductDetailPage implements OnInit {
 
   @ViewChild('textContent') textContent!: ElementRef;
 
+  @ViewChild('swiper') swiper!: SwiperComponent;
+  slideOpts: SwiperOptions = {
+    initialSlide: 0,
+    slidesPerView: 1,
+    spaceBetween: 0,
+    speed: 700,
+    parallax: true,
+    lazy: {
+      loadPrevNext: true,
+      loadPrevNextAmount: 2,
+    },
+    pagination: true,
+  };
+
   constructor(
     public navCtrl: NavController,
     // private loadingController: LoadingController,
@@ -49,21 +68,44 @@ export class ProductDetailPage implements OnInit {
     private modalController: ModalController,
     private catalogService: CatalogService,
     private route: ActivatedRoute,
-    private mainService: MainService
+    private mainService: MainService,
+    private storage: Storage
   ) {}
 
   ngOnInit() {
     this.id = this.id || this.route.snapshot.paramMap.get('id');
-
     this.getProduct();
     this.getProductReviewById();
-    this.setProductAsViewed();
     this.getProductAnalysis();
-    this.getIngrediens();
+    this.storage.get(ACCESS_TOKEN_STORAGE_NAME).then((token) => {
+      if (token) {
+        this.setProductAsViewed();
+        this.getIngrediens();
+      }
+    });
   }
 
   toggleText() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  ngAfterContentChecked() {
+    if (this.swiper) {
+      this.swiper.updateSwiper(this.slideOpts);
+    }
+  }
+
+  async shareProduct() {
+    if (this.openedInModal) {
+      this.openAlertModal();
+    } else {
+      await Share.share({
+        title: this.product?.title,
+        text: this.product?.description,
+        url: 'http://ionicframework.com/',
+        dialogTitle: 'Share with buddies',
+      });
+    }
   }
 
   // Рефреш продукту
@@ -226,7 +268,11 @@ export class ProductDetailPage implements OnInit {
   }
 
   // Відкривання модалки ingredient
-  async openIngredientsModal(detailinfo: any) {
+  async openIngredientsModal(type: string, title: string, color: string) {
+    const ingredients = this.product.ingredients.filter(
+      (item: any) => item[type]
+    );
+    console.log(ingredients);
     const modal = await this.modalController.create({
       component: IngredientModalComponent,
       cssClass: '',
@@ -234,7 +280,11 @@ export class ProductDetailPage implements OnInit {
       handle: false,
       componentProps: {
         product: this.product,
-        indregientsDetail: detailinfo,
+        detail: {
+          ingredients: ingredients || [],
+          title,
+          color,
+        },
       },
     });
 
@@ -242,7 +292,7 @@ export class ProductDetailPage implements OnInit {
   }
 
   // Відкривання модалки ingredient detail
-  async openIngredientModal(title?: string, color?: string) {
+  async openIngredientModal(item: any, title?: string, color?: string) {
     const modal = await this.modalController.create({
       component: IngredientDetailModalComponent,
       cssClass: '',
@@ -251,6 +301,7 @@ export class ProductDetailPage implements OnInit {
       initialBreakpoint: 0.85,
       handle: true,
       componentProps: {
+        item,
         title,
         color,
       },

@@ -19,9 +19,15 @@
 
   <ng-container *ngIf="!loading">
     <div class="product-image">
-      <app-rating-count [rating]="product?.rating_score" [type]="'badge'"></app-rating-count>
-      <app-img [src]="product?.images[product?.images?.length-1]?.url" cssClasses="img-fit-cover" [zooming]="true"
-        *ngIf="product?.images?.length"></app-img>
+      <app-rating-count [rating]="product?.rating_score" [type]="'badge'"
+        *ngIf="product?.rating_score"></app-rating-count>
+
+      <swiper #swiper [config]="slideOpts" pager="true" *ngIf="product?.images?.length">
+        <ng-template swiperSlide *ngFor="let product of product?.images; let i=index">
+          <app-img [src]="product.url" cssClasses="img-fit-cover" [zooming]="true"></app-img>
+        </ng-template>
+      </swiper>
+
     </div>
 
 
@@ -60,7 +66,7 @@
           <ion-button shape="round" fill="outline" (click)="actionAlert()">
             <ion-icon slot="icon-only" [src]="'./assets/img/icons/add-feedback.svg'"></ion-icon>
           </ion-button>
-          <ion-button shape="round" fill="outline" (click)="actionAlert()">
+          <ion-button shape="round" fill="outline" (click)="shareProduct()">
             <ion-icon slot="icon-only" [src]="'./assets/img/icons/icon-share.svg'"></ion-icon>
           </ion-button>
         </div>
@@ -94,7 +100,8 @@
 
         <ng-container *ngIf="type === 'ingredient'">
           <ion-list class="list list-ingredients">
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              (click)="openIngredientsModal('is_benefit', 'Benefits', '#22b51f')">
               <!-- (click)="openIngredientsModal(product?.benefits)" -->
               <span class="indicator green"></span>
               <div class="dark ">Benefits</div>
@@ -102,7 +109,8 @@
                 {{this.analysis?.benefits}}
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              (click)="openIngredientsModal('is_weaknesses', 'Weaknesses', '#ff001c')">
               <!-- (click)="openIngredientsModal(product?.weaknesses)" -->
               <span class="indicator danger-bg"></span>
               <div class="dark ">Weaknesses</div>
@@ -110,7 +118,8 @@
                 {{this.analysis?.weaknesses}}
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              (click)="openIngredientsModal('is_contamintant', 'Contaminants', '#ff9635')">
               <!-- (click)="openIngredientsModal(product?.contaminants)" -->
               <span class="indicator primary-bg"></span>
               <div class="dark">Contaminants</div>
@@ -118,7 +127,8 @@
                 {{this.analysis?.contamintants}}
               </div>
             </ion-item>
-            <ion-item class="fw-600 text-m dark" button detail="true" lines="none">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              (click)="openIngredientsModal('is_allergen', 'Allergens', '#fde334')">
               <!-- (click)="openIngredientsModal(product?.allergens)" -->
               <span class="indicator warning-bg"></span>
               <div class="dark">Allergens</div>
@@ -185,7 +195,7 @@
 
       <div class="section p-vertical--medium p-horizontal--medium m-bottom--large">
         <div class="title text-l fw-600 dark pb-5">Highlighted ingredients</div>
-        <p class="medium fw-500 p-bottom--x-large" *ngIf="!addedHIngredientsOptions?.length">Add ingredients that you
+        <p class="dark fw-500 p-bottom--x-large" *ngIf="!addedHIngredientsOptions?.length">Add ingredients that you
           would like to highlight based on your diet,
           allergies, or
           other reasons that you have, if this
@@ -193,7 +203,8 @@
 
         <ng-container *ngIf="ingredients?.length">
           <ion-list class="list list-ingredients m-bottom--x-small m-top--xx-small">
-            <ion-item class="text-m dark" button detail="false" lines="none" *ngFor="let option of ingredients">
+            <ion-item class="text-m dark" button detail="false" lines="none" *ngFor="let option of ingredients"
+              (click)="openIngredientModal(option)">
               <!-- (click)="openIngredientModal(option?.label, option?.color)" -->
               <div *ngIf="option?.is_benefit" class="indicator" [ngStyle]="{ 'background': '#22B51F' }"></div>
               <div *ngIf="option?.is_weaknesses" class="indicator" [ngStyle]="{ 'background': '#FF001C' }"></div>
@@ -214,7 +225,7 @@
 
       <div class="section p-vertical--medium p-horizontal--medium m-bottom--large" *ngIf="product?.description">
         <div class="title text-l fw-600 dark pb-5">Product description</div>
-        <div class="medium fw-500 mb-5 description" #textContent
+        <div class="dark fw-500 mb-5 description" #textContent
           [ngStyle]="{'-webkit-line-clamp': !isExpanded ? 'inherit': 5}">
           {{product?.description}}</div>
 
@@ -223,6 +234,23 @@
           {{ isExpanded ? 'Read All' : 'Read Less' }}
         </ion-button>
       </div>
+
+      <div class="section p-vertical--medium p-horizontal--medium m-bottom--large dark">
+        <div class="title text-l fw-600 dark pb-5">Suggested use</div>
+
+
+        <p class="fw-500">Mix one scoop into a hot or cold liquid of your choice (at least 8 oz.) or blend into your
+          favorite smoothie.
+        </p>
+        <ul>
+          <li>1 scoop into beverage</li>
+          <li>Hot or cold drink</li>
+          <li>Once daily</li>
+        </ul>
+      </div>
+
+      <app-supplement-fact class="section p-vertical--medium p-horizontal--medium m-bottom--large" [product]="product"
+        *ngIf="product?.ingredients?.length"></app-supplement-fact>
 
       <ion-item class="fw-600 text-l dark item-detail m-bottom--large" button detail="true" lines="none"
         (click)="goToReview()">

@@ -23,7 +23,7 @@ export class ScannerPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    private platform: Platform,
+    public platform: Platform,
     private storage: Storage,
     public router: Router,
     private modalController: ModalController,
@@ -42,6 +42,9 @@ export class ScannerPage implements OnInit {
     // this.getProductByBarcode();
   }
 
+  openScanner() {
+    this.openCameraToScanning();
+  }
   ionViewWillEnter() {
     this.openCameraToScanning();
   }

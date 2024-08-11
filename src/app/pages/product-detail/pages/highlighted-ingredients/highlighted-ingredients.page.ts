@@ -74,58 +74,33 @@ export class HighlightedIngredientsPage implements OnInit {
     public navCtrl: NavController,
     private modalController: ModalController,
     private mainService: MainService
-  ) {
-    console.log(this.addedIngredientsOptions);
-  }
+  ) {}
 
   ngOnInit() {
     this.searchForm = new FormGroup({
       search: new FormControl(null),
     });
 
-    console.log(this.addedIngredientsOptions);
-    setTimeout(() => {
-      // if (this.optionsToShow && this.addedIngredientsOptions?.length) {
-      //   this.addedIngredientsOptions?.map((item: any) => {
-      //     this.handleChangeCheckboxState(true, item?.id);
-      //   });
-      // }
-      console.log(this.optionsToShow);
-    }, 500);
     this.searchIngrediens();
   }
 
   public async handleApplyChanges() {
-    // apply changes
-    console.log(this.addedIngredientsOptions);
     await this.modalController.dismiss(this.addedIngredientsOptions);
   }
 
   public handleSelectReasonFilter(option?: any): void {
     console.log(option);
-    this.searchIngrediens(this.searchForm.value.search, option?.type);
 
     if (this.activeReasonFilter === option.label) {
       this.activeReasonFilter = '';
-      // this.optionsToShow = this.options;
     } else {
       this.activeReasonFilter = option.label || '';
-      //   this.optionsToShow = this.options.map((el: IngredientsSection) => {
-      //     return {
-      //       ...el,
-      //       ingredients: el.ingredients?.filter(
-      //         (option: IngredientOption): boolean => option.status === label
-      //       ),
-      //     };
-      //   });
     }
+    this.searchIngrediens(this.searchForm.value.search, option?.type);
   }
 
   public handleClearAllAddedIngredients(): void {
-    console.log(this.addedIngredientsOptions);
-
     this.addedIngredientsOptions?.map((item: any) => {
-      console.log(item);
       this.handleChangeCheckboxState(false, item?.id);
     });
     this.addedIngredientsOptions = [];
@@ -141,7 +116,6 @@ export class HighlightedIngredientsPage implements OnInit {
   }
 
   public search(event: any): void {
-    console.log(event?.detail?.value);
     this.searchForm.get('search')?.setValue(event?.detail?.value);
     this.searchIngrediens(event?.detail?.value);
   }
@@ -152,9 +126,6 @@ export class HighlightedIngredientsPage implements OnInit {
       this.addedIngredientsOptions.every((el: any): boolean => el !== option.id)
     ) {
       this.addedIngredientsOptions.push(option);
-      // if (option.id) {
-      //   this.handleChangeCheckboxState(true, option.id);
-      // }
     } else if (
       option &&
       this.addedIngredientsOptions.some((el: any): boolean => el === option.id)
@@ -162,9 +133,6 @@ export class HighlightedIngredientsPage implements OnInit {
       this.addedIngredientsOptions = this.addedIngredientsOptions.filter(
         (el: any): boolean => el !== option.id
       );
-      // if (option.id) {
-      //   this.handleChangeCheckboxState(false, option.id);
-      // }
     }
   }
 

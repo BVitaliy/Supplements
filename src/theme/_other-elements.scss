@@ -337,8 +337,16 @@ ng-otp-input {
 .product-image {
   app-img {
     height: 100%;
+    width: 100%;
   }
   .img-wrap {
     padding-bottom: 0 !important;
+  }
+
+  .swiper-pagination {
+    position: absolute !important;
+    left: 0;
+    right: 0;
+    bottom: 10px !important;
   }
 }

@@ -34,6 +34,15 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit() {
     this.idFavorilteList = this.route.snapshot.paramMap.get('favoriteId');
+
+    if (this.product.supplement) {
+      this.product = {
+        ...this.product.supplement,
+        images: this.product.images,
+        title: this.product.title,
+        average_rating: 0,
+      };
+    }
   }
 
   favoriteHandle($event: any) {

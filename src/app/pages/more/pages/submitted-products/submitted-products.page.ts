@@ -93,6 +93,16 @@ export class SubmittedProductsPage {
     console.log(event);
     this.openProductInModal(event);
   }
+  openApproved(product: any) {
+    console.log(product);
+    console.log(+this.activeTab);
+    if (product?.supplement && +this.activeTab === 1) {
+      this.navCtrl.navigateForward([
+        '/product/detail',
+        product?.supplement?.id,
+      ]);
+    }
+  }
 
   async openProductInModal(id: string) {
     const modal = await this.modalController.create({

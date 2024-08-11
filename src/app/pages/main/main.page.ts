@@ -167,5 +167,6 @@ export class MainPage implements OnInit {
   public handleCancelSearch(): void {
     this.isSearchActive = false;
     this.filterForm.reset();
+    this.changeDetectorRef.detectChanges();
   }
 }

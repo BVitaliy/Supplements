@@ -19,7 +19,8 @@
   <ion-grid>
     <div class="product-detail">
       <div class="image">
-        <app-img [src]="product?.images[0]" cssClasses="img-fit-contain" *ngIf="product?.images?.length"></app-img>
+        <app-img [src]="product?.images[product?.images?.length-1]?.url" cssClasses="img-fit-contain"
+          *ngIf="product?.images?.length"></app-img>
       </div>
       <ion-text>
         <p class="text-xs medium fw-400 ion-text-uppercase m-bottom--xxx-small">{{product?.category?.title}}</p>

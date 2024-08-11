@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, NavController, Platform } from '@ionic/angular';
+import { AnyPtrRecord } from 'dns';
 import { Subscription } from 'rxjs';
 import { IngredientDetailModalComponent } from '../ingredient-detail-modal/ingredient-detail-modal.component';
 
@@ -10,7 +11,7 @@ import { IngredientDetailModalComponent } from '../ingredient-detail-modal/ingre
 })
 export class IngredientModalComponent implements OnInit {
   @Input() product: any;
-  @Input() indregientsDetail: any;
+  @Input() detail: any;
   backBtnSubscription!: Subscription;
 
   constructor(
@@ -20,7 +21,7 @@ export class IngredientModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.indregientsDetail);
+    console.log(this.detail);
   }
 
   ionViewWillEnter() {
@@ -47,7 +48,7 @@ export class IngredientModalComponent implements OnInit {
   }
 
   // Відкривання модалки ingredient detail
-  async openIngredientModal(title: string) {
+  async openIngredientModal(item: any) {
     const modal = await this.modalController.create({
       component: IngredientDetailModalComponent,
       cssClass: '',
@@ -56,8 +57,7 @@ export class IngredientModalComponent implements OnInit {
       initialBreakpoint: 0.85,
       handle: true,
       componentProps: {
-        title,
-        indregientDetail: this.indregientsDetail,
+        item,
       },
     });
 

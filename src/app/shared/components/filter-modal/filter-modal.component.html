@@ -46,16 +46,7 @@
           (filteredOptions)="filtered($event, 'categories')" [addedOptions]="form.value.categories"></app-filter-group>
       </div>
     </ion-accordion>
-    <!-- <ion-accordion value="rating">
-      <ion-item slot="header" class="item-header" color="light">
-        <ion-label>Product Rating</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <app-filter-group [options]="productRating" [type]="'quality'"
-          (filteredOptions)="filtered($event,'quality')"></app-filter-group>
 
-      </div>
-    </ion-accordion> -->
     <ion-item class="item-header loader" color="light" *ngIf="brandsLoading">
       <ion-label>Brands
       </ion-label>
@@ -87,6 +78,16 @@
       </div>
     </ion-accordion>
 
+    <ion-accordion value="rating">
+      <ion-item slot="header" class="item-header" color="light">
+        <ion-label>Product Rating</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-filter-group [options]="productRating" [type]="'product_score'"
+          (filteredOptions)="filtered($event,'product_score')"
+          [addedOptions]="form.value.product_score"></app-filter-group>
+      </div>
+    </ion-accordion>
     <ion-accordion value="user-ratings">
       <ion-item slot="header" class="item-header" color="light">
         <ion-label>User Ratings</ion-label>

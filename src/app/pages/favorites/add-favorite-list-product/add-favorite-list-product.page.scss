@@ -73,3 +73,8 @@
 ion-item {
   border-bottom: 1px solid rgba(0, 0, 0, 0.13);
 }
+ion-footer {
+  &.ios {
+    padding-bottom: 16px;
+  }
+}

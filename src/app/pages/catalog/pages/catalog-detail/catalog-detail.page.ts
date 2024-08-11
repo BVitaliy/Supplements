@@ -30,14 +30,15 @@ export class CatalogDetailPage implements OnInit {
 
   ngOnInit() {
     this.filterForm = new FormGroup({
-      search: new FormControl(null),
-      sort: new FormControl(null),
+      query: new FormControl(null),
+      ordering_field: new FormControl(null),
       categories: new FormControl([]),
       brands: new FormControl([]),
       ingredients: new FormControl([]),
       quality: new FormControl(null),
       special_offer: new FormControl(false),
       rating_score: new FormControl(null),
+      product_score: new FormControl(null),
     });
   }
 
@@ -49,9 +50,13 @@ export class CatalogDetailPage implements OnInit {
 
   search(event: any) {
     console.log(event?.detail?.value);
-    this.filterForm.get('search')?.setValue(event?.detail?.value);
-    const search = event?.detail?.value;
-    this.filteredProduct(search ? { query: search } : {});
+    this.filterForm.get('query')?.setValue(event?.detail?.value);
+
+    const values = {
+      ...this.filterForm.value,
+      categories: [this.id],
+    };
+    this.filteredProduct(values);
   }
 
   // Відкривання модалки Filters
@@ -95,7 +100,7 @@ export class CatalogDetailPage implements OnInit {
       initialBreakpoint: 0.4,
       handle: true,
       componentProps: {
-        sort: this.filterForm.get('sort')?.value,
+        sort: this.filterForm.get('ordering_field')?.value,
       },
     });
 
@@ -103,7 +108,13 @@ export class CatalogDetailPage implements OnInit {
       if (returnedData && returnedData?.data) {
         // this.addedHIngredientsOptions = returnedData?.data;
         console.log(returnedData);
-        this.sortProduct(returnedData?.data);
+        this.filterForm.get('ordering_field')?.setValue(returnedData?.data);
+        // this.sortProduct(returnedData?.data);
+        const values = {
+          ...this.filterForm.value,
+          categories: [this.id],
+        };
+        this.filteredProduct(values);
       }
     });
 
@@ -169,7 +180,7 @@ export class CatalogDetailPage implements OnInit {
   sortProduct(sort: any) {
     this.loading = true;
     const data = {
-      ordering: '-' + sort,
+      ordering: sort,
       limit: 200,
     };
     this.catalogService

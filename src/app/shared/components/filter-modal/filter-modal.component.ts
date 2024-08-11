@@ -52,6 +52,7 @@ export class FilterModalComponent implements OnInit {
       quality: new FormControl(null),
       special_offer: new FormControl(false),
       rating_score: new FormControl(null),
+      product_score: new FormControl([]),
     });
     this.form.patchValue(this.filters);
   }
@@ -63,7 +64,6 @@ export class FilterModalComponent implements OnInit {
         this.cancelModal();
       }
     );
-    // this.getData();
     if (this.page !== 'categories') {
       this.getCategories();
     }
@@ -208,8 +208,6 @@ export class FilterModalComponent implements OnInit {
   }
 
   filtered($event: any, type: string) {
-    console.log($event);
-    console.log(type);
     if (type === 'ingredients') {
       this.form.get('ingredients')?.setValue($event);
     }
@@ -221,6 +219,9 @@ export class FilterModalComponent implements OnInit {
     }
     if (type === 'special_offer') {
       this.form.get('special_offer')?.setValue($event ? true : false);
+    }
+    if (type === 'product_score') {
+      this.form.get('product_score')?.setValue($event || []);
     }
   }
 

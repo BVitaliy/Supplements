@@ -5,7 +5,7 @@
         <ion-icon [src]="'./assets/img/icons/icon-back.svg'"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="sm">{{indregientsDetail?.title}}</ion-title>
+    <ion-title class="sm">{{detail?.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,29 +13,31 @@
   <ion-grid>
     <div class="product-detail">
       <div class="image">
-        <app-img [src]="product?.image" cssClasses="img-fit-contain" *ngIf="product?.image"></app-img>
+        <app-img
+          [src]="product?.images[product?.images?.length - 1 || 0]?.url || product?.images[product?.images?.length - 1 || 0]?.image"
+          cssClasses="img-fit-contain" *ngIf="product?.images?.length"></app-img>
       </div>
       <ion-text>
-        <p class="text-xs medium fw-400 ion-text-uppercase m-bottom--xxx-small">{{product?.category}}</p>
+        <p class="text-xs medium fw-400 ion-text-uppercase m-bottom--xxx-small">{{product?.category?.title ||
+          product?.brand?.title}}</p>
         <p class="text-s dark fw-600">{{product?.title}}</p>
       </ion-text>
     </div>
 
     <div class="content">
       <div class="ingredient-header m-bottom--medium">
-        <div class="badge" [ngStyle]="{ 'background': indregientsDetail?.color}"></div>
-        <span class="h4 dark fw-600">{{indregientsDetail?.title}}</span>
-        <span class="h4 medium fw-600">{{indregientsDetail?.count}}</span>
+        <div class="badge" [ngStyle]="{ 'background': detail?.color}"></div>
+        <span class="h4 dark fw-600">{{detail?.title}} list</span>
+        <span class="h4 medium fw-600">{{detail?.ingredients?.length}}</span>
       </div>
 
       <ion-list class="ingerdients">
-        <ng-container *ngFor="let item of indregientsDetail?.ingredients">
+        <ng-container *ngFor="let item of detail?.ingredients">
           <ion-item class="text-m primary" button detail="false" lines="none" (click)="openIngredientModal(item)">
-            {{item}}
+            {{item?.title || item?.name}}
           </ion-item>
         </ng-container>
       </ion-list>
     </div>
-
   </ion-grid>
 </ion-content>

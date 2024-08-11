@@ -25,7 +25,7 @@ export class FilterGroupComponent implements OnInit {
       search: new FormControl(null),
     });
     this.optionsToShow = this.options;
-
+    console.log(this.addedOptions);
     this.checkCount();
 
     this.searchForm.get('search')?.valueChanges.subscribe((el) => {
@@ -59,12 +59,12 @@ export class FilterGroupComponent implements OnInit {
   public checkboxChangeState(_e: any, option?: any): void {
     if (
       option &&
-      this.addedOptions.every((el: any): boolean => el !== option.id)
+      this.addedOptions?.every((el: any): boolean => el !== option.id)
     ) {
-      this.addedOptions.push(option?.id);
+      this.addedOptions?.push(option?.id);
     } else if (
       option &&
-      this.addedOptions.some((el: any): boolean => el === option.id)
+      this.addedOptions?.some((el: any): boolean => el === option.id)
     ) {
       this.addedOptions = this.addedOptions.filter(
         (el: any): boolean => el !== option.id
@@ -75,7 +75,7 @@ export class FilterGroupComponent implements OnInit {
   }
 
   isSelected(option: any): boolean {
-    return !!this.addedOptions.find((el: any) => el === option?.id);
+    return !!this.addedOptions?.find((el: any) => el === option?.id);
   }
 
   getPriorityValue(data: any) {
