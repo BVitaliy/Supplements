@@ -42,7 +42,7 @@
             This field can’t be empty
           </ion-note>
         </ion-item>
-        <ion-button class="btn" fill="clear" mode="md" (click)="takeTextFromImage('barcode')" [disabled]="loading">
+        <ion-button class="btn" fill="clear" mode="md" (click)="scanBarcode()" [disabled]="loading">
           <ion-spinner name="crescent" color="primary" *ngIf="loading && type ==='barcode'; else icon"></ion-spinner>
           <ng-template #icon>
             <ion-icon slot="icon-only" src="./assets/img/product/scan.svg"></ion-icon>

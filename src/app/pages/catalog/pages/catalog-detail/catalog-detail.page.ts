@@ -114,7 +114,7 @@ export class CatalogDetailPage implements OnInit {
           ...this.filterForm.value,
           categories: [this.id],
         };
-        this.filteredProduct(values);
+        this.filteredProduct(values, { ordering: returnedData?.data });
       }
     });
 
@@ -158,10 +158,10 @@ export class CatalogDetailPage implements OnInit {
       });
   }
 
-  filteredProduct(data: any) {
+  filteredProduct(data: any, ordering?: any) {
     this.loading = true;
     this.catalogService
-      .searchProduct(data)
+      .searchProduct(data, ordering)
       .pipe(
         finalize(() => {
           this.loading = false;

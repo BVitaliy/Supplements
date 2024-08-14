@@ -169,6 +169,7 @@ export class CatalogService {
   searchProduct(data: any, parameters?: any): Observable<any> {
     const params: HttpParams = queryParams(parameters);
     const values = this.cleanObject(data);
+    delete values.ordering_field;
     return this.http
       .post(`${environment.origin}/supplements/search/`, values, { params })
       .pipe(

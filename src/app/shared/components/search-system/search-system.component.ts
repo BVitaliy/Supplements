@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { SearchSystemTabs } from './search-system.models';
 import { Products } from '../../../../mock/products';
 import {
@@ -27,12 +33,16 @@ export class SearchSystemComponent implements OnChanges {
   public ingredientsItems: any[] = [];
   lastSearchRecord: any;
 
-  constructor(private catalogService: CatalogService) {
+  constructor(
+    private catalogService: CatalogService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
     this.getData();
   }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     if (changes?.['searchValue'] && this.searchValue?.length > 2) {
+      this.changeDetectorRef.detectChanges();
       if (this.searchActiveTab === 'Products') {
         this.searchProduct();
       } else {

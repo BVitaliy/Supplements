@@ -82,6 +82,7 @@ export class MainPage implements OnInit {
   search(event: any) {
     console.log(event?.detail?.value);
     this.filterForm.get('search')?.setValue(event?.detail?.value);
+    this.changeDetectorRef.detectChanges();
     // this.getOrders(true);
   }
 

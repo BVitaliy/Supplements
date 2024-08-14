@@ -19,12 +19,12 @@
 
   <ng-container *ngIf="!loading">
     <div class="product-image">
-      <app-rating-count [rating]="product?.rating_score" [type]="'badge'"
-        *ngIf="product?.rating_score"></app-rating-count>
+      <app-rating-count [rating]="product?.product_score" [type]="'badge'"
+        *ngIf="product?.product_score"></app-rating-count>
 
       <swiper #swiper [config]="slideOpts" pager="true" *ngIf="product?.images?.length">
         <ng-template swiperSlide *ngFor="let product of product?.images; let i=index">
-          <app-img [src]="product.url" cssClasses="img-fit-cover" [zooming]="true"></app-img>
+          <app-img [src]="product.url" cssClasses="img-fit-contain" [zooming]="true"></app-img>
         </ng-template>
       </swiper>
 

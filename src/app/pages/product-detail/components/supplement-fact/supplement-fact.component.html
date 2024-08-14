@@ -7,13 +7,13 @@
     <div class="row header">
       <div class="cell"></div>
       <div class="cell">Amount per serving</div>
-      <div class="cell">% Daily Values**</div>
+      <!-- <div class="cell">% Daily Values**</div> -->
     </div>
 
     <div class="row" *ngFor="let item of product?.ingredients">
       <div class="cell">{{item?.title}}</div>
-      <div class="cell">{{item?.dosage}}</div>
-      <div class="cell"></div>
+      <div class="cell">{{item?.amount}}{{item?.unit}}</div>
+      <!-- <div class="cell"></div> -->
     </div>
     <!-- <div class="row">
       <div class="cell">Calories From Fat</div>

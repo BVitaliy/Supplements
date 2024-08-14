@@ -11,6 +11,10 @@ import { createWorker } from 'tesseract.js';
 import { finalize, Subscription } from 'rxjs';
 import { CatalogService } from '../catalog/catalog.service';
 import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
+import {
+  BarcodeScanner,
+  BarcodeScannerOptions,
+} from '@awesome-cordova-plugins/barcode-scanner/ngx';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.page.html',
@@ -35,6 +39,7 @@ export class AddProductPage implements OnInit {
     private alertService: AlertService,
     private catalogService: CatalogService,
     private themeOptions: ThemeOptionsService,
+    private barcodeScanner: BarcodeScanner,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
@@ -326,5 +331,35 @@ export class AddProductPage implements OnInit {
           }
         }
       );
+  }
+
+  scanBarcode() {
+    if (this.platform.is('hybrid')) {
+      this.loading = true;
+      this.type = 'barcode';
+      const options: BarcodeScannerOptions = {
+        preferFrontCamera: false,
+        showFlipCameraButton: true,
+        showTorchButton: true,
+        disableAnimations: false,
+        disableSuccessBeep: false,
+        // formats: 'QR_CODE',
+        prompt: 'Place a barcode inside the scan areas',
+        torchOn: false,
+      };
+
+      this.barcodeScanner
+        .scan(options)
+        .then((barcodeData) => {
+          console.log(barcodeData);
+          this.form.get('barcode')?.setValue(barcodeData?.text);
+          this.loading = false;
+          this.type = null;
+        })
+        .catch((error) => {
+          this.loading = false;
+          this.type = null;
+        });
+    }
   }
 }

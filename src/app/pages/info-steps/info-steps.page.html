@@ -7,6 +7,10 @@
       <span [ngClass]="{'active': currentStep >= 4}"></span>
       <span [ngClass]="{'active': currentStep === 5}"></span>
     </div>
+    <ion-button fill="clear" *ngIf="currentStep >= 2" (click)="back()">
+      <ion-icon src="./assets/img/icons/icon-back-primary.svg"></ion-icon>
+      Back
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -306,8 +310,7 @@
   <ng-container *ngIf="currentStep === 3">
     <div class="step-image step-3">
       <div class="image">
-        <svg width="375" height="261" viewBox="0 0 375 261" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+        <svg width="375" height="261" viewBox="0 0 375 261" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_980_42877)">
             <path
               d="M248.214 58.8673V211.098C248.214 213.582 245.96 214.55 243.705 215.598C241.793 216.488 239.783 217.318 237.673 218.096C202.945 230.925 142.447 229.14 111.509 215.598C109.228 214.603 107 213.582 107 211.098V58.8673C107 43.9224 118.734 33.1617 133.382 30.9477C134.075 30.8423 134.569 30.2426 134.569 29.5573V23.7915H220.645V29.5507C220.645 29.722 220.678 29.8934 220.737 30.0449C220.909 30.5062 221.318 30.8686 221.838 30.9411C223.157 31.1388 224.442 31.3958 225.708 31.7252C226.446 31.9229 227.178 32.1338 227.897 32.3776C239.42 36.2061 247.97 45.7543 248.214 58.3006C248.214 58.4851 248.214 58.6696 248.214 58.8607V58.8673Z"
@@ -817,8 +820,7 @@
   <ng-container *ngIf="currentStep === 5">
     <div class="step-image step-5">
       <div class="image">
-        <svg width="343" height="339" viewBox="0 0 343 339" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+        <svg width="343" height="339" viewBox="0 0 343 339" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M37.9043 0.487549C35.369 -0.0399274 33.0039 1.8658 33.0039 4.45213V130.859C33.0039 132.714 34.0929 134.415 35.8114 135.147C43.3492 138.346 69.0254 145.612 146.581 145.612C224.137 145.612 250.375 138.618 257.454 135.334C259.104 134.569 260.159 132.918 260.159 131.097V4.45213C260.159 1.8658 257.794 -0.0399274 255.259 0.487549C241.102 3.41419 197.798 5.55812 146.581 5.55812C95.3652 5.55812 52.0611 3.43121 37.9043 0.487549Z"
             fill="#FF4800" />

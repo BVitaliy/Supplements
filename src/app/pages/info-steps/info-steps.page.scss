@@ -71,3 +71,18 @@ ion-footer {
     margin-bottom: 20px;
   }
 }
+
+ion-header {
+  ion-button {
+    min-height: auto;
+    height: auto;
+    --padding-start: 0;
+    --padding-end: 0;
+    font-size: 14px;
+    ion-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--ion-color-primary);
+    }
+  }
+}

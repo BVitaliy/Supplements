@@ -5,7 +5,7 @@
     <div vertical="center">
       <ion-searchbar #searchbar mode="ios" placeholder="Search for a product or ingredient..." show-clear-button="never"
         [searchIcon]="'./assets/img/icons/icon-search.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
-        formControlName="search" (ionFocus)="onSearchFocus($event)" (ionChange)="search($event)">
+        formControlName="search" (ionFocus)="onSearchFocus($event)" (ionChange)="search($event)" enterkeyhint="Done">
       </ion-searchbar>
       <!-- Cancel search state -->
       <div *ngIf="isSearchActive" vertical="center" class="m-left--small flex-shrink--none">

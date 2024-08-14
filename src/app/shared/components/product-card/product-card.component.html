@@ -34,8 +34,8 @@
       </div>
 
       <div class="product-bottom" *ngIf="!detailDisabled">
-        <ng-container *ngIf="product?.average_rating">
-          <app-rating-count [rating]="product?.average_rating" [type]="'badge'"></app-rating-count>
+        <ng-container *ngIf="product?.product_score">
+          <app-rating-count [rating]="product?.product_score" [type]="'badge'"></app-rating-count>
         </ng-container>
         <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product"
           [favorite]="product?.in_favorite"></app-favorite-btn>

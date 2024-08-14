@@ -39,6 +39,10 @@ export class InfoStepsPage implements OnInit {
     }
   }
 
+  back() {
+    this.currentStep--;
+  }
+
   nextPage(url: string) {
     this.storage.set(FIRST_OPEN_APP, true);
     this.navCtrl.navigateRoot(url);

@@ -159,6 +159,7 @@ ion-icon {
 ion-content {
   --background: var(--ion-color-light-tint-next);
   background: var(--ion-color-light-tint-next);
+  transition: --keyboard-offset 0.5s ease;
   &.secondary {
     --background: var(--ion-color-secondary);
     background: var(--ion-color-secondary);
