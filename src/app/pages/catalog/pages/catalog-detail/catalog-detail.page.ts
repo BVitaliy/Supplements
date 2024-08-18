@@ -38,7 +38,7 @@ export class CatalogDetailPage implements OnInit {
       quality: new FormControl(null),
       special_offer: new FormControl(false),
       rating_score: new FormControl(null),
-      product_score: new FormControl(null),
+      product_score: new FormControl([]),
     });
   }
 
@@ -92,6 +92,7 @@ export class CatalogDetailPage implements OnInit {
 
   // Відкривання модалки sort
   async openSortPopover() {
+    console.log(this.filterForm.value);
     const modal = await this.modalController.create({
       component: SortModalComponent,
       cssClass: '',

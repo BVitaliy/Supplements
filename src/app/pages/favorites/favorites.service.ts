@@ -75,6 +75,18 @@ export class FavoriteService {
       })
     );
   }
+
+  deleteProductFromFavList(id: string): Observable<any> {
+    return this.http
+      .delete(`${environment.origin}/favorite-lists/products/${id}`)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
   setProductToFavList(data: any, id: any): Observable<any> {
     return this.http
       .post(`${environment.origin}/favorite-lists/${id}/data/`, data)

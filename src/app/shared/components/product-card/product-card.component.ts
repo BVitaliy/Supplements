@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { FavoriteService } from 'src/app/pages/favorites/favorites.service';
 import { ProductDetailPage } from 'src/app/pages/product-detail/product-detail.page';
 import { AddFavoriteListProductPage } from '../../../pages/favorites/add-favorite-list-product/add-favorite-list-product.page';
@@ -29,7 +30,8 @@ export class ProductCardComponent implements OnInit {
     public navCtrl: NavController,
     private modalController: ModalController,
     private favoriteService: FavoriteService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -45,11 +47,23 @@ export class ProductCardComponent implements OnInit {
     }
   }
 
+  getStarWidth(starIndex: number): number {
+    const score = this.product?.rating_score || 0;
+    const fullStars = Math.floor(score);
+    const partialStar = score - fullStars;
+
+    if (starIndex <= fullStars) {
+      return 100; // Повна зірка
+    } else if (starIndex === fullStars + 1) {
+      return partialStar * 100; // Часткова зірка
+    } else {
+      return 0; // Порожня зірка
+    }
+  }
+
   favoriteHandle($event: any) {
     if (this.product!.in_favorite) {
-      if (this.idFavorilteList) {
-        this.removeToFavorites(this.idFavorilteList);
-      }
+      this.removeFromFavorites(this.product?.id);
     } else {
       this.showListActionsModal();
     }
@@ -73,7 +87,6 @@ export class ProductCardComponent implements OnInit {
             this.setToFavorites(id);
           });
         }
-        // add product to favorite list
       }
     });
     return await modal.present();
@@ -117,18 +130,27 @@ export class ProductCardComponent implements OnInit {
     this.favoriteService.setProductToFavList(data, id).subscribe(
       (data: any) => {
         this.product.in_favorite = true;
-        // this.favoritesList = data.results;
+        this.alertService.createToast({
+          header: `Product was successfully added to Favorite list!`,
+          mode: 'ios',
+          position: 'bottom',
+        });
       },
       (error: any) => {}
     );
   }
 
-  removeToFavorites(id: any) {
-    const data = {
-      ids_to_delete: [this.product?.id],
-    };
-    this.favoriteService.setProductToFavList(data, id).subscribe(
+  removeFromFavorites(id: any) {
+    this.favoriteService.deleteProductFromFavList(id).subscribe(
       (data: any) => {
+        if (!this.idFavorilteList) {
+          this.product.in_favorite = false;
+          this.alertService.createToast({
+            header: `Product was successfully removed from Favorite lists!`,
+            mode: 'ios',
+            position: 'bottom',
+          });
+        }
         this.reloadPage.emit(true);
       },
       (error: any) => {}

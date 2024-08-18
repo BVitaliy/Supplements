@@ -89,6 +89,20 @@ export class ProductDetailPage implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
+  getStarWidth(starIndex: number): number {
+    const score = this.product?.rating_score || 0;
+    const fullStars = Math.floor(score);
+    const partialStar = score - fullStars;
+
+    if (starIndex <= fullStars) {
+      return 100; // Повна зірка
+    } else if (starIndex === fullStars + 1) {
+      return partialStar * 100; // Часткова зірка
+    } else {
+      return 0; // Порожня зірка
+    }
+  }
+
   ngAfterContentChecked() {
     if (this.swiper) {
       this.swiper.updateSwiper(this.slideOpts);

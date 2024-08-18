@@ -20,9 +20,9 @@ export class ProductNotFoundComponent implements OnInit {
 
   async ngOnInit() {
     this.modalHeight = Math.floor(0.75 * window.innerHeight);
-    const token = await this.storage.get('access_token');
-
-    this.logged = token ? true : false;
+    this.storage.get('access_token').then((token) => {
+      this.logged = token ? true : false;
+    });
   }
 
   openPage(link: string) {

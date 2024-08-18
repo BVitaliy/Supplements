@@ -36,7 +36,7 @@
       <div class="medium fw-500 pb-5">{{product?.category?.title}}</div>
       <div class="text-l fw-700 dark m-bottom--small">{{product?.title}}</div>
 
-      <div vertical="center" class="m-bottom--medium">
+      <!-- <div vertical="center" class="m-bottom--medium">
         <ion-icon
           [src]="product?.rating_score >= 1 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
           class="star"></ion-icon>
@@ -55,6 +55,19 @@
         <div class="review-count m-left--x-small text-s">
           {{reviews?.length}}
         </div>
+      </div> -->
+      <div vertical="center" class="m-bottom--medium star-rating">
+        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+          <div class="star-container">
+            <ion-icon src="./assets/img/icons/star-default.svg" class="star-back"></ion-icon>
+            <div class="wrap-star" [style.width.%]="getStarWidth(i + 1)">
+              <ion-icon src="./assets/img/icons/star-icon.svg" class="star-front"></ion-icon>
+            </div>
+          </div>
+        </ng-container>
+        <div class="review-count m-left--x-small text-s">
+          {{product?.rating_score | number:'1.1-1'}}
+        </div>
       </div>
 
       <div class="product-controls">
@@ -63,9 +76,9 @@
         </ion-button>
         <div class="options">
           <app-favorite-btn (favorited)="favoriteHandle($event)" [product]="product" [size]="'md'"></app-favorite-btn>
-          <ion-button shape="round" fill="outline" (click)="actionAlert()">
+          <!-- <ion-button shape="round" fill="outline" (click)="actionAlert()">
             <ion-icon slot="icon-only" [src]="'./assets/img/icons/add-feedback.svg'"></ion-icon>
-          </ion-button>
+          </ion-button> -->
           <ion-button shape="round" fill="outline" (click)="shareProduct()">
             <ion-icon slot="icon-only" [src]="'./assets/img/icons/icon-share.svg'"></ion-icon>
           </ion-button>
@@ -92,10 +105,10 @@
           <ion-segment-button value="ingredient">
             Ingredient Analysis
           </ion-segment-button>
-          <ion-segment-button value="efects">
+          <!-- <ion-segment-button value="efects">
             Body Positive Efects
 
-          </ion-segment-button>
+          </ion-segment-button> -->
         </ion-segment>
 
         <ng-container *ngIf="type === 'ingredient'">
@@ -235,18 +248,19 @@
         </ion-button>
       </div>
 
-      <div class="section p-vertical--medium p-horizontal--medium m-bottom--large dark">
+      <div class="section p-vertical--medium p-horizontal--medium m-bottom--large dark" *ngIf="product?.dosage">
         <div class="title text-l fw-600 dark pb-5">Suggested use</div>
 
 
-        <p class="fw-500">Mix one scoop into a hot or cold liquid of your choice (at least 8 oz.) or blend into your
+        <div [innerHTML]="product?.dosage | safeHtml"></div>
+        <!-- <p class="fw-500">Mix one scoop into a hot or cold liquid of your choice (at least 8 oz.) or blend into your
           favorite smoothie.
         </p>
         <ul>
           <li>1 scoop into beverage</li>
           <li>Hot or cold drink</li>
           <li>Once daily</li>
-        </ul>
+        </ul> -->
       </div>
 
       <app-supplement-fact class="section p-vertical--medium p-horizontal--medium m-bottom--large" [product]="product"
