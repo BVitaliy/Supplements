@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { queryParams } from 'src/app/core/functions/query-params';
+import { transformProductScore } from 'src/app/core/functions/transform-product-score';
 
 @Injectable({
   providedIn: 'root',
@@ -168,7 +169,12 @@ export class CatalogService {
 
   searchProduct(data: any, parameters?: any): Observable<any> {
     const params: HttpParams = queryParams(parameters);
-    const values = this.cleanObject(data);
+    let values = this.cleanObject(data);
+
+    console.log(values);
+    if (values?.product_score) {
+      values.product_score = transformProductScore(values?.product_score);
+    }
     delete values.ordering_field;
     return this.http
       .post(`${environment.origin}/supplements/search/`, values, { params })

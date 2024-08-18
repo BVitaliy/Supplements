@@ -65,27 +65,27 @@ export class ScannerPage implements OnInit {
         .scan(options)
         .then((barcodeData) => {
           console.log(barcodeData);
-          if (barcodeData?.format === 'QR_CODE') {
-            // this.getUserInfoByQrCode(this.cardQrCode);
-          } else {
+          if (barcodeData?.text) {
             this.getProductByBarcode(barcodeData?.text);
+          } else if (barcodeData?.cancelled) {
+            this.navCtrl.back();
           }
           // this.openProductNotFound();
         })
         .catch((error) => {
-          this.openProductNotFound();
-          if (this.platform.is('ios')) {
-            // this.navCtrl.back();
+          console.log(error);
+          if (error?.cancelled) {
+            this.navCtrl.back();
+          } else {
+            this.openProductNotFound();
           }
-          // this.scanningInfo = null;
           this.loading = false;
         });
     } else {
-      // this.scanningInfo = null;
       this.loading = false;
-      this.openProductNotFound();
+      // this.openProductNotFound();
       if (this.platform.is('ios')) {
-        // this.navCtrl.back();
+        this.navCtrl.back();
       }
       // setTimeout(() => { // Видалити !!!
       //   this.getUserInfoByQrCode('89770172'); // '42110929'

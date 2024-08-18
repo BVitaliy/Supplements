@@ -350,3 +350,44 @@ ng-otp-input {
     bottom: 10px !important;
   }
 }
+
+//rating stars
+.star-container {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  ion-icon {
+    min-width: 16px;
+  }
+}
+
+.star-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.star-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.wrap-star {
+  overflow: hidden;
+  display: block;
+  width: 16px;
+  height: 16px;
+  position: relative;
+}

@@ -13,7 +13,7 @@
     </div>
     <div *ngIf="product?.status === 1 || !product?.status">
       <div *ngIf="showStars" vertical="center" class="m-bottom--x-small">
-        <ion-icon
+        <!-- <ion-icon
           [src]="product?.average_rating >= 1 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
           class="star"></ion-icon>
         <ion-icon
@@ -27,10 +27,23 @@
           class="star m-left--xx-small"></ion-icon>
         <ion-icon
           [src]="product?.average_rating >= 5 ? './assets/img/icons/star-icon.svg' : './assets/img/icons/star-default.svg'"
-          class="star m-left--xx-small"></ion-icon>
+          class="star m-left--xx-small"></ion-icon> -->
         <!-- <div class="review-count m-left--xx-small">
           {{product?.average_rating}}
         </div> -->
+        <div vertical="center" class="m-bottom--medium star-rating">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+            <div class="star-container">
+              <ion-icon src="./assets/img/icons/star-default.svg" class="star-back"></ion-icon>
+              <div class="wrap-star" [style.width.%]="getStarWidth(i + 1)">
+                <ion-icon src="./assets/img/icons/star-icon.svg" class="star-front"></ion-icon>
+              </div>
+            </div>
+          </ng-container>
+          <div class="review-count  text-s" *ngIf="product!.rating_score">
+            {{(product?.rating_score | number:'1.1-1') || '-'}}
+          </div>
+        </div>
       </div>
 
       <div class="product-bottom" *ngIf="!detailDisabled">

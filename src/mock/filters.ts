@@ -160,7 +160,7 @@ export const Brands = [
 
 export const ProductRating = [
   {
-    id: 1,
+    id: 3,
     type: 'product_rating',
     label: 'God: 4-5',
     count: 0,
@@ -170,13 +170,13 @@ export const ProductRating = [
   {
     id: 2,
     type: 'product_rating',
-    label: 'Not bad: 2-3',
+    label: 'Not bad: 2-4',
     count: 0,
     checked: false,
     icon: './assets/img/icons/state-normal.svg',
   },
   {
-    id: 3,
+    id: 1,
     type: 'product_rating',
     label: 'Bad: 0-2',
     count: 0,
