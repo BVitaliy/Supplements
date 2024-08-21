@@ -145,12 +145,12 @@ export class ProductCardComponent implements OnInit {
       (data: any) => {
         if (!this.idFavorilteList) {
           this.product.in_favorite = false;
-          this.alertService.createToast({
-            header: `Product was successfully removed from Favorite lists!`,
-            mode: 'ios',
-            position: 'bottom',
-          });
         }
+        this.alertService.createToast({
+          header: `Product was successfully removed from Favorite lists!`,
+          mode: 'ios',
+          position: 'bottom',
+        });
         this.reloadPage.emit(true);
       },
       (error: any) => {}

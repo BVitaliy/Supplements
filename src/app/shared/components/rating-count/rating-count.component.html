@@ -9,6 +9,10 @@
   <span *ngIf="rating" class="text-s fw-600 dark">{{rating}}</span>
   <span *ngIf="text">{{text}}</span>
   <span *ngIf="count">({{count}})</span>
+
+  <p class="info" *ngIf="info">
+    ?
+  </p>
 </div>
 
 <div class="rating-count" [ngClass]="type" *ngIf="isLoading">

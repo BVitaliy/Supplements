@@ -328,9 +328,12 @@ ng-otp-input {
 
   ion-modal {
     top: var(--ion-safe-area-top);
-    .ion-page {
-      // height: calc(100% - var(--ion-safe-area-top));
-    }
+  }
+}
+
+ion-modal {
+  &.height-auto {
+    --height: auto;
   }
 }
 

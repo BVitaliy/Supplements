@@ -14,6 +14,7 @@ import { IngredientDetailModalComponent } from './components/ingredient-detail-m
 import { HighlightedIngredientsPage } from './pages/highlighted-ingredients/highlighted-ingredients.page';
 import { SwiperModule } from 'swiper/angular';
 import { SupplementFactComponent } from './components/supplement-fact/supplement-fact.component';
+import { RatingComponent } from './components/rating/rating.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { SupplementFactComponent } from './components/supplement-fact/supplement
     IngredientDetailModalComponent,
     HighlightedIngredientsPage,
     SupplementFactComponent,
+    RatingComponent,
   ],
 })
 export class ProductDetailPageModule {}

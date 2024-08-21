@@ -22,6 +22,10 @@ import { ACCESS_TOKEN_STORAGE_NAME } from 'src/app/app.config';
 import { SwiperComponent } from 'swiper/angular';
 import Swiper, { SwiperOptions } from 'swiper';
 import { Share } from '@capacitor/share';
+import { AddFavoriteListProductPage } from '../favorites/add-favorite-list-product/add-favorite-list-product.page';
+import { FavoriteService } from '../favorites/favorites.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { RatingComponent } from './components/rating/rating.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -69,7 +73,9 @@ export class ProductDetailPage implements OnInit {
     private catalogService: CatalogService,
     private route: ActivatedRoute,
     private mainService: MainService,
-    private storage: Storage
+    private storage: Storage,
+    private favoriteService: FavoriteService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -270,10 +276,71 @@ export class ProductDetailPage implements OnInit {
       this.openAlertModal();
     }
   }
+
   favoriteHandle($event: any) {
     if (this.openedInModal) {
       this.openAlertModal();
+    } else {
+      if (this.product!.in_favorite) {
+        this.removeFromFavorites(this.product?.id);
+      } else {
+        this.showListActionsModal();
+      }
     }
+  }
+
+  public async showListActionsModal(): Promise<void> {
+    const modal: HTMLIonModalElement = await this.modalController.create({
+      component: AddFavoriteListProductPage,
+      cssClass: 'auto-height',
+      breakpoints: [0, 0.3, 0.5, 1],
+      initialBreakpoint: 1,
+      componentProps: {
+        product: this.product,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+      if (data?.data) {
+        const ids = data.data.selectedListsIds;
+        if (ids?.length) {
+          ids?.forEach((id: any) => {
+            this.setToFavorites(id);
+          });
+        }
+      }
+    });
+    return await modal.present();
+  }
+
+  setToFavorites(id: any) {
+    const data = {
+      ids_to_add: [this.product?.id],
+    };
+    this.favoriteService.setProductToFavList(data, id).subscribe(
+      (data: any) => {
+        this.product.in_favorite = true;
+        this.alertService.createToast({
+          header: `Product was successfully added to Favorite list!`,
+          mode: 'ios',
+          position: 'bottom',
+        });
+      },
+      (error: any) => {}
+    );
+  }
+
+  removeFromFavorites(id: any) {
+    this.favoriteService.deleteProductFromFavList(id).subscribe(
+      (data: any) => {
+        this.product.in_favorite = false;
+        this.alertService.createToast({
+          header: `Product was successfully removed from Favorite lists!`,
+          mode: 'ios',
+          position: 'bottom',
+        });
+      },
+      (error: any) => {}
+    );
   }
 
   // Зміна типу сторінки
@@ -438,5 +505,21 @@ export class ProductDetailPage implements OnInit {
   }
   objectToArray(obj: { [key: string]: any }): { label: string; brands: any }[] {
     return Object.keys(obj).map((key) => ({ label: key, brands: obj[key] }));
+  }
+
+  // Відкривання модалки Rating
+  async openRatingModal() {
+    const modal = await this.modalController.create({
+      component: RatingComponent,
+      cssClass: 'height-auto',
+      mode: 'ios',
+      handle: true,
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
+
+      componentProps: {},
+    });
+
+    return await modal.present();
   }
 }
