@@ -162,7 +162,7 @@ export const ProductRating = [
   {
     id: 3,
     type: 'product_rating',
-    label: 'God: 4-5',
+    label: 'God: 8-10',
     count: 0,
     checked: false,
     icon: './assets/img/icons/state-good.svg',
@@ -170,7 +170,7 @@ export const ProductRating = [
   {
     id: 2,
     type: 'product_rating',
-    label: 'Not bad: 2-4',
+    label: 'Not bad: 4-7',
     count: 0,
     checked: false,
     icon: './assets/img/icons/state-normal.svg',
@@ -178,7 +178,7 @@ export const ProductRating = [
   {
     id: 1,
     type: 'product_rating',
-    label: 'Bad: 0-2',
+    label: 'Bad: 0-3',
     count: 0,
     checked: false,
     icon: './assets/img/icons/state-bad.svg',

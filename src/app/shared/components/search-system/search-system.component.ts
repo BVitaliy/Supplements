@@ -75,6 +75,7 @@ export class SearchSystemComponent implements OnChanges {
       (data: any) => {
         this.productsHistoryItems = [];
         this.ingredientsHistoryItems = [];
+        this.changeDetectorRef.detectChanges();
       },
       (error: any) => {}
     );
@@ -87,6 +88,7 @@ export class SearchSystemComponent implements OnChanges {
       .pipe(
         finalize(() => {
           // this.loading = false;
+          this.changeDetectorRef.detectChanges();
         })
       )
       .subscribe(
@@ -127,6 +129,7 @@ export class SearchSystemComponent implements OnChanges {
       .pipe(
         finalize(() => {
           this.isLoading = false;
+          this.changeDetectorRef.detectChanges();
         })
       )
       .subscribe({
@@ -162,6 +165,7 @@ export class SearchSystemComponent implements OnChanges {
       .pipe(
         finalize(() => {
           this.isLoading = false;
+          this.changeDetectorRef.detectChanges();
         })
       )
       .subscribe({

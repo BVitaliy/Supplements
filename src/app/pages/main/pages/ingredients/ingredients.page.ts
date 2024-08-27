@@ -70,7 +70,7 @@ export class IngredientsPage implements OnInit {
   searchIngrediens(search: string) {
     this.loading = true;
     this.mainService
-      .searchIngredients(search)
+      .searchIngredients({ query: search })
       .pipe(
         finalize(() => {
           this.loading = false;
