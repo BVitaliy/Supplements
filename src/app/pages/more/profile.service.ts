@@ -140,4 +140,24 @@ export class ProfileService {
         })
       );
   }
+
+  getNotifications(): Observable<any> {
+    return this.http.get(`${environment.origin}/notifications/settings/`).pipe(
+      catchError((error) => {
+        this.alertService.presentErrorAlert(error);
+        return throwError(error);
+      })
+    );
+  }
+
+  setNotifications(data: any): Observable<any> {
+    return this.http
+      .patch(`${environment.origin}/notifications/settings/`, data)
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
 }

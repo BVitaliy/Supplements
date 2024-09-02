@@ -21,6 +21,7 @@ import { Capacitor } from '@capacitor/core';
 // import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 // import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { ActivatedRoute } from '@angular/router';
+import { PushNotificationsService } from 'src/app/core/services/push-notifications.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -40,7 +41,8 @@ export class LoginPage implements OnInit, ViewDidLeave {
     private loadingController: LoadingController,
     private storage: Storage,
     public authService: AuthenticationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private pushNotificationsService: PushNotificationsService
   ) {
     this.platformName = Capacitor.getPlatform();
   }
@@ -51,6 +53,11 @@ export class LoginPage implements OnInit, ViewDidLeave {
         if (playerID) {
           this.playerID = playerID;
           // this.faceId();
+        } else {
+          // this.pushNotificationsService.getIds().then((ids: any) => {
+          //   this.playerID = ids?.userId;
+          //   this.storage.set(DEVICE_ID_STORAGE_NAME, ids?.userId);
+          // });
         }
       });
     }

@@ -23,59 +23,38 @@
 </ion-header>
 
 <ion-content>
-  <ion-list lines="full">
+  <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  </ion-refresher>
+  <ion-list lines="full" [formGroup]="form" *ngIf="!loading">
     <!-- Updates -->
     <div class="notifications__label">
       Updates
     </div>
     <ion-item lines="none">
       <div vertical="center">
-        <ion-checkbox
-          slot="start"
-          class="checkbox"
-        ></ion-checkbox>
+        <ion-checkbox slot="start" class="checkbox" formControlName="favorite_products"></ion-checkbox>
         <ion-label>
-            <span class="checkbox-label">
-              When a favorite product  rating change
-            </span>
+          <span class="checkbox-label">
+            When a favorite product rating change
+          </span>
         </ion-label>
       </div>
     </ion-item>
 
     <ion-item>
       <div vertical="center" class="p-bottom--small">
-        <ion-checkbox
-          slot="start"
-          class="checkbox"
-        ></ion-checkbox>
+        <ion-checkbox slot="start" class="checkbox" formControlName="submission_in_db"></ion-checkbox>
         <ion-label>
-            <span class="checkbox-label">
-              When your submissions are in database
-            </span>
+          <span class="checkbox-label">
+            When your submissions are in database
+          </span>
         </ion-label>
       </div>
     </ion-item>
     <!-- / Updates -->
 
-    <!-- Reviews -->
-    <div class="notifications__label">
-      Reviews
-    </div>
-
-    <ion-item>
-      <div vertical="center" class="p-bottom--small">
-        <ion-checkbox
-          slot="start"
-          class="checkbox"
-        ></ion-checkbox>
-        <ion-label>
-            <span class="checkbox-label">
-              When your review is submitted and added
-            </span>
-        </ion-label>
-      </div>
-    </ion-item>
-    <!-- / Reviews -->
 
     <!-- Promotions -->
     <div class="notifications__label">
@@ -84,14 +63,11 @@
 
     <ion-item>
       <div vertical="center" class="p-bottom--small">
-        <ion-checkbox
-          slot="start"
-          class="checkbox"
-        ></ion-checkbox>
+        <ion-checkbox slot="start" class="checkbox" formControlName="promotional"></ion-checkbox>
         <ion-label>
-            <span class="checkbox-label">
-              Receiving promotional push notifications
-            </span>
+          <span class="checkbox-label">
+            Receiving promotional push notifications
+          </span>
         </ion-label>
       </div>
     </ion-item>

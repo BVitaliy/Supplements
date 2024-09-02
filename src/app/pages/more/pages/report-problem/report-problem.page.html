@@ -48,5 +48,28 @@
       </ion-item>
     </div>
     <!-- / Problem description -->
+
+    <div class="form-control image-controls">
+      <ion-label position="stacked">Add image</ion-label>
+      <ion-button class="btn secondary btn-sm" expand="block" fill="outline" mode="md" (click)="openGallery()"
+        *ngIf="!images?.length" [disabled]="loadingPhoto">
+        <ion-icon [src]="'./assets/img/icon/upload.svg'"></ion-icon>
+        Upload image
+        <ion-spinner class="spinner" color="primary" name="crescent" *ngIf="loadingPhoto"></ion-spinner>
+      </ion-button>
+
+      <div class="images-list" *ngIf="images?.length">
+        <div class="item" *ngFor="let item of images">
+          <app-img [src]="item?.src" cssClasses="img-fit-contain"></app-img>
+        </div>
+        <div class="item" (click)="openGallery()" [class.disabled]="loadingPhoto">
+          <div class="content">
+            <ion-icon [src]="'./assets/img/icon/upload.svg'"></ion-icon>
+            <p>Upload image</p>
+          </div>
+          <ion-spinner class="spinner" color="primary" name="crescent" *ngIf="loadingPhoto"></ion-spinner>
+        </div>
+      </div>
+    </div>
   </form>
 </ion-content>
