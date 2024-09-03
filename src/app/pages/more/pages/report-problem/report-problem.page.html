@@ -58,8 +58,8 @@
         <ion-spinner class="spinner" color="primary" name="crescent" *ngIf="loadingPhoto"></ion-spinner>
       </ion-button>
 
-      <div class="images-list" *ngIf="images?.length">
-        <div class="item" *ngFor="let item of images">
+      <div class="images-list" *ngIf="images?.length ">
+        <div class="item" *ngFor="let item of images; let i = index" (click)="openSourcePopover(i)">
           <app-img [src]="item?.src" cssClasses="img-fit-contain"></app-img>
         </div>
         <div class="item" (click)="openGallery()" [class.disabled]="loadingPhoto">

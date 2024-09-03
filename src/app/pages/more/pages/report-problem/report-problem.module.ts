@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ReportProblemPageRoutingModule } from './report-problem-routing.module';
 import { ReportProblemPage } from './report-problem.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ControlPopoverComponent } from '../../components/control-popover/control-popover.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ReactiveFormsModule,
     SharedModule,
   ],
-  declarations: [ReportProblemPage],
+  declarations: [ReportProblemPage, ControlPopoverComponent],
 })
 export class ReportProblemPageModule {}

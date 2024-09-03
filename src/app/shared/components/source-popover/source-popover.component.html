@@ -4,12 +4,12 @@
     <div class="title dark h2 fw-700">Select image source</div>
     <input type="file" accept="image/*" #fileInput hidden (change)="takeAvatar($event)" />
     <ion-item class="fw-600 text-m dark" button detail="false" lines="none" (click)="openCamera()">
-      <ion-icon size="large" [src]="'./assets/img/product/camera.svg'" slot="start"></ion-icon>
+      <ion-icon size="large" [src]="'./assets/img/product/camera.svg'" color="primary" slot="start"></ion-icon>
       Take a photo
     </ion-item>
 
     <ion-item class="fw-600 text-m dark" button detail="false" lines="none" (click)="triggerFileInput()">
-      <ion-icon size="large" [src]="'./assets/img/product/library.svg'" slot="start"></ion-icon>
+      <ion-icon size="large" [src]="'./assets/img/product/library.svg'" color="primary" slot="start"></ion-icon>
       Use photo from library
     </ion-item>
   </div>

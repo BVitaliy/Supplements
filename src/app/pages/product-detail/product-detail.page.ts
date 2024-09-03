@@ -271,6 +271,8 @@ export class ProductDetailPage implements OnInit {
   shopNowProduct() {
     if (this.openedInModal) {
       this.openAlertModal();
+    } else {
+      window.open(this.product.link, '_system');
     }
   }
 
