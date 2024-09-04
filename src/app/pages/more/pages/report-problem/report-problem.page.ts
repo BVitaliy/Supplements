@@ -65,6 +65,9 @@ export class ReportProblemPage {
             mode: 'ios',
             position: 'bottom',
           });
+          this.images?.forEach((element: any) => {
+            this.uploadImage(data?.id, element);
+          });
           this.navCtrl.back();
         },
         (error: any) => {
@@ -75,7 +78,22 @@ export class ReportProblemPage {
       );
   }
 
-  uploadImage() {}
+  async uploadImage(id: any, image: any) {
+    console.log(image);
+    const formData = new FormData();
+    formData.append('images', image.blob, 'image.' + image.format);
+    setTimeout(() => {
+      this.profileService.uploadImage(id, formData).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.loading = false;
+        },
+        (error: any) => {
+          this.loading = false;
+        }
+      );
+    }, 600);
+  }
 
   // Photo from gallery
   openGallery(indexChange?: number) {
@@ -87,7 +105,7 @@ export class ReportProblemPage {
           if (imageData && imageData?.photos?.length) {
             console.log('image data', imageData);
             let images = [];
-            if (!indexChange) {
+            if (!indexChange && indexChange !== 0) {
               for (const image of imageData?.photos) {
                 console.log(image);
                 const base64Response = await Filesystem.readFile({
