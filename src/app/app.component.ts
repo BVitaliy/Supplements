@@ -15,6 +15,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { App } from '@capacitor/app';
 import { Router } from '@angular/router';
 import { ThemeOptionsService } from './core/services/theme-options.service';
+import { PushNotificationsService } from './core/services/push-notifications.service';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent {
     private toastCtrl: ToastController,
     private permissionsService: PermissionsService,
     private themeOptions: ThemeOptionsService,
+    private pushNotificationsService: PushNotificationsService,
     @Optional() private routerOutlet?: IonRouterOutlet
   ) {
     this.initApp();
@@ -48,9 +50,9 @@ export class AppComponent {
             // serverClientId:
             //   '274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com',
             clientId:
-            '274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com',
+              '274080642453-pnrmp7g8n68bh430upid33l23vlgu35n.apps.googleusercontent.com',
           });
-
+          this.pushNotificationsService.setupPush();
           this.screenOrientation.lock(
             this.screenOrientation.ORIENTATIONS.PORTRAIT
           ); // 'portrait'
