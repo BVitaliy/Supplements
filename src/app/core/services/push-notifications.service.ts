@@ -21,6 +21,8 @@ import { Platform } from '@ionic/angular';
   providedIn: 'root',
 })
 export class PushNotificationsService {
+  FCMtoken: string | null = null;
+
   constructor(
     // private oneSignal: OneSignal,
     private platform: Platform,
@@ -42,8 +44,9 @@ export class PushNotificationsService {
     // Request permission to use push notifications
     // iOS will prompt user and return if they granted permission or not
     // Android will just grant without prompting
+    PushNotifications.checkPermissions;
     PushNotifications.requestPermissions().then((result) => {
-      console.log(result);
+      console.log(JSON.stringify(result));
       if (result.receive === 'granted') {
         // Register with Apple / Google to receive push via APNS/FCM
         PushNotifications.register();
@@ -54,7 +57,8 @@ export class PushNotificationsService {
 
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', (token: Token) => {
-      console.log('Push registration success, token: ' + token);
+      console.log('Push registration success, token: ' + JSON.stringify(token));
+      this.FCMtoken = token.value;
     });
 
     // Some issue with our setup and push will not work

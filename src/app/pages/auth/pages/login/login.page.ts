@@ -29,8 +29,7 @@ import { PushNotificationsService } from 'src/app/core/services/push-notificatio
 })
 export class LoginPage implements OnInit, ViewDidLeave {
   loginForm!: FormGroup;
-  playerID: string = '';
-  voIPToken: string = '';
+
   showPassword: boolean = false;
   user: any = null;
   platformName: any = null;
@@ -49,17 +48,6 @@ export class LoginPage implements OnInit, ViewDidLeave {
 
   ngOnInit() {
     if (this.platform.is('hybrid')) {
-      this.storage.get(DEVICE_ID_STORAGE_NAME).then((playerID) => {
-        if (playerID) {
-          this.playerID = playerID;
-          // this.faceId();
-        } else {
-          // this.pushNotificationsService.getIds().then((ids: any) => {
-          //   this.playerID = ids?.userId;
-          //   this.storage.set(DEVICE_ID_STORAGE_NAME, ids?.userId);
-          // });
-        }
-      });
     }
     this.loginForm = new FormGroup({
       email: new FormControl(null, [
@@ -106,6 +94,9 @@ export class LoginPage implements OnInit, ViewDidLeave {
             this.storage.set(REFRESH_TOKEN_STORAGE_NAME, data?.refresh);
             this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
             this.loginForm?.setErrors(null);
+            if (this.platform.is('hybrid')) {
+              this.authService.handleRegisterDevice();
+            }
           },
           (error: any) => {
             console.log(error);

@@ -28,6 +28,8 @@ import {
 } from 'src/app/app.config';
 import { NavController, Platform } from '@ionic/angular';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { PushNotificationsService } from 'src/app/core/services/push-notifications.service';
+import { Capacitor } from '@capacitor/core';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,15 +38,17 @@ export class AuthenticationService {
   signInLoading = false;
   signInLoadingGoogle = false;
   signInLoadingApple = false;
-
+  playerID: string | null = '';
   constructor(
     private http: HttpClient,
     private navCtrl: NavController,
     private alertService: AlertService,
     private storage: Storage,
-    private platform: Platform //private authFire: Auth
+    private platform: Platform, //private authFire: Auth
+    private pushNotificationsService: PushNotificationsService
   ) {
     this.isWeb = !(this.platform.is('android') || this.platform.is('ios'));
+    this.playerID = this.pushNotificationsService.FCMtoken || null;
   }
 
   async loginViaApple() {
@@ -115,6 +119,9 @@ export class AuthenticationService {
         (data: any) => {
           console.log(data);
           this.setSession(data?.access_token, data?.refresh_token);
+          if (this.platform.is('hybrid')) {
+            this.handleRegisterDevice();
+          }
         },
         (error: any) => {
           console.log(error);
@@ -124,7 +131,7 @@ export class AuthenticationService {
   async googleSignIn() {
     this.signInLoading = true;
     this.signInLoadingGoogle = true;
-    const user = await GoogleAuth.signIn().catch(data => {
+    const user = await GoogleAuth.signIn().catch((data) => {
       this.signInLoading = false;
       this.signInLoadingGoogle = false;
     });
@@ -181,9 +188,7 @@ export class AuthenticationService {
 
   // Оновлення токена
   refreshToken(body: any): Observable<any> {
-    return this.http.post(`${environment.origin}/token/refresh/`, body).pipe(
- 
-    );
+    return this.http.post(`${environment.origin}/token/refresh/`, body).pipe();
   }
 
   forgotPassword(body: any): Observable<any> {
@@ -229,5 +234,30 @@ export class AuthenticationService {
           return throwError(error);
         })
       );
+  }
+
+  registerDevice(body: any): Observable<any> {
+    return this.http.post(`${environment.origin}/devices/`, body).pipe(
+      catchError((error) => {
+        // this.alertService.presentErrorAlert(error);
+        return throwError(error);
+      })
+    );
+  }
+
+  handleRegisterDevice() {
+    this.registerDevice({
+      name: 'test',
+      registration_id: this.playerID,
+      active: true,
+      type: Capacitor.getPlatform(),
+    }).subscribe(
+      (data: any) => {
+        console.log(data);
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 }
