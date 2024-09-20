@@ -38,22 +38,26 @@ export class PushNotificationsService {
     // });
   }
 
-  setupPush() {
+  async setupPush() {
     console.log('Initializing HomePage');
 
     // Request permission to use push notifications
     // iOS will prompt user and return if they granted permission or not
     // Android will just grant without prompting
-    PushNotifications.checkPermissions;
-    PushNotifications.requestPermissions().then((result) => {
-      console.log(JSON.stringify(result));
-      if (result.receive === 'granted') {
-        // Register with Apple / Google to receive push via APNS/FCM
-        PushNotifications.register();
-      } else {
-        // Show some error
-      }
-    });
+    // PushNotifications.checkPermissions;
+    // PushNotifications.requestPermissions().then((result) => {
+    //   console.log(JSON.stringify(result));
+    //   if (result.receive === 'granted') {
+    //     // Register with Apple / Google to receive push via APNS/FCM
+    //     PushNotifications.register();
+    //   } else {
+    //     // Show some error
+    //   }
+    // });
+
+    await this.registerNotifications();
+    
+ 
 
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', (token: Token) => {
@@ -81,5 +85,27 @@ export class PushNotificationsService {
         console.log('Push action performed: ' + JSON.stringify(notification));
       }
     );
+
+    this.getDeliveredNotifications()
+  }
+
+  async registerNotifications () {
+    let permStatus = await PushNotifications.checkPermissions();
+    console.log(JSON.stringify(permStatus));
+    if (permStatus.receive === 'prompt') {
+      permStatus = await PushNotifications.requestPermissions();
+    }
+    console.log(JSON.stringify(permStatus));
+  
+    if (permStatus.receive !== 'granted') {
+      throw new Error('User denied permissions!');
+    }
+  
+    await PushNotifications.register();
+  }
+
+    async getDeliveredNotifications(){
+    const notificationList = await PushNotifications.getDeliveredNotifications();
+    console.log('delivered notifications', notificationList);
   }
 }

@@ -36,7 +36,6 @@
 				<string>com.googleusercontent.apps.274080642453-o31iec6l7s9ra52jq0t701db26kfmct1</string>
 			</array>
 		</dict>
-	 
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -50,10 +49,14 @@
 	<string>We need to track your location in order to build a route on the map along which you will move</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To be able to call/chat</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To select photos from the library</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>To save the captured photos to the gallery</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To select photos from the library</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
