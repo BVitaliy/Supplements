@@ -15,7 +15,7 @@ import {
   VOIP_TOKEN_STORAGE_NAME,
 } from 'src/app/app.config';
 
-import { Platform } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class PushNotificationsService {
   constructor(
     // private oneSignal: OneSignal,
     private platform: Platform,
-    private storage: Storage,
+    private navCtrl: NavController,
     private router: Router
   ) {}
 
@@ -56,8 +56,6 @@ export class PushNotificationsService {
     // });
 
     await this.registerNotifications();
-    
- 
 
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', (token: Token) => {
@@ -75,6 +73,7 @@ export class PushNotificationsService {
       'pushNotificationReceived',
       (notification: PushNotificationSchema) => {
         console.log('Push received: ' + JSON.stringify(notification));
+        this.inAppRouting(notification);
       }
     );
 
@@ -83,29 +82,63 @@ export class PushNotificationsService {
       'pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
         console.log('Push action performed: ' + JSON.stringify(notification));
+        this.inAppRouting(notification);
       }
     );
 
-    this.getDeliveredNotifications()
+    this.getDeliveredNotifications();
   }
 
-  async registerNotifications () {
+  inAppRouting(notification: any) {
+    console.log('notification');
+    if (notification.type === 'favorite_list') {
+      this.router.navigateByUrl('home/tabs/tab/favorites');
+    }
+    if (notification.type === 'product_request') {
+      if (notification?.product_id) {
+        this.router.navigateByUrl(
+          '/product/detail/' + notification?.product_id
+        );
+      }
+      if (notification?.request_id) {
+        this.navCtrl.navigateForward([
+          '/home/tabs/tab/more/submitted-products',
+          {
+            openId: notification?.request_id,
+          },
+        ]);
+      }
+    }
+    if (
+      notification?.type === 'product_promo' ||
+      notification?.type === 'info'
+    ) {
+      if (notification?.product_id) {
+        this.router.navigateByUrl(
+          '/product/detail/' + notification?.product_id
+        );
+      }
+    }
+  }
+
+  async registerNotifications() {
     let permStatus = await PushNotifications.checkPermissions();
     console.log(JSON.stringify(permStatus));
     if (permStatus.receive === 'prompt') {
       permStatus = await PushNotifications.requestPermissions();
     }
     console.log(JSON.stringify(permStatus));
-  
+
     if (permStatus.receive !== 'granted') {
       throw new Error('User denied permissions!');
     }
-  
+
     await PushNotifications.register();
   }
 
-    async getDeliveredNotifications(){
-    const notificationList = await PushNotifications.getDeliveredNotifications();
+  async getDeliveredNotifications() {
+    const notificationList =
+      await PushNotifications.getDeliveredNotifications();
     console.log('delivered notifications', notificationList);
   }
 }

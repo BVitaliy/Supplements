@@ -120,7 +120,9 @@ export class AuthenticationService {
           console.log(data);
           this.setSession(data?.access_token, data?.refresh_token);
           if (this.platform.is('hybrid')) {
-            this.handleRegisterDevice();
+            setTimeout(() => {
+              this.handleRegisterDevice();
+            }, 1000);
           }
         },
         (error: any) => {
@@ -239,7 +241,7 @@ export class AuthenticationService {
   registerDevice(body: any): Observable<any> {
     return this.http.post(`${environment.origin}/devices/`, body).pipe(
       catchError((error) => {
-        // this.alertService.presentErrorAlert(error);
+        this.alertService.presentErrorAlert(error);
         return throwError(error);
       })
     );
@@ -247,9 +249,7 @@ export class AuthenticationService {
 
   handleRegisterDevice() {
     this.registerDevice({
-      name: 'test',
       registration_id: this.playerID,
-      active: true,
       type: Capacitor.getPlatform(),
     }).subscribe(
       (data: any) => {

@@ -95,7 +95,9 @@ export class LoginPage implements OnInit, ViewDidLeave {
             this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
             this.loginForm?.setErrors(null);
             if (this.platform.is('hybrid')) {
-              this.authService.handleRegisterDevice();
+              setTimeout(() => {
+                this.authService.handleRegisterDevice();
+              }, 1000);
             }
           },
           (error: any) => {

@@ -5,6 +5,7 @@ import { Products, ProductsD } from '../../../../../mock/products';
 import { AddProductPage } from 'src/app/pages/add-product/add-product.page';
 import { ProfileService } from '../../profile.service';
 import { finalize } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-submitted-products',
@@ -15,14 +16,21 @@ export class SubmittedProductsPage {
   public loading = false;
   public products: any[] = [];
   public activeTab = 0;
+  openId: any;
 
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private route: ActivatedRoute
   ) {}
 
   ionViewWillEnter() {
+    this.openId = this.route.snapshot.paramMap.get('openId');
+    if (this.openId) {
+      this.openProductInModal(this.openId);
+      this.activeTab = 2;
+    }
     this.getSubProducts();
   }
 
@@ -73,11 +81,11 @@ export class SubmittedProductsPage {
       )
       .subscribe({
         next: (data: any) => {
-          console.log(data);
           if (callbackFunction) {
             callbackFunction();
           }
           this.products = data?.results;
+          console.log(this.products);
         },
         error: (error: any) => {
           // this.alertService.presentErrorAlert(error?.email?.error);
