@@ -79,8 +79,7 @@ export class MainPage implements OnInit {
   }
 
   // Пошук
-  search(event: any) {
-    console.log(event?.detail?.value);
+  search(event: any) { 
     this.filterForm.get('search')?.setValue(event?.detail?.value);
     this.changeDetectorRef.detectChanges();
     // this.getOrders(true);
@@ -108,8 +107,7 @@ export class MainPage implements OnInit {
         })
       )
       .subscribe({
-        next: (data: any) => {
-          console.log(data);
+        next: (data: any) => { 
           this.products.recent = data?.results;
         },
         error: (error: any) => {},
@@ -130,8 +128,7 @@ export class MainPage implements OnInit {
         })
       )
       .subscribe({
-        next: (data: any) => {
-          console.log(data);
+        next: (data: any) => { 
           this.products.trending = data?.results;
         },
         error: (error: any) => {},
@@ -151,8 +148,7 @@ export class MainPage implements OnInit {
         })
       )
       .subscribe({
-        next: (data: any) => {
-          console.log(data);
+        next: (data: any) => { 
           this.products.forYou = data?.results;
         },
         error: (error: any) => {},

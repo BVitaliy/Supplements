@@ -248,8 +248,12 @@ export class AuthenticationService {
   }
 
   handleRegisterDevice() {
+    console.log('DEVICE API ' +JSON.stringify({
+      registration_id: this.pushNotificationsService.FCMtoken,
+      type: Capacitor.getPlatform(),
+    }))
     this.registerDevice({
-      registration_id: this.playerID,
+      registration_id: this.pushNotificationsService.FCMtoken,
       type: Capacitor.getPlatform(),
     }).subscribe(
       (data: any) => {
