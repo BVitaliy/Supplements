@@ -73,7 +73,7 @@ export class PushNotificationsService {
       'pushNotificationReceived',
       (notification: PushNotificationSchema) => {
         console.log('Push received: ' + JSON.stringify(notification));
-        this.inAppRouting(notification);
+        // this.inAppRouting(notification?.notification);
       }
     );
 
@@ -82,7 +82,7 @@ export class PushNotificationsService {
       'pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
         console.log('Push action performed: ' + JSON.stringify(notification));
-        this.inAppRouting(notification);
+        this.inAppRouting(notification?.notification);
       }
     );
 
@@ -90,34 +90,35 @@ export class PushNotificationsService {
   }
 
   inAppRouting(notification: any) {
-    console.log('notification');
-    if (notification.type === 'favorite_list') {
+    console.log('notification' + JSON.stringify(notification));
+    if (notification?.data?.notification_type === 'favorite_list') {
       this.router.navigateByUrl('home/tabs/tab/favorites');
     }
-    if (notification.type === 'product_request') {
-      if (notification?.product_id) {
+    if (notification?.data?.notification_type === 'product_request') {
+      if (notification?.data?.product_id) {
         this.router.navigateByUrl(
-          '/product/detail/' + notification?.product_id
+          '/product/detail/' + notification?.data?.product_id
         );
       }
-      if (notification?.request_id) {
+      if (notification?.data?.request_id) {
         this.navCtrl.navigateForward([
           '/home/tabs/tab/more/submitted-products',
           {
-            openId: notification?.request_id,
+            openId: notification?.data?.request_id,
           },
         ]);
       }
     }
     if (
-      notification?.type === 'product_promo' ||
-      notification?.type === 'info'
+      notification?.data?.notification_type === 'product_promo' ||
+      notification?.data?.notification_type === 'info'
     ) {
-      if (notification?.product_id) {
+      if (notification?.data?.product_id) {
         this.router.navigateByUrl(
-          '/product/detail/' + notification?.product_id
+          '/product/detail/' + notification?.data?.product_id
         );
       }
+      console.log('/product/detail/' + notification?.data?.product_id)
     }
   }
 
