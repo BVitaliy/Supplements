@@ -66,7 +66,7 @@
           </div>
         </ng-container>
         <div class="review-count m-left--x-small text-s">
-          {{product?.rating_score | number:'1.1-1'}}
+          {{reviews?.length !== 0 ? reviews?.length : '' }}
         </div>
       </div>
 
@@ -101,15 +101,15 @@
           </div>
         </div>
 
-        <ion-segment (ionChange)="setType($event)" [value]="type" mode="ios" class="m-bottom--medium">
+        <!-- <ion-segment (ionChange)="setType($event)" [value]="type" mode="ios" class="m-bottom--medium">
           <ion-segment-button value="ingredient">
             Ingredient Analysis
           </ion-segment-button>
-          <!-- <ion-segment-button value="efects">
+           <ion-segment-button value="efects">
             Body Positive Efects
 
-          </ion-segment-button> -->
-        </ion-segment>
+          </ion-segment-button>  
+        </ion-segment> -->
 
         <ng-container *ngIf="type === 'ingredient'">
           <ion-list class="list list-ingredients">
