@@ -49,6 +49,10 @@ export class NotificationsPage implements OnInit {
       );
   }
 
+  ionViewWillEnter() {
+    this.getData();
+  }
+
   // Рефреш даних користувача
   doRefresh(event: any) {
     this.getData(() => event.target.complete());

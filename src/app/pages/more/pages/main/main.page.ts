@@ -12,6 +12,7 @@ import {
   ACCESS_WITH_APPLE,
   ACCESS_WITH_GOOGLE,
   APP_AUTH_REDIRECT_URL,
+  DEVICE_ID_STORAGE_NAME,
   REFRESH_TOKEN_STORAGE_NAME,
 } from 'src/app/app.config';
 import { ProfileService } from '../../profile.service';
@@ -106,17 +107,14 @@ export class MainPage implements OnInit {
   }
 
   removeDevice() {
-    this.authService
-      .removeDevice(this.pushNotificationsService.FCMtoken)
-      .subscribe(
+    this.storage.get(DEVICE_ID_STORAGE_NAME).then((token: any) => {
+      this.authService.removeDevice(token).subscribe(
         (data: any) => {
-          console.log(
-            'removed Device id ' + this.pushNotificationsService.FCMtoken
-          );
-          console.log(data);
+          console.log('removed Device id ' + token);
         },
         (error: any) => {}
       );
+    });
   }
 
   getUser() {

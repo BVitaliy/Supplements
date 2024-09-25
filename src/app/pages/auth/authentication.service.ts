@@ -24,6 +24,7 @@ import { Storage } from '@ionic/storage';
 import {
   ACCESS_TOKEN_STORAGE_NAME,
   APP_HOME_REDIRECT_URL,
+  DEVICE_ID_STORAGE_NAME,
   REFRESH_TOKEN_STORAGE_NAME,
 } from 'src/app/app.config';
 import { NavController, Platform } from '@ionic/angular';
@@ -38,7 +39,6 @@ export class AuthenticationService {
   signInLoading = false;
   signInLoadingGoogle = false;
   signInLoadingApple = false;
-  playerID: string | null = '';
   constructor(
     private http: HttpClient,
     private navCtrl: NavController,
@@ -48,7 +48,6 @@ export class AuthenticationService {
     private pushNotificationsService: PushNotificationsService
   ) {
     this.isWeb = !(this.platform.is('android') || this.platform.is('ios'));
-    this.playerID = this.pushNotificationsService.FCMtoken || null;
   }
 
   async loginViaApple() {
@@ -256,24 +255,19 @@ export class AuthenticationService {
     );
   }
 
-  handleRegisterDevice() {
-    console.log(
-      'DEVICE API ' +
-        JSON.stringify({
-          registration_id: this.pushNotificationsService.FCMtoken,
-          type: Capacitor.getPlatform(),
-        })
-    );
-    this.registerDevice({
-      registration_id: this.pushNotificationsService.FCMtoken,
-      type: Capacitor.getPlatform(),
-    }).subscribe(
-      (data: any) => {
-        console.log(data);
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+  async handleRegisterDevice() {
+    this.storage.get(DEVICE_ID_STORAGE_NAME).then((token: any) => {
+      this.registerDevice({
+        registration_id: token,
+        type: Capacitor.getPlatform(),
+      }).subscribe(
+        (data: any) => {
+          console.log('DEVICE ID REMOVED ' + token);
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    });
   }
 }

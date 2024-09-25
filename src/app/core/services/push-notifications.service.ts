@@ -27,7 +27,8 @@ export class PushNotificationsService {
     // private oneSignal: OneSignal,
     private platform: Platform,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private storage: Storage
   ) {}
 
   getIds() {
@@ -60,7 +61,9 @@ export class PushNotificationsService {
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', (token: Token) => {
       console.log('Push registration success, token: ' + JSON.stringify(token));
-      this.FCMtoken = token.value;
+      if (this.platform.is('hybrid')) {
+        this.storage.set(DEVICE_ID_STORAGE_NAME, token.value);
+      }
     });
 
     // Some issue with our setup and push will not work
@@ -85,8 +88,6 @@ export class PushNotificationsService {
         this.inAppRouting(notification?.notification);
       }
     );
-
-    this.getDeliveredNotifications();
   }
 
   inAppRouting(notification: any) {
@@ -135,11 +136,5 @@ export class PushNotificationsService {
     }
 
     await PushNotifications.register();
-  }
-
-  async getDeliveredNotifications() {
-    const notificationList =
-      await PushNotifications.getDeliveredNotifications();
-    console.log('delivered notifications', notificationList);
   }
 }
