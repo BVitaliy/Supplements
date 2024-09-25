@@ -247,11 +247,23 @@ export class AuthenticationService {
     );
   }
 
+  removeDevice(id: any): Observable<any> {
+    return this.http.delete(`${environment.origin}/device/${id}`).pipe(
+      catchError((error) => {
+        this.alertService.presentErrorAlert(error);
+        return throwError(error);
+      })
+    );
+  }
+
   handleRegisterDevice() {
-    console.log('DEVICE API ' +JSON.stringify({
-      registration_id: this.pushNotificationsService.FCMtoken,
-      type: Capacitor.getPlatform(),
-    }))
+    console.log(
+      'DEVICE API ' +
+        JSON.stringify({
+          registration_id: this.pushNotificationsService.FCMtoken,
+          type: Capacitor.getPlatform(),
+        })
+    );
     this.registerDevice({
       registration_id: this.pushNotificationsService.FCMtoken,
       type: Capacitor.getPlatform(),

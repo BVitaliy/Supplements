@@ -21,7 +21,7 @@ import { NavController, Platform } from '@ionic/angular';
   providedIn: 'root',
 })
 export class PushNotificationsService {
-  FCMtoken: string | null = null;
+  FCMtoken: any;
 
   constructor(
     // private oneSignal: OneSignal,
@@ -118,7 +118,7 @@ export class PushNotificationsService {
           '/product/detail/' + notification?.data?.product_id
         );
       }
-      console.log('/product/detail/' + notification?.data?.product_id)
+      console.log('/product/detail/' + notification?.data?.product_id);
     }
   }
 

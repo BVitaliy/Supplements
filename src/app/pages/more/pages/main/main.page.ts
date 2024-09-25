@@ -20,6 +20,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { jwtDecode } from 'jwt-decode';
 import { AuthenticationService } from 'src/app/pages/auth/authentication.service';
 import { ActivatedRoute } from '@angular/router';
+import { PushNotificationsService } from 'src/app/core/services/push-notifications.service';
 
 @Component({
   selector: 'app-main',
@@ -41,7 +42,7 @@ export class MainPage implements OnInit {
     private loadingController: LoadingController,
     private alertService: AlertService,
     public route: ActivatedRoute,
-
+    private pushNotificationsService: PushNotificationsService,
     public authService: AuthenticationService
   ) {
     // this.storage.get(ACCESS_WITH_APPLE).then((login) => {
@@ -91,6 +92,7 @@ export class MainPage implements OnInit {
             this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
             this.storage.remove('user');
             this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+            this.removeDevice();
           },
           (error: any) => {
             // this.alertService.presentErrorAlert(error?.email?.error);
@@ -101,6 +103,20 @@ export class MainPage implements OnInit {
           }
         );
     });
+  }
+
+  removeDevice() {
+    this.authService
+      .removeDevice(this.pushNotificationsService.FCMtoken)
+      .subscribe(
+        (data: any) => {
+          console.log(
+            'removed Device id ' + this.pushNotificationsService.FCMtoken
+          );
+          console.log(data);
+        },
+        (error: any) => {}
+      );
   }
 
   getUser() {
