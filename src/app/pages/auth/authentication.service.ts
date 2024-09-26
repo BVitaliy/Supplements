@@ -262,7 +262,7 @@ export class AuthenticationService {
         type: Capacitor.getPlatform(),
       }).subscribe(
         (data: any) => {
-          console.log('DEVICE ID REMOVED ' + token);
+          console.log('DEVICE ID added ' + token);
         },
         (error: any) => {
           console.log(error);
