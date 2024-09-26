@@ -47,8 +47,6 @@ export class LoginPage implements OnInit, ViewDidLeave {
   }
 
   ngOnInit() {
-    if (this.platform.is('hybrid')) {
-    }
     this.loginForm = new FormGroup({
       email: new FormControl(null, [
         Validators.required,
