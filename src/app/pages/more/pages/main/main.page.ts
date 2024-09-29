@@ -72,48 +72,52 @@ export class MainPage implements OnInit {
   async logOut() {
     // this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
     // this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+    this.removeDevice();
+    setTimeout(async () => {
+      const loading = await this.loadingController.create({
+        message: 'Wait...',
+        mode: 'ios',
+      });
+      await loading.present().then(() => {
+        this.authService.logOut();
+        this.profileService
+          .logout({})
+          .pipe(
+            finalize(() => {
+              loading?.dismiss();
+            })
+          )
+          .subscribe(
+            (data: any) => {
+              console.log(data);
+              this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+              this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
+              this.storage.remove('user');
+              this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
+              // this.removeDevice();
+            },
+            (error: any) => {
+              // this.alertService.presentErrorAlert(error?.email?.error);
 
-    const loading = await this.loadingController.create({
-      message: 'Wait...',
-      mode: 'ios',
-    });
-    await loading.present().then(() => {
-      this.authService.logOut();
-      this.profileService
-        .logout({})
-        .pipe(
-          finalize(() => {
-            loading?.dismiss();
-          })
-        )
-        .subscribe(
-          (data: any) => {
-            console.log(data);
-            this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
-            this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
-            this.storage.remove('user');
-            this.navCtrl.navigateRoot([APP_AUTH_REDIRECT_URL]);
-            this.removeDevice();
-          },
-          (error: any) => {
-            // this.alertService.presentErrorAlert(error?.email?.error);
-
-            if (error.status === 401) {
-              this.alertService.presentErrorAlert('Something went wrong');
+              if (error.status === 401) {
+                this.alertService.presentErrorAlert('Something went wrong');
+              }
             }
-          }
-        );
-    });
+          );
+      });
+    }, 300);
   }
 
   removeDevice() {
     this.storage.get(DEVICE_ID_STORAGE_NAME).then((token: any) => {
-      this.authService.removeDevice(token).subscribe(
-        (data: any) => {
-          console.log('removed Device id ' + token);
-        },
-        (error: any) => {}
-      );
+      if (token) {
+        this.authService.removeDevice(token).subscribe(
+          (data: any) => {
+            console.log('removed Device id ' + token);
+          },
+          (error: any) => {}
+        );
+      }
     });
   }
 

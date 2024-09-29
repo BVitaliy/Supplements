@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { SubmittedProductsTabs } from './submitted-products.models';
 import { Products, ProductsD } from '../../../../../mock/products';
@@ -22,7 +22,8 @@ export class SubmittedProductsPage {
     public navCtrl: NavController,
     private modalController: ModalController,
     private profileService: ProfileService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private zone: NgZone
   ) {}
 
   ionViewWillEnter() {
@@ -31,12 +32,16 @@ export class SubmittedProductsPage {
       this.openProductInModal(this.openId);
       this.activeTab = 2;
     }
-    this.getSubProducts();
+    this.zone.run(() => {
+      this.getSubProducts();
+    });
   }
 
   public handleChangeTab(event: any): void {
     this.activeTab = event.target.value;
-    this.getSubProducts();
+    this.zone.run(() => {
+      this.getSubProducts();
+    });
   }
 
   // handleOpenEditDetails(id: any) {
@@ -64,7 +69,9 @@ export class SubmittedProductsPage {
   // }
 
   doRefresh(event: any) {
-    this.getSubProducts(true, () => event.target.complete());
+    this.zone.run(() => {
+      this.getSubProducts(true, () => event.target.complete());
+    });
   }
 
   getSubProducts(refresh?: boolean, callbackFunction?: () => void) {
