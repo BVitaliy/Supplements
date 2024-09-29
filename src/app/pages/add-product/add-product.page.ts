@@ -240,6 +240,7 @@ export class AddProductPage implements OnInit {
           this.loading = false;
           setTimeout(() => {
             this.createProductSuccess('/home/tabs/tab/more/submitted-products');
+            this.themeOptions.refreshPage$.next(true)
           }, 1000);
         },
         (error: any) => {
@@ -260,6 +261,7 @@ export class AddProductPage implements OnInit {
               mode: 'ios',
               position: 'bottom',
             });
+            this.themeOptions.refreshPage$.next(true)
           }, 300);
           this.cancelModal();
           // this.createProductSuccess();

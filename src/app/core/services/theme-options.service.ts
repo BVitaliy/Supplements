@@ -1,4 +1,4 @@
-import { of, ReplaySubject } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
@@ -16,14 +16,19 @@ export class ThemeOptionsService {
   public getOptions$: ReplaySubject<any> = new ReplaySubject<any>(1);
   public getMap$: ReplaySubject<any> = new ReplaySubject<any>(1);
   userToken: ReplaySubject<any> = new ReplaySubject<any>(1);
+  public refreshPage$: ReplaySubject<any> = new ReplaySubject<any>(1);
 
+ 
   constructor(
     private http: HttpClient,
     private alertService: AlertService,
     private storage: Storage
-  ) {
-    this.saveToken();
-  }
+    ) {
+      this.saveToken();
+    }
+    getRefreshToken(): Observable<any> {
+      return this.refreshPage$
+    }
 
   loadOptions() {
     return this.http

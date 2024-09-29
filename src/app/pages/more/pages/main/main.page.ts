@@ -22,6 +22,9 @@ import { jwtDecode } from 'jwt-decode';
 import { AuthenticationService } from 'src/app/pages/auth/authentication.service';
 import { ActivatedRoute } from '@angular/router';
 import { PushNotificationsService } from 'src/app/core/services/push-notifications.service';
+// import { AppRate } from '@awesome-cordova-plugins/app-rate/ngx';
+
+import { RateApp } from 'capacitor-rate-app';
 
 @Component({
   selector: 'app-main',
@@ -44,7 +47,8 @@ export class MainPage implements OnInit {
     private alertService: AlertService,
     public route: ActivatedRoute,
     private pushNotificationsService: PushNotificationsService,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
+    // private appRate: AppRate,
   ) {
     // this.storage.get(ACCESS_WITH_APPLE).then((login) => {
     //   console.log(login);
@@ -68,6 +72,7 @@ export class MainPage implements OnInit {
   }
 
   public ngOnInit(): void {}
+  
 
   async logOut() {
     // this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
@@ -264,5 +269,27 @@ export class MainPage implements OnInit {
 
   goToArticle(slug: any) {
     this.navCtrl.navigateForward(['article', { slug }]);
+  }
+
+
+  promptForRating() {
+    RateApp.requestReview();
+    // this.platform.ready().then(() => {
+      // this.appRate.setPreferences({
+      //   usesUntilPrompt: 1,  // How many times a user must use the app before being prompted
+      //   storeAppURL: {
+      //     ios: 'com.supplementsocre.ss',
+      //     android: 'market://details?id=com.supplementsocre.ss',
+      //   },
+      //   customLocale: {
+      //     title: "Rate us",
+      //     message: "If you enjoy using this app, would you mind taking a moment to rate it? Thanks for your support!",
+      //     cancelButtonLabel: "No, thanks",
+      //     laterButtonLabel: "Remind me later",
+      //     rateButtonLabel: "Rate it now",
+      //   }
+      // });
+      // this.appRate.promptForRating(true); // true for forcing the prompt to show
+    // });
   }
 }

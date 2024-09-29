@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -10,7 +10,10 @@ import { PhonePipe } from 'src/app/shared/pipes/phone.pipe';
   providedIn: 'root',
 })
 export class ProfileService {
+ 
   constructor(private http: HttpClient, private alertService: AlertService) {}
+
+ 
 
   logout(body: any): Observable<any> {
     return this.http.post(`${environment.origin}/users/logout/`, body).pipe(

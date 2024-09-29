@@ -4,8 +4,9 @@ import { SubmittedProductsTabs } from './submitted-products.models';
 import { Products, ProductsD } from '../../../../../mock/products';
 import { AddProductPage } from 'src/app/pages/add-product/add-product.page';
 import { ProfileService } from '../../profile.service';
-import { finalize } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { finalize, Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 
 @Component({
   selector: 'app-submitted-products',
@@ -18,15 +19,33 @@ export class SubmittedProductsPage {
   public activeTab = 0;
   openId: any;
 
+  refreshSubscription!: Subscription;
+
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
     private profileService: ProfileService,
     private route: ActivatedRoute,
-    private zone: NgZone
-  ) {}
-
-  ionViewWillEnter() {
+    public router: Router,
+    private zone: NgZone,
+    private themeOptions: ThemeOptionsService,
+  ) {
+    this.refreshSubscription = this.themeOptions.getRefreshToken().subscribe({
+      next: (value:any) => {
+        if(value && this.router.url.includes('/submitted-products')){
+          console.log(value)
+          setTimeout(() => {
+            this.zone.run(() => {
+              this.getSubProducts();
+            });
+          }, 2000);
+          this.themeOptions.refreshPage$.next(false)
+        }
+      }
+    })
+  }
+  
+  ionViewWillEnter() { 
     this.openId = this.route.snapshot.paramMap.get('openId');
     if (this.openId) {
       this.openProductInModal(this.openId);
@@ -35,6 +54,8 @@ export class SubmittedProductsPage {
     this.zone.run(() => {
       this.getSubProducts();
     });
+
+    console.log('add product')
   }
 
   public handleChangeTab(event: any): void {
@@ -140,5 +161,11 @@ export class SubmittedProductsPage {
     });
 
     return await modal.present();
+  }
+
+  ionViewWillLeave() {
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
   }
 }
