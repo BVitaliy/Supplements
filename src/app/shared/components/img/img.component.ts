@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ImageZoomingComponent } from '../image-zooming/image-zooming.component';
 
@@ -14,14 +14,14 @@ export class ImgComponent implements OnInit {
   @Input() zooming = false;
   imgLoaded = false;
 
-  constructor(
-    private modalController: ModalController
-  ) { }
+  constructor(private modalController: ModalController, private zone: NgZone) {}
 
   ngOnInit() {}
 
   imgDidLoad() {
-    this.imgLoaded = true;
+    this.zone.run(() => {
+      this.imgLoaded = true;
+    });
     // setTimeout(() => {
     //   this.imgLoaded = true;
     // }, 400);
@@ -34,8 +34,8 @@ export class ImgComponent implements OnInit {
         cssClass: 'transparent-modal',
         mode: 'md',
         componentProps: {
-          image
-        }
+          image,
+        },
       });
       modal.present();
     }

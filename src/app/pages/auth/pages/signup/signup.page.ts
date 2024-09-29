@@ -134,6 +134,11 @@ export class SignupPage implements OnInit {
             this.storage.set(ACCESS_TOKEN_STORAGE_NAME, data?.token?.access);
             this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
             this.presentModal();
+            if (this.platform.is('hybrid')) {
+              setTimeout(() => {
+                this.authService.handleRegisterDevice();
+              }, 1000);
+            }
           },
           (error: any) => {
             if (error?.error?.email) {

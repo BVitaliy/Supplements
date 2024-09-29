@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  NgZone,
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
@@ -35,31 +36,41 @@ export class SearchSystemComponent implements OnChanges {
 
   constructor(
     private catalogService: CatalogService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
+    private changeDetectorRef: ChangeDetectorRef,
+    private zone: NgZone
+  ) {}
+
+  ionViewWillEnter() {
     this.getData();
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     if (changes?.['searchValue'] && this.searchValue?.length > 2) {
       this.changeDetectorRef.detectChanges();
       if (this.searchActiveTab === 'Products') {
-        this.searchProduct();
+        this.zone.run(() => {
+          this.searchProduct();
+        });
       } else {
-        this.searchIngredient();
+        this.zone.run(() => {
+          this.searchIngredient();
+        });
       }
     }
   }
 
   public changeSearchTab(event: any): void {
-    this.searchActiveTab = event?.detail?.value;
-    if (this.searchValue?.length > 2) {
-      if (this.searchActiveTab === 'Products') {
-        this.searchProduct();
-      } else {
-        this.searchIngredient();
+    this.zone.run(() => {
+      this.searchActiveTab = event?.detail?.value;
+      if (this.searchValue?.length > 2) {
+        if (this.searchActiveTab === 'Products') {
+          this.searchProduct();
+        } else {
+          this.searchIngredient();
+        }
       }
-    }
+    });
   }
 
   public handleCleanProductsHistory(): void {

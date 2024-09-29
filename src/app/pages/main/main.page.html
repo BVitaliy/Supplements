@@ -19,9 +19,9 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner> -->
-  <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
+  <ion-refresher slot="fixed" mode="ios" color="primary" (ionRefresh)="doRefresh($event)" *ngIf="!isSearchActive">
+    <ion-refresher-content mode="ios" color="primary" pullingIcon="arrow-down"
+      refreshingSpinner="lines"></ion-refresher-content>
   </ion-refresher>
 
   <ion-grid *ngIf="!isSearchActive">
@@ -128,34 +128,8 @@
       </div>
     </div>
 
-    <!-- <div class="section">
-      <div class="section-header">
-        <h3 class="h3">Sales and offers</h3>
-
-        <ion-button class="btn btn-link ml-10" fill="clear" mode="md" [routerLink]="['/home/tabs/tab/main/trending']">
-          <ion-icon [src]="'./assets/img/icons/arrow-right.svg'"></ion-icon>
-        </ion-button>
-      </div>
-
-      <div class="swiper-body" *ngIf="products?.length">
-        <swiper #swiper [config]="slideOpts" class="main-swiper">
-          <ng-template swiperSlide *ngFor="let product of products; let i=index">
-            <app-product-card [product]="product"></app-product-card>
-          </ng-template>
-        </swiper>
-      </div>
-    </div> -->
-
-
   </ion-grid>
 
-  <!-- Search system -->
   <app-search-system *ngIf="isSearchActive" [searchValue]="filterForm.get('search')?.value"></app-search-system>
-  <!-- / Search system -->
-  <!-- <ng-container *ngIf="!loading">
-    <ion-infinite-scroll threshold="0" (ionInfinite)="loadData()" position="bottom" [disabled]="disableInfinity">
-      <ion-infinite-scroll-content loadingSpinner="bubbles">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ng-container> -->
+
 </ion-content>
