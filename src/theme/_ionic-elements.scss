@@ -54,6 +54,7 @@ ion-toolbar {
     min-height: 40px;
     border-radius: 6px;
     margin: 0 !important;
+    position: relative;
 
     &.button-outline {
       --border-width: 0px;

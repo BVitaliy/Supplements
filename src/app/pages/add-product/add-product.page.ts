@@ -25,7 +25,7 @@ export class AddProductPage implements OnInit {
   form!: FormGroup;
   image: any;
   type: any;
-  loading = false;
+  isLoading = false;
   backBtnSubscription!: Subscription;
   format: any;
 
@@ -100,6 +100,12 @@ export class AddProductPage implements OnInit {
 </svg>`,
       },
     });
+
+    modal.onDidDismiss().then(() => {
+      setTimeout(() => {
+        this.themeOptions.refreshPage$.next(true);
+      }, 600);
+    });
     return await modal.present();
   }
 
@@ -167,7 +173,7 @@ export class AddProductPage implements OnInit {
           const image = imageData?.dataUrl;
           const worker = await createWorker();
           if (worker) {
-            this.loading = true;
+            this.isLoading = true;
             this.type = input;
           }
           worker.load();
@@ -177,7 +183,7 @@ export class AddProductPage implements OnInit {
           console.log(text);
           if (text) {
             this.form.get(input)?.setValue(text);
-            this.loading = false;
+            this.isLoading = false;
             this.type = null;
           }
           await worker.terminate();
@@ -216,7 +222,7 @@ export class AddProductPage implements OnInit {
   }
 
   requestProduct() {
-    this.loading = true;
+    this.isLoading = true;
     let data = {
       ...this.form.value,
       status: 0,
@@ -237,14 +243,11 @@ export class AddProductPage implements OnInit {
         (data: any) => {
           console.log(data);
           this.uploadImage(data?.id);
-          this.loading = false;
-          setTimeout(() => {
-            this.createProductSuccess('/home/tabs/tab/more/submitted-products');
-            this.themeOptions.refreshPage$.next(true)
-          }, 1000);
+          this.isLoading = false;
+          this.createProductSuccess('/home/tabs/tab/more/submitted-products');
         },
         (error: any) => {
-          this.loading = false;
+          this.isLoading = false;
         }
       );
     } else {
@@ -254,20 +257,20 @@ export class AddProductPage implements OnInit {
           if (this.format) {
             this.uploadImage(data?.id);
           }
-          this.loading = false;
+          this.isLoading = false;
           setTimeout(() => {
             this.alertService.createToast({
               header: 'Product was successfully updated!',
               mode: 'ios',
               position: 'bottom',
             });
-            this.themeOptions.refreshPage$.next(true)
+            this.themeOptions.refreshPage$.next(true);
           }, 300);
           this.cancelModal();
           // this.createProductSuccess();
         },
         (error: any) => {
-          this.loading = false;
+          this.isLoading = false;
         }
       );
     }
@@ -292,10 +295,10 @@ export class AddProductPage implements OnInit {
       this.catalogService.uploadImage(id, formData).subscribe(
         (data: any) => {
           console.log(data);
-          this.loading = false;
+          this.isLoading = false;
         },
         (error: any) => {
-          this.loading = false;
+          this.isLoading = false;
         }
       );
     }
@@ -307,12 +310,12 @@ export class AddProductPage implements OnInit {
   }
 
   getProduct(refresh?: boolean, callbackFunction?: () => void) {
-    this.loading = true;
+    this.isLoading = true;
     this.catalogService
       .getProductRequest(this.id, refresh)
       .pipe(
         finalize(() => {
-          this.loading = false;
+          this.isLoading = false;
           if (callbackFunction) {
             callbackFunction();
           }
@@ -339,7 +342,7 @@ export class AddProductPage implements OnInit {
 
   scanBarcode() {
     if (this.platform.is('hybrid')) {
-      this.loading = true;
+      this.isLoading = true;
       this.type = 'barcode';
       const options: BarcodeScannerOptions = {
         preferFrontCamera: false,
@@ -357,11 +360,11 @@ export class AddProductPage implements OnInit {
         .then((barcodeData) => {
           console.log(barcodeData);
           this.form.get('barcode')?.setValue(barcodeData?.text);
-          this.loading = false;
+          this.isLoading = false;
           this.type = null;
         })
         .catch((error) => {
-          this.loading = false;
+          this.isLoading = false;
           this.type = null;
         });
     }

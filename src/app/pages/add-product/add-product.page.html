@@ -11,12 +11,12 @@
 
 <ion-content>
   <ng-container *ngIf="id">
-    <ion-spinner class="spinner" color="primary" name="lines" *ngIf="loading"></ion-spinner>
+    <ion-spinner class="spinner" color="primary" name="lines" *ngIf="isLoading"></ion-spinner>
     <ion-refresher slot="fixed" mode="ios" (ionRefresh)="doRefresh($event)">
       <ion-refresher-content mode="ios" pullingIcon="arrow-down" refreshingSpinner="lines"></ion-refresher-content>
     </ion-refresher>
   </ng-container>
-  <div class="content" *ngIf="!id || id && !loading">
+  <div class="content" *ngIf="!id || id && !isLoading">
     <form class="form" [formGroup]="form">
       <div class="file-control">
         <ion-label>Product front packing image*</ion-label>
@@ -42,8 +42,8 @@
             This field can’t be empty
           </ion-note>
         </ion-item>
-        <ion-button class="btn" fill="clear" mode="md" (click)="scanBarcode()" [disabled]="loading">
-          <ion-spinner name="crescent" color="primary" *ngIf="loading && type ==='barcode'; else icon"></ion-spinner>
+        <ion-button class="btn" fill="clear" mode="md" (click)="scanBarcode()" [disabled]="isLoading">
+          <ion-spinner name="crescent" color="primary" *ngIf="isLoading && type ==='barcode'; else icon"></ion-spinner>
           <ng-template #icon>
             <ion-icon slot="icon-only" src="./assets/img/product/scan.svg"></ion-icon>
           </ng-template>
@@ -81,9 +81,10 @@
             This field can’t be empty
           </ion-note>
         </ion-item>
-        <ion-button class="btn" fill="clear" mode="md" (click)="takeTextFromImage('ingredients')" [disabled]="loading">
+        <ion-button class="btn" fill="clear" mode="md" (click)="takeTextFromImage('ingredients')"
+          [disabled]="isLoading">
           <ion-spinner name="crescent" color="primary"
-            *ngIf="loading && type ==='ingredients'; else icon"></ion-spinner>
+            *ngIf="isLoading && type ==='ingredients'; else icon"></ion-spinner>
           <ng-template #icon>
             <ion-icon slot="icon-only" src="./assets/img/product/scan.svg"></ion-icon>
           </ng-template>
@@ -96,9 +97,10 @@
           <ion-textarea formControlName="description" type="text" inputmode="text"
             placeholder="Enter product description or scan" autocomplete="off"></ion-textarea>
         </ion-item>
-        <ion-button class="btn" fill="clear" mode="md" (click)="takeTextFromImage('description')" [disabled]="loading">
+        <ion-button class="btn" fill="clear" mode="md" (click)="takeTextFromImage('description')"
+          [disabled]="isLoading">
           <ion-spinner name="crescent" color="primary"
-            *ngIf="loading && type ==='description'; else icon"></ion-spinner>
+            *ngIf="isLoading && type ==='description'; else icon"></ion-spinner>
           <ng-template #icon>
             <ion-icon slot="icon-only" src="./assets/img/product/scan.svg"></ion-icon>
           </ng-template>
@@ -113,9 +115,10 @@
   </div>
 </ion-content>
 
-<ion-footer *ngIf="!id || id && !loading">
-  <ion-button class="btn btn-primary mb-5" expand="block" fill="solid" mode="md" [disabled]="form.invalid"
+<ion-footer *ngIf="!id || id && !isLoading">
+  <ion-button class="btn btn-primary mb-5" expand="block" fill="solid" mode="md" [disabled]="form.invalid || isLoading"
     (click)="requestProduct()">
     Submit
+    <ion-spinner *ngIf="isLoading" class="spinner" name="crescent"></ion-spinner>
   </ion-button>
 </ion-footer>
