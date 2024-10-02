@@ -45,7 +45,6 @@ export class SearchSystemComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (changes?.['searchValue'] && this.searchValue?.length > 2) {
       this.changeDetectorRef.detectChanges();
       if (this.searchActiveTab === 'Products') {
@@ -108,7 +107,6 @@ export class SearchSystemComponent implements OnChanges {
             this.lastSearchRecord = data?.results[0];
             this.searchProduct(this.lastSearchRecord);
           }
-          console.log(this.lastSearchRecord);
         },
         (error: any) => {
           // if (error.status === 401) {

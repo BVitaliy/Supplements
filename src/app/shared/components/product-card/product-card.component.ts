@@ -38,7 +38,7 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit() {
     this.idFavorilteList = this.route.snapshot.paramMap.get('favoriteId');
-    console.log(this.product);
+
     if (this.product.supplement?.id && this.product.status !== 2) {
       this.product = {
         ...this.product.supplement,
@@ -47,7 +47,6 @@ export class ProductCardComponent implements OnInit {
         average_rating: 0,
       };
     }
-    console.log(this.product);
   }
 
   getStarWidth(starIndex: number): number {

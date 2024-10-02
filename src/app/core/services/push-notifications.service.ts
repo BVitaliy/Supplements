@@ -40,8 +40,6 @@ export class PushNotificationsService {
   }
 
   async setupPush() {
-    console.log('Initializing HomePage');
-
     // Request permission to use push notifications
     // iOS will prompt user and return if they granted permission or not
     // Android will just grant without prompting
@@ -91,7 +89,6 @@ export class PushNotificationsService {
   }
 
   inAppRouting(notification: any) {
-    console.log('notification' + JSON.stringify(notification));
     if (notification?.data?.notification_type === 'favorite_list') {
       this.router.navigateByUrl('home/tabs/tab/favorites');
     }
@@ -119,17 +116,15 @@ export class PushNotificationsService {
           '/product/detail/' + notification?.data?.product_id
         );
       }
-      console.log('/product/detail/' + notification?.data?.product_id);
     }
   }
 
   async registerNotifications() {
     let permStatus = await PushNotifications.checkPermissions();
-    console.log(JSON.stringify(permStatus));
+
     if (permStatus.receive === 'prompt') {
       permStatus = await PushNotifications.requestPermissions();
     }
-    console.log(JSON.stringify(permStatus));
 
     if (permStatus.receive !== 'granted') {
       throw new Error('User denied permissions!');

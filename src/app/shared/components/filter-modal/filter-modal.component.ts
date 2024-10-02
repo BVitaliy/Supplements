@@ -50,11 +50,12 @@ export class FilterModalComponent implements OnInit {
       brands: new FormControl([]),
       ingredients: new FormControl([]),
       quality: new FormControl(null),
-      special_offer: new FormControl(false),
+      special_offer: new FormControl(null),
       rating_score: new FormControl(null),
       product_score: new FormControl([]),
     });
     this.form.patchValue(this.filters);
+    console.log(this.filters);
   }
 
   ionViewWillEnter() {
@@ -217,8 +218,9 @@ export class FilterModalComponent implements OnInit {
     if (type === 'brands') {
       this.form.get('brands')?.setValue($event);
     }
+
     if (type === 'special_offer') {
-      this.form.get('special_offer')?.setValue($event ? true : false);
+      this.form.get('special_offer')?.setValue($event.length ? true : null);
     }
     if (type === 'product_score') {
       this.form.get('product_score')?.setValue($event || []);

@@ -37,7 +37,6 @@ export class OnboardingSearchProductComponent implements OnInit {
       )
       .subscribe({
         next: (data: any) => {
-          console.log(data);
           this.products = data.results;
         },
         error: (error: any) => {},
