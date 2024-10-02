@@ -5,6 +5,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { FavoriteService } from 'src/app/pages/favorites/favorites.service';
 import { ProductDetailPage } from 'src/app/pages/product-detail/product-detail.page';
 import { AddFavoriteListProductPage } from '../../../pages/favorites/add-favorite-list-product/add-favorite-list-product.page';
+import { ProductAlertPopupComponent } from '../product-alert-popup/product-alert-popup.component';
 
 @Component({
   selector: 'app-product-card',
@@ -14,6 +15,7 @@ import { AddFavoriteListProductPage } from '../../../pages/favorites/add-favorit
 export class ProductCardComponent implements OnInit {
   @Input() type = 'vertical'; //horizontal
   @Input() isLoading: any = false;
+  @Input() logged: any = true;
   @Input() detailDisabled: any = false;
   @Input() product: any;
   @Input() showStars: boolean = true;
@@ -63,10 +65,14 @@ export class ProductCardComponent implements OnInit {
   }
 
   favoriteHandle($event: any) {
-    if (this.product!.in_favorite) {
-      this.removeFromFavorites(this.product?.id);
+    if (this.logged) {
+      if (this.product!.in_favorite) {
+        this.removeFromFavorites(this.product?.id);
+      } else {
+        this.showListActionsModal();
+      }
     } else {
-      this.showListActionsModal();
+      this.openAlertModal();
     }
   }
 
@@ -156,5 +162,21 @@ export class ProductCardComponent implements OnInit {
       },
       (error: any) => {}
     );
+  }
+
+  async openAlertModal() {
+    const modal = await this.modalController.create({
+      component: ProductAlertPopupComponent,
+      cssClass: 'alert-modal',
+      mode: 'ios',
+      handle: false,
+      componentProps: {},
+    });
+    modal.onDidDismiss().then((returnedData: any) => {
+      if (returnedData && returnedData?.data) {
+        this.closeModal.emit(true);
+      }
+    });
+    return await modal.present();
   }
 }

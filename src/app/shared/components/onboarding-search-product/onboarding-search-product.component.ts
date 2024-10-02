@@ -25,7 +25,6 @@ export class OnboardingSearchProductComponent implements OnInit {
   }
 
   public search(event: any): void {
-    console.log(event?.detail?.value);
     this.searchText = event?.detail?.value;
 
     this.isLoading = true;
