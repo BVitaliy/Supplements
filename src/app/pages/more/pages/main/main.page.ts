@@ -47,8 +47,7 @@ export class MainPage implements OnInit {
     private alertService: AlertService,
     public route: ActivatedRoute,
     private pushNotificationsService: PushNotificationsService,
-    public authService: AuthenticationService,
-    // private appRate: AppRate,
+    public authService: AuthenticationService // private appRate: AppRate,
   ) {
     // this.storage.get(ACCESS_WITH_APPLE).then((login) => {
     //   console.log(login);
@@ -72,7 +71,6 @@ export class MainPage implements OnInit {
   }
 
   public ngOnInit(): void {}
-  
 
   async logOut() {
     // this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);
@@ -271,25 +269,37 @@ export class MainPage implements OnInit {
     this.navCtrl.navigateForward(['article', { slug }]);
   }
 
-
   promptForRating() {
-    RateApp.requestReview();
+    if (this.platform.is('ios')) {
+      window.open(
+        'https://itunes.apple.com/app/com.supplementsocre.ss?action=write-review',
+        '_system'
+      );
+    }
+    if (this.platform.is('android')) {
+      window.open(
+        'https://play.google.com/store/apps/details?id=com.supplementsocre.ss',
+        '_system'
+      );
+    }
+
+    // RateApp.requestReview();
     // this.platform.ready().then(() => {
-      // this.appRate.setPreferences({
-      //   usesUntilPrompt: 1,  // How many times a user must use the app before being prompted
-      //   storeAppURL: {
-      //     ios: 'com.supplementsocre.ss',
-      //     android: 'market://details?id=com.supplementsocre.ss',
-      //   },
-      //   customLocale: {
-      //     title: "Rate us",
-      //     message: "If you enjoy using this app, would you mind taking a moment to rate it? Thanks for your support!",
-      //     cancelButtonLabel: "No, thanks",
-      //     laterButtonLabel: "Remind me later",
-      //     rateButtonLabel: "Rate it now",
-      //   }
-      // });
-      // this.appRate.promptForRating(true); // true for forcing the prompt to show
+    // this.appRate.setPreferences({
+    //   usesUntilPrompt: 1,  // How many times a user must use the app before being prompted
+    //   storeAppURL: {
+    //     ios: 'com.supplementsocre.ss',
+    //     android: 'market://details?id=com.supplementsocre.ss',
+    //   },
+    //   customLocale: {
+    //     title: "Rate us",
+    //     message: "If you enjoy using this app, would you mind taking a moment to rate it? Thanks for your support!",
+    //     cancelButtonLabel: "No, thanks",
+    //     laterButtonLabel: "Remind me later",
+    //     rateButtonLabel: "Rate it now",
+    //   }
+    // });
+    // this.appRate.promptForRating(true); // true for forcing the prompt to show
     // });
   }
 }

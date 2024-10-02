@@ -244,6 +244,9 @@ export class AddProductPage implements OnInit {
           console.log(data);
           this.uploadImage(data?.id);
           this.isLoading = false;
+          this.navCtrl.navigateForward([
+            '/home/tabs/tab/more/submitted-products',
+          ]);
           this.createProductSuccess('/home/tabs/tab/more/submitted-products');
         },
         (error: any) => {

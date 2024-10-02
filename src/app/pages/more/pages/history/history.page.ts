@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HistoryTabs } from './history.models';
 import { Products } from '../../../../../mock/products';
@@ -18,7 +18,8 @@ export class HistoryPage {
 
   constructor(
     public navCtrl: NavController,
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
+    private zone: NgZone
   ) {}
 
   ionViewWillEnter() {
@@ -26,12 +27,16 @@ export class HistoryPage {
   }
 
   doRefresh(event: any) {
-    this.getProducts(() => event.target.complete());
+    this.zone.run(() => {
+      this.getProducts(() => event.target.complete());
+    });
   }
 
   handleChangeTab(event: any) {
-    this.activeTab = event?.detail?.value;
-    this.getProducts();
+    this.zone.run(() => {
+      this.activeTab = event?.detail?.value;
+      this.getProducts();
+    });
   }
 
   getProducts(callbackFunction?: () => void) {

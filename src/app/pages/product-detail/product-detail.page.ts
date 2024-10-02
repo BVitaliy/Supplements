@@ -121,9 +121,9 @@ export class ProductDetailPage implements OnInit {
     } else {
       await Share.share({
         title: this.product?.title,
-        text: this.product?.description,
-        url: 'http://ionicframework.com/',
-        dialogTitle: 'Share with buddies',
+        text: this.product?.title,
+        url: this.product?.link,
+        dialogTitle: 'Share with...',
       });
     }
   }
