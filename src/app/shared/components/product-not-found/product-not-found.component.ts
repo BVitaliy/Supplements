@@ -36,12 +36,14 @@ export class ProductNotFoundComponent implements OnInit {
 
   // Відкривання модалки
   async openSearchProductModal() {
+    this.cancelModal(true);
     const modal = await this.modalController.create({
       component: OnboardingSearchProductComponent,
       cssClass: 'modal-search',
       mode: 'ios',
       breakpoints: [0, 0.9],
       initialBreakpoint: 0.9,
+      // animated: false,
       handle: true,
       componentProps: {},
     });

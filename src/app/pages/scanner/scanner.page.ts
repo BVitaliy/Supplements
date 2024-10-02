@@ -83,7 +83,7 @@ export class ScannerPage implements OnInit {
         });
     } else {
       this.loading = false;
-      // this.openProductNotFound();
+      this.openProductNotFound();
       if (this.platform.is('ios')) {
         this.navCtrl.back();
       }
