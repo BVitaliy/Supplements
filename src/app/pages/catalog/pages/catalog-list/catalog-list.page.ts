@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ModalController, NavController } from '@ionic/angular';
 import {
@@ -27,26 +27,29 @@ export class CatalogListPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
+    private zone: NgZone
   ) {}
 
   public ngOnInit(): void {
     this.filterForm = new FormGroup({
       search: new FormControl(''),
     });
-    this.getCategories();
-    this.filterForm
-      .get('search')
-      ?.valueChanges.pipe(
-        debounceTime(500), // Adjust debounce time as needed
-        distinctUntilChanged(),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe((value) => { 
-        this.getCategories(value ? { query: value } : {});
-      });
+
+    this.zone.run(() => {
+      this.getCategories();
+      this.filterForm
+        .get('search')
+        ?.valueChanges.pipe(
+          debounceTime(500), // Adjust debounce time as needed
+          distinctUntilChanged(),
+          takeUntil(this.unsubscribe$)
+        )
+        .subscribe((value) => {
+          this.getCategories(value ? { query: value } : {});
+        });
+    });
   }
- 
 
   public onSearchFocus(_event: any): void {
     // this.isSearchActive = true;

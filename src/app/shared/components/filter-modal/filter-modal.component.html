@@ -121,6 +121,7 @@
       </ion-item>
       <div class="ion-padding" slot="content">
         <app-filter-group [options]="special" [type]="'special_offer'"
+          [addedOptions]="form.value.special_offer ? [1] : []"
           (filteredOptions)="filtered($event,'special_offer')"></app-filter-group>
       </div>
     </ion-accordion>

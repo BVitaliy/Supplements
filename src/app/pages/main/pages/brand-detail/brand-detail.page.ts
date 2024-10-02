@@ -36,7 +36,7 @@ export class BrandDetailPage implements OnInit {
       brands: new FormControl([]),
       ingredients: new FormControl([]),
       quality: new FormControl(null),
-      special_offer: new FormControl(false),
+      special_offer: new FormControl(null),
       rating_score: new FormControl(null),
     });
   }

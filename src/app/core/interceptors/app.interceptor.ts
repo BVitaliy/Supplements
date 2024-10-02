@@ -55,7 +55,6 @@ export class AppInterceptor implements HttpInterceptor {
         this.refreshToken = refresh;
       }
     });
-    console.log(this.refreshToken);
     return from(promise).pipe(
       mergeMap((token) => {
         let clonedReq = this.addToken(request, token);
@@ -84,7 +83,6 @@ export class AppInterceptor implements HttpInterceptor {
             }
           }),
           catchError((err: any) => {
-            console.log(this.refreshToken);
             if (err instanceof HttpErrorResponse) {
               if (err.status === 0) {
                 window.addEventListener('online', () => {
@@ -97,9 +95,7 @@ export class AppInterceptor implements HttpInterceptor {
                 !request.url?.includes('/token') &&
                 !request.url?.includes('/refresh')
               ) {
-                console.log(this.isRefreshing);
                 if (!this.isRefreshing) {
-                  console.log(this.refreshToken);
                   this.isRefreshing = true;
                   this.refreshToken$.next(null);
                   return this.authenticationService
@@ -124,7 +120,6 @@ export class AppInterceptor implements HttpInterceptor {
                       })
                     );
                 } else {
-                  console.log(this.refreshToken);
                   if (request.url?.includes('/token/refresh')) {
                     this.destroyed$.next();
                     this.storage.remove(ACCESS_TOKEN_STORAGE_NAME);

@@ -50,7 +50,6 @@ export class ProductNotFoundComponent implements OnInit {
 
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
-        console.log(returnedData);
         this.cancelModal(true);
       }
     });

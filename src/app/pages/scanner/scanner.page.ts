@@ -11,6 +11,7 @@ import { CatalogService } from '../catalog/catalog.service';
 import { finalize } from 'rxjs';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
+import { ProductDetailPage } from '../product-detail/product-detail.page';
 
 @Component({
   selector: 'app-scanner',
@@ -84,6 +85,7 @@ export class ScannerPage implements OnInit {
     } else {
       this.loading = false;
       this.openProductNotFound();
+      // this.openProductInModal(3379);
       if (this.platform.is('ios')) {
         this.navCtrl.back();
       }
@@ -143,7 +145,8 @@ export class ScannerPage implements OnInit {
         (data: any) => {
           console.log(data);
           if (data?.id) {
-            this.navCtrl.navigateForward(['/product/detail/', data?.id]);
+            // this.navCtrl.navigateForward(['/product/detail/', data?.id]);
+            this.openProductInModal(data?.id);
           } else {
             this.openProductNotFound();
           }
@@ -152,5 +155,24 @@ export class ScannerPage implements OnInit {
           this.openProductNotFound();
         }
       );
+  }
+
+  async openProductInModal(id: any) {
+    const modal = await this.modalController.create({
+      component: ProductDetailPage,
+      cssClass: '',
+      mode: 'ios',
+      handle: true,
+      componentProps: {
+        openedInModal: true,
+        id,
+      },
+    });
+
+    modal.onDidDismiss().then((returnedData: any) => {
+      this.navCtrl.navigateForward(['info-steps']);
+    });
+
+    return await modal.present();
   }
 }
