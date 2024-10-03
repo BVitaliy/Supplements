@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, Platform } from '@ionic/angular';
 import { finalize } from 'rxjs';
 import { IngredientOption } from 'src/app/core/models/highlighted-ingredients.models';
 import { ProductAlertPopupComponent } from 'src/app/shared/components/product-alert-popup/product-alert-popup.component';
@@ -26,6 +26,7 @@ import { AddFavoriteListProductPage } from '../favorites/add-favorite-list-produ
 import { FavoriteService } from '../favorites/favorites.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { RatingComponent } from './components/rating/rating.component';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -75,10 +76,15 @@ export class ProductDetailPage implements OnInit {
     private mainService: MainService,
     private storage: Storage,
     private favoriteService: FavoriteService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private themeOptions: ThemeOptionsService,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
+    if (this.platform.is('hybrid')) {
+      this.themeOptions.setStatusBarWhite();
+    }
     this.id = this.id || this.route.snapshot.paramMap.get('id');
     this.getProduct();
     this.getProductReviewById();

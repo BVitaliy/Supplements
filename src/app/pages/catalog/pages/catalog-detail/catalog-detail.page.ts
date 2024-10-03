@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
@@ -25,7 +25,8 @@ export class CatalogDetailPage implements OnInit {
     public navCtrl: NavController,
     private modalController: ModalController,
     private catalogService: CatalogService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
@@ -45,18 +46,22 @@ export class CatalogDetailPage implements OnInit {
   ionViewWillEnter() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = this.route.snapshot.paramMap.get('title') || '';
-    this.getProducts(this.id);
+    this.zone.run(() => {
+      this.getProducts(this.id);
+    });
   }
 
   search(event: any) {
-    console.log(event?.detail?.value);
-    this.filterForm.get('query')?.setValue(event?.detail?.value);
+    this.zone.run(() => {
+      console.log(event?.detail?.value);
+      this.filterForm.get('query')?.setValue(event?.detail?.value);
 
-    const values = {
-      ...this.filterForm.value,
-      categories: [this.id],
-    };
-    this.filteredProduct(values);
+      const values = {
+        ...this.filterForm.value,
+        categories: [this.id],
+      };
+      this.filteredProduct(values);
+    });
   }
 
   // Відкривання модалки Filters
@@ -82,8 +87,9 @@ export class CatalogDetailPage implements OnInit {
           ...returnedData?.data,
           categories: [this.id],
         };
-
-        this.filteredProduct(values);
+        this.zone.run(() => {
+          this.filteredProduct(values);
+        });
       }
     });
 
@@ -106,17 +112,18 @@ export class CatalogDetailPage implements OnInit {
     });
 
     modal.onDidDismiss().then((returnedData: any) => {
-      if (returnedData && returnedData?.data) {
-        // this.addedHIngredientsOptions = returnedData?.data;
-        console.log(returnedData);
-        this.filterForm.get('ordering_field')?.setValue(returnedData?.data);
-        // this.sortProduct(returnedData?.data);
-        const values = {
-          ...this.filterForm.value,
-          categories: [this.id],
-        };
-        this.filteredProduct(values, { ordering: returnedData?.data });
-      }
+      this.zone.run(() => {
+        if (returnedData && returnedData?.data) {
+          console.log(returnedData);
+          this.filterForm.get('ordering_field')?.setValue(returnedData?.data);
+
+          const values = {
+            ...this.filterForm.value,
+            categories: [this.id],
+          };
+          this.filteredProduct(values, { ordering: returnedData?.data });
+        }
+      });
     });
 
     return await modal.present();
@@ -124,7 +131,9 @@ export class CatalogDetailPage implements OnInit {
 
   // Рефреш даних користувача
   doRefresh(event: any) {
-    this.getProducts(this.id, true, () => event.target.complete());
+    this.zone.run(() => {
+      this.getProducts(this.id, true, () => event.target.complete());
+    });
   }
 
   getProducts(id: string, refresh?: boolean, callbackFunction?: () => void) {

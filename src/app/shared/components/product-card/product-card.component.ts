@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, Platform } from '@ionic/angular';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 import { FavoriteService } from 'src/app/pages/favorites/favorites.service';
 import { ProductDetailPage } from 'src/app/pages/product-detail/product-detail.page';
 import { AddFavoriteListProductPage } from '../../../pages/favorites/add-favorite-list-product/add-favorite-list-product.page';
@@ -33,7 +34,9 @@ export class ProductCardComponent implements OnInit {
     private modalController: ModalController,
     private favoriteService: FavoriteService,
     private route: ActivatedRoute,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private themeOptions: ThemeOptionsService,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
@@ -123,6 +126,9 @@ export class ProductCardComponent implements OnInit {
     modal.onDidDismiss().then((returnedData: any) => {
       if (returnedData && returnedData?.data) {
         this.closeModal.emit(true);
+        if (this.platform.is('hybrid')) {
+          this.themeOptions.setStatusBarDark();
+        }
       }
     });
 
