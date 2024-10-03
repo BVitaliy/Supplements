@@ -171,6 +171,9 @@ export class ScannerPage implements OnInit {
 
     modal.onDidDismiss().then((returnedData: any) => {
       this.navCtrl.navigateForward(['info-steps']);
+      if (this.platform.is('hybrid')) {
+        this.themeOptions.setStatusBarDark();
+      }
     });
 
     return await modal.present();

@@ -4,6 +4,7 @@ import {
   Input,
   NgZone,
   OnChanges,
+  OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { SearchSystemTabs } from './search-system.models';
@@ -20,7 +21,7 @@ import { CatalogService } from 'src/app/pages/catalog/catalog.service';
   templateUrl: './search-system.component.html',
   styleUrls: ['./search-system.component.scss'],
 })
-export class SearchSystemComponent implements OnChanges {
+export class SearchSystemComponent implements OnChanges, OnInit {
   @Input() searchValue: string = '';
 
   isLoading = false;
@@ -39,9 +40,10 @@ export class SearchSystemComponent implements OnChanges {
     private changeDetectorRef: ChangeDetectorRef,
     private zone: NgZone
   ) {}
-
-  ionViewWillEnter() {
-    this.getData();
+  ngOnInit(): void {
+    this.zone.run(() => {
+      this.getData();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
