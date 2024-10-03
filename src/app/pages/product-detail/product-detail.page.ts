@@ -82,9 +82,7 @@ export class ProductDetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.platform.is('hybrid')) {
-      this.themeOptions.setStatusBarWhite();
-    }
+  
     this.id = this.id || this.route.snapshot.paramMap.get('id');
     this.getProduct();
     this.getProductReviewById();
@@ -95,6 +93,11 @@ export class ProductDetailPage implements OnInit {
         this.getIngrediens();
       }
     });
+    if (this.platform.is('hybrid')) {
+      setTimeout(() => {
+        this.themeOptions.setStatusBarWhite();
+      }, 2000);
+    }
   }
 
   toggleText() {
