@@ -1,6 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { getPriorityValue } from 'src/app/core/functions/priority-value';
+import { MainService } from 'src/app/pages/main/main.service';
 
 @Component({
   selector: 'app-filter-group',
@@ -18,7 +26,7 @@ export class FilterGroupComponent implements OnInit {
   open = false;
   countHide = 0;
 
-  constructor() {}
+  constructor(private zone: NgZone, private mainService: MainService) {}
 
   ngOnInit() {
     this.searchForm = new FormGroup({
@@ -27,17 +35,18 @@ export class FilterGroupComponent implements OnInit {
     this.optionsToShow = this.options;
     console.log(this.addedOptions);
     this.checkCount();
+    if (this.type !== 'brands' && this.type !== 'ingredients') {
+      this.searchForm.get('search')?.valueChanges.subscribe((el) => {
+        this.optionsToShow =
+          el.length > 0
+            ? this.options.filter((option) =>
+                option.title.toLowerCase().includes(el.toLowerCase())
+              )
+            : this.options;
 
-    this.searchForm.get('search')?.valueChanges.subscribe((el) => {
-      this.optionsToShow =
-        el.length > 0
-          ? this.options.filter((option) =>
-              option.title.toLowerCase().includes(el.toLowerCase())
-            )
-          : this.options;
-
-      this.checkCount();
-    });
+        this.checkCount();
+      });
+    }
   }
 
   checkCount() {
@@ -53,7 +62,16 @@ export class FilterGroupComponent implements OnInit {
   }
 
   public search(event: any): void {
-    this.searchForm.get('search')?.setValue(event?.detail?.value);
+    this.zone.run(() => {
+      this.searchForm.get('search')?.setValue(event?.detail?.value);
+
+      if (this.type === 'brands') {
+        this.getBrands(event?.detail?.value);
+      }
+      if (this.type === 'ingredients') {
+        this.getIngredients(event?.detail?.value);
+      }
+    });
   }
 
   public checkboxChangeState(_e: any, option?: any): void {
@@ -80,5 +98,66 @@ export class FilterGroupComponent implements OnInit {
 
   getPriorityValue(data: any) {
     return getPriorityValue(data);
+  }
+
+  getBrands(search?: any) {
+    let data: any = {
+      limit: 300,
+    };
+    if (search) {
+      data = {
+        ...data,
+        query: search,
+      };
+    }
+    this.mainService
+      .getBrands(data)
+
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.optionsToShow = [];
+          const options = this.objectToArray(data?.results);
+          options.forEach((brand: any) => {
+            console.log(brand);
+            this.optionsToShow = [...this.optionsToShow, ...brand?.brands];
+          });
+          console.log(this.optionsToShow);
+          this.checkCount();
+        },
+        (error: any) => {}
+      );
+  }
+  getIngredients(search?: any) {
+    let data: any = {
+      limit: 300,
+    };
+    if (search) {
+      data = {
+        ...data,
+        query: search,
+      };
+    }
+    this.mainService
+      .getIngredients(data)
+
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.optionsToShow = [];
+          const options = this.objectToArray(data?.results);
+          options.forEach((brand: any) => {
+            console.log(brand);
+            this.optionsToShow = [...this.optionsToShow, ...brand?.brands];
+          });
+          console.log(this.optionsToShow);
+          this.checkCount();
+        },
+        (error: any) => {}
+      );
+  }
+
+  objectToArray(obj: { [key: string]: any }): { label: string; brands: any }[] {
+    return Object.keys(obj).map((key) => ({ label: key, brands: obj[key] }));
   }
 }

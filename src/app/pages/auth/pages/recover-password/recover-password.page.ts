@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import {
   LoadingController,
   ModalController,
@@ -52,14 +52,16 @@ export class RecoverPasswordPage
   };
   isOtpTouched = false;
   codeValid: boolean = false;
-  showPassword: string = '';
+  public showPassword: boolean = false;
+  public showRepeatPassword: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     private loadingController: LoadingController,
     private modalController: ModalController,
     private platform: Platform,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private zone: NgZone
   ) {
     this.recoverForm = new FormGroup(
       {
@@ -240,12 +242,16 @@ export class RecoverPasswordPage
     });
   }
 
-  toggleShowPassword(field: string) {
-    if (this.showPassword === field) {
-      this.showPassword = '';
-    } else {
-      this.showPassword = field;
-    }
+  toggleShowPassword() {
+    this.zone.run(() => {
+      this.showPassword = !this.showPassword;
+    });
+  }
+
+  toggleShowRepeatPassword() {
+    this.zone.run(() => {
+      this.showRepeatPassword = !this.showRepeatPassword;
+    });
   }
 
   // async presentModal() {

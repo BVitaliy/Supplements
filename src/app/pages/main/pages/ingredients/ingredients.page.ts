@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { finalize } from 'rxjs';
@@ -20,7 +20,8 @@ export class IngredientsPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     private mainService: MainService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
@@ -30,16 +31,22 @@ export class IngredientsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.getData();
+    this.zone.run(() => {
+      this.getData();
+    });
   }
 
   public search(event: any): void {
-    this.searchForm.get('search')?.setValue(event?.detail?.value);
-    this.searchIngrediens(event?.detail?.value);
+    this.zone.run(() => {
+      this.searchForm.get('search')?.setValue(event?.detail?.value);
+      this.searchIngrediens(event?.detail?.value);
+    });
   }
 
   doRefresh(event: any) {
-    this.getData(true, () => event.target.complete());
+    this.zone.run(() => {
+      this.getData(true, () => event.target.complete());
+    });
   }
 
   getData(refresh?: boolean, callbackFunction?: () => void) {

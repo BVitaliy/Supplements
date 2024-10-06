@@ -88,7 +88,7 @@
   <!-- / Ingredients added -->
 
   <!-- Search -->
-  <div class="p-horizontal--medium p-bottom--large" [formGroup]="searchForm" *ngIf="!loading">
+  <div class="p-horizontal--medium p-bottom--large" [formGroup]="searchForm">
     <ion-searchbar mode="ios" placeholder="Search..." show-clear-button="never"
       [searchIcon]="'./assets/img/icons/search-icon-grey.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
       formControlName="search" class="highlighted-ingredients__search" (ionChange)="search($event)"></ion-searchbar>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
@@ -25,7 +25,8 @@ export class BrandDetailPage implements OnInit {
     public navCtrl: NavController,
     private route: ActivatedRoute,
     private catalogService: CatalogService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
@@ -45,10 +46,14 @@ export class BrandDetailPage implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = this.route.snapshot.paramMap.get('title') || '';
     this.type = this.route.snapshot.paramMap.get('type') || '';
-    this.getProducts();
+    this.zone.run(() => {
+      this.getProducts();
+    });
   }
   doRefresh(event: any) {
-    this.getProducts(() => event.target.complete());
+    this.zone.run(() => {
+      this.getProducts(() => event.target.complete());
+    });
   }
 
   // Відкривання модалки Filters
@@ -66,15 +71,17 @@ export class BrandDetailPage implements OnInit {
 
     modal.onDidDismiss().then((returnedData: any) => {
       this.form.reset();
-      if (returnedData && returnedData?.data) {
-        const values = {
-          ...returnedData?.data,
-          [this.type]: [this.id],
-        };
-        this.form.patchValue(returnedData?.data);
-        console.log(returnedData);
-        this.filteredProduct(values);
-      }
+      this.zone.run(() => {
+        if (returnedData && returnedData?.data) {
+          const values = {
+            ...returnedData?.data,
+            [this.type]: [this.id],
+          };
+          this.form.patchValue(returnedData?.data);
+          console.log(returnedData);
+          this.filteredProduct(values);
+        }
+      });
     });
 
     return await modal.present();

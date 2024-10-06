@@ -1,4 +1,11 @@
-import { Component, Input, NgZone, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ImageZoomingComponent } from '../image-zooming/image-zooming.component';
 
@@ -12,6 +19,8 @@ export class ImgComponent implements OnInit {
   @Input() alt!: string;
   @Input() cssClasses!: string;
   @Input() zooming = false;
+  @Input() showSpinner = true;
+  @Output() imgLoadedState: EventEmitter<boolean> = new EventEmitter<boolean>();
   imgLoaded = false;
 
   constructor(private modalController: ModalController, private zone: NgZone) {}
@@ -21,6 +30,7 @@ export class ImgComponent implements OnInit {
   imgDidLoad() {
     this.zone.run(() => {
       this.imgLoaded = true;
+      this.imgLoadedState.next(true);
     });
     // setTimeout(() => {
     //   this.imgLoaded = true;

@@ -14,11 +14,12 @@ ion-item {
   --inner-padding-end: 0px;
   --min-height: 0px;
   ion-label {
-    padding: 0 10px 0 0;
+    padding: 0 14px 0 0;
     margin: 0;
     font-size: 14px;
     display: flex;
     align-items: center;
+    white-space: normal;
   }
   span {
     margin-left: 8px;

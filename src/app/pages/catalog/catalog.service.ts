@@ -84,20 +84,11 @@ export class CatalogService {
   }
 
   uploadImage(id: any, data: any): Observable<any> {
-    // let headers = new HttpHeaders();
-    // headers = headers.set('Accept', 'application/json');
-    // headers = headers.set('Content-Type', 'multipart/form-data; boundary=--');
     return this.http
-      .post(
-        `${environment.origin}/requests/${id}/images/`,
-        data
-        // , {
-        //   headers: headers,
-        // }
-      )
+      .post(`${environment.origin}/requests/${id}/images/`, data)
       .pipe(
         catchError((error) => {
-          this.alertService.presentErrorAlert(error);
+          // this.alertService.presentErrorAlert(error);
           return throwError(error);
         })
       );

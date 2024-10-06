@@ -19,7 +19,7 @@
   <div class="content" *ngIf="!id || id && !isLoading">
     <form class="form" [formGroup]="form">
       <div class="file-control">
-        <ion-label>Product front packing image*</ion-label>
+        <ion-label>Product front packing image* (Max size 10 MB)</ion-label>
         <ion-button class="btn btn-outline" expand="block" fill="outline" mode="md" (click)="openSourcePopover()"
           *ngIf="!form.value?.photo && !form.value?.images?.length">
           <ion-icon src="./assets/img/product/upload.svg"></ion-icon>

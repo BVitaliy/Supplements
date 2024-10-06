@@ -279,7 +279,7 @@ export class AddProductPage implements OnInit {
     }
   }
 
-  uploadImage(id: any) {
+  async uploadImage(id: any) {
     const image = this.form.value.photo;
     console.log(image);
 
@@ -288,7 +288,7 @@ export class AddProductPage implements OnInit {
       if (image?.name) {
         blob = image;
       } else {
-        blob = this.photoService.base64toBlob(image);
+        blob = await this.photoService.base64toBlob(image);
       }
 
       const formData = new FormData();

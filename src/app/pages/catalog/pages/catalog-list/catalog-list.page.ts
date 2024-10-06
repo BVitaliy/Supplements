@@ -96,7 +96,9 @@ export class CatalogListPage implements OnInit {
 
   // Рефреш даних користувача
   doRefresh(event: any) {
-    this.getCategories(true, () => event.target.complete());
+    this.zone.run(() => {
+      this.getCategories(true, () => event.target.complete());
+    });
   }
 
   getCategories(data?: any, callbackFunction?: () => void) {

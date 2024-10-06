@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { finalize } from 'rxjs';
@@ -36,13 +36,16 @@ export class ReportProblemPage {
     private alertService: AlertService,
     private photoService: PhotoService,
     private platform: Platform,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private zone: NgZone
   ) {}
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      theme: new FormControl(null, [Validators.required]),
-      message: new FormControl(null, [Validators.required]),
+    this.zone.run(() => {
+      this.form = new FormGroup({
+        theme: new FormControl(null, [Validators.required]),
+        message: new FormControl(null, [Validators.required]),
+      });
     });
   }
 
@@ -80,30 +83,40 @@ export class ReportProblemPage {
 
   async uploadImage(id: any, image: any) {
     console.log(image);
-    const formData = new FormData();
-    formData.append('images', image.blob, 'image.' + image.format);
-    setTimeout(() => {
-      this.profileService.uploadImage(id, formData).subscribe(
-        (data: any) => {
-          console.log(data);
-          this.loading = false;
-        },
-        (error: any) => {
-          this.loading = false;
-        }
-      );
-    }, 600);
+    this.zone.run(() => {
+      const formData = new FormData();
+      formData.append('images', image.blob, 'image.' + image.format);
+      setTimeout(() => {
+        this.profileService.uploadImage(id, formData).subscribe(
+          (data: any) => {
+            console.log(data);
+            this.loading = false;
+          },
+          (error: any) => {
+            this.loading = false;
+          }
+        );
+      }, 600);
+    });
   }
 
   // Photo from gallery
-  openGallery(indexChange?: number) {
-    this.loadingPhoto = true;
+  openGallery(indexChange?: number, loading?: boolean) {
+    if (!loading) {
+      this.loadingPhoto = true;
+    } else {
+      if (indexChange || indexChange === 0) {
+        this.images[indexChange].loading = true;
+      }
+    }
+
     this.photoService
       .choosePicture(1)
       .then(
         async (imageData: any) => {
           if (imageData && imageData?.photos?.length) {
             console.log('image data', imageData);
+
             let images = [];
             if (!indexChange && indexChange !== 0) {
               for (const image of imageData?.photos) {
@@ -133,16 +146,20 @@ export class ReportProblemPage {
               );
 
               this.images[indexChange] = {
+                loading: true,
                 format: image.format,
                 blob: blob,
                 src: `data:image/${image.format};base64,` + base64Response.data,
               };
             }
+
             console.log(this.images);
+            this.loadingPhoto = false;
           } else {
             this.loadingPhoto = false;
             this.alertService.warning('Something went wrong, please try again');
           }
+          this.loadingPhoto = false;
         },
         (error: any) => {
           this.loadingPhoto = false;
@@ -151,6 +168,12 @@ export class ReportProblemPage {
       .finally(() => {
         this.loadingPhoto = false;
       });
+  }
+
+  imgLoaded($event: any, i: number) {
+    setTimeout(() => {
+      this.images[i].loading = false;
+    }, 1000);
   }
 
   async openSourcePopover(index: number) {
@@ -167,7 +190,7 @@ export class ReportProblemPage {
       console.log(returnedData);
       const type = returnedData.data;
       if (type === 1) {
-        this.openGallery(index);
+        this.openGallery(index, true);
       }
       if (type === 2) {
         this.images.splice(index, 1);

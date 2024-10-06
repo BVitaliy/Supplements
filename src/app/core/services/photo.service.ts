@@ -34,22 +34,6 @@ export class PhotoService {
       promptLabelPicture: 'Camera',
     };
     return Camera.getPhoto(options);
-
-    // // CORDOVA Camera
-    // const options: CameraOptions = {
-    //   quality: 100,
-    //   destinationType: this.camera.DestinationType.DATA_URL,
-    //   sourceType: this.camera.PictureSourceType.CAMERA, // PHOTOLIBRARY CAMERA SAVEDPHOTOALBUM
-    //   allowEdit: true,
-    //   encodingType: this.camera.EncodingType.JPEG, // JPEG PNG
-    //   targetWidth: 300,
-    //   targetHeight: 300,
-    //   mediaType: this.camera.MediaType.ALLMEDIA, // not work. Work if sourceType = PHOTOLIBRARY or SAVEDPHOTOALBUM
-    //   correctOrientation: false,
-    //   saveToPhotoAlbum: true,
-    //   cameraDirection: this.camera.Direction.FRONT, // BACK
-    // };
-    // return this.camera.getPicture(options);
   }
 
   // Вибрати фото - Capacitor Camera
@@ -81,31 +65,6 @@ export class PhotoService {
       };
       return Camera.getPhoto(options);
     }
-
-    // // Cordova Gallery
-    // const options: CameraOptions = {
-    //   quality: 100,
-    //   destinationType: this.camera.DestinationType.DATA_URL,
-    //   sourceType: this.camera.PictureSourceType.PHOTOLIBRARY, // PHOTOLIBRARY CAMERA SAVEDPHOTOALBUM
-    //   allowEdit: true,
-    //   encodingType: this.camera.EncodingType.JPEG, // JPEG PNG
-    //   targetWidth: 300,
-    //   targetHeight: 300,
-    //   mediaType: this.camera.MediaType.PICTURE, // PICTURE VIDEO ALLMEDIA. NOT work. Work if sourceType = PHOTOLIBRARY or SAVEDPHOTOALBUM
-    //   correctOrientation: false,
-    //   saveToPhotoAlbum: true,
-    //   cameraDirection: this.camera.Direction.FRONT, // BACK
-    // };
-    // return this.camera.getPicture(options);
-
-    // // Cordova ImagePicker
-    // const maximumImagesCount = 1;
-    // const options: ImagePickerOptions = {
-    //   maximumImagesCount,
-    //   quality: 100,
-    //   outputType: 1,
-    // };
-    // return this.imagePicker.getPictures(options);
   }
 
   // Вибір документів - Cordova MultipleDocumentsPicker
@@ -114,9 +73,7 @@ export class PhotoService {
   }
 
   // Перетворення із base64 у blob
-  base64toBlob(dataURI: string) {
-    console.log(dataURI);
-    console.log(dataURI.split(','));
+  async base64toBlob(dataURI: string): Promise<any> {
     let byteString: string;
     if (dataURI.split(',')[0].indexOf('base64') >= 0) {
       byteString = atob(dataURI.split(',')[1]);
@@ -129,7 +86,6 @@ export class PhotoService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-
     return new Blob([ia], { type: mimeString });
   }
 
@@ -152,18 +108,4 @@ export class PhotoService {
       .__zone_symbol__originalInstance;
     return zoneOriginalInstance || fileReader;
   }
-
-  // blobToBase64(blob: Blob) {
-  //   const reader = this.getFileReader();
-  //   // let progress = 0;
-  //   console.log(reader);
-  //   return this.ngZone.run(() => {
-  //     reader.readAsDataURL(blob);
-  //     reader.onloadend = (e: any) => {
-  //       const buffer = e.target?.result;
-  //       console.log(buffer);
-  //       return buffer;
-  //     };
-  //   });
-  // }
 }

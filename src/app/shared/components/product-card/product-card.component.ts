@@ -124,12 +124,12 @@ export class ProductCardComponent implements OnInit {
     });
 
     modal.onDidDismiss().then((returnedData: any) => {
-      if (returnedData && returnedData?.data) {
-        this.closeModal.emit(true);
-        if (this.platform.is('hybrid')) {
-          this.themeOptions.setStatusBarDark();
-        }
+      // if (returnedData && returnedData?.data) {
+      this.closeModal.emit(true);
+      if (this.platform.is('hybrid')) {
+        this.themeOptions.setStatusBarDark();
       }
+      // }
     });
 
     return await modal.present();
