@@ -14,7 +14,7 @@ import { SharedModule } from '../../../shared/shared.module';
     FavoritesListPageRoutingModule,
     SharedModule,
   ],
-    exports: [FavoritesListPage],
-    declarations: [FavoritesListPage],
+  exports: [FavoritesListPage],
+  declarations: [FavoritesListPage],
 })
 export class FavoritesListPageModule {}

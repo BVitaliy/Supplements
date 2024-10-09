@@ -25,6 +25,7 @@ import { PushNotificationsService } from 'src/app/core/services/push-notificatio
 // import { AppRate } from '@awesome-cordova-plugins/app-rate/ngx';
 
 import { RateApp } from 'capacitor-rate-app';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 
 @Component({
   selector: 'app-main',
@@ -47,7 +48,8 @@ export class MainPage implements OnInit {
     private alertService: AlertService,
     public route: ActivatedRoute,
     private pushNotificationsService: PushNotificationsService,
-    public authService: AuthenticationService // private appRate: AppRate,
+    public authService: AuthenticationService,
+    private themeOptions: ThemeOptionsService
   ) {
     // this.storage.get(ACCESS_WITH_APPLE).then((login) => {
     //   console.log(login);
@@ -60,6 +62,9 @@ export class MainPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    if (this.platform.is('hybrid')) {
+      this.themeOptions.setStatusBarWhite();
+    }
     this.storage.get('user').then((user) => {
       if (user) {
         this.profile = JSON.parse(user);
@@ -238,17 +243,17 @@ export class MainPage implements OnInit {
       mode: 'ios',
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: ['alert-button-delete'],
-        },
-        {
           text: 'Delete',
           role: 'confirm',
-          cssClass: ['alert-button-cancel'],
+          cssClass: ['alert-button-delete'],
           handler: (): void => {
             this.delete();
           },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: ['alert-button-cancel'],
         },
       ],
     });

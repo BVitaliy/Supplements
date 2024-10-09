@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, Platform } from '@ionic/angular';
 import { ManageFavoriteListPage } from './manage-favorite-list/manage-favorite-list.page';
 import {
   ManageFavoriteListModel,
@@ -10,6 +10,7 @@ import { Products } from '../../../mock/products';
 import { finalize } from 'rxjs';
 import { FavoriteService } from './favorites.service';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 
 @Component({
   selector: 'app-favorites',
@@ -24,7 +25,9 @@ export class FavoritesPage {
     public navCtrl: NavController,
     private modalCtrl: ModalController,
     private favoriteService: FavoriteService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private platform: Platform,
+    private themeOptions: ThemeOptionsService
   ) {}
 
   public async showCreateListModal(): Promise<void> {
@@ -72,6 +75,9 @@ export class FavoritesPage {
 
   ionViewWillEnter() {
     this.getFavorites();
+    if (this.platform.is('hybrid')) {
+      this.themeOptions.setStatusBarWhite();
+    }
   }
 
   // Рефреш даних

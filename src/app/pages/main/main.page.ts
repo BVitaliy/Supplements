@@ -67,19 +67,19 @@ export class MainPage implements OnInit {
     this.filterForm = new FormGroup({
       search: new FormControl(null),
     });
-    if (this.platform.is('hybrid')) {
-      this.themeOptions.setStatusBarWhite();
-    }
   }
 
   ionViewWillEnter() {
+    if (this.platform.is('hybrid')) {
+      this.themeOptions.setStatusBarWhite();
+    }
     this.getRecent();
     this.getTrending();
     this.getForYou();
   }
 
   // Пошук
-  search(event: any) { 
+  search(event: any) {
     this.filterForm.get('search')?.setValue(event?.detail?.value);
     this.changeDetectorRef.detectChanges();
     // this.getOrders(true);
@@ -107,7 +107,7 @@ export class MainPage implements OnInit {
         })
       )
       .subscribe({
-        next: (data: any) => { 
+        next: (data: any) => {
           this.products.recent = data?.results;
         },
         error: (error: any) => {},
@@ -128,7 +128,7 @@ export class MainPage implements OnInit {
         })
       )
       .subscribe({
-        next: (data: any) => { 
+        next: (data: any) => {
           this.products.trending = data?.results;
         },
         error: (error: any) => {},
@@ -148,7 +148,7 @@ export class MainPage implements OnInit {
         })
       )
       .subscribe({
-        next: (data: any) => { 
+        next: (data: any) => {
           this.products.forYou = data?.results;
         },
         error: (error: any) => {},

@@ -28,24 +28,24 @@ export class SubmittedProductsPage {
     private route: ActivatedRoute,
     public router: Router,
     private zone: NgZone,
-    private themeOptions: ThemeOptionsService,
+    private themeOptions: ThemeOptionsService
   ) {
     this.refreshSubscription = this.themeOptions.getRefreshToken().subscribe({
-      next: (value:any) => {
-        if(value && this.router.url.includes('/submitted-products')){
-          console.log(value)
+      next: (value: any) => {
+        if (value && this.router.url.includes('/submitted-products')) {
+          console.log(value);
           setTimeout(() => {
             this.zone.run(() => {
               this.getSubProducts();
             });
           }, 2000);
-          this.themeOptions.refreshPage$.next(false)
+          this.themeOptions.refreshPage$.next(false);
         }
-      }
-    })
+      },
+    });
   }
-  
-  ionViewWillEnter() { 
+
+  ionViewWillEnter() {
     this.openId = this.route.snapshot.paramMap.get('openId');
     if (this.openId) {
       this.openProductInModal(this.openId);
@@ -55,7 +55,7 @@ export class SubmittedProductsPage {
       this.getSubProducts();
     });
 
-    console.log('add product')
+    console.log('add product');
   }
 
   public handleChangeTab(event: any): void {

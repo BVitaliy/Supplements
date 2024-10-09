@@ -15,6 +15,7 @@
               {{ favorite?.description }}
             </div>
             <!-- / List description -->
+
           </div>
 
           <!-- List actions -->
@@ -25,19 +26,19 @@
         </div>
 
         <!-- Products -->
-        <div *ngIf="!!favorite?.products?.length" class="m-top--medium" vertical="center">
-          <ng-container *ngFor="let product of favorite.products; let index = index">
+        <div *ngIf="!!favorite?.supplements?.length" class="m-top--medium preview-list" vertical="center">
+          <ng-container *ngFor="let product of favorite.supplements; let index = index">
             <div *ngIf="index < productsToShow" vertical="center" horizontal="center"
               class="favorites-list__list-product p-around--x-small">
-              <app-img [src]="product?.image" cssClasses="img-fit-contain"
+              <app-img [src]="product?.images[0]?.url" cssClasses="img-fit-contain"
                 class="favorites-list__list-product-img"></app-img>
             </div>
           </ng-container>
 
-          <div *ngIf="handleProductsCount(favorite.products) > productsToShow" vertical="center" horizontal="center"
+          <div *ngIf="handleProductsCount(favorite.supplements) > productsToShow" vertical="center" horizontal="center"
             class="favorites-list__list-product">
             <span class="favorites-list__count-number">
-              + {{ handleProductsCount(favorite.products) - productsToShow }}
+              + {{ handleProductsCount(favorite.supplements) - productsToShow }}
             </span>
           </div>
         </div>

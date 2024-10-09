@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, Platform } from '@ionic/angular';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -8,6 +8,7 @@ import {
   Subject,
   takeUntil,
 } from 'rxjs';
+import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 import { FilterModalComponent } from 'src/app/shared/components/filter-modal/filter-modal.component';
 import { ProductNotFoundComponent } from 'src/app/shared/components/product-not-found/product-not-found.component';
 import { CatalogService } from '../../catalog.service';
@@ -28,7 +29,9 @@ export class CatalogListPage implements OnInit {
     public navCtrl: NavController,
     private modalController: ModalController,
     private catalogService: CatalogService,
-    private zone: NgZone
+    private zone: NgZone,
+    private platform: Platform,
+    private themeOptions: ThemeOptionsService
   ) {}
 
   public ngOnInit(): void {
@@ -49,6 +52,12 @@ export class CatalogListPage implements OnInit {
           this.getCategories(value ? { query: value } : {});
         });
     });
+  }
+
+  ionViewWillEnter() {
+    if (this.platform.is('hybrid')) {
+      this.themeOptions.setStatusBarWhite();
+    }
   }
 
   public onSearchFocus(_event: any): void {

@@ -45,10 +45,13 @@ export class ProductCardComponent implements OnInit {
     if (this.product.supplement?.id && this.product.status !== 2) {
       this.product = {
         ...this.product.supplement,
-        images: this.product.images,
+        images: this.product.images?.length
+          ? this.product.images
+          : this.product?.supplement?.images,
         title: this.product.title,
         average_rating: 0,
       };
+      console.log(this.product);
     }
   }
 
