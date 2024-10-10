@@ -4,6 +4,7 @@ import { HistoryTabs } from './history.models';
 import { Products } from '../../../../../mock/products';
 import { CatalogService } from 'src/app/pages/catalog/catalog.service';
 import { finalize } from 'rxjs';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-history',
@@ -19,11 +20,19 @@ export class HistoryPage {
   constructor(
     public navCtrl: NavController,
     private catalogService: CatalogService,
-    private zone: NgZone
+    private zone: NgZone,
+    private storage: Storage
   ) {}
 
   ionViewWillEnter() {
-    this.getProducts();
+    this.zone.run(() => {
+      this.getProducts();
+      this.storage.get('history_page').then((value) => {
+        if (value) {
+          this.activeTab = value;
+        }
+      });
+    });
   }
 
   doRefresh(event: any) {
@@ -35,6 +44,7 @@ export class HistoryPage {
   handleChangeTab(event: any) {
     this.zone.run(() => {
       this.activeTab = event?.detail?.value;
+      this.storage.set('history_page', event?.detail?.value);
       this.getProducts();
     });
   }

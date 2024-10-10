@@ -55,8 +55,8 @@ export class MainPage implements OnInit {
     private storage: Storage,
     public navCtrl: NavController,
     private platform: Platform,
-    private modalController: ModalController,
     private themeOptions: ThemeOptionsService,
+    private modalController: ModalController,
     private catalogService: CatalogService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
