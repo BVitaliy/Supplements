@@ -9,6 +9,7 @@ export class IngredientOption {
   is_allergen?: boolean;
   is_weaknesses?: boolean;
   is_benefit?: boolean;
+  is_highlighted?: boolean;
 }
 
 export class IngredientsSection {

@@ -32,7 +32,7 @@ export class CabinetGuard implements CanActivate {
         if (user) {
           return true;
         } else {
-          this.navCtrl.navigateForward([APP_AUTH_REDIRECT_URL]);
+          this.navCtrl.navigateForward(['info-steps']);
           return false;
         }
       });

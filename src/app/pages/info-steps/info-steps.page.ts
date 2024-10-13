@@ -49,7 +49,6 @@ export class InfoStepsPage implements OnInit {
   }
 
   goToScanner(url: string) {
-    this.storage.set('onbording_not_finished', true);
     this.navCtrl.navigateForward(url);
   }
 }

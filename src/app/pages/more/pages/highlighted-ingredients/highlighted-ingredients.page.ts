@@ -67,6 +67,7 @@ export class HighlightedIngredientsPage implements OnInit {
     },
   ];
   public addedIngredientsOptions: any[] = [];
+  public removeIngredientsOptions: any[] = [];
   public optionsToShow: any[] = [];
   public options: any[] = [];
 
@@ -87,14 +88,16 @@ export class HighlightedIngredientsPage implements OnInit {
   // apply changes
   public handleApplyChanges(): void {
     console.log(this.addedIngredientsOptions);
-    this.addedIngredientsOptions.forEach((el, index) => {
-      this.switchHighlightedIng(el);
+    // this.switchHighlightedIng(el);
+    const ingredientIds = this.addedIngredientsOptions.map(
+      (ingredient: any) => ingredient.id
+    );
+    this.switchHighlightedIng(ingredientIds);
 
-      if (index === this.addedIngredientsOptions.length - 1) {
-        setTimeout(() => {
-          this.searchIngrediens(this.searchForm.value.search);
-        }, 300);
-      }
+    this.removeIngredientsOptions.forEach((el, index) => {
+      // if (index === this.addedIngredientsOptions.length - 1) {
+      this.switchItemHighlightedIng(el);
+      // }
     });
   }
 
@@ -110,6 +113,7 @@ export class HighlightedIngredientsPage implements OnInit {
   }
 
   public handleClearAllAddedIngredients(): void {
+    this.removeIngredientsOptions = [...this.addedIngredientsOptions];
     this.addedIngredientsOptions = [];
   }
 
@@ -128,6 +132,7 @@ export class HighlightedIngredientsPage implements OnInit {
   // }
 
   public checkboxChangeState(_e: any, ingredient?: IngredientOption): void {
+    console.log(ingredient);
     if (
       ingredient &&
       this.addedIngredientsOptions.every(
@@ -137,6 +142,15 @@ export class HighlightedIngredientsPage implements OnInit {
       this.addedIngredientsOptions.push(ingredient);
       if (ingredient.id) {
         this.handleChangeCheckboxState(true, ingredient.id);
+      }
+      if (
+        this.removeIngredientsOptions.some(
+          (id): boolean => id === ingredient.id
+        )
+      ) {
+        this.removeIngredientsOptions = this.removeIngredientsOptions.filter(
+          (id): boolean => id !== ingredient.id
+        );
       }
     } else if (
       ingredient &&
@@ -149,8 +163,11 @@ export class HighlightedIngredientsPage implements OnInit {
       );
       if (ingredient.id) {
         this.handleChangeCheckboxState(false, ingredient.id);
+        this.removeIngredientsOptions.push(ingredient.id);
+        // this.switchItemHighlightedIng(ingredient?.id);
       }
     }
+
     console.log(this.addedIngredientsOptions);
   }
 
@@ -163,7 +180,7 @@ export class HighlightedIngredientsPage implements OnInit {
             option.id === id
               ? {
                   ...option,
-                  checked: value,
+                  is_highlighted: value,
                 }
               : option
         ),
@@ -187,7 +204,7 @@ export class HighlightedIngredientsPage implements OnInit {
   getData(callbackFunction?: () => void) {
     this.loading = true;
     const data = {
-      highlighted: true,
+      // highlighted: true,
       limit: 200,
     };
     this.mainService
@@ -204,7 +221,14 @@ export class HighlightedIngredientsPage implements OnInit {
         (data: any) => {
           console.log(data);
           this.options = this.objectToArray(data?.results);
-          console.log(this.options);
+
+          this.options.forEach((item: any) => {
+            const highlightedIngredients = item.ingredients.filter(
+              (ingredient: any) => ingredient.is_highlighted
+            );
+            this.addedIngredientsOptions.push(...highlightedIngredients);
+          });
+          console.log(this.addedIngredientsOptions);
         },
         (error: any) => {
           if (error.status === 401) {
@@ -217,7 +241,7 @@ export class HighlightedIngredientsPage implements OnInit {
   searchIngrediens(search: string, type?: any) {
     this.loading = true;
     let data = {
-      highlighted: true,
+      // highlighted: true,
       query: search,
       limit: 200,
     };
@@ -238,6 +262,7 @@ export class HighlightedIngredientsPage implements OnInit {
       .subscribe(
         (data: any) => {
           this.options = this.objectToArray(data?.results);
+          console.log(this.options);
         },
         (error: any) => {
           if (error.status === 401) {
@@ -256,13 +281,28 @@ export class HighlightedIngredientsPage implements OnInit {
     }));
   }
 
+  switchItemHighlightedIng(item: any) {
+    this.catalogService.switchItemHighlightedIng(item).subscribe(
+      (data: any) => {},
+      (error: any) => {
+        // this.alertService.presentErrorAlert(error?.email?.error);
+
+        if (error.status === 401) {
+          // this.alertService.presentErrorAlert('Something went wrong');
+        }
+      }
+    );
+  }
   switchHighlightedIng(item: any) {
     this.catalogService
-      .switchHighlightedIng(item.id)
+      .switchHighlightedIng({ ingredients: item })
       .pipe(finalize(() => {}))
       .subscribe(
         (data: any) => {
           console.log(data);
+          setTimeout(() => {
+            this.searchIngrediens(this.searchForm.value.search);
+          }, 500);
         },
         (error: any) => {
           // this.alertService.presentErrorAlert(error?.email?.error);

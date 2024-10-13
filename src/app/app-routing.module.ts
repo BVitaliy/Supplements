@@ -12,18 +12,18 @@ const routes: Routes = [
     canActivate: [CabinetGuard],
   },
   {
-    path: 'auth',
-    loadChildren: () =>
-      import('./pages/auth/auth.module').then((m) => m.AuthPageModule),
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'info-steps',
     loadChildren: () =>
       import('./pages/info-steps/info-steps.module').then(
         (m) => m.InfoStepsPageModule
       ),
     canActivate: [FirstOpenGuard],
+  },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then((m) => m.AuthPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'product',

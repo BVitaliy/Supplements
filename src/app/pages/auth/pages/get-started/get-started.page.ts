@@ -13,6 +13,7 @@ import { AuthenticationService } from '../../authentication.service';
 })
 export class GetStartedPage implements OnInit {
   platformName: any = null;
+  loading = false;
   constructor(
     public navCtrl: NavController,
     public authService: AuthenticationService,
@@ -30,6 +31,15 @@ export class GetStartedPage implements OnInit {
       // StatusBar.setBackgroundColor({ color: '#ff4c00' });
       // StatusBar.setStyle({ style: Style.Light });
     }
+  }
+
+  ionViewWillEnter() {
+    this.storage.get('first_open_app').then((event: any) => {
+      console.log(event);
+      if (event) {
+        this.loading = true;
+      }
+    });
   }
 
   googleSignIn() {

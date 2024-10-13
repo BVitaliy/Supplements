@@ -56,13 +56,13 @@
   <!-- / Reasons filter -->
 
   <!-- Ingredients added -->
-  <div *ngIf="addedIngredientsOptions.length" vertical="center"
+  <!-- <div *ngIf="addedIngredientsOptions.length" vertical="center"
     class="p-vertical--medium p-left--medium m-bottom--medium highlighted-ingredients__ingredients-added-wrapper highlighted-ingredients__border-vertical">
-    <!-- Clear button -->
+  
     <ion-button class="btn btn-link m-right--small" mode="md" fill="clear" (click)="handleClearAllAddedIngredients()">
       <span class="highlighted-ingredients__clear-all-added-ingredients-text">Clear all</span>
     </ion-button>
-    <!-- / Clear button -->
+    
     <swiper #ingredientsSwiper [config]="addedIngrSlideOpts">
       <ng-template swiperSlide *ngFor="let ingredient of addedIngredientsOptions">
         <ion-chip [outline]="true">
@@ -84,7 +84,7 @@
         </ion-chip>
       </ng-template>
     </swiper>
-  </div>
+  </div> -->
   <!-- / Ingredients added -->
 
   <!-- Search -->
@@ -123,7 +123,7 @@
           </div>
 
           <ion-checkbox (ionChange)="checkboxChangeState($event, ingredient)" class="checkbox flex-shrink--none"
-            [checked]="ingredient.checked"></ion-checkbox>
+            [checked]="ingredient?.is_highlighted"></ion-checkbox>
         </div>
         <!-- / Ingredients -->
       </div>

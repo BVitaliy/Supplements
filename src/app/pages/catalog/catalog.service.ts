@@ -288,11 +288,24 @@ export class CatalogService {
       );
   }
 
-  switchHighlightedIng(id?: any): Observable<any> {
+  switchItemHighlightedIng(id?: any): Observable<any> {
     return this.http
       .post(
         `${environment.origin}/supplements/ingredients/${id}/highlighted/`,
         {}
+      )
+      .pipe(
+        catchError((error) => {
+          // this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+  switchHighlightedIng(ids?: any): Observable<any> {
+    return this.http
+      .post(
+        `${environment.origin}/supplements/ingredients/list/highlighted/`,
+        ids
       )
       .pipe(
         catchError((error) => {

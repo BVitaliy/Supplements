@@ -32,7 +32,7 @@ export class FirstOpenGuard implements CanActivate {
     return this.storage.create().then(() => {
       return this.storage.get(FIRST_OPEN_APP).then((opened) => {
         if (opened) {
-          this.navCtrl.navigateForward([APP_HOME_REDIRECT_URL]);
+          this.navCtrl.navigateForward([APP_AUTH_REDIRECT_URL]);
           return false;
         } else {
           return true;

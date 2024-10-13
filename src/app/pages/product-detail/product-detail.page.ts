@@ -82,7 +82,6 @@ export class ProductDetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
-  
     this.id = this.id || this.route.snapshot.paramMap.get('id');
     this.getProduct();
     this.getProductReviewById();
@@ -90,7 +89,9 @@ export class ProductDetailPage implements OnInit {
     this.storage.get(ACCESS_TOKEN_STORAGE_NAME).then((token) => {
       if (token) {
         this.setProductAsViewed();
-        this.getIngrediens();
+        setTimeout(() => {
+          this.getIngrediens();
+        }, 300);
       }
     });
     if (this.platform.is('hybrid')) {
@@ -148,6 +149,7 @@ export class ProductDetailPage implements OnInit {
     let data = {
       highlighted: true,
       limit: 200,
+      product_id: this.id,
     };
     this.ingredients = [];
     this.mainService
@@ -423,15 +425,19 @@ export class ProductDetailPage implements OnInit {
       modal.onDidDismiss().then((returnedData: any) => {
         if (returnedData && returnedData?.data) {
           this.addedHIngredientsOptions = returnedData?.data;
-
-          this.addedHIngredientsOptions.forEach((el, index) => {
-            this.switchHighlightedIng(el);
-            if (index === this.addedHIngredientsOptions.length - 1) {
-              setTimeout(() => {
-                this.getIngrediens();
-              }, 300);
-            }
-          });
+          if (returnedData?.data?.length) {
+            const ingredientIds = returnedData?.data.map(
+              (ingredient: any) => ingredient.id
+            );
+            this.switchHighlightedIng(ingredientIds);
+          }
+          // this.addedHIngredientsOptions.forEach((el, index) => {
+          //   if (index === this.addedHIngredientsOptions.length - 1) {
+          //     setTimeout(() => {
+          //       this.getIngrediens();
+          //     }, 300);
+          //   }
+          // });
         }
       });
 
@@ -441,20 +447,46 @@ export class ProductDetailPage implements OnInit {
 
   switchHighlightedIng(item: any) {
     this.catalogService
-      .switchHighlightedIng(item.id)
+      .switchHighlightedIng({ ingredients: item })
       .pipe(finalize(() => {}))
       .subscribe(
         (data: any) => {
           console.log(data);
+          this.alertService.createToast({
+            header: `Ingredients was successfully added to highlighted list!`,
+            mode: 'ios',
+            position: 'bottom',
+            buttons: [
+              {
+                text: 'Go to list',
+                role: 'info',
+                handler: () => {},
+              },
+            ],
+          });
+          this.getIngrediens();
         },
         (error: any) => {
           // this.alertService.presentErrorAlert(error?.email?.error);
-
           if (error.status === 401) {
             // this.alertService.presentErrorAlert('Something went wrong');
           }
         }
       );
+    // this.catalogService
+    //   .switchHighlightedIng(item.id)
+    //   .pipe(finalize(() => {}))
+    //   .subscribe(
+    //     (data: any) => {
+    //       console.log(data);
+    //     },
+    //     (error: any) => {
+    //       // this.alertService.presentErrorAlert(error?.email?.error);
+    //       if (error.status === 401) {
+    //         // this.alertService.presentErrorAlert('Something went wrong');
+    //       }
+    //     }
+    //   );
   }
 
   async cancelModal(closeAll = false) {

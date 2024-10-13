@@ -32,9 +32,8 @@
       <ng-container *ngFor="let item of categories">
         <!-- [routerLink]="['/home/tabs/tab/catalog/',item?.id]" -->
         <ion-item button lines="none" mode="ios" (click)="handleOpenDetails(item?.id, item?.title)">
-          <ion-icon slot="start"
-            [src]="item?.icon || '
-https://supplemets-backend-dev.s3.amazonaws.com/users/3773791/avatar.jpg?AWSAccessKeyId=AKIAU2QTJJHK272DFNEY&Signature=4uaMRt%2FXY3U9WcBLoqhtAvFVbXM%3D&Expires=1722512907'"></ion-icon>
+          <app-img slot="start" *ngIf="item?.icon" [src]="item?.icon"></app-img>
+          <ion-icon *ngIf="!item?.icon"></ion-icon>
           <ion-label class="fw-600 dark">{{item?.title}}</ion-label>
         </ion-item>
       </ng-container>

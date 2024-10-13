@@ -65,9 +65,11 @@
       <div class="swiper-body">
         <swiper #swiper [config]="slideOpts" class="main-swiper">
           <ng-container *ngIf="!isLoadingRecent && products!.recent?.length">
-            <ng-template swiperSlide *ngFor="let product of products!.recent; let i=index">
-              <app-product-card [product]="product?.product"></app-product-card>
-            </ng-template>
+            <ng-container *ngFor="let product of products!.recent; let i=index">
+              <ng-template swiperSlide *ngIf="product?.product">
+                <app-product-card [product]="product?.product"></app-product-card>
+              </ng-template>
+            </ng-container>
           </ng-container>
           <ng-container *ngIf="isLoadingRecent">
             <ng-template swiperSlide *ngFor="let product of [1,2,3]; let i=index">
