@@ -2,8 +2,8 @@
 
   <div class="image" (click)="openDetail()">
     <app-img
-      [src]="product?.images[product?.images?.length - 1 || 0]?.url || product?.images[product?.images?.length - 1 || 0]?.image"
-      cssClasses="img-fit-contain" *ngIf="product?.images?.length"></app-img>
+      [src]="product?.images[product?.images?.length - 1 || 0]?.url || product?.images[product?.images?.length - 1 || 0]?.image || './assets/img/placeholder.svg'"
+      cssClasses="img-fit-contain"></app-img>
   </div>
   <div class="content">
     <div (click)="openDetail()">

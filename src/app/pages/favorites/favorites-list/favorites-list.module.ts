@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { FavoritesListPageRoutingModule } from './favorites-list-routing.module';
 import { FavoritesListPage } from './favorites-list.page';
 import { SharedModule } from '../../../shared/shared.module';
+import { PreviewImageComponent } from '../preview-image/preview-image.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { SharedModule } from '../../../shared/shared.module';
     SharedModule,
   ],
   exports: [FavoritesListPage],
-  declarations: [FavoritesListPage],
+  declarations: [FavoritesListPage, PreviewImageComponent],
 })
 export class FavoritesListPageModule {}

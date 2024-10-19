@@ -16,7 +16,7 @@ export class CatalogService {
   getCategories(data?: any): Observable<any> {
     const params: HttpParams = queryParams(data);
     return this.http
-      .get(`${environment.origin}/supplements/categories/?limit=500`, {
+      .get(`${environment.origin}/supplements/categories/?limit=200`, {
         params,
       })
       .pipe(

@@ -55,7 +55,6 @@ export class FilterModalComponent implements OnInit {
       product_score: new FormControl([]),
     });
     this.form.patchValue(this.filters);
-    console.log(this.filters);
   }
 
   ionViewWillEnter() {
@@ -94,9 +93,7 @@ export class FilterModalComponent implements OnInit {
         })
       )
       .subscribe(
-        (data: any) => {
-          console.log(data);
-        },
+        (data: any) => {},
         (error: any) => {
           if (error.status === 401) {
             this.alertService.presentErrorAlert('Something went wrong');
@@ -116,7 +113,6 @@ export class FilterModalComponent implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
           // this.profileDetails = data;
           this.categories = data.results;
           this.categories.forEach((el) => {
@@ -151,14 +147,11 @@ export class FilterModalComponent implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
           const brands = this.objectToArray(data?.results);
-          console.log(brands);
+
           brands.forEach((brand: any) => {
-            console.log(brand);
             this.brands = [...this.brands, ...brand?.brands];
           });
-          console.log(this.brands);
         },
         (error: any) => {
           if (error.status === 401) {
@@ -203,7 +196,7 @@ export class FilterModalComponent implements OnInit {
 
   public async handleApplyChanges() {
     // apply changes
-    console.log(this.form.value);
+
     const values = this.form.value || null;
     this.cancelModal(values);
   }

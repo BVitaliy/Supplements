@@ -35,3 +35,16 @@ ion-item {
   height: 10px;
   border-radius: 50%;
 }
+
+.search-box {
+  position: relative;
+  margin-bottom: 16px;
+
+  ion-spinner {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+}

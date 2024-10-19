@@ -1,8 +1,9 @@
 <!-- Search -->
-<div class="p-bottom--medium" [formGroup]="searchForm" *ngIf="options && options.length > 7">
+<div class="search-box" [formGroup]="searchForm" *ngIf="options && options.length > 7">
   <ion-searchbar mode="ios" placeholder="Search..." show-clear-button="never"
     [searchIcon]="'./assets/img/icons/search-icon-grey.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
-    formControlName="search" class="search" (ionChange)="search($event)"></ion-searchbar>
+    formControlName="search" class="search" (ionChange)="search($event)" [debounce]="1000"></ion-searchbar>
+  <ion-spinner name="crescent" color="primary" *ngIf="isLoading"></ion-spinner>
 </div>
 <!-- / Search -->
 

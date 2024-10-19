@@ -30,8 +30,7 @@
           <ng-container *ngFor="let product of favorite.supplements; let index = index">
             <div *ngIf="index < productsToShow" vertical="center" horizontal="center"
               class="favorites-list__list-product p-around--x-small">
-              <app-img [src]="product?.images[0]?.url" cssClasses="img-fit-contain"
-                class="favorites-list__list-product-img"></app-img>
+              <app-preview-image [images]="product?.images"></app-preview-image>
             </div>
           </ng-container>
 

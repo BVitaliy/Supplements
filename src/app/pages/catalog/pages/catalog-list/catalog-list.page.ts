@@ -39,22 +39,35 @@ export class CatalogListPage implements OnInit {
       search: new FormControl(''),
     });
 
+    // this.filterForm
+    //   .get('search')
+    //   ?.valueChanges.pipe(
+    //     debounceTime(500), // Adjust debounce time as needed
+    //     distinctUntilChanged(),
+    //     takeUntil(this.unsubscribe$)
+    //   )
+    //   .subscribe((value) => {
+    //     this.zone.run(() => {
+    //       this.getCategories(value ? { query: value } : {});
+    //     });
+    //   });
+  }
+
+  search(event: any) {
     this.zone.run(() => {
-      this.getCategories();
-      this.filterForm
-        .get('search')
-        ?.valueChanges.pipe(
-          debounceTime(500), // Adjust debounce time as needed
-          distinctUntilChanged(),
-          takeUntil(this.unsubscribe$)
-        )
-        .subscribe((value) => {
-          this.getCategories(value ? { query: value } : {});
-        });
+      console.log(event?.detail?.value);
+      this.filterForm.get('search')?.setValue(event?.detail?.value);
+
+      this.getCategories(
+        event?.detail?.value ? { query: event?.detail?.value } : {}
+      );
     });
   }
 
   ionViewWillEnter() {
+    this.zone.run(() => {
+      this.getCategories();
+    });
     if (this.platform.is('hybrid')) {
       this.themeOptions.setStatusBarWhite();
     }

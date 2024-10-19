@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, finalize, switchMap } from 'rxjs';
 import { getPriorityValue } from 'src/app/core/functions/priority-value';
 import { MainService } from 'src/app/pages/main/main.service';
 
@@ -22,7 +23,7 @@ export class FilterGroupComponent implements OnInit {
   @Output() filteredOptions: EventEmitter<any> = new EventEmitter<any>();
   @Input() addedOptions: any[] = [];
   optionsToShow: any[] = [];
-
+  isLoading = false;
   open = false;
   countHide = 0;
 
@@ -101,8 +102,9 @@ export class FilterGroupComponent implements OnInit {
   }
 
   getBrands(search?: any) {
+    this.isLoading = true;
     let data: any = {
-      limit: 300,
+      limit: search ? 40 : 300,
     };
     if (search) {
       data = {
@@ -112,7 +114,12 @@ export class FilterGroupComponent implements OnInit {
     }
     this.mainService
       .getBrands(data)
-
+      .pipe(
+        distinctUntilChanged(),
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
       .subscribe(
         (data: any) => {
           console.log(data);
@@ -129,8 +136,9 @@ export class FilterGroupComponent implements OnInit {
       );
   }
   getIngredients(search?: any) {
+    this.isLoading = true;
     let data: any = {
-      limit: 300,
+      limit: search ? 40 : 240,
     };
     if (search) {
       data = {
@@ -140,7 +148,11 @@ export class FilterGroupComponent implements OnInit {
     }
     this.mainService
       .getIngredients(data)
-
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
       .subscribe(
         (data: any) => {
           console.log(data);

@@ -204,7 +204,7 @@ export class HighlightedIngredientsPage implements OnInit {
   getData(callbackFunction?: () => void) {
     this.loading = true;
     const data = {
-      // highlighted: true,
+      highlighted: true,
       limit: 200,
     };
     this.mainService
@@ -241,7 +241,7 @@ export class HighlightedIngredientsPage implements OnInit {
   searchIngrediens(search: string, type?: any) {
     this.loading = true;
     let data = {
-      // highlighted: true,
+      // highlighted: search ? false : true,
       query: search,
       limit: 200,
     };
