@@ -394,3 +394,10 @@ ion-modal {
   height: 16px;
   position: relative;
 }
+
+.spinner-lines,
+.arrow.down,
+.spinner-bubbles {
+  color: var(--ion-color-primary);
+  stroke: var(--ion-color-primary);
+}

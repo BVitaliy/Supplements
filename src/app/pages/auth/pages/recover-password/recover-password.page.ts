@@ -75,11 +75,13 @@ export class RecoverPasswordPage
         ]),
         password: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
+          Validators.pattern(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,}/
+          ),
         ]),
         confirm_password: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
+          Validators.minLength(8),
         ]),
         token: new FormControl(null),
       },

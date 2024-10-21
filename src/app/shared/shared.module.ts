@@ -36,6 +36,7 @@ import { SetAvatarNamePipe } from './pipes/setAvatarName.pipe';
 import { MaskDirective } from './directives/mask.directives';
 import { SearchEmptyComponent } from './components/search-empty/search-empty-state.component';
 import { SearchEmptyStateComponent } from './components/search-system/search-empty-state/search-empty-state.component';
+import { PreviewImageComponent2 } from './components/preview-image/preview-image.component';
 
 const exportedDeclarations = [
   ImgComponent,
@@ -67,6 +68,7 @@ const exportedDeclarations = [
   ProductAlertPopupComponent,
   SearchEmptyComponent,
   SearchEmptyStateComponent,
+  PreviewImageComponent2,
 ];
 
 @NgModule({

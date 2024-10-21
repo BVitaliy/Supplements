@@ -1,6 +1,6 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll, NavController } from '@ionic/angular';
 import { finalize } from 'rxjs';
 import { getPriorityValue } from 'src/app/core/functions/priority-value';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -12,9 +12,16 @@ import { MainService } from '../../main.service';
   styleUrls: ['./ingredients.page.scss'],
 })
 export class IngredientsPage implements OnInit {
+  @ViewChild(IonContent, { static: false }) content!: IonContent;
+  @ViewChild(IonInfiniteScroll) infiniteScroll!: {
+    disabled: boolean;
+    complete: () => any;
+  };
   loading: boolean = false;
   searchForm!: FormGroup;
-
+  disableInfinity = false;
+  current_page = 1;
+  items_per_page = 30;
   public brandList: any[] = [];
 
   constructor(
@@ -49,10 +56,28 @@ export class IngredientsPage implements OnInit {
     });
   }
 
+  loadData() {
+    this.zone.run(() => {
+      if (!this.disableInfinity) {
+        setTimeout(() => {
+          this.current_page = 1;
+          this.items_per_page = this.items_per_page + 30;
+
+          this.getData(false, undefined);
+        }, 500);
+      } else {
+        this.disableInfinity = true;
+      }
+    });
+  }
+
   getData(refresh?: boolean, callbackFunction?: () => void) {
     this.loading = true;
+    const data = {
+      limit: this.items_per_page,
+    };
     this.mainService
-      .getIngredients()
+      .getIngredients(data)
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -65,6 +90,14 @@ export class IngredientsPage implements OnInit {
         (data: any) => {
           console.log(data);
           this.brandList = this.objectToArray(data?.results);
+
+          this.disableInfinity =
+            this.current_page * this.items_per_page >= data?.count;
+          if (this.disableInfinity && this.infiniteScroll) {
+            this.infiniteScroll.disabled = true;
+          } else {
+            this.infiniteScroll?.complete();
+          }
         },
         (error: any) => {
           if (error.status === 401) {

@@ -6,7 +6,7 @@
     <div class="p-top--xx-large p-bottom--medium p-horizontal--medium">
       <ion-searchbar mode="ios" placeholder="Search product by name" show-clear-button="never"
         [searchIcon]="'./assets/img/icons/search-icon-grey.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
-        class="search" (ionChange)="search($event)"></ion-searchbar>
+        class="search" (ionChange)="search($event)" [debounce]="1000"></ion-searchbar>
     </div>
     <!-- / Search -->
 

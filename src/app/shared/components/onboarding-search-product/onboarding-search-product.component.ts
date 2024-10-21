@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { finalize } from 'rxjs';
 import { CatalogService } from 'src/app/pages/catalog/catalog.service';
@@ -16,8 +16,9 @@ export class OnboardingSearchProductComponent implements OnInit {
   isLoading = false;
 
   constructor(
-    private modalController: ModalController,
-    private catalogService: CatalogService
+    private zone: NgZone,
+    private catalogService: CatalogService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -25,22 +26,29 @@ export class OnboardingSearchProductComponent implements OnInit {
   }
 
   public search(event: any): void {
-    this.searchText = event?.detail?.value;
+    this.zone.run(() => {
+      this.searchText = event?.detail?.value;
 
-    this.isLoading = true;
-    this.catalogService
-      .searchProduct({ query: this.searchText })
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-        })
-      )
-      .subscribe({
-        next: (data: any) => {
-          this.products = data.results;
-        },
-        error: (error: any) => {},
-      });
+      if (
+        (event?.detail?.value && event?.detail?.value?.length >= 3) ||
+        !event?.detail?.value
+      ) {
+        this.isLoading = true;
+        this.catalogService
+          .searchProduct({ query: this.searchText })
+          .pipe(
+            finalize(() => {
+              this.isLoading = false;
+            })
+          )
+          .subscribe({
+            next: (data: any) => {
+              this.products = data.results;
+            },
+            error: (error: any) => {},
+          });
+      }
+    });
   }
 
   async cancelModal(closeModal = false) {

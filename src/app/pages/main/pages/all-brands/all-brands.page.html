@@ -21,10 +21,11 @@
     <div class="p-bottom--large" [formGroup]="searchForm">
       <ion-searchbar mode="ios" placeholder="Search..." show-clear-button="never"
         [searchIcon]="'./assets/img/icons/search-icon-grey.svg'" [clearIcon]="'./assets/img/icon/close-icon.svg'"
-        formControlName="search" class="highlighted-ingredients__search" (ionChange)="search($event)"></ion-searchbar>
+        formControlName="search" class="highlighted-ingredients__search" (ionChange)="search($event)"
+        [debounce]="1000"></ion-searchbar>
     </div>
     <!-- / Search -->
-    <ng-container *ngIf="brandList.length && !loading">
+    <ng-container *ngIf="brandList.length">
       <ng-container *ngFor="let brandSection of brandList">
         <div *ngIf="brandSection.brands?.length" class="section">
           <!-- Section label -->
@@ -50,4 +51,11 @@
     </ng-container>
 
   </div>
+
+  <ng-container *ngIf="brandList?.length">
+    <ion-infinite-scroll threshold="0" (ionInfinite)="loadData()" position="bottom" [disabled]="disableInfinity">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" color="primary">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container>
 </ion-content>

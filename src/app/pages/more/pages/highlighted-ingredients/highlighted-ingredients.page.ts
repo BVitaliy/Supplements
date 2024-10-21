@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { SwiperComponent } from 'swiper/angular';
 import { SwiperOptions } from 'swiper';
@@ -75,7 +75,8 @@ export class HighlightedIngredientsPage implements OnInit {
     public navCtrl: NavController,
     private mainService: MainService,
     private alertService: AlertService,
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
+    private zone: NgZone
   ) {}
 
   public ngOnInit(): void {
@@ -87,29 +88,28 @@ export class HighlightedIngredientsPage implements OnInit {
 
   // apply changes
   public handleApplyChanges(): void {
-    console.log(this.addedIngredientsOptions);
-    // this.switchHighlightedIng(el);
-    const ingredientIds = this.addedIngredientsOptions.map(
-      (ingredient: any) => ingredient.id
-    );
-    this.switchHighlightedIng(ingredientIds);
+    this.zone.run(() => {
+      const ingredientIds = this.addedIngredientsOptions.map(
+        (ingredient: any) => ingredient.id
+      );
+      this.switchHighlightedIng(ingredientIds);
 
-    this.removeIngredientsOptions.forEach((el, index) => {
-      // if (index === this.addedIngredientsOptions.length - 1) {
-      this.switchItemHighlightedIng(el);
-      // }
+      this.removeIngredientsOptions.forEach((el, index) => {
+        this.switchItemHighlightedIng(el);
+      });
     });
   }
 
   public handleSelectReasonFilter(option?: any): void {
     console.log(option);
-
-    if (this.activeReasonFilter === option.label) {
-      this.activeReasonFilter = '';
-    } else {
-      this.activeReasonFilter = option.label || '';
-    }
-    this.searchIngrediens(this.searchForm.value.search, option?.type);
+    this.zone.run(() => {
+      if (this.activeReasonFilter === option.label) {
+        this.activeReasonFilter = '';
+      } else {
+        this.activeReasonFilter = option.label || '';
+      }
+      this.searchIngrediens(this.searchForm.value.search, option?.type);
+    });
   }
 
   public handleClearAllAddedIngredients(): void {
@@ -193,8 +193,22 @@ export class HighlightedIngredientsPage implements OnInit {
   }
 
   public search(event: any): void {
-    this.searchForm.get('search')?.setValue(event?.detail?.value);
-    this.searchIngrediens(event?.detail?.value);
+    this.zone.run(() => {
+      console.log(this.activeReasonFilter);
+      let item;
+      if (this.activeReasonFilter) {
+        item = this.reasonsOptions.find(
+          (el: any) => el.label === this.activeReasonFilter
+        );
+      }
+      this.searchForm.get('search')?.setValue(event?.detail?.value);
+      if (
+        (event?.detail?.value && event?.detail?.value?.length >= 3) ||
+        !event?.detail?.value
+      ) {
+        this.searchIngrediens(event?.detail?.value, item?.type);
+      }
+    });
   }
 
   doRefresh(event: any) {
