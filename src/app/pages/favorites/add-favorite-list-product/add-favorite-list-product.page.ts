@@ -37,8 +37,8 @@ export class AddFavoriteListProductPage {
     };
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
       component: ManageFavoriteListPage,
-      breakpoints: [0, 0.3, 0.5, 0.8],
-      initialBreakpoint: 0.5,
+      breakpoints: [0, 0.3, 0.6, 0.8],
+      initialBreakpoint: 0.6,
       componentProps: {
         mode: dialogConf.mode,
         titleText: dialogConf.titleText,

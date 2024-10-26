@@ -25,40 +25,40 @@
     </div>
     <!-- / Search -->
 
-    <ng-container>
-      <ng-container *ngFor="let brandSection of brandList">
-        <div *ngIf="brandSection.brands?.length" class="section">
-          <!-- Section label -->
-          <div class="section-label m-bottom--x-small ion-text-uppercase">
-            {{ brandSection.label }}
-          </div>
-          <!-- / Section label -->
-          <ion-list class="list">
-            <ng-container *ngFor="let option of brandSection.brands; let last = last">
-              <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
-                [routerLink]="['/home/tabs/tab/main/all-brands/', option?.id, {title: option?.title, type:'ingredients'}]">
 
-                <div *ngIf="option?.is_benefit && getPriorityValue(option) === 'is_benefit'" class="indicator"
-                  [ngStyle]="{ 'background': '#22B51F' }"></div>
-                <div *ngIf="option?.is_weaknesses && getPriorityValue(option) === 'is_weaknesses'" class="indicator"
-                  [ngStyle]="{ 'background': '#FF001C' }"></div>
-                <div *ngIf="option?.is_contamintant && getPriorityValue(option) === 'is_contamintant'" class="indicator"
-                  [ngStyle]="{ 'background': '#FF9635' }"></div>
-                <div *ngIf="option?.is_allergen && getPriorityValue(option) === 'is_allergen'" class="indicator"
-                  [ngStyle]="{ 'background': '#FDE334' }"></div>
-                <div class="dark ">{{option?.title}}</div>
-              </ion-item>
-            </ng-container>
-          </ion-list>
-
-
+    <ng-container *ngFor="let brandSection of brandList">
+      <div *ngIf="brandSection.brands?.length" class="section">
+        <!-- Section label -->
+        <div class="section-label m-bottom--x-small ion-text-uppercase">
+          {{ brandSection.label }}
         </div>
-      </ng-container>
+        <!-- / Section label -->
+        <ion-list class="list">
+          <ng-container *ngFor="let option of brandSection.brands; let last = last">
+            <ion-item class="fw-600 text-m dark" button detail="true" lines="none"
+              [routerLink]="['/home/tabs/tab/main/all-brands/', option?.id, {title: option?.title, type:'ingredients'}]">
 
-      <ng-container *ngIf="!brandList.length && !loading">
-        <app-search-empty class="flex-grow  "></app-search-empty>
-      </ng-container>
+              <div *ngIf="option?.is_benefit && getPriorityValue(option) === 'is_benefit'" class="indicator"
+                [ngStyle]="{ 'background': '#22B51F' }"></div>
+              <div *ngIf="option?.is_weaknesses && getPriorityValue(option) === 'is_weaknesses'" class="indicator"
+                [ngStyle]="{ 'background': '#FF001C' }"></div>
+              <div *ngIf="option?.is_contamintant && getPriorityValue(option) === 'is_contamintant'" class="indicator"
+                [ngStyle]="{ 'background': '#FF9635' }"></div>
+              <div *ngIf="option?.is_allergen && getPriorityValue(option) === 'is_allergen'" class="indicator"
+                [ngStyle]="{ 'background': '#FDE334' }"></div>
+              <div class="dark ">{{option?.title}}</div>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+
+
+      </div>
     </ng-container>
+
+    <ng-container *ngIf="!brandList.length && !loading">
+      <app-search-empty class="flex-grow  "></app-search-empty>
+    </ng-container>
+
 
   </div>
 

@@ -91,10 +91,10 @@ export class ProfileDetailsPage implements OnInit {
     value?: string
   ): Promise<void> {
     const initialBreakpointValue: number =
-      field === ProfileDetailsFields.gender ? 0.5 : 0.3;
+      field === ProfileDetailsFields.gender ? 0.5 : 0.38;
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
       component: EditProfileDetailPage,
-      breakpoints: [0, 0.3, 0.5, 0.8],
+      breakpoints: [0, 0.38, 0.5, 0.8],
       initialBreakpoint: initialBreakpointValue,
       componentProps: {
         fieldTitle: field,

@@ -38,8 +38,8 @@ export class FavoritesPage {
     };
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
       component: ManageFavoriteListPage,
-      breakpoints: [0, 0.3, 0.5, 0.8],
-      initialBreakpoint: 0.5,
+      breakpoints: [0, 0.3, 0.6, 0.8, 1],
+      initialBreakpoint: 0.6,
       componentProps: {
         mode: dialogConf.mode,
         titleText: dialogConf.titleText,
@@ -48,14 +48,6 @@ export class FavoritesPage {
     });
     modal.onDidDismiss().then((data) => {
       if (data?.data) {
-        console.log(data);
-        // create favorite list
-        // this.favoritesList.push({
-        //   id: Math.random(),
-        //   listName: data?.data?.listName,
-        //   listDescription: data?.data?.listDescription,
-        //   products: [],
-        // });
         if (data?.data?.mode === 'Create') {
           this.createList(data?.data);
         }

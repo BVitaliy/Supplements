@@ -202,11 +202,12 @@ export class HighlightedIngredientsPage implements OnInit {
         );
       }
       this.searchForm.get('search')?.setValue(event?.detail?.value);
-      if (
-        (event?.detail?.value && event?.detail?.value?.length >= 3) ||
-        !event?.detail?.value
-      ) {
+      if (event?.detail?.value && event?.detail?.value?.length >= 3) {
         this.searchIngrediens(event?.detail?.value, item?.type);
+      }
+
+      if (!event?.detail?.value) {
+        this.getData();
       }
     });
   }
@@ -254,8 +255,7 @@ export class HighlightedIngredientsPage implements OnInit {
 
   searchIngrediens(search: string, type?: any) {
     this.loading = true;
-    let data = {
-      // highlighted: search ? false : true,
+    let data: any = {
       query: search,
       limit: 200,
     };
@@ -264,6 +264,14 @@ export class HighlightedIngredientsPage implements OnInit {
       data = {
         ...data,
         [type]: true,
+        highlighted: true,
+      };
+    }
+    console.log(this.activeReasonFilter);
+    if (!search && !this.activeReasonFilter) {
+      data = {
+        limit: 200,
+        highlighted: true,
       };
     }
     this.mainService
