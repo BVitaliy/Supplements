@@ -191,9 +191,9 @@ export class ProductDetailPage implements OnInit {
         (data: any) => {
           if (data) {
             this.product = data;
-            if (data?.images?.length) {
-              this.product.images = data?.images.reverse();
-            }
+            // if (data?.images?.length) {
+            //   this.product.images = data?.images.reverse();
+            // }
             if (data?.description) {
               setTimeout(() => {
                 const textHeight = this.textContent.nativeElement.scrollHeight;
