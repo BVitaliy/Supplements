@@ -37,6 +37,21 @@ export class MainService {
       );
   }
 
+  getAllIngredients(data?: any): Observable<any> {
+    const params: HttpParams = queryParams(data);
+
+    return this.http
+      .get(`${environment.origin}/supplements/ingredients/`, {
+        params,
+      })
+      .pipe(
+        catchError((error) => {
+          this.alertService.presentErrorAlert(error);
+          return throwError(error);
+        })
+      );
+  }
+
   getIngredients(data?: any): Observable<any> {
     const params: HttpParams = queryParams(data);
 

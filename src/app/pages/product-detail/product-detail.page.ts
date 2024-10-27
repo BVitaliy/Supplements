@@ -94,11 +94,14 @@ export class ProductDetailPage implements OnInit {
         }, 300);
       }
     });
+  }
+  
+  ionViewWillEnter() {
     if (this.platform.is('hybrid')) {
-      setTimeout(() => {
+      setTimeout(() => { 
         this.themeOptions.setStatusBarWhite();
-      }, 2000);
-    }
+      }, 1000);
+    } 
   }
 
   toggleText() {
@@ -495,6 +498,7 @@ export class ProductDetailPage implements OnInit {
 
   closePage() {
     if (this.openedInModal) {
+      this.navCtrl.navigateRoot(['info-steps']);
       this.cancelModal();
     } else {
       this.navCtrl.back();

@@ -30,13 +30,13 @@ export class ProductNotFoundComponent implements OnInit {
     this.navCtrl.navigateForward([link]);
   }
 
-  async cancelModal(closeModal = false) {
+  async cancelModal(closeModal:any = false) {
     await this.modalController.dismiss(closeModal);
   }
 
   // Відкривання модалки
   async openSearchProductModal() {
-    this.cancelModal(true);
+    this.cancelModal('openSearch');
     const modal = await this.modalController.create({
       component: OnboardingSearchProductComponent,
       cssClass: 'modal-search',

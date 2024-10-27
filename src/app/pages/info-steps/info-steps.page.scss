@@ -85,4 +85,11 @@ ion-header {
       color: var(--ion-color-primary);
     }
   }
+
+  &.dark{
+    background: var(--ion-color-primary);
+    ion-toolbar{
+      background: var(--ion-color-primary);
+    }
+  }
 }
