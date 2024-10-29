@@ -625,6 +625,8 @@ ion-modal {
 
   &.auto-height {
     --height: auto;
+    align-items: end;
+    --border-radius: 16px 16px 0 0;
   }
 }
 

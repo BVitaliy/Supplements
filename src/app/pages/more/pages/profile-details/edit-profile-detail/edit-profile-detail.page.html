@@ -1,91 +1,90 @@
-<ion-content>
-  <form direction="column" class="form p-around--medium" [formGroup]="formGroup">
-    <!-- Title -->
-    <div class="edit-profile-detail__title m-bottom--medium">
-      {{ fieldTitle }}
-    </div>
-    <!-- / Title -->
+<!-- <ion-content> -->
+<form direction="column" class="form p-around--medium" [formGroup]="formGroup">
+  <!-- Title -->
+  <div class="edit-profile-detail__title m-bottom--medium">
+    {{ fieldTitle }}
+  </div>
+  <!-- / Title -->
 
-    <ng-container [ngSwitch]="fieldTitle">
-      <!-- First name -->
-      <ng-container *ngSwitchCase="profileDetailsFields.first_name">
-        <div class="form-control m-top--xx-small">
-          <ion-item class="form-item form-item--no-label" mode="ios" lines="none">
-            <ion-input formControlName="first_name" type="text" inputmode="text"
-              placeholder="Enter first name"></ion-input>
-          </ion-item>
+  <ng-container [ngSwitch]="fieldTitle">
+    <!-- First name -->
+    <ng-container *ngSwitchCase="profileDetailsFields.first_name">
+      <div class="form-control m-top--xx-small">
+        <ion-item class="form-item form-item--no-label" mode="ios" lines="none">
+          <ion-input formControlName="first_name" type="text" inputmode="text"
+            placeholder="Enter first name"></ion-input>
+        </ion-item>
+      </div>
+    </ng-container>
+    <!-- / First name -->
+
+    <!-- Last name -->
+    <ng-container *ngSwitchCase="profileDetailsFields.last_name">
+      <div class="form-control m-top--xx-small">
+        <ion-item class="form-item form-item--no-label" mode="ios" lines="none">
+          <ion-input formControlName="last_name" type="text" inputmode="text" placeholder="Enter last name"></ion-input>
+        </ion-item>
+      </div>
+    </ng-container>
+    <!-- / Last name -->
+
+    <!-- Email address -->
+    <ng-container *ngSwitchCase="profileDetailsFields.email">
+      <div class="form-control m-top--xx-small">
+        <ion-item class="form-item form-item--no-label" mode="ios" lines="none">
+          <ion-input formControlName="email" type="email" inputmode="email"
+            placeholder="Enter email address"></ion-input>
+        </ion-item>
+      </div>
+    </ng-container>
+    <!-- / Email address -->
+
+    <!-- Sex -->
+    <ng-container *ngSwitchCase="profileDetailsFields.gender">
+      <div class="m-top--xx-small p-bottom--medium">
+        <!-- Male -->
+        <div vertical="center" class="m-bottom--small edit-profile-detail__item"
+          [ngClass]="{ 'edit-profile-detail__item--selected': formGroup.get('gender')?.value === 0 }"
+          (click)="handleChangeSexValue(0)">
+          <ion-icon [src]="'./assets/img/icons/male-icon.svg'" class="m-right--x-small"></ion-icon>
+          <div class="edit-profile-detail__item-text">{{ profileGenders.male }}</div>
         </div>
-      </ng-container>
-      <!-- / First name -->
+        <!-- / Male -->
 
-      <!-- Last name -->
-      <ng-container *ngSwitchCase="profileDetailsFields.last_name">
-        <div class="form-control m-top--xx-small">
-          <ion-item class="form-item form-item--no-label" mode="ios" lines="none">
-            <ion-input formControlName="last_name" type="text" inputmode="text"
-              placeholder="Enter last name"></ion-input>
-          </ion-item>
+        <!-- Female -->
+        <div vertical="center" class="m-bottom--small edit-profile-detail__item"
+          [ngClass]="{ 'edit-profile-detail__item--selected': formGroup.get('gender')?.value === 1 }"
+          (click)="handleChangeSexValue(1)">
+          <ion-icon [src]="'./assets/img/icons/female-icon.svg'" class="m-right--x-small"></ion-icon>
+          <div class="edit-profile-detail__item-text">{{ profileGenders.female }}</div>
         </div>
-      </ng-container>
-      <!-- / Last name -->
+        <!-- / Female -->
 
-      <!-- Email address -->
-      <ng-container *ngSwitchCase="profileDetailsFields.email">
-        <div class="form-control m-top--xx-small">
-          <ion-item class="form-item form-item--no-label" mode="ios" lines="none">
-            <ion-input formControlName="email" type="email" inputmode="email"
-              placeholder="Enter email address"></ion-input>
-          </ion-item>
+        <!-- Other -->
+        <div vertical="center" class="edit-profile-detail__item m-bottom--xx-small"
+          [ngClass]="{ 'edit-profile-detail__item--selected': formGroup.get('gender')?.value === 2 }"
+          (click)="handleChangeSexValue(2)">
+          <ion-icon [src]="'./assets/img/icons/other-icon.svg'" class="m-right--x-small"></ion-icon>
+          <div class="edit-profile-detail__item-text">{{ profileGenders.other }}</div>
         </div>
-      </ng-container>
-      <!-- / Email address -->
+        <!-- / Other -->
+      </div>
+    </ng-container>
+    <!-- / Sex -->
 
-      <!-- Sex -->
-      <ng-container *ngSwitchCase="profileDetailsFields.gender">
-        <div class="m-top--xx-small p-bottom--medium">
-          <!-- Male -->
-          <div vertical="center" class="m-bottom--small edit-profile-detail__item"
-            [ngClass]="{ 'edit-profile-detail__item--selected': formGroup.get('gender')?.value === 0 }"
-            (click)="handleChangeSexValue(0)">
-            <ion-icon [src]="'./assets/img/icons/male-icon.svg'" class="m-right--x-small"></ion-icon>
-            <div class="edit-profile-detail__item-text">{{ profileGenders.male }}</div>
-          </div>
-          <!-- / Male -->
-
-          <!-- Female -->
-          <div vertical="center" class="m-bottom--small edit-profile-detail__item"
-            [ngClass]="{ 'edit-profile-detail__item--selected': formGroup.get('gender')?.value === 1 }"
-            (click)="handleChangeSexValue(1)">
-            <ion-icon [src]="'./assets/img/icons/female-icon.svg'" class="m-right--x-small"></ion-icon>
-            <div class="edit-profile-detail__item-text">{{ profileGenders.female }}</div>
-          </div>
-          <!-- / Female -->
-
-          <!-- Other -->
-          <div vertical="center" class="edit-profile-detail__item m-bottom--xx-small"
-            [ngClass]="{ 'edit-profile-detail__item--selected': formGroup.get('gender')?.value === 2 }"
-            (click)="handleChangeSexValue(2)">
-            <ion-icon [src]="'./assets/img/icons/other-icon.svg'" class="m-right--x-small"></ion-icon>
-            <div class="edit-profile-detail__item-text">{{ profileGenders.other }}</div>
-          </div>
-          <!-- / Other -->
-        </div>
-      </ng-container>
-      <!-- / Sex -->
-
-      <!-- Birthday -->
-      <ng-container *ngSwitchCase="profileDetailsFields.date_of_birth">
-        <div class="form-control m-top--xx-small">
-          <ion-item class="form-item form-item--no-label" mode="ios" lines="none">
-            <!-- <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="DD/MM/YYYY"
+    <!-- Birthday -->
+    <ng-container *ngSwitchCase="profileDetailsFields.date_of_birth">
+      <div class="form-control m-top--xx-small">
+        <ion-item class="form-item form-item--no-label" mode="ios" lines="none">
+          <!-- <ion-input [value]="formattedDate" type="text" inputmode="text" placeholder="DD/MM/YYYY"
               autocomplete="off"></ion-input> -->
-            <ion-input class="form-item-hidden" formControlName="date_of_birth" autocomplete="'off'"></ion-input>
-            <input class="native-input" formControlName="date_of_birth" type="text" placeholder="YYYY-MM-DD"
-              autocomplete="'off'" mask="0000-00-00" [showMaskTyped]="false" />
-          </ion-item>
-        </div>
+          <ion-input class="form-item-hidden" formControlName="date_of_birth" autocomplete="'off'"></ion-input>
+          <input class="native-input" formControlName="date_of_birth" type="text" placeholder="YYYY-MM-DD"
+            autocomplete="'off'" mask="0000-00-00" [showMaskTyped]="false" />
+        </ion-item>
+      </div>
 
-        <!-- <ion-modal #modal trigger="open-modal" handle="true">
+      <!-- <ion-modal #modal trigger="open-modal" handle="true">
           <ng-template>
             <ion-content>
               <ion-grid>
@@ -96,15 +95,15 @@
             </ion-content>
           </ng-template>
         </ion-modal> -->
-      </ng-container>
-      <!-- / Birthday -->
     </ng-container>
+    <!-- / Birthday -->
+  </ng-container>
 
-    <!-- Action -->
-    <ion-button class="btn btn-sm btn-primary" expand="block" fill="solid" mode="md" [disabled]="!formGroup.valid"
-      (click)="handleAction()">
-      <b>Save</b>
-    </ion-button>
-    <!-- / Action -->
-  </form>
-</ion-content>
+  <!-- Action -->
+  <ion-button class="btn btn-sm btn-primary" expand="block" fill="solid" mode="md" [disabled]="!formGroup.valid"
+    (click)="handleAction()">
+    <b>Save</b>
+  </ion-button>
+  <!-- / Action -->
+</form>
+<!-- </ion-content> -->

@@ -94,8 +94,9 @@ export class ProfileDetailsPage implements OnInit {
       field === ProfileDetailsFields.gender ? 0.5 : 0.38;
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
       component: EditProfileDetailPage,
-      breakpoints: [0, 0.38, 0.5, 0.8],
-      initialBreakpoint: initialBreakpointValue,
+      // breakpoints: [0, 0.38, 0.5, 0.8],
+      // initialBreakpoint: initialBreakpointValue,
+      cssClass: 'auto-height',
       componentProps: {
         fieldTitle: field,
         fieldValue: value,

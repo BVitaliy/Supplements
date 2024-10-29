@@ -38,8 +38,9 @@ export class FavoritesPage {
     };
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
       component: ManageFavoriteListPage,
-      breakpoints: [0, 0.3, 0.6, 0.8, 1],
-      initialBreakpoint: 0.6,
+      // breakpoints: [0, 0.3, 0.6, 0.8, 1],
+      // initialBreakpoint: 0.6,
+      cssClass: 'auto-height',
       componentProps: {
         mode: dialogConf.mode,
         titleText: dialogConf.titleText,
