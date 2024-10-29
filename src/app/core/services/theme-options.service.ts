@@ -17,6 +17,7 @@ export class ThemeOptionsService {
   public getMap$: ReplaySubject<any> = new ReplaySubject<any>(1);
   userToken: ReplaySubject<any> = new ReplaySubject<any>(1);
   public refreshPage$: ReplaySubject<any> = new ReplaySubject<any>(1);
+  public headerMode$: ReplaySubject<any> = new ReplaySubject<any>(1);
 
  
   constructor(
@@ -29,6 +30,10 @@ export class ThemeOptionsService {
     getRefreshToken(): Observable<any> {
       return this.refreshPage$
     }
+
+    getHeaderMode(): Observable<any> {
+      return this.headerMode$
+    }  
 
   loadOptions() {
     return this.http

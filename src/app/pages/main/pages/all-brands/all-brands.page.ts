@@ -26,6 +26,8 @@ export class AllBrandsPage implements OnInit {
 
   public brandList: any[] = [];
 
+  private scrollPosition = 0;
+
   constructor(
     public navCtrl: NavController,
     private mainService: MainService,
@@ -61,10 +63,10 @@ export class AllBrandsPage implements OnInit {
   loadData() {
     this.zone.run(() => {
       if (!this.disableInfinity) {
-        setTimeout(() => {
+        setTimeout(async() => {
           this.current_page = 1;
           this.items_per_page = this.items_per_page + 30;
-
+          await this.saveScrollPosition();
           this.getData(false, undefined);
         }, 500);
       } else {
@@ -100,6 +102,9 @@ export class AllBrandsPage implements OnInit {
           } else {
             this.infiniteScroll?.complete();
           }
+          setTimeout(() => {
+            this.restoreScrollPosition()
+          }, 100);
         },
         (error: any) => {
           if (error.status === 401) {
@@ -133,5 +138,15 @@ export class AllBrandsPage implements OnInit {
 
   objectToArray(obj: { [key: string]: any }): { label: string; brands: any }[] {
     return Object.keys(obj).map((key) => ({ label: key, brands: obj[key] }));
+  }
+
+  async saveScrollPosition() {
+    this.scrollPosition = await this.content.getScrollElement().then(el => el.scrollTop);
+    
+  }
+
+  // Відновлюємо позицію після оновлення даних
+  restoreScrollPosition() {
+    this.content.scrollToPoint(0, this.scrollPosition, 0); // 300ms для плавного скролу
   }
 }

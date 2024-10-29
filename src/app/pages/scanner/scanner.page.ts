@@ -87,7 +87,7 @@ export class ScannerPage implements OnInit {
       this.openProductNotFound();
       // this.openProductInModal(3379);
       if (this.platform.is('ios')) {
-        this.navCtrl.back();
+        // this.navCtrl.back();
       }
       // setTimeout(() => { // Видалити !!!
       //   this.getUserInfoByQrCode('89770172'); // '42110929'
@@ -110,8 +110,13 @@ export class ScannerPage implements OnInit {
       handle: true,
       componentProps: {},
     });
-    modal.onDidDismiss().then(() => {
-      console.log(this.router.url);
+    modal.onDidDismiss().then((data) => {
+      console.log(data);
+      if(data.data === 'openSearch'){
+        
+      } else {
+
+       
       if (this.logged && !this.router.url.includes('add-product')) {
         // this.navCtrl.navigateForward(['/home/tabs/tab/main']);
         this.navCtrl.back();
@@ -124,7 +129,7 @@ export class ScannerPage implements OnInit {
         if (this.platform.is('hybrid')) {
           this.themeOptions.setStatusBarDark();
         }
-      }
+      }}
     });
 
     return await modal.present();

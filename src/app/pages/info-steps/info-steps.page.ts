@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { NavController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { Subscription } from 'rxjs';
 import { FIRST_OPEN_APP } from 'src/app/app.config';
 import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
 
@@ -12,6 +13,7 @@ import { ThemeOptionsService } from 'src/app/core/services/theme-options.service
 })
 export class InfoStepsPage implements OnInit {
   currentStep = 1;
+ 
 
   constructor(
     public navCtrl: NavController,
@@ -30,6 +32,14 @@ export class InfoStepsPage implements OnInit {
     if (this.platform.is('hybrid')) {
       this.themeOptions.setStatusBarDark();
     }
+  }
+
+  ionViewWillEnter() {
+    if (this.platform.is('hybrid')) {
+        this.themeOptions.setStatusBarDark();
+    } 
+
+ 
   }
 
   next() {
@@ -51,4 +61,6 @@ export class InfoStepsPage implements OnInit {
   goToScanner(url: string) {
     this.navCtrl.navigateForward(url);
   }
+
+ 
 }

@@ -29,14 +29,14 @@ export class AlertService {
       mess = err;
     }
 
-    const alert = await this.alertController.create({
-      header: 'Error',
-      message: mess ? mess : 'An unknown error has occurred',
-      buttons: buttonsArr,
-      mode: 'ios',
-    });
+    // const alert = await this.alertController.create({
+    //   header: 'Error',
+    //   message: mess ? mess : 'An unknown error has occurred',
+    //   buttons: buttonsArr,
+    //   mode: 'ios',
+    // });
 
-    await alert.present();
+    // await alert.present();
   }
 
   async presentNetworkError(cb?: any) {

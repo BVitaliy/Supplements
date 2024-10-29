@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { ThemeOptionsService } from 'src/app/core/services/theme-options.service';
@@ -115,27 +116,28 @@ export class ProductCardComponent implements OnInit {
   }
 
   async openProductInModal() {
-    const modal = await this.modalController.create({
-      component: ProductDetailPage,
-      cssClass: '',
-      mode: 'ios',
-      handle: true,
-      componentProps: {
-        openedInModal: true,
-        id: this.product?.id,
-      },
-    });
+      const modal = await this.modalController.create({
+        component: ProductDetailPage,
+        cssClass: '',
+        mode: 'ios',
+        handle: true,
+        componentProps: {
+          openedInModal: true,
+          id: this.product?.id,
+        },
+      });
 
-    modal.onDidDismiss().then((returnedData: any) => {
-      // if (returnedData && returnedData?.data) {
-      this.closeModal.emit(true);
-      if (this.platform.is('hybrid')) {
-        this.themeOptions.setStatusBarDark();
-      }
-      // }
-    });
+      modal.onDidDismiss().then((returnedData: any) => {
+        // if (returnedData && returnedData?.data) {
+        this.closeModal.emit(true);
+        if (this.platform.is('hybrid')) {
+          this.themeOptions.headerMode$.next(null);
+          this.themeOptions.setStatusBarDark();
+        }
+        // }
+      });
 
-    return await modal.present();
+      return await modal.present();
   }
 
   setToFavorites(id: any) {

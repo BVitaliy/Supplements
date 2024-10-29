@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IonContent, IonInfiniteScroll, NavController } from '@ionic/angular';
 import { finalize } from 'rxjs';
@@ -22,15 +22,19 @@ export class IngredientsPage implements OnInit {
   disableInfinity = false;
   current_page = 1;
   items_per_page = 30;
-  public brandList: any[] = [];
+  brandList: any[]  = [];
 
+  private scrollPosition = 0;
+
+  
   constructor(
     public navCtrl: NavController,
     private mainService: MainService,
     private alertService: AlertService,
     private zone: NgZone
-  ) {}
-
+    ) {}
+    
+ 
   ngOnInit() {
     this.searchForm = new FormGroup({
       search: new FormControl(null),
@@ -56,13 +60,13 @@ export class IngredientsPage implements OnInit {
     });
   }
 
-  loadData() {
+    loadData() {
     this.zone.run(() => {
       if (!this.disableInfinity) {
-        setTimeout(() => {
+        setTimeout(async() => {
           this.current_page = 1;
           this.items_per_page = this.items_per_page + 30;
-
+          await this.saveScrollPosition();
           this.getData(false, undefined);
         }, 500);
       } else {
@@ -90,6 +94,10 @@ export class IngredientsPage implements OnInit {
         (data: any) => {
           console.log(data);
           this.brandList = this.objectToArray(data?.results);
+          // setTimeout(() => {
+          //   this.brandList = list;
+          // }, 300);
+          // this.brandList = data?.results;
 
           this.disableInfinity =
             this.current_page * this.items_per_page >= data?.count;
@@ -98,6 +106,9 @@ export class IngredientsPage implements OnInit {
           } else {
             this.infiniteScroll?.complete();
           }
+          setTimeout(() => {
+            this.restoreScrollPosition()
+          }, 100);
         },
         (error: any) => {
           if (error.status === 401) {
@@ -106,6 +117,8 @@ export class IngredientsPage implements OnInit {
         }
       );
   }
+
+ 
 
   searchIngrediens(search: string) {
     this.loading = true;
@@ -135,5 +148,15 @@ export class IngredientsPage implements OnInit {
 
   getPriorityValue(data: any) {
     return getPriorityValue(data);
+  }
+
+  async saveScrollPosition() {
+    this.scrollPosition = await this.content.getScrollElement().then(el => el.scrollTop);
+    console.log(this.scrollPosition)
+  }
+
+  // Відновлюємо позицію після оновлення даних
+  restoreScrollPosition() {
+    this.content.scrollToPoint(0, this.scrollPosition, 0); // 300ms для плавного скролу
   }
 }
